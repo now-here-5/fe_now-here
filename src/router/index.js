@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import HomeView from '@/views/HomeView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -25,7 +25,24 @@ const router = createRouter({
     {
       path: '/match',
       name: 'match',
-      component: () => import('@/views/MatchView.vue')
+      component: () => import('@/views/MatchView.vue'),
+      children: [
+        {
+          path: 'sent-hearts', // /match/sent-hearts
+          name: 'sentHearts',
+          component: () => import('@/components/SentHeartsView.vue')
+        },
+        {
+          path: 'received-hearts', // /match/received-hearts
+          name: 'receivedHearts',
+          component: () => import('@/components/ReceivedHeartsView.vue')
+        },
+        {
+          path: 'status', // /match/status
+          name: 'matchStatus',
+          component: () => import('@/components/MatchStatusView.vue')
+        }
+      ]
     },
     {
       path: '/profile',
