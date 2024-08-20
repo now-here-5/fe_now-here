@@ -8,15 +8,21 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/${{ github.repository }}/oci-node-image:latest # GitHub Container Registry에 저장된 Docker 이미지
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
+      # npm 캐시를 사용해 의존성 설치 속도 최적화
+      - name: Cache Node.js modules
+        uses: actions/cache@v2
         with:
-          node-version: '14'
+          path: ~/.npm  # 또는 node_modules로 지정 가능
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
       - name: Install dependencies
         run: npm install
@@ -24,15 +30,20 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Set up OCI CLI
+      - name: Configure OCI CLI
         run: |
-          mkdir -p ~/.oci
-          echo "${{ secrets.OCI_API_KEY }}" | base64 --decode > ~/.oci/api_key.pem
-          oci setup config --tenancy ${{ secrets.OCI_TENANCY_OCID }} \
-                           --user ${{ secrets.OCI_USER_OCID }} \
-                           --region ${{ secrets.OCI_REGION }} \
-                           --key-file ~/.oci/api_key.pem \
-                           --fingerprint ${{ secrets.OCI_KEY_FINGERPRINT }}
+          # OCI CLI는 배포용 Docker 이미지에 모든 환경으로써 포함되어 있음.
+          # Configure OCI CLI credentials
+            mkdir -p ~/.oci
+            echo "[DEFAULT]" > ~/.oci/config
+            echo "user=${{ secrets.OCI_USER_OCID }}" >> ~/.oci/config
+            echo "fingerprint=${{ secrets.OCI_KEY_FINGERPRINT }}" >> ~/.oci/config
+            echo "key_file=~/.oci/api_key.pem" >> ~/.oci/config
+            echo "tenancy=${{ secrets.OCI_TENANCY_OCID }}" >> ~/.oci/config
+            echo "region=${{ secrets.OCI_REGION }}" >> ~/.oci/config
+        
+            echo "${{ secrets.OCI_API_KEY }}" > ~/.oci/api_key.pem
+            chmod 600 ~/.oci/api_key.pem
 
       - name: Upload to Oracle Object Storage
         run: |
