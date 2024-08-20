@@ -1,0 +1,41 @@
+name: Deploy to Oracle Object Storage
+
+on:
+  push:
+    branches:
+      - prod  
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build project
+        run: npm run build
+
+      - name: Set up OCI CLI
+        run: |
+          mkdir -p ~/.oci
+          echo "${{ secrets.OCI_API_KEY }}" | base64 --decode > ~/.oci/api_key.pem
+          oci setup config --tenancy ${{ secrets.OCI_TENANCY_OCID }} \
+                           --user ${{ secrets.OCI_USER_OCID }} \
+                           --region ${{ secrets.OCI_REGION }} \
+                           --key-file ~/.oci/api_key.pem \
+                           --fingerprint ${{ secrets.OCI_KEY_FINGERPRINT }}
+
+      - name: Upload to Oracle Object Storage
+        run: |
+          oci os object bulk-upload -bn "blinker-vue-bucket" \
+                                    --src-dir "./dist" \
+                                    --overwrite
