@@ -47,6 +47,6 @@ jobs:
 
       - name: Upload to Oracle Object Storage
         run: |
-          oci os object bulk-upload -bn "blinker-vue-bucket" \
+          oci os object bulk-upload -bn "now-here-bucket" \
                                     --src-dir "./dist" \
                                     --overwrite
