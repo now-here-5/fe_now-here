@@ -6,54 +6,54 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: () => import('@/views/HomeView.vue')
+      component: () => import('@/presentation/views/HomeView.vue')
     },
     {
       path: '/login',
       name: 'login',
-      component: () => import('@/views/LoginView.vue')
+      component: () => import('@/presentation/views/LoginView.vue')
     },
     {
       path: '/signup',
       name: 'signup',
-      component: () => import('@/views/SignupView.vue')
+      component: () => import('@/presentation/views/SignupView.vue')
     },
     {
       path: '/match',
       name: 'match',
-      component: () => import('@/views/MatchView.vue'),
+      component: () => import('@/presentation/views/MatchView.vue'),
       children: [
         {
           path: 'sent-hearts', // /match/sent-hearts
           name: 'sentHearts',
-          component: () => import('@/components/SentHeartsView.vue')
+          component: () => import('@/presentation/components/SentHeartsView.vue')
         },
         {
           path: 'received-hearts', // /match/received-hearts
           name: 'receivedHearts',
-          component: () => import('@/components/ReceivedHeartsView.vue')
+          component: () => import('@/presentation/components/ReceivedHeartsView.vue')
         },
         {
           path: 'status', // /match/status
           name: 'matchStatus',
-          component: () => import('@/components/MatchStatusView.vue')
+          component: () => import('@/presentation/components/MatchStatusView.vue')
         }
       ]
     },
     {
       path: '/profile',
       name: 'profile',
-      component: () => import('@/views/ProfileView.vue')
+      component: () => import('@/presentation/views/ProfileView.vue')
     },
     {
       path: '/notice',
       name: 'notice',
-      component: () => import('@/views/NoticeView.vue')
+      component: () => import('@/presentation/views/NoticeView.vue')
     },
     {
       path: '/contact',
       name: 'contact',
-      component: () => import('@/views/ContactView.vue')
+      component: () => import('@/presentation/views/ContactView.vue')
     }
   ]
 })
