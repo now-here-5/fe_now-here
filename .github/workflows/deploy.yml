@@ -3,7 +3,11 @@ name: Deploy to Oracle Object Storage
 on:
   push:
     branches:
-      - prod  
+        - prod
+
+  pull_request:
+      branches:
+        - prod   
 
 jobs:
   build:
@@ -15,11 +19,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+
       # npm 캐시를 사용해 의존성 설치 속도 최적화
       - name: Cache Node.js modules
         uses: actions/cache@v2
         with:
-          path: ~/.npm  # 또는 node_modules로 지정 가능
+          path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
@@ -30,11 +35,13 @@ jobs:
       - name: Build project
         run: npm run build
 
+
       - name: Configure OCI CLI
         run: |
-          # OCI CLI는 배포용 Docker 이미지에 모든 환경으로써 포함되어 있음.
+          # OCI CLI && node.js는 oci-node-image에 포함되어 있음.
           # Configure OCI CLI credentials
             mkdir -p ~/.oci
+
             echo "[DEFAULT]" > ~/.oci/config
             echo "user=${{ secrets.OCI_USER_OCID }}" >> ~/.oci/config
             echo "fingerprint=${{ secrets.OCI_KEY_FINGERPRINT }}" >> ~/.oci/config
