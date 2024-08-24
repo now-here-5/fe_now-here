@@ -34,8 +34,8 @@
     .today-card {
       display: flex;
       flex-direction: column;
-      width: 150px;
-      height: 260px;
+      width: 170px;
+      height: 250px;
       background-color: black;
       border-radius: 13px;
     }
