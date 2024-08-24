@@ -1,5 +1,5 @@
 <template>
-  <div class="test">
+  <div>
     <h1>HOME</h1>
     <RouterLink to="/notice">알림</RouterLink>
     <RouterLink to="/match">오늘의 카드</RouterLink>
@@ -14,9 +14,4 @@
 
 <script setup></script>
 
-<style lang="scss">
-.test {
-  display: flex;
-  flex-direction: column;
-}
-</style>
+<style lang="scss"></style>
