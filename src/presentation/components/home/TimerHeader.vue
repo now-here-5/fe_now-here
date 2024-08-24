@@ -25,28 +25,14 @@
   </div>
 </template>
 
-<script setup>
-import { onMounted } from 'vue'
-
-// 브라우저 width에 따라 header width 조정
-onMounted(() => {
-  const mainContainer = document.querySelector('.main-container')
-  const timerHeader = document.querySelector('.timer-header')
-  const parentWidth = mainContainer.offsetWidth
-  if (timerHeader) {
-    timerHeader.style.width = `${parentWidth - 40}px`
-    console.log(`timer ${parentWidth - 40}px`)
-  }
-})
-</script>
+<script setup></script>
 
 <style lang="scss">
 .timer-header {
-  position: fixed;
-  top: 77px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
   padding: 10px;
   background-color: #f2f2f2;
   border-radius: 10px;

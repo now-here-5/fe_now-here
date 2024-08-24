@@ -15,7 +15,7 @@
 .today-card-container {
   display: flex;
   flex-direction: column;
-
+  margin-top: 20px;
   .title {
     font-size: 18px;
     font-weight: 700;

@@ -1,9 +1,7 @@
 <template>
   <header class="main-header">
-    <div class="top-header">
-      <span class="logo">Now, Here.</span>
-      <RouterLink to="/notice"><img src="@/assets/images/notifications.png" /></RouterLink>
-    </div>
+    <span class="logo">Now, Here.</span>
+    <RouterLink to="/notice"><img src="@/assets/images/notifications.png" /></RouterLink>
   </header>
 </template>
 
@@ -16,37 +14,35 @@ onMounted(() => {
   const mainHeader = document.querySelector('.main-header')
   const parentWidth = mainContainer.offsetWidth
   if (mainHeader) {
-    mainHeader.style.width = `${parentWidth - 40}px`
+    mainHeader.style.width = `${parentWidth}px`
   }
 })
 </script>
 
 <style lang="scss">
 .main-header {
-  display: flex;
-  flex-direction: column;
   position: fixed;
-  top: 0;
+  display: flex;
   justify-content: space-between;
-  align-items: flex-start;
-  padding: 20px 0;
+  align-items: center;
+  top: 0;
+  padding: 0 20px;
+  height: 60px;
   z-index: 100;
   background-color: white;
+  box-sizing: border-box;
+  border-left: 1px solid #ddd;
+  border-right: 1px solid #ddd;
 
-  .top-header {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    .logo {
-      font-size: 28px;
-      line-height: 28px;
-      font-weight: 700;
-    }
-    img {
-      width: 30px;
-      cursor: pointer;
-    }
+  .logo {
+    font-size: 28px;
+    line-height: 28px;
+    font-weight: 700;
+  }
+  img {
+    width: 30px;
+    cursor: pointer;
+    margin-top: 5px;
   }
 }
 </style>

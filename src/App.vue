@@ -1,10 +1,17 @@
 <template>
+  <MainHeader v-if="showMainHeader" />
   <div class="main-container">
     <RouterView />
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { useRoute } from 'vue-router'
+import MainHeader from '@/presentation/components/MainHeader.vue'
+import { computed } from 'vue'
+const route = useRoute()
+const showMainHeader = computed(() => route.path === '/')
+</script>
 
 <style scoped lang="scss">
 .main-container {
@@ -17,7 +24,6 @@
 
   // 추가적인 스타일링
   background-color: white;
-  border: 1px solid #ddd; // 테두리
-  /* border-radius: 8px; // 모서리 둥글게 */
+  border: 1px solid #ddd;
 }
 </style>
