@@ -2,8 +2,11 @@
   <div class="home-container">
     <MainHeader />
 
+    <TimerHeader />
+
     <main class="main-content">
-      <RouterLink to="/match">오늘의 카드</RouterLink>
+      <TodayCards />
+
       <RouterLink to="/contact">문의하기</RouterLink>
       <nav>
         <RouterLink to="/">홈</RouterLink>
@@ -16,10 +19,12 @@
 
 <script setup>
 import MainHeader from '@/presentation/components/MainHeader.vue'
+import TimerHeader from '@/presentation/components/home/TimerHeader.vue'
+import TodayCards from '@/presentation/components/home/TodayCards.vue'
 </script>
 
 <style lang="scss">
 .main-content {
-  margin-top: 60px;
+  margin-top: var(--mg-top-main-sub-header);
 }
 </style>
