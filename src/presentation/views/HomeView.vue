@@ -5,13 +5,7 @@
       <TodayCards />
       <HeartStatus />
       <MatchingStatus />
-
-      <RouterLink to="/contact">문의하기</RouterLink>
-      <nav>
-        <RouterLink to="/">홈</RouterLink>
-        <RouterLink to="/match">매칭</RouterLink>
-        <RouterLink to="/profile">프로필</RouterLink>
-      </nav>
+      <DirectReview />
     </main>
   </div>
 </template>
@@ -21,6 +15,7 @@ import TimerHeader from '@/presentation/components/home/TimerHeader.vue'
 import TodayCards from '@/presentation/components/home/TodayCards.vue'
 import HeartStatus from '@/presentation/components/home/HeartStatus.vue'
 import MatchingStatus from '@/presentation/components/home/MatchingStatus.vue'
+import DirectReview from '@/presentation/components/home/DirectReview.vue'
 </script>
 
 <style lang="scss">

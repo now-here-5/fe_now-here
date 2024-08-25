@@ -5,22 +5,11 @@
   </header>
 </template>
 
-<script setup>
-import { onMounted } from 'vue'
-
-// 브라우저 width에 따라 header width 조정
-onMounted(() => {
-  const mainContainer = document.querySelector('.main-container')
-  const mainHeader = document.querySelector('.main-header')
-  const parentWidth = mainContainer.offsetWidth
-  if (mainHeader) {
-    mainHeader.style.width = `${parentWidth}px`
-  }
-})
-</script>
+<script setup></script>
 
 <style lang="scss">
 .main-header {
+  width: 400px;
   position: fixed;
   display: flex;
   justify-content: space-between;
