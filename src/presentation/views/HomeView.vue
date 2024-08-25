@@ -7,6 +7,11 @@
       <MatchingStatus />
       <DirectReview />
     </main>
+    <footer class="footer-container">
+      <span>이용약관</span>
+      <span>개인정보처리방침</span>
+      <span>문의하기</span>
+    </footer>
   </div>
 </template>
 
@@ -21,5 +26,18 @@ import DirectReview from '@/presentation/components/home/DirectReview.vue'
 <style lang="scss">
 .main-content {
   margin-top: 60px;
+}
+.footer-container {
+  width: 100%;
+  height: 55px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 20px;
+  span {
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+  }
 }
 </style>
