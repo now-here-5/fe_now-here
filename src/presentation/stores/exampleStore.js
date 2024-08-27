@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { TodoRepository } from '../../infrastructure/repositories/exampleRepository'
+import { TodoRepository } from '../../infrastructure/repositories/ExampleRepository'
 import { AddTodoUseCase } from '../../core/usecases/AddExample'
 
 // store 레이어: Pinia를 사용해 상태 관리와 유스케이스 호출을 담당
