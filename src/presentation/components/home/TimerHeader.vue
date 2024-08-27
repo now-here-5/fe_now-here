@@ -36,7 +36,8 @@
   padding: 10px;
   background-color: $point;
   border-radius: 10px;
-  box-shadow: 0px 1px 3px 1px #00000026;
+  box-shadow: 0px 2px 3px 0px #0000004d;
+  box-shadow: 0px 6px 10px 4px #00000026;
 
   .timer-title {
     font-size: 14px;
