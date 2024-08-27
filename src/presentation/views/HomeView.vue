@@ -3,7 +3,7 @@
     <main class="main-content">
       <TimerHeader />
       <TodayCards />
-      <HeartStatus />
+      <HeartHistory />
       <MatchingStatus />
       <DirectReview />
     </main>
@@ -18,14 +18,14 @@
 <script setup>
 import TimerHeader from '@/presentation/components/home/TimerHeader.vue'
 import TodayCards from '@/presentation/components/home/TodayCards.vue'
-import HeartStatus from '@/presentation/components/home/HeartStatus.vue'
+import HeartHistory from '@/presentation/components/home/HeartHistory.vue'
 import MatchingStatus from '@/presentation/components/home/MatchingStatus.vue'
 import DirectReview from '@/presentation/components/home/DirectReview.vue'
 </script>
 
 <style lang="scss">
 .main-content {
-  margin-top: 60px;
+  margin-top: 70px;
 }
 .footer-container {
   width: 100%;
@@ -33,7 +33,7 @@ import DirectReview from '@/presentation/components/home/DirectReview.vue'
   display: flex;
   justify-content: space-around;
   align-items: center;
-  margin-top: 20px;
+  margin-top: 60px;
   span {
     font-size: 12px;
     font-weight: 500;

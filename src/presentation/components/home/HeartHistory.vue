@@ -23,7 +23,7 @@
 .heart-status-container {
   display: flex;
   flex-direction: column;
-  margin-top: 20px;
+  margin-top: 30px;
 
   .title {
     font-size: 18px;
@@ -35,8 +35,9 @@
   }
 
   .heart-item-wrapper {
-    background-color: #f4f4f4;
-    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
     border-radius: 10px;
     width: 100%;
     margin-top: 10px;
@@ -44,14 +45,12 @@
     .heart-item {
       display: flex;
       justify-content: space-between;
+      background-color: $light_grey;
+      padding: 15px;
       align-items: center;
-      margin-bottom: 10px;
-      padding: 5px 0;
+      border-radius: 15px;
       cursor: pointer;
-
-      &:last-child {
-        margin-bottom: 0;
-      }
+      box-shadow: 0px 1px 3px 0px #0000004d;
 
       .heart-text {
         font-size: 15px;
@@ -59,7 +58,7 @@
       }
 
       .heart-count {
-        color: red;
+        color: $point;
         font-size: 15px;
         font-weight: bold;
         margin-left: 10px;
@@ -67,10 +66,10 @@
       }
 
       .new-badge {
-        background-color: black;
-        color: white;
-        font-size: 14px;
-        font-weight: bold;
+        background-color: $point;
+        color: $white;
+        font-size: 12px;
+        font-weight: 700;
         width: 20px;
         height: 20px;
         display: flex;

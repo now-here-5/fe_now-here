@@ -1,6 +1,6 @@
 <template>
   <header class="main-header">
-    <span class="logo">Now, Here.</span>
+    <img class="logo" src="@/assets/images/logo_text.png" alt="logo" />
     <RouterLink to="/notice"><img src="@/assets/images/notifications.png" /></RouterLink>
   </header>
 </template>
@@ -24,9 +24,7 @@
   border-right: 1px solid #ddd;
 
   .logo {
-    font-size: 28px;
-    line-height: 28px;
-    font-weight: 700;
+    width: 210px;
   }
   img {
     width: 30px;

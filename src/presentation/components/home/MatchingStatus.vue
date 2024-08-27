@@ -9,11 +9,17 @@
           우산님이 <br />
           매칭되었어요!</span
         >
-        <span class="desc">장마소년님 우산님 매칭되었어요!</span>
+        <span class="desc">케미 점수는 87점이에요!</span>
       </div>
-      <div class="image-wrapper">
-        <img src="@/assets/images/ENTJ.png" alt="ENTJ" />
-        <img src="@/assets/images/ENTJ.png" alt="ENTJ" />
+      <div class="profile-wrapper">
+        <div class="profile">
+          <span class="mbti">ESFP</span>
+          <img class="profile-img" src="@/assets/images/avatar_ESTP_Female.png" alt="ENTJ" />
+        </div>
+        <div class="profile">
+          <span class="mbti">ESFP</span>
+          <img class="profile-img" src="@/assets/images/avatar_ESTP_Female.png" alt="ENTJ" />
+        </div>
       </div>
     </div>
   </div>
@@ -25,7 +31,7 @@
 .matching-status-container {
   display: flex;
   flex-direction: column;
-  margin-top: 20px;
+  margin-top: 30px;
   > .title {
     font-size: 18px;
     font-weight: 700;
@@ -53,17 +59,32 @@
         font-weight: 700;
       }
       .desc {
-        font-size: 10px;
+        font-size: 12px;
         font-weight: 400;
       }
     }
 
-    .image-wrapper {
+    .profile-wrapper {
       display: flex;
       justify-content: center;
       align-items: center;
       gap: 5px;
       width: 50%;
+      .profile {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .mbti {
+          font-size: 14px;
+          font-weight: 700;
+          color: $point;
+        }
+        .profile-img {
+          width: 70px;
+          border-radius: 15px;
+          border: 2px solid $point;
+        }
+      }
     }
   }
 }

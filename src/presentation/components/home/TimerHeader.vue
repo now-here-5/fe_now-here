@@ -34,13 +34,14 @@
   align-items: center;
   width: 100%;
   padding: 10px;
-  background-color: #f2f2f2;
+  background-color: $point;
   border-radius: 10px;
   box-shadow: 0px 1px 3px 1px #00000026;
 
   .timer-title {
     font-size: 14px;
     margin-bottom: 3px;
+    color: $white;
     strong {
       font-weight: bold;
     }
@@ -52,7 +53,7 @@
     align-items: flex-start;
     font-size: 20px;
     font-family: 'Arial', sans-serif;
-    color: #333;
+    color: $white;
 
     .time-segment {
       display: flex;
@@ -67,7 +68,7 @@
       .label {
         font-size: 8px;
         margin-top: 2px;
-        color: #666;
+        color: $white;
       }
     }
 

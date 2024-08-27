@@ -1,6 +1,6 @@
 <template>
   <div class="direct-reivew-container">
-    <span class="title">리뷰 남기기</span>
+    <span class="title">의견 남기기</span>
     <span class="desc">더 좋은 서비스를 만들기 위해, 많은 의견을 남겨주세요!</span>
     <div class="input-container">
       <div class="input-background">
@@ -19,7 +19,7 @@
 .direct-reivew-container {
   display: flex;
   flex-direction: column;
-  margin-top: 20px;
+  margin-top: 30px;
 
   .title {
     font-size: 18px;
@@ -71,16 +71,12 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        background-color: #e0e0e0; // 버튼 배경색
+        background-color: $point; // 버튼 배경색
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); // 버튼 그림자
-
-        &:hover {
-          background-color: #d0d0d0; // 호버 시 버튼 색상 변경
-        }
 
         span {
           font-size: 16px;
-          color: #555; // 화살표 색상
+          color: $white; // 화살표 색상
         }
       }
     }

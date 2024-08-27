@@ -3,19 +3,21 @@
     <span class="title">오늘의 카드</span>
     <span class="desc">카드를 누르면 더 많은 정보를 확인할 수 있어요!</span>
     <div class="cards-wrapper">
-      <div class="today-card">카드1</div>
-      <div class="today-card">카드2</div>
+      <TodayCardItem />
+      <TodayCardItem />
     </div>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import TodayCardItem from '@/presentation/components/home/TodayCardItem.vue'
+</script>
 
 <style lang="scss">
 .today-card-container {
   display: flex;
   flex-direction: column;
-  margin-top: 20px;
+  margin-top: 30px;
   .title {
     font-size: 18px;
     font-weight: 700;
@@ -30,15 +32,6 @@
     align-items: center;
     gap: 1rem;
     margin-top: 15px;
-
-    .today-card {
-      display: flex;
-      flex-direction: column;
-      width: 170px;
-      height: 250px;
-      background-color: black;
-      border-radius: 13px;
-    }
   }
 }
 </style>

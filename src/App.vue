@@ -3,6 +3,11 @@
   <div class="main-container">
     <RouterView />
   </div>
+  <div class="bottom-nav-container">
+    <RouterLink to="/match" class="bottom-nav-menu" active-class="active">매칭</RouterLink>
+    <RouterLink to="/" class="bottom-nav-menu" active-class="active">홈</RouterLink>
+    <RouterLink to="/profile" class="bottom-nav-menu" active-class="active">프로필</RouterLink>
+  </div>
 </template>
 
 <script setup>
@@ -17,7 +22,7 @@ const showMainHeader = computed(() => route.path === '/')
 <style scoped lang="scss">
 .main-container {
   width: 400px;
-  height: 100vh;
+  /* height: 100vh; */
   margin: 0 auto;
   padding: 0 20px;
   box-sizing: border-box;
@@ -42,5 +47,35 @@ const showMainHeader = computed(() => route.path === '/')
 /* 웹킷 기반 브라우저에서 스크롤바 숨기기 */
 .main-container::-webkit-scrollbar {
   display: none;
+}
+
+.bottom-nav-container {
+  display: flex;
+  position: fixed;
+  bottom: 0;
+  background-color: white;
+  width: 400px;
+  height: 70px;
+  border-top: 1px solid $grey;
+  border-left: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+
+  .bottom-nav-menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    color: inherit;
+    color: $grey;
+
+    &.active {
+      border-top: 2px solid $dark;
+      font-size: 20px;
+      color: $dark;
+    }
+  }
 }
 </style>
