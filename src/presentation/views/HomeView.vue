@@ -1,7 +1,7 @@
 <template>
   <div class="home-container">
     <main class="main-content">
-      <TimerHeader />
+      <TimerHeader ends-at="2024-09-01T00:00:00" />
       <TodayCards />
       <HeartHistory />
       <MatchingStatus />
