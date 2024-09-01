@@ -16,7 +16,7 @@ export const calculateMatchedScore = (matchedInfo) => {
 /**
  * 주어진 매칭 정보를 이용해 두 멤버의 아바타 이미지 url 반환하는 함수
  * @param {MatchedInfoEntity} matchedInfo
- * @returns {senderImgUrl, receiverImgUrl} 멤버들의 아바타 이미지 url
+ * @returns {senderAvatarImgUrl, receiverAvatarImgUrl} 멤버들의 아바타 이미지 url
  */
 export const getAvatarImgUrlForMatchedInfo = (matchedInfo) => {
   const getAvatarImgUrl = (gender, mbti) => {

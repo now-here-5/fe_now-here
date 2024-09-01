@@ -2,7 +2,7 @@
   <div class="matching-status-container">
     <span class="title">매칭 현황</span>
     <span class="desc">다른 유저들은 어떤 인연을 만나고 있을까요?</span>
-    <Carousel :autoplay="3000" :wrapAround="true">
+    <Carousel v-if="matchedInfoList.length > 0" :autoplay="3000" :wrapAround="isRolling">
       <Slide v-for="matchedInfo in matchedInfoList" :key="matchedInfo">
         <div class="matching-banner">
           <div class="info-wrapper">
@@ -34,13 +34,20 @@
         </div>
       </Slide>
     </Carousel>
+
+    <div v-else class="matching-banner">
+      <span>
+        새로운 매칭을 기다리고 있어요.<br />
+        곧 좋은 소식을 전해드릴게요!
+      </span>
+    </div>
   </div>
 </template>
 
 <script setup>
 import { useMatchingStore } from '@/presentation/stores/matchingStore'
 import { storeToRefs } from 'pinia'
-import { onMounted } from 'vue'
+import { computed, onMounted } from 'vue'
 import { Carousel, Slide } from 'vue3-carousel'
 import 'vue3-carousel/dist/carousel.css'
 
@@ -56,9 +63,11 @@ const getAvatarImgUrl = (matchedInfo, role) => {
   return role === 'sender' ? senderAvatarImgUrl : receiverAvatarImgUrl
 }
 
+const isRolling = computed(() => matchedInfoList.value.length > 1)
+
 onMounted(async () => {
   await matchingStore.fetchMatchedInfoList()
-  console.log(matchedInfoList.value)
+  // matchedInfoList.value = []
 })
 </script>
 

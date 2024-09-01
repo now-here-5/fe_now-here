@@ -32,8 +32,10 @@ const sendDirectReview = async () => {
     field: 1
   }
   const res = await interactionStore.postFeedback(body)
-  if (res.status === 200) alert('피드백이 등록되었습니다.')
+  if (res.status === 200) alert('소중한 의견을 주셔서 감사합니다!')
   else alert('피드백 전송 과정에서 오류가 발생했습니다.')
+
+  reviewValue.value = ''
 }
 </script>
 
