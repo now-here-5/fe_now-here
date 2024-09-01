@@ -4,8 +4,13 @@
     <span class="desc">더 좋은 서비스를 만들기 위해, 많은 의견을 남겨주세요!</span>
     <div class="input-container">
       <div class="input-background">
-        <input type="text" placeholder="내용을 작성해 주세요" class="input-field" />
-        <button class="submit-button">
+        <input
+          type="text"
+          placeholder="내용을 작성해 주세요"
+          class="input-field"
+          v-model="reviewValue"
+        />
+        <button class="submit-button" @click="sendDirectReview">
           <span>&rarr;</span>
         </button>
       </div>
@@ -13,7 +18,12 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { ref } from 'vue'
+
+const reviewValue = ref('')
+const sendDirectReview = () => {}
+</script>
 
 <style lang="scss">
 .direct-reivew-container {

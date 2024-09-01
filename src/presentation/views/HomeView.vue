@@ -1,7 +1,7 @@
 <template>
   <div class="home-container">
     <main class="main-content">
-      <TimerHeader ends-at="2024-09-01T00:00:00" />
+      <TimerHeader :ends-at="eventEndsAt" />
       <TodayCards />
       <HeartHistory />
       <MatchingStatus />
@@ -21,6 +21,16 @@ import TodayCards from '@/presentation/components/home/TodayCards.vue'
 import HeartHistory from '@/presentation/components/home/HeartHistory.vue'
 import MatchingStatus from '@/presentation/components/home/MatchingStatus.vue'
 import DirectReview from '@/presentation/components/home/DirectReview.vue'
+import { useEventStore } from '../stores/eventStore'
+import { storeToRefs } from 'pinia'
+import { onMounted } from 'vue'
+
+const eventStore = useEventStore()
+const { eventEndsAt } = storeToRefs(eventStore)
+
+onMounted(() => {
+  eventStore.fetchEventEndsAt()
+})
 </script>
 
 <style lang="scss">

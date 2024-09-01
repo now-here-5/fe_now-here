@@ -1,5 +1,6 @@
 import axios from 'axios'
 
+console.log(import.meta.env.VITE_API_BASE_URL)
 const httpClient = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
   timeout: 10000,
@@ -12,11 +13,12 @@ const httpClient = axios.create({
 httpClient.interceptors.request.use(
   (config) => {
     // 예: 인증 토큰 추가
-    const token = localStorage.getItem('token')
-    if (token) {
-      // config.headers.Authorization = `Bearer ${token}`
-      config.headers.Authorization = `Bearer    21qs-n_p1yYjTD_YarmF9Mgx1hevx5tb-7dc6d4c7-e693-4da6-84dc-3038a4710eaa`
-    }
+    config.headers.Authorization = `Bearer uquXP7bgLNvnCBcc0KYQ9w-b6NyfUvxN-22359b12-2ae3-49dd-a29a-d860c4e39b83`
+    // const token = localStorage.getItem('token')
+    // if (token) {
+    //   // config.headers.Authorization = `Bearer ${token}`
+    //   config.headers.Authorization = `Bearer    uquXP7bgLNvnCBcc0KYQ9w-b6NyfUvxN-22359b12-2ae3-49dd-a29a-d860c4e39b83`
+    // }
     return config
   },
   (error) => {

@@ -1,32 +1,37 @@
 <template>
   <div class="timer-header">
-    <p class="timer-title"><strong>건국대학교</strong>에서 짝을 만날 시간</p>
-    <div class="timer">
-      <div class="time-segment">
-        <span class="time">{{ formatNumber(days) }}</span>
-        <span class="label">일</span>
+    <LoadingSpinner v-if="isLoading" />
+
+    <template v-else>
+      <p class="timer-title"><strong>건국대학교</strong>에서 짝을 만날 시간</p>
+      <div class="timer">
+        <div class="time-segment">
+          <span class="time">{{ formatNumber(days) }}</span>
+          <span class="label">일</span>
+        </div>
+        <span class="separator">:</span>
+        <div class="time-segment">
+          <span class="time">{{ formatNumber(hours) }}</span>
+          <span class="label">시</span>
+        </div>
+        <span class="separator">:</span>
+        <div class="time-segment">
+          <span class="time">{{ formatNumber(minutes) }}</span>
+          <span class="label">분</span>
+        </div>
+        <span class="separator">:</span>
+        <div class="time-segment">
+          <span class="time">{{ formatNumber(seconds) }}</span>
+          <span class="label">초</span>
+        </div>
       </div>
-      <span class="separator">:</span>
-      <div class="time-segment">
-        <span class="time">{{ formatNumber(hours) }}</span>
-        <span class="label">시</span>
-      </div>
-      <span class="separator">:</span>
-      <div class="time-segment">
-        <span class="time">{{ formatNumber(minutes) }}</span>
-        <span class="label">분</span>
-      </div>
-      <span class="separator">:</span>
-      <div class="time-segment">
-        <span class="time">{{ formatNumber(seconds) }}</span>
-        <span class="label">초</span>
-      </div>
-    </div>
+    </template>
   </div>
 </template>
 
 <script setup>
-import { onMounted, onUnmounted, ref } from 'vue'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
+import LoadingSpinner from '../LoadingSpinner.vue'
 
 const props = defineProps({
   endsAt: {
@@ -35,6 +40,7 @@ const props = defineProps({
   }
 })
 
+const isLoading = computed(() => props.endsAt === '')
 const days = ref(0)
 const hours = ref(0)
 const minutes = ref(0)
@@ -48,6 +54,8 @@ const formatNumber = (num) => {
 
 // 남은 시간을 계산하는 함수
 const calculateRemainingTime = () => {
+  if (props.endsAt === '') return
+
   const now = new Date()
   const end = new Date(props.endsAt)
   const diff = end - now
@@ -83,8 +91,10 @@ onUnmounted(() => {
 .timer-header {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   width: 100%;
+  height: 92px;
   padding: 10px;
   background-color: $point;
   border-radius: 10px;
