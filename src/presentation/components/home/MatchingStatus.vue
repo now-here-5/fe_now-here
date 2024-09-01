@@ -35,11 +35,9 @@
       </Slide>
     </Carousel>
 
-    <div v-else class="matching-banner">
-      <span>
-        새로운 매칭을 기다리고 있어요.<br />
-        곧 좋은 소식을 전해드릴게요!
-      </span>
+    <div v-else class="matching-banner no-data">
+      <span class="main-text"> 새로운 매칭을 기다리고 있어요. </span>
+      <span class="sub-text">곧 좋은 소식을 전해드릴게요!</span>
     </div>
   </div>
 </template>
@@ -129,6 +127,21 @@ onMounted(async () => {
           border: 2px solid $point;
         }
       }
+    }
+  }
+  .no-data {
+    display: flex;
+    flex-direction: column;
+
+    .main-text {
+      display: block;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .sub-text {
+      font-size: 14px;
+      font-weight: 400;
     }
   }
 }
