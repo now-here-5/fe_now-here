@@ -6,3 +6,8 @@ export const getRecommendedMembers = async () => {
   const response = await httpClient.get('/member/recommend')
   return response.data
 }
+
+export const getMatchedInfoForBanner = async () => {
+  const response = await httpClient.get('/matching/banner')
+  return response.data
+}

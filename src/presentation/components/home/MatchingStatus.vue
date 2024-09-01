@@ -2,30 +2,37 @@
   <div class="matching-status-container">
     <span class="title">매칭 현황</span>
     <span class="desc">다른 유저들은 어떤 인연을 만나고 있을까요?</span>
-    <div class="matching-banner">
-      <div class="info-wrapper">
-        <span class="title"
-          >장마소년님과 <br />
-          우산님이 <br />
-          매칭되었어요!</span
-        >
-        <span class="desc">케미 점수는 87점이에요!</span>
-      </div>
-      <div class="profile-wrapper">
-        <div class="profile">
-          <span class="mbti">ESFP</span>
-          <img class="profile-img" src="@/assets/images/avatar_ESTP_Female.png" alt="ENTJ" />
+    <Carousel :autoplay="3000" :wrapAround="true">
+      <Slide v-for="slide in 2" :key="slide">
+        <div class="matching-banner">
+          <div class="info-wrapper">
+            <span class="title"
+              >장마소년님과 <br />
+              우산님이 <br />
+              매칭되었어요!</span
+            >
+            <span class="desc">케미 점수는 87점이에요!</span>
+          </div>
+          <div class="profile-wrapper">
+            <div class="profile">
+              <span class="mbti">ESFP</span>
+              <img class="profile-img" src="@/assets/images/avatar_ESTP_Female.png" alt="ENTJ" />
+            </div>
+            <div class="profile">
+              <span class="mbti">ESFP</span>
+              <img class="profile-img" src="@/assets/images/avatar_ESTP_Female.png" alt="ENTJ" />
+            </div>
+          </div>
         </div>
-        <div class="profile">
-          <span class="mbti">ESFP</span>
-          <img class="profile-img" src="@/assets/images/avatar_ESTP_Female.png" alt="ENTJ" />
-        </div>
-      </div>
-    </div>
+      </Slide>
+    </Carousel>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { Carousel, Slide } from 'vue3-carousel'
+import 'vue3-carousel/dist/carousel.css'
+</script>
 
 <style lang="scss">
 .matching-status-container {
