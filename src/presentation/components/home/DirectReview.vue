@@ -8,6 +8,7 @@
           type="text"
           placeholder="내용을 작성해 주세요"
           class="input-field"
+          @keyup.enter="sendDirectReview"
           v-model="reviewValue"
         />
         <button class="submit-button" @click="sendDirectReview">
@@ -19,10 +20,21 @@
 </template>
 
 <script setup>
+import { useInteractionStore } from '@/presentation/stores/interactionStore'
 import { ref } from 'vue'
 
+const interactionStore = useInteractionStore()
 const reviewValue = ref('')
-const sendDirectReview = () => {}
+const sendDirectReview = async () => {
+  // TODO: field null 가능하도록 수정 요청
+  const body = {
+    content: reviewValue.value,
+    field: 1
+  }
+  const res = await interactionStore.postFeedback(body)
+  if (res.status === 200) alert('피드백이 등록되었습니다.')
+  else alert('피드백 전송 과정에서 오류가 발생했습니다.')
+}
 </script>
 
 <style lang="scss">
