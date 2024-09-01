@@ -3,24 +3,32 @@
     <span class="title">매칭 현황</span>
     <span class="desc">다른 유저들은 어떤 인연을 만나고 있을까요?</span>
     <Carousel :autoplay="3000" :wrapAround="true">
-      <Slide v-for="slide in 2" :key="slide">
+      <Slide v-for="matchedInfo in matchedInfoList" :key="matchedInfo">
         <div class="matching-banner">
           <div class="info-wrapper">
-            <span class="title"
-              >장마소년님과 <br />
-              우산님이 <br />
+            <span class="title">
+              {{ matchedInfo.senderNickname }}님과 <br />
+              {{ matchedInfo.receiverNickname }}님이 <br />
               매칭되었어요!</span
             >
-            <span class="desc">케미 점수는 87점이에요!</span>
+            <span class="desc">케미 점수는 {{ getMbtiScore(matchedInfo) }}점이에요!</span>
           </div>
           <div class="profile-wrapper">
             <div class="profile">
-              <span class="mbti">ESFP</span>
-              <img class="profile-img" src="@/assets/images/avatar_ESTP_Female.png" alt="ENTJ" />
+              <span class="mbti">{{ matchedInfo.senderMbti }}</span>
+              <img
+                class="profile-img"
+                :src="getAvatarImgUrl(matchedInfo, 'sender')"
+                alt="senderAvatar"
+              />
             </div>
             <div class="profile">
-              <span class="mbti">ESFP</span>
-              <img class="profile-img" src="@/assets/images/avatar_ESTP_Female.png" alt="ENTJ" />
+              <span class="mbti">{{ matchedInfo.receiverMbti }}</span>
+              <img
+                class="profile-img"
+                :src="getAvatarImgUrl(matchedInfo, 'receiver')"
+                alt="receiverAvatar"
+              />
             </div>
           </div>
         </div>
@@ -30,8 +38,28 @@
 </template>
 
 <script setup>
+import { useMatchingStore } from '@/presentation/stores/matchingStore'
+import { storeToRefs } from 'pinia'
+import { onMounted } from 'vue'
 import { Carousel, Slide } from 'vue3-carousel'
 import 'vue3-carousel/dist/carousel.css'
+
+const matchingStore = useMatchingStore()
+const { matchedInfoList } = storeToRefs(matchingStore)
+
+const getMbtiScore = (matchedInfo) => {
+  return matchingStore.getMatchedInfoMbtiScore(matchedInfo)
+}
+const getAvatarImgUrl = (matchedInfo, role) => {
+  const { senderAvatarImgUrl, receiverAvatarImgUrl } =
+    matchingStore.getMatchedInfoAvatarImgUrls(matchedInfo)
+  return role === 'sender' ? senderAvatarImgUrl : receiverAvatarImgUrl
+}
+
+onMounted(async () => {
+  await matchingStore.fetchMatchedInfoList()
+  console.log(matchedInfoList.value)
+})
 </script>
 
 <style lang="scss">

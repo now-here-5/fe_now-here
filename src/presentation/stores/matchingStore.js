@@ -1,4 +1,8 @@
 import {
+  calculateMatchedScore,
+  getAvatarImgUrlForMatchedInfo
+} from '@/core/usecases/MatchedMembers'
+import {
   calculateDateToAge,
   calculateMbtiScore,
   getMemberAvatarImgUrl,
@@ -12,6 +16,7 @@ const matchingRepository = new MatchingRepository()
 
 export const useMatchingStore = defineStore('matching', () => {
   const recommendedMembers = ref([])
+  const matchedInfoList = ref([])
 
   const fetchRecommendedCards = async () => {
     recommendedMembers.value = await matchingRepository.getRecommendedMembers()
@@ -33,12 +38,28 @@ export const useMatchingStore = defineStore('matching', () => {
     return getMemberAvatarImgUrl(member)
   }
 
+  const fetchMatchedInfoList = async () => {
+    matchedInfoList.value = await matchingRepository.getMatchedInfoForBanner()
+  }
+
+  const getMatchedInfoMbtiScore = (matchedInfo) => {
+    return calculateMatchedScore(matchedInfo)
+  }
+
+  const getMatchedInfoAvatarImgUrls = (matchedInfo) => {
+    return getAvatarImgUrlForMatchedInfo(matchedInfo)
+  }
+
   return {
     recommendedMembers,
+    matchedInfoList,
     fetchRecommendedCards,
     getRecommendedMemberAge,
     getRecommendedMemberMbtiScore,
     getRecommendedMemberGender,
-    getRecommendedMemberAvatarImgUrl
+    getRecommendedMemberAvatarImgUrl,
+    fetchMatchedInfoList,
+    getMatchedInfoMbtiScore,
+    getMatchedInfoAvatarImgUrls
   }
 })
