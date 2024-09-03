@@ -1,8 +1,8 @@
 <template>
   <header class="main-header">
-    <img class="logo" src="@/assets/images/logo_text.png" alt="logo" />
+    <img class="logo" src="/images/logo_text.png" alt="logo" />
     <RouterLink to="/notice">
-      <img src="@/assets/images/notifications.png" />
+      <img src="/images/notifications.png" />
       <span v-if="notificationCounts > 0" class="count">{{ notificationCounts }}</span>
     </RouterLink>
   </header>
