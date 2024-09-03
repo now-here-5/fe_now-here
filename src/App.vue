@@ -1,7 +1,82 @@
 <template>
-  <RouterView />
+  <MainHeader v-if="showMainHeader" />
+  <div class="main-container">
+    <RouterView />
+  </div>
+  <div v-if="showBottomNav" class="bottom-nav-container">
+    <RouterLink to="/match" class="bottom-nav-menu" active-class="active">매칭</RouterLink>
+    <RouterLink to="/" class="bottom-nav-menu" active-class="active">홈</RouterLink>
+    <RouterLink to="/profile" class="bottom-nav-menu" active-class="active">프로필</RouterLink>
+  </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { useRoute } from 'vue-router'
+import MainHeader from '@/presentation/components/MainHeader.vue'
+import { computed } from 'vue'
 
-<style scoped></style>
+const route = useRoute()
+const showMainHeader = computed(() => route.path === '/' || route.path.startsWith('/match'))
+const showBottomNav = computed(() => route.path === '/' || route.path.startsWith('/match'))
+</script>
+
+<style scoped lang="scss">
+.main-container {
+  width: 400px;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  background-color: white;
+  border: 1px solid #ddd;
+
+  /* 스크롤바 숨기기 설정 */
+  scrollbar-width: none; /* Firefox용 설정 */
+  -ms-overflow-style: none; /* IE와 Edge용 설정 */
+}
+
+/* 모바일 환경을 위한 미디어 쿼리 */
+@media (max-width: 767px) {
+  .main-header {
+    width: 100vw;
+  }
+  .main-container {
+    width: 100vw;
+  }
+}
+/* 웹킷 기반 브라우저에서 스크롤바 숨기기 */
+.main-container::-webkit-scrollbar {
+  display: none;
+}
+
+.bottom-nav-container {
+  display: flex;
+  position: fixed;
+  bottom: 0;
+  background-color: white;
+  width: 400px;
+  height: 70px;
+  border-top: 1px solid $grey;
+  border-left: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+
+  .bottom-nav-menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    font-size: $textMS_size;
+    font-weight: $textB_weight;
+    text-decoration: none;
+    color: inherit;
+    color: $grey;
+
+    &.active {
+      border-top: 2px solid $dark;
+      font-size: $textXL_size;
+      color: $dark;
+    }
+  }
+}
+</style>
