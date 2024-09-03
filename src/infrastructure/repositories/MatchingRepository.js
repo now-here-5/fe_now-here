@@ -2,6 +2,7 @@ import { MatchedInfoEntity } from '@/core/entities/MatchedInfoEntity'
 import { RecommendedMemberEntity } from '@/core/entities/RecommendedMemberEntity'
 import {
   getMatchedInfoForBanner,
+  getMatchingSummary,
   getRecommendedMembers
 } from '@/infrastructure/http/api/matchingApi'
 
@@ -25,5 +26,10 @@ export class MatchingRepository {
     const matchedInfoList = data.map((matchedInfo) => new MatchedInfoEntity(matchedInfo))
 
     return matchedInfoList
+  }
+
+  async getMatchingSummary() {
+    const { data } = await getMatchingSummary()
+    return data
   }
 }

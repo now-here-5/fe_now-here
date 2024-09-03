@@ -13,7 +13,7 @@ const httpClient = axios.create({
 httpClient.interceptors.request.use(
   (config) => {
     // 예: 인증 토큰 추가
-    config.headers.Authorization = `Bearer uquXP7bgLNvnCBcc0KYQ9w-b6NyfUvxN-22359b12-2ae3-49dd-a29a-d860c4e39b83`
+    config.headers.Authorization = `Bearer 9JLsfVdbadlAK_ZPFeWrgphUCbr4iAeC-62b99b1c-06a4-46cb-aabc-7803fe171e64`
     // const token = localStorage.getItem('token')
     // if (token) {
     //   // config.headers.Authorization = `Bearer ${token}`

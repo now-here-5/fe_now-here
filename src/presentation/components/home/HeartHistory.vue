@@ -4,20 +4,41 @@
     <span class="desc">받은 하트와 보낸 하트를 한 눈에 볼 수 있어요!</span>
     <div class="heart-item-wrapper">
       <div class="heart-item">
-        <span class="heart-text">보낸 하트</span>
-        <span class="heart-count">5</span>
-        <span class="new-badge">N</span>
+        <LoadingSpinner v-if="isLoading" />
+        <template v-else>
+          <span class="heart-text">보낸 하트</span>
+          <span class="heart-count">{{ matchingSummary.sendLove }}</span>
+          <span v-if="matchingSummary.sendLove !== 0" class="new-badge">N</span>
+        </template>
       </div>
       <div class="heart-item">
-        <span class="heart-text">받은 하트</span>
-        <span class="heart-count">5</span>
-        <span class="new-badge">N</span>
+        <LoadingSpinner v-if="isLoading" />
+        <template v-else>
+          <span class="heart-text">보낸 하트</span>
+          <span class="heart-count">{{ matchingSummary.receiveLove }}</span>
+          <span v-if="matchingSummary.sendLove !== 0" class="new-badge">N</span>
+        </template>
       </div>
     </div>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { useMatchingStore } from '@/presentation/stores/matchingStore'
+import { onMounted, ref } from 'vue'
+import LoadingSpinner from '../LoadingSpinner.vue'
+
+const mathingStore = useMatchingStore()
+const matchingSummary = ref({})
+const isLoading = ref(true)
+
+onMounted(async () => {
+  isLoading.value = true
+  const { data } = await mathingStore.getMatchingSummaryForHomeView()
+  matchingSummary.value = data.data[0]
+  isLoading.value = false
+})
+</script>
 
 <style lang="scss">
 .heart-status-container {
