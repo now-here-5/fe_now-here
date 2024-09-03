@@ -3,13 +3,10 @@ name: Deploy to Oracle Object Storage
 on:
   push:
     branches:
-        
-prod
-
+      - prod
   pull_request:
-      branches:
-        
-prod
+    branches:
+      - prod
 
 jobs:
   build:
@@ -18,28 +15,24 @@ jobs:
       image: ghcr.io/${{ github.repository }}/oci-node-image:latest
 
     steps:
-      
-name: Checkout code
+    - name: Checkout code
       uses: actions/checkout@v2
 
-      
-name: Cache Node.js modules
+    - name: Cache Node.js modules
       uses: actions/cache@v2
       with:
         path: ~/.npm
         key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
-        restore-keys: |${{ runner.os }}-node-
+        restore-keys: |
+          ${{ runner.os }}-node-
 
-      
-name: Install dependencies
+    - name: Install dependencies
       run: npm install
 
-      
-name: Build project
+    - name: Build project
       run: npm run build
 
-      
-name: Configure OCI CLI
+    - name: Configure OCI CLI
       run: |
         mkdir -p ~/.oci
         echo "[DEFAULT]" > ~/.oci/config
@@ -49,18 +42,22 @@ name: Configure OCI CLI
         echo "tenancy=${{ secrets.OCI_TENANCY_OCID }}" >> ~/.oci/config
         echo "region=${{ secrets.OCI_REGION }}" >> ~/.oci/config
 
-          echo "${{ secrets.OCI_API_KEY }}" > ~/.oci/api_key.pem
-          chmod 600 ~/.oci/api_key.pem
+        echo "${{ secrets.OCI_API_KEY }}" > ~/.oci/api_key.pem
+        chmod 600 ~/.oci/api_key.pem
 
-      
-name: Upload to Oracle Object Storage
+    - name: Upload to Oracle Object Storage
       run: |
-        oci os object bulk-upload -bn "now-here-bucket" \--src-dir "./dist" \--overwrite \--parallel-upload-count 5 \--retry-count 3 \--include ".js" \
-                                  --include ".css" \--include ".html" \
-                                  --include ".png" \
+        oci os object bulk-upload -bn "now-here-bucket" \
+          --src-dir "./dist" \
+          --overwrite \
+          --parallel-upload-count 5 \
+          --retry-count 3 \
+          --include "*.js" \
+          --include "*.css" \
+          --include "*.html" \
+          --include "*.png"
 
-      
-name: Verify Upload Success
+    - name: Verify Upload Success
       run: |
         echo "Verifying upload..."
         oci os object list -bn "now-here-bucket" --all
