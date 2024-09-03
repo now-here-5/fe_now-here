@@ -51,7 +51,6 @@ jobs:
           --src-dir "./dist" \
           --overwrite \
           --parallel-upload-count 5 \
-          --retry-count 3 \
           --include "*.js" \
           --include "*.css" \
           --include "*.html" \
