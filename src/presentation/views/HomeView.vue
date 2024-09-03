@@ -34,6 +34,11 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
+.home-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 .main-content {
   margin-top: 70px;
 }
@@ -43,8 +48,8 @@ onMounted(() => {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  margin-top: 40px;
   margin-bottom: 60px;
+  margin-top: 20px;
   span {
     font-size: $textS_size;
     font-weight: $textM_weight;
