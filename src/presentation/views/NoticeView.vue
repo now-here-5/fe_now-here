@@ -1,7 +1,7 @@
 <template>
   <div class="notice-container">
     <div class="normal-header">
-      <img src="@/assets/images/backspace.png" @click="router.push('/')" />
+      <img src="/images/backspace.png" @click="router.push('/')" />
       <span class="title">알림</span>
     </div>
     <div class="notice-content">
@@ -14,7 +14,7 @@
         >
           <span class="notice-item__title">{{ item.title }}</span>
           <span class="notice-item__desc">{{ item.content }}</span>
-          <img src="@/assets/images/navigate_next.png" />
+          <img src="/images/navigate_next.png" />
         </div>
       </template>
       <div class="no-content" v-else>

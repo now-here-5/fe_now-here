@@ -21,7 +21,7 @@ export const calculateMatchedScore = (matchedInfo) => {
 export const getAvatarImgUrlForMatchedInfo = (matchedInfo) => {
   const getAvatarImgUrl = (gender, mbti) => {
     const genderFolder = gender === 'MALE' ? 'Male' : 'Female'
-    return `/src/assets/images/avatar_MBTI_${genderFolder}/avatar_${mbti}_${genderFolder}.png`
+    return `/images/avatar_MBTI_${genderFolder}/avatar_${mbti}_${genderFolder}.png`
   }
 
   const senderAvatarImgUrl = getAvatarImgUrl(matchedInfo.senderGender, matchedInfo.senderMbti)

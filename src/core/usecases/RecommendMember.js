@@ -48,8 +48,8 @@ export const transformGenderToKor = (member) => {
  */
 export const getMemberAvatarImgUrl = (member) => {
   if (member.gender === 'MALE') {
-    return `/src/assets/images/avatar_MBTI_Male/avatar_${member.mbti}_Male.png`
+    return `/images/avatar_MBTI_Male/avatar_${member.mbti}_Male.png`
   } else {
-    return `/src/assets/images/avatar_MBTI_Female/avatar_${member.mbti}_Female.png`
+    return `/images/avatar_MBTI_Female/avatar_${member.mbti}_Female.png`
   }
 }
