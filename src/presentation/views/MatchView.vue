@@ -92,12 +92,12 @@ const dummyEntityData = new RecommendedMemberEntity(dummyData)
       margin-bottom: 5px;
       color: $point;
       .sub-info {
-        font-size: 14px;
-        font-weight: 400;
+        font-size: $textMS_size;
+        font-weight: $textS_weight;
       }
       .main-info {
-        font-size: 26px;
-        font-weight: 700;
+        font-size: $textXXL_size;
+        font-weight: $textB_weight;
       }
     }
 
@@ -107,12 +107,12 @@ const dummyEntityData = new RecommendedMemberEntity(dummyData)
       align-items: center;
       margin-bottom: 10px;
       .sub-info {
-        font-size: 14px;
-        font-weight: 500;
+        font-size: $textMS_size;
+        font-weight: $textM_weight;
       }
       .main-info {
-        font-size: 18px;
-        font-weight: 700;
+        font-size: $textL_size;
+        font-weight: $textB_weight;
       }
     }
 
@@ -148,8 +148,8 @@ const dummyEntityData = new RecommendedMemberEntity(dummyData)
         justify-content: center;
         align-items: center;
         color: white;
-        font-size: 18px;
-        font-weight: 700;
+        font-size: $textL_size;
+        font-weight: $textB_weight;
       }
     }
   }

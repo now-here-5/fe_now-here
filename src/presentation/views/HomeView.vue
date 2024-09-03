@@ -46,8 +46,8 @@ onMounted(() => {
   margin-top: 40px;
   margin-bottom: 60px;
   span {
-    font-size: 12px;
-    font-weight: 500;
+    font-size: $textS_size;
+    font-weight: $textM_weight;
     cursor: pointer;
   }
 }

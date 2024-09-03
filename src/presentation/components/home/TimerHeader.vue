@@ -102,11 +102,11 @@ onUnmounted(() => {
   box-shadow: 0px 6px 10px 4px #00000026;
 
   .timer-title {
-    font-size: 14px;
+    font-size: $textMS_size;
     margin-bottom: 3px;
     color: $white;
     strong {
-      font-weight: bold;
+      font-weight: $textB_weight;
     }
   }
 
@@ -114,8 +114,7 @@ onUnmounted(() => {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    font-size: 20px;
-    font-family: 'Arial', sans-serif;
+    font-size: $textXL_size;
     color: $white;
 
     .time-segment {
@@ -129,14 +128,14 @@ onUnmounted(() => {
       }
 
       .label {
-        font-size: 8px;
+        font-size: $textXXS_size;
         margin-top: 2px;
         color: $white;
       }
     }
 
     .separator {
-      font-size: 20px;
+      font-size: $textXL_size;
       margin: 0 8px;
     }
   }

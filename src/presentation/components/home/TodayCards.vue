@@ -7,8 +7,8 @@
         <LoadingSpinner />
       </div>
       <template v-else>
-        <TodayCardItem :member-info="recommendedMembers[0]" />
-        <TodayCardItem :member-info="recommendedMembers[1]" />
+        <TodayCardItem :member-info="recommendedMembers[0]" @click="router.push('/match')" />
+        <TodayCardItem :member-info="recommendedMembers[1]" @click="router.push('/match')" />
       </template>
     </div>
   </div>
@@ -20,9 +20,11 @@ import { useMatchingStore } from '@/presentation/stores/matchingStore'
 import { storeToRefs } from 'pinia'
 import { onMounted } from 'vue'
 import LoadingSpinner from '../LoadingSpinner.vue'
+import { useRouter } from 'vue-router'
 
 const matchingStore = useMatchingStore()
 const { recommendedMembers } = storeToRefs(matchingStore)
+const router = useRouter()
 
 onMounted(async () => {
   await matchingStore.fetchRecommendedCards()
@@ -35,12 +37,12 @@ onMounted(async () => {
   flex-direction: column;
   margin-top: 30px;
   .title {
-    font-size: 18px;
-    font-weight: 700;
+    font-size: $textL_size;
+    font-weight: $textB_weight;
   }
   .desc {
-    font-size: 14px;
-    font-weight: 500;
+    font-size: $textMS_size;
+    font-weight: $textM_weight;
   }
   .cards-wrapper {
     display: flex;

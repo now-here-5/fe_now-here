@@ -66,15 +66,15 @@ const showBottomNav = computed(() => route.path === '/' || route.path.startsWith
     justify-content: center;
     align-items: center;
     flex: 1;
-    font-size: 14px;
-    font-weight: 700;
+    font-size: $textMS_size;
+    font-weight: $textB_weight;
     text-decoration: none;
     color: inherit;
     color: $grey;
 
     &.active {
       border-top: 2px solid $dark;
-      font-size: 20px;
+      font-size: $textXL_size;
       color: $dark;
     }
   }

@@ -3,7 +3,7 @@
     <span class="title">하트 내역</span>
     <span class="desc">받은 하트와 보낸 하트를 한 눈에 볼 수 있어요!</span>
     <div class="heart-item-wrapper">
-      <div class="heart-item">
+      <div class="heart-item" @click="router.push('/match/sent-hearts')">
         <LoadingSpinner v-if="isLoading" />
         <template v-else>
           <span class="heart-text">보낸 하트</span>
@@ -11,7 +11,7 @@
           <span v-if="matchingSummary.sendLove !== 0" class="new-badge">N</span>
         </template>
       </div>
-      <div class="heart-item">
+      <div class="heart-item" @click="router.push('/match/received-hearts')">
         <LoadingSpinner v-if="isLoading" />
         <template v-else>
           <span class="heart-text">보낸 하트</span>
@@ -27,10 +27,12 @@
 import { useMatchingStore } from '@/presentation/stores/matchingStore'
 import { onMounted, ref } from 'vue'
 import LoadingSpinner from '../LoadingSpinner.vue'
+import { useRouter } from 'vue-router'
 
 const mathingStore = useMatchingStore()
 const matchingSummary = ref({})
 const isLoading = ref(true)
+const router = useRouter()
 
 onMounted(async () => {
   isLoading.value = true
@@ -47,12 +49,12 @@ onMounted(async () => {
   margin-top: 30px;
 
   .title {
-    font-size: 18px;
-    font-weight: 700;
+    font-size: $textL_size;
+    font-weight: $textB_weight;
   }
   .desc {
-    font-size: 14px;
-    font-weight: 500;
+    font-size: $textMS_size;
+    font-weight: $textM_weight;
   }
 
   .heart-item-wrapper {
@@ -89,8 +91,8 @@ onMounted(async () => {
       .new-badge {
         background-color: $point;
         color: $white;
-        font-size: 12px;
-        font-weight: 700;
+        font-size: $textS_size;
+        font-weight: $textB_weight;
         width: 20px;
         height: 20px;
         display: flex;

@@ -94,13 +94,13 @@ const avatarImgUrl = computed(() => recommendedInfo.value.avatarImgUrl)
     flex-direction: column;
 
     &-value {
-      font-size: 18px;
-      font-weight: 700;
+      font-size: $textL_size;
+      font-weight: $textB_weight;
     }
 
     &-text-value {
-      font-size: 9px;
-      font-weight: 700;
+      font-size: $textXXS_size;
+      font-weight: $textB_weight;
     }
   }
 
@@ -115,13 +115,13 @@ const avatarImgUrl = computed(() => recommendedInfo.value.avatarImgUrl)
 
   &__name {
     margin: 0;
-    font-size: 14px;
-    font-weight: 700;
+    font-size: $textMS_size;
+    font-weight: $textB_weight;
     color: $white;
   }
 
   &__info {
-    font-size: 10px;
+    font-size: $textXS_size;
     color: $white;
   }
 
@@ -129,7 +129,7 @@ const avatarImgUrl = computed(() => recommendedInfo.value.avatarImgUrl)
     background-color: $light_grey;
     text-align: center;
     padding: 5px;
-    font-size: 16px;
+    font-size: $textM_size;
     font-weight: 700;
     height: 60px;
     .character-card__footer_content {

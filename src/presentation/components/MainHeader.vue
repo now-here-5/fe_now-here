@@ -3,7 +3,7 @@
     <img class="logo" src="@/assets/images/logo_text.png" alt="logo" />
     <RouterLink to="/notice">
       <img src="@/assets/images/notifications.png" />
-      <span class="count">{{ notificationCounts }}</span>
+      <span v-if="notificationCounts > 0" class="count">{{ notificationCounts }}</span>
     </RouterLink>
   </header>
 </template>
@@ -58,7 +58,7 @@ onMounted(async () => {
     top: 10px;
     right: 17px;
     font-size: 8px;
-    font-weight: 700;
+    font-weight: $textB_weight;
   }
 }
 </style>

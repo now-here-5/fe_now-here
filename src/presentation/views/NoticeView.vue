@@ -5,15 +5,21 @@
       <span class="title">알림</span>
     </div>
     <div class="notice-content">
-      <div
-        v-for="(item, idx) in notificationList"
-        :key="idx"
-        class="notice-item"
-        @click="routeTo(item.title)"
-      >
-        <span class="notice-item__title">{{ item.title }}</span>
-        <span class="notice-item__desc">{{ item.content }}</span>
-        <img src="@/assets/images/navigate_next.png" />
+      <template v-if="notificationList.length">
+        <div
+          v-for="(item, idx) in notificationList"
+          :key="idx"
+          class="notice-item"
+          @click="routeTo(item.title)"
+        >
+          <span class="notice-item__title">{{ item.title }}</span>
+          <span class="notice-item__desc">{{ item.content }}</span>
+          <img src="@/assets/images/navigate_next.png" />
+        </div>
+      </template>
+      <div class="no-content" v-else>
+        <span class="title">새로운 알림이 없어요...</span>
+        <span class="desc">활발한 매칭을 시도해보세요!</span>
       </div>
     </div>
   </div>
@@ -54,8 +60,8 @@ onMounted(async () => {
     cursor: pointer;
   }
   .title {
-    font-size: 20px;
-    font-weight: 700;
+    font-size: $textXL_size;
+    font-weight: $textB_weight;
   }
 }
 .notice-container {
@@ -70,28 +76,40 @@ onMounted(async () => {
     height: auto;
     /* background-color: aliceblue; */
     margin-top: 10px;
+
+    .notice-item {
+      width: 100%;
+      height: 85px;
+      background-color: #f4f5f5;
+      border-radius: 11px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      justify-content: center;
+      padding: 20px;
+      cursor: pointer;
+
+      &__title {
+        font-size: $textM_size;
+        font-weight: $textB_weight;
+      }
+      img {
+        position: absolute;
+        right: 15px;
+        width: 24px;
+      }
+    }
   }
 
-  .notice-item {
-    width: 100%;
-    height: 85px;
-    background-color: #f4f5f5;
-    border-radius: 11px;
+  .no-content {
     display: flex;
+    height: calc(80vh - 60px);
     flex-direction: column;
-    position: relative;
+    align-items: center;
     justify-content: center;
-    padding: 20px;
-    cursor: pointer;
-
-    &__title {
-      font-size: 16px;
-      font-weight: 700;
-    }
-    img {
-      position: absolute;
-      right: 15px;
-      width: 24px;
+    .title {
+      font-size: $textXXL_size;
+      font-weight: $textB_weight;
     }
   }
 }

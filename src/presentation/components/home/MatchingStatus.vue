@@ -75,12 +75,12 @@ onMounted(async () => {
   flex-direction: column;
   margin-top: 30px;
   > .title {
-    font-size: 18px;
-    font-weight: 700;
+    font-size: $textL_size;
+    font-weight: $textB_weight;
   }
   > .desc {
-    font-size: 14px;
-    font-weight: 500;
+    font-size: $textMS_size;
+    font-weight: $textM_weight;
   }
   .matching-banner {
     display: flex;
@@ -97,12 +97,12 @@ onMounted(async () => {
       width: 50%;
       gap: 5px;
       .title {
-        font-size: 14px;
-        font-weight: 700;
+        font-size: $textMS_size;
+        font-weight: $textB_weight;
       }
       .desc {
-        font-size: 12px;
-        font-weight: 400;
+        font-size: $textS_size;
+        font-weight: $textS_weight;
       }
     }
 
@@ -117,8 +117,8 @@ onMounted(async () => {
         flex-direction: column;
         align-items: center;
         .mbti {
-          font-size: 14px;
-          font-weight: 700;
+          font-size: $textMS_size;
+          font-weight: $textB_weight;
           color: $point;
         }
         .profile-img {
@@ -135,13 +135,13 @@ onMounted(async () => {
 
     .main-text {
       display: block;
-      font-size: 18px;
-      font-weight: 700;
+      font-size: $textL_size;
+      font-weight: $textB_weight;
     }
 
     .sub-text {
-      font-size: 14px;
-      font-weight: 400;
+      font-size: $textMS_size;
+      font-weight: $textS_weight;
     }
   }
 }
