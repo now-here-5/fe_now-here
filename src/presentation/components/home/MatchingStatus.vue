@@ -97,6 +97,7 @@ onMounted(async () => {
       width: 50%;
       gap: 5px;
       .title {
+        text-align: left;
         font-size: $textMS_size;
         font-weight: $textB_weight;
       }
