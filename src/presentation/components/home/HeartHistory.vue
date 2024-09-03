@@ -35,7 +35,7 @@ const isLoading = ref(true)
 onMounted(async () => {
   isLoading.value = true
   const { data } = await mathingStore.getMatchingSummaryForHomeView()
-  matchingSummary.value = data.data[0]
+  matchingSummary.value = data[0]
   isLoading.value = false
 })
 </script>

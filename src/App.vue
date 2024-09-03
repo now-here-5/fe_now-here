@@ -3,7 +3,7 @@
   <div class="main-container">
     <RouterView />
   </div>
-  <div class="bottom-nav-container">
+  <div v-if="showBottomNav" class="bottom-nav-container">
     <RouterLink to="/match" class="bottom-nav-menu" active-class="active">매칭</RouterLink>
     <RouterLink to="/" class="bottom-nav-menu" active-class="active">홈</RouterLink>
     <RouterLink to="/profile" class="bottom-nav-menu" active-class="active">프로필</RouterLink>
@@ -17,6 +17,7 @@ import { computed } from 'vue'
 
 const route = useRoute()
 const showMainHeader = computed(() => route.path === '/' || route.path.startsWith('/match'))
+const showBottomNav = computed(() => route.path === '/' || route.path.startsWith('/match'))
 </script>
 
 <style scoped lang="scss">

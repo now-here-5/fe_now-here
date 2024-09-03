@@ -2,6 +2,8 @@ import { MatchedInfoEntity } from '@/core/entities/MatchedInfoEntity'
 import { RecommendedMemberEntity } from '@/core/entities/RecommendedMemberEntity'
 import {
   getMatchedInfoForBanner,
+  getMatchingNotificationCount,
+  getMatchingNotificationList,
   getMatchingSummary,
   getRecommendedMembers
 } from '@/infrastructure/http/api/matchingApi'
@@ -30,6 +32,16 @@ export class MatchingRepository {
 
   async getMatchingSummary() {
     const { data } = await getMatchingSummary()
+    return data
+  }
+
+  async getMatchingNotificationCounts() {
+    const { data } = await getMatchingNotificationCount()
+    return data
+  }
+
+  async getMatchingNotificationList() {
+    const { data } = await getMatchingNotificationList()
     return data
   }
 }

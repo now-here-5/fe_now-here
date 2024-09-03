@@ -6,7 +6,7 @@
       <router-link to="/match/received-hearts" class="tab">받은 하트</router-link>
       <router-link to="/match/status" class="tab">매칭 현황</router-link>
     </nav>
-    <main id="main123" class="matching-content">
+    <main class="matching-content">
       <div class="info-wrapper">
         <div class="event-info">
           <span class="sub-info">Now Here in</span>

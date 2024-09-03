@@ -43,7 +43,8 @@ onMounted(() => {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  margin-top: 60px;
+  margin-top: 40px;
+  margin-bottom: 60px;
   span {
     font-size: 12px;
     font-weight: 500;

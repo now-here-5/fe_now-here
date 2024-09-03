@@ -16,7 +16,7 @@ const notificationCounts = ref(0)
 const matchingStore = useMatchingStore()
 onMounted(async () => {
   const { data } = await matchingStore.fetchMatchingNotificationCounts()
-  notificationCounts.value = data.data
+  notificationCounts.value = data
 })
 </script>
 

@@ -8,10 +8,7 @@ import {
   getMemberAvatarImgUrl,
   transformGenderToKor
 } from '@/core/usecases/RecommendMember'
-import {
-  getMatchingNotificationCount,
-  getMatchingSummary
-} from '@/infrastructure/http/api/matchingApi'
+
 import { MatchingRepository } from '@/infrastructure/repositories/MatchingRepository'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
@@ -55,11 +52,15 @@ export const useMatchingStore = defineStore('matching', () => {
   }
 
   const getMatchingSummaryForHomeView = () => {
-    return getMatchingSummary()
+    return matchingRepository.getMatchingSummary()
   }
 
   const fetchMatchingNotificationCounts = () => {
-    return getMatchingNotificationCount()
+    return matchingRepository.getMatchingNotificationCounts()
+  }
+
+  const getMatchingNotificationList = () => {
+    return matchingRepository.getMatchingNotificationList()
   }
 
   return {
@@ -74,6 +75,7 @@ export const useMatchingStore = defineStore('matching', () => {
     getMatchedInfoMbtiScore,
     getMatchedInfoAvatarImgUrls,
     getMatchingSummaryForHomeView,
-    fetchMatchingNotificationCounts
+    fetchMatchingNotificationCounts,
+    getMatchingNotificationList
   }
 })
