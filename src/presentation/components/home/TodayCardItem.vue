@@ -105,7 +105,7 @@
   }
 
   &__footer {
-    background-color: $light_grey;
+    background-color: $light_gray;
     text-align: center;
     padding: 5px;
     font-size: 16px;

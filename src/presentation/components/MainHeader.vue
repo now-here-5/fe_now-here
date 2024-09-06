@@ -1,11 +1,20 @@
 <template>
   <header class="main-header">
     <img class="logo" src="@/assets/images/logo_text.png" alt="logo" />
-    <RouterLink to="/notice"><img src="@/assets/images/notifications.png" /></RouterLink>
+    <RouterLink v-if="route.path === '/profile'" to="/settings">
+      <img src="@/assets/images/settings.png" alt="settings" />
+    </RouterLink>
+    <RouterLink v-else to="/notice">
+      <img src="@/assets/images/notifications.png" alt="notifications" />
+    </RouterLink>
   </header>
 </template>
 
-<script setup></script>
+<script setup>
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
+</script>
 
 <style lang="scss">
 .main-header {
