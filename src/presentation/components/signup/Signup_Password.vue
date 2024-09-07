@@ -13,7 +13,7 @@
 <script setup>
 import PasswordComponent from "@/presentation/components/signup/PasswordComponent.vue";
 import { ref, watch, computed } from 'vue';
-import { signupStore } from "@/presentation/stores/SignupStore.js";
+import { signupStore } from "@/presentation/stores/signupStore.js";
 import { passwordStore } from "@/presentation/stores/signupSub/passwordStore.js";
 
 const store_Signup = signupStore();

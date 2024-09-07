@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import { ref, computed, watch } from 'vue';
 
 import { NameDuplicateRepository } from "@/infrastructure/repositories/NameDuplicateRepository.js";
-import { signupStore } from "@/presentation/stores/SignupStore.js";
+import { signupStore } from "@/presentation/stores/signupStore.js";
 import { eventStore } from '@/presentation/stores/eventStore.js';
 
 
