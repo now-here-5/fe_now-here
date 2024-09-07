@@ -1,24 +1,11 @@
 <template>
   <header class="main-header">
-    <img class="logo" src="/images/logo_text.png" alt="logo" />
-    <RouterLink to="/notice">
-      <img src="/images/notifications.png" />
-      <span v-if="notificationCounts > 0" class="count">{{ notificationCounts }}</span>
-    </RouterLink>
+    <img class="logo" src="@/assets/images/logo_text.png" alt="logo" />
+    <RouterLink to="/notice"><img src="@/assets/images/notifications.png" /></RouterLink>
   </header>
 </template>
 
-<script setup>
-import { onMounted, ref } from 'vue'
-import { useMatchingStore } from '../stores/matchingStore'
-
-const notificationCounts = ref(0)
-const matchingStore = useMatchingStore()
-onMounted(async () => {
-  const { data } = await matchingStore.fetchMatchingNotificationCounts()
-  notificationCounts.value = data
-})
-</script>
+<script setup></script>
 
 <style lang="scss">
 .main-header {
@@ -33,8 +20,8 @@ onMounted(async () => {
   z-index: 100;
   background-color: white;
   box-sizing: border-box;
-  border-left: 1px solid #ddd;
-  border-right: 1px solid #ddd;
+  border-left: 1px solid $white;
+  border-right: 1px solid $white;
 
   .logo {
     width: 210px;
@@ -43,22 +30,6 @@ onMounted(async () => {
     width: 30px;
     cursor: pointer;
     margin-top: 5px;
-  }
-  .count {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    color: white;
-    background-color: red;
-    border-radius: 50%;
-    text-decoration: none;
-    width: 16px;
-    height: 16px;
-    top: 10px;
-    right: 17px;
-    font-size: 8px;
-    font-weight: $textB_weight;
   }
 }
 </style>

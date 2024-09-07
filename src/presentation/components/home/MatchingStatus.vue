@@ -84,7 +84,7 @@ onMounted(async () => {
   }
   .matching-banner {
     display: flex;
-    background-color: #f4f4f4;
+    background-color: $light_gray;
     padding: 20px 15px;
     border-radius: 10px;
     width: 100%;

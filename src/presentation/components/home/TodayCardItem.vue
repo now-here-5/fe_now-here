@@ -86,7 +86,7 @@ const avatarImgUrl = computed(() => recommendedInfo.value.avatarImgUrl)
     position: absolute;
     top: 0px;
     right: 0px;
-    background-color: #6200ea;
+    background-color: $point;
     color: #fff;
     border-bottom-left-radius: 13px;
     padding: 5px 10px;
@@ -126,7 +126,7 @@ const avatarImgUrl = computed(() => recommendedInfo.value.avatarImgUrl)
   }
 
   &__footer {
-    background-color: $light_grey;
+    background-color: $light_gray;
     text-align: center;
     padding: 5px;
     font-size: $textM_size;

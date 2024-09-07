@@ -17,3 +17,5 @@ export const useReviewStore = defineStore('review', {
 
   //   }
 })
+
+//review_inquirySotre에 통합 하면 좋을 듯 이미 거기에 보내는 게 있음
