@@ -63,6 +63,10 @@ export const useMatchingStore = defineStore('matching', () => {
     return matchingRepository.getMatchingNotificationList()
   }
 
+  const sendHeart = (receiverId) => {
+    return matchingRepository.postMatchingSendHeart(receiverId)
+  }
+
   return {
     recommendedMembers,
     matchedInfoList,
@@ -76,6 +80,7 @@ export const useMatchingStore = defineStore('matching', () => {
     getMatchedInfoAvatarImgUrls,
     getMatchingSummaryForHomeView,
     fetchMatchingNotificationCounts,
-    getMatchingNotificationList
+    getMatchingNotificationList,
+    sendHeart
   }
 })

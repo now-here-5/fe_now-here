@@ -6,6 +6,7 @@ export class RecommendedMemberEntity {
    * @param {string} mbti
    * @param {Date} birthdate
    * @param {string} gender
+   * @param {string} description
    */
   constructor(member) {
     this.memberId = member.memberId
@@ -13,5 +14,6 @@ export class RecommendedMemberEntity {
     this.mbti = member.mbti
     this.birthdate = member.birthdate
     this.gender = member.gender
+    this.description = member.description
   }
 }

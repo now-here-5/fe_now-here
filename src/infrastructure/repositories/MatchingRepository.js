@@ -5,7 +5,8 @@ import {
   getMatchingNotificationCount,
   getMatchingNotificationList,
   getMatchingSummary,
-  getRecommendedMembers
+  getRecommendedMembers,
+  postSendHeart
 } from '@/infrastructure/http/api/matchingApi'
 
 export class MatchingRepository {
@@ -43,5 +44,10 @@ export class MatchingRepository {
   async getMatchingNotificationList() {
     const { data } = await getMatchingNotificationList()
     return data
+  }
+
+  async postMatchingSendHeart(receiverId) {
+    const res = await postSendHeart(receiverId)
+    return res
   }
 }

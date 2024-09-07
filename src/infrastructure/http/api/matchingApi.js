@@ -28,3 +28,9 @@ export const getMatchingNotificationList = async () => {
   const { data } = await httpClient.get('/matching/getNotificationList')
   return data
 }
+
+// 하트 보내기
+export const postSendHeart = async (receiverId) => {
+  const { data } = await httpClient.post(`/matching/send/${receiverId}`)
+  return data
+}

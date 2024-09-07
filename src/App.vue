@@ -20,8 +20,12 @@ import { computed } from 'vue'
 import ToastM from '@/presentation/components/popUp/ToastM.vue'
 
 const route = useRoute()
-const showMainHeader = computed(() => route.path === '/' || route.path === '/profile')
-const showBottomNav = computed(() => route.path === '/' || route.path.startsWith('/match'))
+
+const shouldShowElements = (path) =>
+  path === '/' || path === '/profile' || path.startsWith('/match')
+
+const showMainHeader = computed(() => shouldShowElements(route.path))
+const showBottomNav = computed(() => shouldShowElements(route.path))
 </script>
 
 <style scoped lang="scss">
