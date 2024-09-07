@@ -5,10 +5,6 @@ on:
     branches:
       - prod
 
-  pull_request:
-    branches:
-      - prod
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -57,8 +53,3 @@ jobs:
           oci os object bulk-upload -bn "now-here-bucket" \
                                     --src-dir "./dist" \
                                     --overwrite
-      
-name: Verify Upload Success
-      run: |
-        echo "Verifying upload..."
-        oci os object list -bn "now-here-bucket" --all
