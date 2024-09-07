@@ -5,20 +5,20 @@
 </template>
 
 <script setup>
-import { defineProps, defineEmits } from 'vue';
+import { defineProps, defineEmits } from 'vue'
 
 const props = defineProps({
   isActive: Boolean,
-  buttonText: String,
-});
+  buttonText: String
+})
 
-const emit = defineEmits(['click']);
+const emit = defineEmits(['click'])
 
 const handleClick = () => {
   if (props.isActive) {
-    emit('click');
+    emit('click')
   }
-};
+}
 </script>
 
 <style scoped lang="scss">
@@ -36,7 +36,7 @@ const handleClick = () => {
   cursor: pointer;
   p {
     font-size: $textM_size;
-    font-weight: $Bold_weight;
+    font-weight: $textB_weight;
     color: $white;
   }
 }
@@ -46,7 +46,7 @@ const handleClick = () => {
   cursor: not-allowed;
   p {
     font-size: $textM_size;
-    font-weight: $Bold_weight;
+    font-weight: $textB_weight;
     color: $gray;
   }
 }

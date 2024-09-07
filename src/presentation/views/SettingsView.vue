@@ -1,13 +1,13 @@
 <template>
   <div class="frame">
     <header class="header">
-      <img class="backspace" src="@/assets/images/backspace.png" alt="backspace" @click="navigateToBack"/>
+      <img class="backspace" src="/images/backspace.png" alt="backspace" @click="navigateToBack" />
       <div class="titleContainer">
         <p v-if="route.path === '/settings'">설정</p>
         <p v-if="route.path === '/deleteAccount'">계정 탈퇴</p>
       </div>
     </header>
-    <router-view/>
+    <router-view />
     <main class="body" v-if="route.path === '/settings'">
       <div class="optionList">
         <div class="optionItem">
@@ -30,7 +30,6 @@
         </div>
       </div>
     </main>
-
   </div>
 
   <div v-if="modalL_deleteAccount" class="M_Overlay">
@@ -40,16 +39,15 @@
           <div class="modalL_titleContainer">
             <p>잠깐! 진짜 떠나시나요?..</p>
           </div>
-          <div class="modalL_clearContainer">
-          </div>
+          <div class="modalL_clearContainer"></div>
         </div>
         <div class="modalL_imgContainer">
-          <img src="@/assets/images/Modal_Image/modal_Crying.png" class="modalL_img" />
+          <img src="/images/Modal_Image/modal_Crying.png" class="modalL_img" />
         </div>
         <div class="modalL_detailContainer">
           <p>
-            축제가 끝나면 자동 탈퇴 후,<br>
-            개인정보가 파기됩니다.<br>
+            축제가 끝나면 자동 탈퇴 후,<br />
+            개인정보가 파기됩니다.<br />
             벌써 떠나실 건가요?
           </p>
         </div>
@@ -67,35 +65,35 @@
 </template>
 
 <script setup>
-import { useRoute, useRouter } from 'vue-router';
-import { ref, onMounted } from 'vue';
-import { settingStore } from '@/presentation/stores/settingStore.js';
+import { useRoute, useRouter } from 'vue-router'
+import { ref, onMounted } from 'vue'
+import { settingStore } from '@/presentation/stores/settingStore.js'
 
-const store_setting = settingStore();
+const store_setting = settingStore()
 
-const route = useRoute();
-const router = useRouter();
+const route = useRoute()
+const router = useRouter()
 
-const modalL_deleteAccount = ref(false);
+const modalL_deleteAccount = ref(false)
 
 onMounted(() => {
-  store_setting.getNotiOption();
-});
+  store_setting.getNotiOption()
+})
 
 const openAlertModalL_deleteAccount = () => {
-  modalL_deleteAccount.value = true;
-};
+  modalL_deleteAccount.value = true
+}
 const closeAlertModalL_deleteAccount = () => {
-  modalL_deleteAccount.value = false;
-};
+  modalL_deleteAccount.value = false
+}
 const navigateToDeleteAccount = () => {
-  closeAlertModalL_deleteAccount();
-  router.push('deleteAccount');
+  closeAlertModalL_deleteAccount()
+  router.push('deleteAccount')
 }
 
 const navigateToBack = () => {
-  router.back();
-};
+  router.back()
+}
 </script>
 
 <style scoped lang="scss">
@@ -103,7 +101,7 @@ const navigateToBack = () => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 25px 25px 25px ;
+  padding: 25px 25px 25px;
 
   height: 100vh;
 }
@@ -136,7 +134,7 @@ const navigateToBack = () => {
   flex: 1;
   p {
     font-size: $textXL_size;
-    font-weight: $Bold_weight;
+    font-weight: $textB_weight;
     color: $dark;
   }
 }
@@ -173,7 +171,7 @@ const navigateToBack = () => {
   align-self: stretch;
 
   p {
-    font-weight: $Bold_weight;
+    font-weight: $textB_weight;
     font-size: $textM_size;
     line-height: 23px;
     text-align: center;
@@ -201,7 +199,7 @@ const navigateToBack = () => {
   width: 64px;
   height: 32px;
 }
-.toggle-switch input[type="checkbox"] {
+.toggle-switch input[type='checkbox'] {
   opacity: 0;
   width: 0;
   height: 0;
@@ -219,7 +217,7 @@ const navigateToBack = () => {
 }
 .toggle-switch label:before {
   position: absolute;
-  content: "";
+  content: '';
   height: 25px;
   width: 25px;
   left: 4px;
@@ -259,21 +257,19 @@ const navigateToBack = () => {
   cursor: pointer;
   p {
     font-size: $textM_size;
-    font-weight: $Bold_weight;
+    font-weight: $textB_weight;
     color: $gray;
   }
 }
 
 /* 모바일 장치에 적용할 스타일 */
 @media only screen and (max-width: 600px) {
-
   .body {
     height: 520px;
   }
 }
 /* 데스크톱에 적용할 스타일 */
 @media only screen and (min-width: 601px) {
-
   .body {
     align-self: stretch;
     flex-grow: 1;
@@ -339,7 +335,7 @@ const navigateToBack = () => {
   flex-grow: 1;
   p {
     font-size: $textM_size;
-    font-weight: $Bold_weight;
+    font-weight: $textB_weight;
     color: $dark;
     text-align: center;
   }
@@ -374,7 +370,7 @@ const navigateToBack = () => {
   flex-grow: 0;
   p {
     font-size: $textS_size;
-    font-weight: $Bold_weight;
+    font-weight: $textB_weight;
     color: $dark;
     text-align: center;
   }
@@ -427,7 +423,7 @@ const navigateToBack = () => {
   flex-grow: 1;
   p {
     font-size: $textM_size;
-    font-weight: $Bold_weight;
+    font-weight: $textB_weight;
     color: $gray;
   }
   &.active {

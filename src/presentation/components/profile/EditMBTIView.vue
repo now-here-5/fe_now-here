@@ -4,64 +4,64 @@
     <div class="btnContainer">
       <div class="btnColumn">
         <div
-            class="mbtiBtn"
-            @click="selectMBTI('E', 0)"
-            :class="{ selected: selectedMBTI[0] === 'E' }"
+          class="mbtiBtn"
+          @click="selectMBTI('E', 0)"
+          :class="{ selected: selectedMBTI[0] === 'E' }"
         >
           <p>E</p>
         </div>
         <div
-            class="mbtiBtn"
-            @click="selectMBTI('I', 0)"
-            :class="{ selected: selectedMBTI[0] === 'I' }"
+          class="mbtiBtn"
+          @click="selectMBTI('I', 0)"
+          :class="{ selected: selectedMBTI[0] === 'I' }"
         >
           <p>I</p>
         </div>
       </div>
       <div class="btnColumn">
         <div
-            class="mbtiBtn"
-            @click="selectMBTI('N', 1)"
-            :class="{ selected: selectedMBTI[1] === 'N' }"
+          class="mbtiBtn"
+          @click="selectMBTI('N', 1)"
+          :class="{ selected: selectedMBTI[1] === 'N' }"
         >
           <p>N</p>
         </div>
         <div
-            class="mbtiBtn"
-            @click="selectMBTI('S', 1)"
-            :class="{ selected: selectedMBTI[1] === 'S' }"
+          class="mbtiBtn"
+          @click="selectMBTI('S', 1)"
+          :class="{ selected: selectedMBTI[1] === 'S' }"
         >
           <p>S</p>
         </div>
       </div>
       <div class="btnColumn">
         <div
-            class="mbtiBtn"
-            @click="selectMBTI('F', 2)"
-            :class="{ selected: selectedMBTI[2] === 'F' }"
+          class="mbtiBtn"
+          @click="selectMBTI('F', 2)"
+          :class="{ selected: selectedMBTI[2] === 'F' }"
         >
           <p>F</p>
         </div>
         <div
-            class="mbtiBtn"
-            @click="selectMBTI('T', 2)"
-            :class="{ selected: selectedMBTI[2] === 'T' }"
+          class="mbtiBtn"
+          @click="selectMBTI('T', 2)"
+          :class="{ selected: selectedMBTI[2] === 'T' }"
         >
           <p>T</p>
         </div>
       </div>
       <div class="btnColumn">
         <div
-            class="mbtiBtn"
-            @click="selectMBTI('P', 3)"
-            :class="{ selected: selectedMBTI[3] === 'P' }"
+          class="mbtiBtn"
+          @click="selectMBTI('P', 3)"
+          :class="{ selected: selectedMBTI[3] === 'P' }"
         >
           <p>P</p>
         </div>
         <div
-            class="mbtiBtn"
-            @click="selectMBTI('J', 3)"
-            :class="{ selected: selectedMBTI[3] === 'J' }"
+          class="mbtiBtn"
+          @click="selectMBTI('J', 3)"
+          :class="{ selected: selectedMBTI[3] === 'J' }"
         >
           <p>J</p>
         </div>
@@ -71,32 +71,32 @@
 </template>
 
 <script setup>
-import { useRoute, useRouter, onBeforeRouteLeave } from 'vue-router'; // useRouter를 추가로 import
+import { useRoute, useRouter, onBeforeRouteLeave } from 'vue-router' // useRouter를 추가로 import
 
-import { ref } from 'vue';
-import { profileStore } from '@/presentation/stores/profileStore';
+import { ref } from 'vue'
+import { profileStore } from '@/presentation/stores/profileStore'
 
-const store_profile = profileStore();  // 스토어 사용
+const store_profile = profileStore() // 스토어 사용
 
 const selectedMBTI = ref(
-    typeof store_profile.mbti === 'string'
-        ? store_profile.mbti.split('')
-        : Array.isArray(store_profile.mbti)
-            ? store_profile.mbti
-            : ['', '', '', '']
-);
+  typeof store_profile.mbti === 'string'
+    ? store_profile.mbti.split('')
+    : Array.isArray(store_profile.mbti)
+      ? store_profile.mbti
+      : ['', '', '', '']
+)
 
 const selectMBTI = (value, index) => {
-  selectedMBTI.value[index] = value;
-  store_profile.mbti = selectedMBTI.value.join('');
-  console.log(store_profile.mbti);
-};
+  selectedMBTI.value[index] = value
+  store_profile.mbti = selectedMBTI.value.join('')
+  console.log(store_profile.mbti)
+}
 
 // 사용자가 페이지를 떠나기 전에 원본 데이터 복구
 onBeforeRouteLeave((to, from, next) => {
-  store_profile.restoreOriginalData();
-  next();
-});
+  store_profile.restoreOriginalData()
+  next()
+})
 </script>
 
 <style scoped lang="scss">
@@ -111,7 +111,7 @@ onBeforeRouteLeave((to, from, next) => {
   width: 100%;
   p {
     font-size: $textL_size;
-    font-weight: $Bold_weight;
+    font-weight: $textB_weight;
     color: $dark;
   }
 }
@@ -150,7 +150,7 @@ onBeforeRouteLeave((to, from, next) => {
   border-radius: 7px;
   p {
     font-size: $textXXL_size;
-    font-weight: $Bold_weight;
+    font-weight: $textB_weight;
     color: $gray;
   }
 }

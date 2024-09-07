@@ -1,7 +1,7 @@
 <template>
   <div class="frame">
     <header class="header">
-      <img class="backspace" src="/images/backspace.png" alt="backspace" @click="navigateToBack"/>
+      <img class="backspace" src="/images/backspace.png" alt="backspace" @click="navigateToBack" />
       <div class="titleContainer">
         <p v-if="route.path === '/editProfile'">프로필 수정</p>
         <p v-if="route.path === '/editSelf'">자기소개 수정</p>
@@ -10,11 +10,11 @@
       </div>
     </header>
     <main class="body">
-      <router-view/>
+      <router-view />
       <div class="selfEdit" v-if="route.path === '/editProfile'">
         <div class="optionItem" @click="navigateToSelf">
           <p>자기소개</p>
-          <img src="/images/keyboard_arrowRight.png" class="navigate_next" alt="navigate_next"/>
+          <img src="/images/keyboard_arrowRight.png" class="navigate_next" alt="navigate_next" />
         </div>
         <div class="selfText">
           <div class="textContainer">
@@ -28,8 +28,7 @@
           <p>휴대폰 번호</p>
           <div class="text_component">
             <p>{{ store_profile.phone }}</p>
-            <div class="componentSpace">
-            </div>
+            <div class="componentSpace"></div>
           </div>
         </div>
         <div class="editItem" @click="navigateToName">
@@ -37,7 +36,11 @@
           <div class="text_component">
             <p>{{ store_profile.nickname }}</p>
             <div class="componentSpace">
-              <img src="/images/keyboard_arrowRight.png" class="navigate_next" alt="navigate_next" />
+              <img
+                src="/images/keyboard_arrowRight.png"
+                class="navigate_next"
+                alt="navigate_next"
+              />
             </div>
           </div>
         </div>
@@ -45,16 +48,14 @@
           <p>나이</p>
           <div class="text_component">
             <p>만 {{ store_profile.birthdate }}세</p>
-            <div class="componentSpace">
-            </div>
+            <div class="componentSpace"></div>
           </div>
         </div>
         <div class="editItem">
           <p>성별</p>
           <div class="text_component">
             <p>{{ store_profile.gender }}</p>
-            <div class="componentSpace">
-            </div>
+            <div class="componentSpace"></div>
           </div>
         </div>
         <div class="editItem" @click="navigateToMBTI">
@@ -62,7 +63,11 @@
           <div class="text_component">
             <p>{{ store_profile.mbti }}</p>
             <div class="componentSpace">
-              <img src="/images/keyboard_arrowRight.png" class="navigate_next" alt="navigate_next" />
+              <img
+                src="/images/keyboard_arrowRight.png"
+                class="navigate_next"
+                alt="navigate_next"
+              />
             </div>
           </div>
         </div>
@@ -80,33 +85,32 @@
 </template>
 
 <script setup>
-import { useRoute, useRouter, onBeforeRouteLeave } from 'vue-router'; // useRouter를 추가로 import
-import { profileStore } from '@/presentation/stores/profileStore';
-import SelectBtn from "@/presentation/components/SelectBtn.vue"; // useRouter를 추가로 import
+import { useRoute, useRouter, onBeforeRouteLeave } from 'vue-router' // useRouter를 추가로 import
+import { profileStore } from '@/presentation/stores/profileStore'
+import SelectBtn from '@/presentation/components/SelectBtn.vue' // useRouter를 추가로 import
 
-const route = useRoute();
-const router = useRouter(); // useRouter 사용
+const route = useRoute()
+const router = useRouter() // useRouter 사용
 
-const store_profile = profileStore();
+const store_profile = profileStore()
 
 const handleSubmit = () => {
-  store_profile.submit(route.path);  // 현재 라우트를 전달
-};
+  store_profile.submit(route.path) // 현재 라우트를 전달
+}
 
 const navigateToSelf = () => {
-  router.push('/editSelf');
+  router.push('/editSelf')
 }
 const navigateToName = () => {
-  router.push('/editName');
+  router.push('/editName')
 }
 const navigateToMBTI = () => {
-  router.push('/editMBTI');
+  router.push('/editMBTI')
 }
 const navigateToBack = () => {
-  store_profile.restoreOriginalData();
-  router.back();
-};
-
+  store_profile.restoreOriginalData()
+  router.back()
+}
 </script>
 
 <style scoped lang="scss">
@@ -114,7 +118,7 @@ const navigateToBack = () => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 25px 25px 25px ;
+  padding: 25px 25px 25px;
 
   height: 100vh;
 }
@@ -147,7 +151,7 @@ const navigateToBack = () => {
   flex: 1;
   p {
     font-size: $textXL_size;
-    font-weight: $Bold_weight;
+    font-weight: $textB_weight;
     color: $dark;
   }
 }
@@ -188,7 +192,7 @@ const navigateToBack = () => {
   align-self: stretch;
 
   p {
-    font-weight: $Bold_weight;
+    font-weight: $textB_weight;
     font-size: $textM_size;
     line-height: 23px;
     text-align: center;
@@ -209,7 +213,7 @@ const navigateToBack = () => {
 
   width: 100%;
   p {
-    font-weight: $Regular_weight;
+    font-weight: $textS_weight;
     font-size: $textS_size;
 
     color: $gray;
@@ -230,7 +234,7 @@ const navigateToBack = () => {
   border: 1px solid $gray;
   border-radius: 5px;
   p {
-    font-weight: $Regular_weight;
+    font-weight: $textS_weight;
     font-size: $textMS_size;
 
     color: $dark;
@@ -258,7 +262,7 @@ const navigateToBack = () => {
 
   background: $white;
   p {
-    font-weight: $Regular_weight;
+    font-weight: $textS_weight;
     font-size: $textM_size;
 
     color: $gray;
@@ -273,7 +277,7 @@ const navigateToBack = () => {
 
   height: 24px;
   p {
-    font-weight: $Regular_weight;
+    font-weight: $textS_weight;
     font-size: $textM_size;
 
     color: $dark;
@@ -297,14 +301,12 @@ const navigateToBack = () => {
 
 /* 모바일 장치에 적용할 스타일 */
 @media only screen and (max-width: 600px) {
-
   .body {
     height: 520px;
   }
 }
 /* 데스크톱에 적용할 스타일 */
 @media only screen and (min-width: 601px) {
-
   .body {
     align-self: stretch;
     flex-grow: 1;

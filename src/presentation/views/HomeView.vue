@@ -39,6 +39,7 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  padding: 0 20px;
 }
 .main-content {
   margin-top: 70px;

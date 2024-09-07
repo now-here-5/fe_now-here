@@ -8,9 +8,9 @@
 </template>
 
 <script setup>
-import { popupStore } from "@/presentation/stores/popupStore.js";
+import { popupStore } from '@/presentation/stores/popupStore.js'
 
-const store_Popup = popupStore();
+const store_Popup = popupStore()
 </script>
 
 <style scoped lang="scss">
@@ -39,7 +39,7 @@ const store_Popup = popupStore();
   p {
     color: $white;
     font-size: $textS_size;
-    font-weight: $Bold_weight;
+    font-weight: $textB_weight;
     text-align: center;
   }
 }

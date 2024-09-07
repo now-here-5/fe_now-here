@@ -4,55 +4,50 @@
       <div class="text_container">
         <p1>탈퇴 사유</p1>
         <p2>
-          회원 탈퇴 시, 등록된 정보가 모두 삭제되며,<br>
+          회원 탈퇴 시, 등록된 정보가 모두 삭제되며,<br />
           삭제된 정보는 복구할 수 없습니다.
         </p2>
       </div>
     </div>
     <div class="text_Input">
       <div class="input_conunt">
-          <textarea
-            class="input"
-            placeholder="내용을 작성해주세요."
-            v-model="contents"
-            @input="formContents"
-          />
+        <textarea
+          class="input"
+          placeholder="내용을 작성해주세요."
+          v-model="contents"
+          @input="formContents"
+        />
         <p>10/30</p>
       </div>
     </div>
   </main>
   <footer class="bottom">
-    <SelectBtn
-        :isActive="Active"
-        buttonText="작성 완료"
-        @click="handleSubmit"
-    />
+    <SelectBtn :isActive="Active" buttonText="작성 완료" @click="handleSubmit" />
   </footer>
 </template>
 
 <script setup>
-import {ref, watch} from 'vue';
-import { settingStore } from '@/presentation/stores/settingStore.js';
-import SelectBtn from "@/presentation/components/SelectBtn.vue";
+import { ref, watch } from 'vue'
+import { settingStore } from '@/presentation/stores/settingStore.js'
+import SelectBtn from '@/presentation/components/SelectBtn.vue'
 
-const store_setting = settingStore();
+const store_setting = settingStore()
 
-const contents = ref(''); // 문의 내용 추가
-const Active = ref(false);
+const contents = ref('') // 문의 내용 추가
+const Active = ref(false)
 
 const handleSubmit = async () => {
-  await store_setting.deleteTo();
-};
+  await store_setting.deleteTo()
+}
 
 const formContents = () => {
-  store_setting.textContent = contents.value;
-  console.log(store_setting.textContent);
-};
+  store_setting.textContent = contents.value
+  console.log(store_setting.textContent)
+}
 // 휴대폰 번호와 문의 내용의 변화를 감지하여 버튼 활성화 상태를 업데이트
 watch([contents], () => {
-  Active.value = contents.value.length > 0;
-});
-
+  Active.value = contents.value.length > 0
+})
 </script>
 
 <style scoped lang="scss">
@@ -60,7 +55,7 @@ watch([contents], () => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 25px 25px 25px ;
+  padding: 25px 25px 25px;
 
   height: 100vh;
 }
@@ -93,7 +88,7 @@ watch([contents], () => {
   flex: 1;
   p {
     font-size: $textXL_size;
-    font-weight: $Bold_weight;
+    font-weight: $textB_weight;
     color: $dark;
   }
 }
@@ -128,12 +123,12 @@ watch([contents], () => {
   width: 100%;
   p1 {
     font-size: $textXL_size;
-    font-weight: $Bold_weight;
+    font-weight: $textB_weight;
     color: $dark;
   }
   p2 {
     font-size: $textS_size;
-    font-weight: $Regular_weight;
+    font-weight: $textS_weight;
     color: $dark;
   }
 }
@@ -154,11 +149,11 @@ watch([contents], () => {
   outline: none;
 
   font-size: $textL_size;
-  font-weight: $Bold_weight;
+  font-weight: $textB_weight;
 
   &::placeholder {
     font-size: $textL_size;
-    font-weight: $Bold_weight;
+    font-weight: $textB_weight;
     color: $gray;
   }
 }
@@ -172,7 +167,7 @@ watch([contents], () => {
   width: 100%;
   p {
     font-size: $textXL_size;
-    font-weight: $Bold_weight;
+    font-weight: $textB_weight;
     color: $dark;
   }
 }
@@ -186,7 +181,7 @@ watch([contents], () => {
   width: 100%;
   p {
     font-size: $textS_size;
-    font-weight: $Regular_weight;
+    font-weight: $textS_weight;
     color: $gray;
   }
 }
@@ -206,18 +201,18 @@ watch([contents], () => {
   background: $light_gray;
   border: 1px solid $gray;
   border-radius: 5px;
-  resize: none;  // 사용자가 크기 조절하지 못하게 설정
+  resize: none; // 사용자가 크기 조절하지 못하게 설정
 
   font-size: $textM_size;
-  font-weight: $Regular_weight;
+  font-weight: $textS_weight;
   color: $dark;
 
   outline: none;
   &::placeholder {
     font-size: $textMS_size;
-    font-weight: $Regular_weight;
+    font-weight: $textS_weight;
     color: $gray;
-    text-align: left;  // 가로 정렬을 왼쪽으로 설정
+    text-align: left; // 가로 정렬을 왼쪽으로 설정
   }
 }
 
@@ -233,14 +228,12 @@ watch([contents], () => {
 }
 /* 모바일 장치에 적용할 스타일 */
 @media only screen and (max-width: 600px) {
-
   .body {
     height: 520px;
   }
 }
 /* 데스크톱에 적용할 스타일 */
 @media only screen and (min-width: 601px) {
-
   .body {
     align-self: stretch;
     flex-grow: 1;

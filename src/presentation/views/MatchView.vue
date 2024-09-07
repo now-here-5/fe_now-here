@@ -99,7 +99,7 @@ watch(route, (to) => {
 
     .tab {
       text-decoration: none;
-      color: $grey;
+      color: $gray;
       font-size: $textM_size;
       font-weight: $textB_weight;
     }

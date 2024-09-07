@@ -11,7 +11,7 @@
         maxlength="13"
       />
       <div
-        :class="['authBtn', { 'active': store_PhoneAuth.authBtnReady }]"
+        :class="['authBtn', { active: store_PhoneAuth.authBtnReady }]"
         @click="store_PhoneAuth.fetchAuthNumber()"
       >
         <p>{{ store_PhoneAuth.authBtnText }}</p>
@@ -37,43 +37,43 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import { phoneAuthStore } from '@/presentation/stores/signupSub/phoneAuthStore.js';
-import { signupStore } from "@/presentation/stores/signupStore.js";
-import { formPhoneNumber } from '@/core/usecases/FormNumber.js';
+import { ref, onMounted } from 'vue'
+import { phoneAuthStore } from '@/presentation/stores/signupSub/phoneAuthStore.js'
+import { signupStore } from '@/presentation/stores/signupStore.js'
+import { formPhoneNumber } from '@/core/usecases/FormNumber.js'
 
-const store_PhoneAuth = phoneAuthStore();
-const store_Signup = signupStore();
-store_Signup.signupCompleted.auth = false;
-store_Signup.signupStep = 0;
+const store_PhoneAuth = phoneAuthStore()
+const store_Signup = signupStore()
+store_Signup.signupCompleted.auth = false
+store_Signup.signupStep = 0
 
-const phoneNum = ref(store_PhoneAuth.phoneNumber ||'');
-const authNumber = ref('');
+const phoneNum = ref(store_PhoneAuth.phoneNumber || '')
+const authNumber = ref('')
 
 // 새로고침 시 폰 번호를 하이픈(-) 처리된 상태로 표시
 onMounted(() => {
   if (phoneNum.value) {
-    handlePhoneNumberInput();
+    handlePhoneNumberInput()
   }
-});
+})
 
 // 전화번호 입력 처리 함수
 const handlePhoneNumberInput = () => {
-  phoneNum.value = formPhoneNumber(phoneNum.value); // 포맷 적용
-  store_PhoneAuth.phoneNumber = phoneNum.value;
+  phoneNum.value = formPhoneNumber(phoneNum.value) // 포맷 적용
+  store_PhoneAuth.phoneNumber = phoneNum.value
 
   // 전화번호 13자리 여부에 따라 인증 버튼 활성화
-  store_PhoneAuth.authBtnReady = phoneNum.value.length === 13;
-};
+  store_PhoneAuth.authBtnReady = phoneNum.value.length === 13
+}
 
 // 인증 번호 입력 처리 함수
 const handleAuthNumberInput = () => {
-  authNumber.value = authNumber.value.replace(/[^0-9]/g, '').slice(0, 6);
-  store_PhoneAuth.authNumber = authNumber.value;
+  authNumber.value = authNumber.value.replace(/[^0-9]/g, '').slice(0, 6)
+  store_PhoneAuth.authNumber = authNumber.value
 
   // 인증 번호가 6자리가 되면 인증 완료로 상태 변경
-  store_Signup.signupCompleted.auth = authNumber.value.length === 6;
-};
+  store_Signup.signupCompleted.auth = authNumber.value.length === 6
+}
 </script>
 
 <style scoped lang="scss">
@@ -88,7 +88,7 @@ const handleAuthNumberInput = () => {
 
   p {
     font-size: $textM_size;
-    font-weight: $Bold_weight;
+    font-weight: $textB_weight;
     color: $dark;
   }
 }
@@ -140,7 +140,7 @@ const handleAuthNumberInput = () => {
 
   p {
     font-size: $textS_size;
-    font-weight: $Bold_weight;
+    font-weight: $textB_weight;
     color: $gray;
   }
   &.active {

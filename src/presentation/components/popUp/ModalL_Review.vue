@@ -4,20 +4,17 @@
       <div class="modalL_contentContainer">
         <div class="modalL_header">
           <div class="modalL_titleContainer">
-            <p>
-              1분만!<br>시간 내주실 수 있나요?
-            </p>
+            <p>1분만!<br />시간 내주실 수 있나요?</p>
           </div>
-          <div class="modalL_clearContainer">
-          </div>
+          <div class="modalL_clearContainer"></div>
         </div>
         <div class="modalL_imgContainer">
           <img src="/images/Modal_Image/modal_Mailbox.png" class="modalL_img" />
         </div>
         <div class="modalL_detailContainer">
           <p>
-            이용해 주셔서 감사합니다.<br>
-            서비스 개선을 위해<br>
+            이용해 주셔서 감사합니다.<br />
+            서비스 개선을 위해<br />
             소중한 의견을 남겨주세요.
           </p>
         </div>
@@ -35,34 +32,34 @@
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router';
+import { useRouter } from 'vue-router'
 
-import { popupStore } from "@/presentation/stores/popupStore.js";
+import { popupStore } from '@/presentation/stores/popupStore.js'
 
-const router = useRouter();
-const store_Popup = popupStore();
+const router = useRouter()
+const store_Popup = popupStore()
 
 const closeAlertModalL_review = () => {
-  store_Popup.modalL_review = false;
-};
+  store_Popup.modalL_review = false
+}
 const navigateToReview = () => {
-  router.push('/review');
-};
+  router.push('/review')
+}
 </script>
 
 <style scoped lang="scss">
- /* modal 오버레이 */
+/* modal 오버레이 */
 .M_Overlay {
- position: fixed;
- top: 0;
- left: 0;
- width: 100%;
- height: 100%;
- background: rgba($dark, 0.75);
- display: flex;
- justify-content: center;
- align-items: center;
- z-index: 101;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba($dark, 0.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 101;
 }
 
 /* modalL */
@@ -111,7 +108,7 @@ const navigateToReview = () => {
   flex-grow: 1;
   p {
     font-size: $textM_size;
-    font-weight: $Bold_weight;
+    font-weight: $textB_weight;
     color: $dark;
     text-align: center;
   }
@@ -146,54 +143,54 @@ const navigateToReview = () => {
   flex-grow: 0;
   p {
     font-size: $textS_size;
-    font-weight: $Bold_weight;
+    font-weight: $textB_weight;
     color: $dark;
     text-align: center;
   }
 }
 .modalL_btn {
- /* Auto layout */
- display: flex;
- flex-direction: row;
- justify-content: center;
- align-items: center;
- padding: 15px;
- gap: 20px;
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+  gap: 20px;
 
- width: 100%;
+  width: 100%;
 
- background: $white;
- border-radius: 0px 0px 15px 15px;
+  background: $white;
+  border-radius: 0px 0px 15px 15px;
 }
 .modalL_btnBg {
- display: flex;
- flex-direction: row;
- justify-content: center;
- align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 
- height: 40px;
+  height: 40px;
 
- background: $middle_gray;
- border-radius: 12px;
+  background: $middle_gray;
+  border-radius: 12px;
 
- flex-grow: 1;
- p {
-   font-size: $textM_size;
-   font-weight: $Bold_weight;
-   color: $gray;
- }
- &.active {
-   background: $point; /* active 클래스가 있을 때의 배경 색상 */
-   p {
-     color: $white;
-   }
- }
+  flex-grow: 1;
+  p {
+    font-size: $textM_size;
+    font-weight: $textB_weight;
+    color: $gray;
+  }
+  &.active {
+    background: $point; /* active 클래스가 있을 때의 배경 색상 */
+    p {
+      color: $white;
+    }
+  }
 }
 .modalL_btnBg.active {
- background: $point;
- cursor: pointer;
+  background: $point;
+  cursor: pointer;
 }
 .modalL_btnBg.active p {
- color: $white;
+  color: $white;
 }
 </style>

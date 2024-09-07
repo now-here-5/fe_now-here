@@ -1,7 +1,10 @@
 <template>
   <div class="input_textContainer">
     <div class="input_mention">
-      <p>각 이벤트마다 별도 가입이 필요합니다.<br>해당 이벤트에 처음 참여하신다면 "회원가입"을 눌러주세요.</p>
+      <p>
+        각 이벤트마다 별도 가입이 필요합니다.<br />해당 이벤트에 처음 참여하신다면 "회원가입"을
+        눌러주세요.
+      </p>
       <div class="inputContainer">
         <input
           class="inputBox"
@@ -28,20 +31,20 @@
 </template>
 
 <script setup>
-import { loginStore } from '@/presentation/stores/loginStore.js';
+import { loginStore } from '@/presentation/stores/loginStore.js'
 
-const store_Login = loginStore();
+const store_Login = loginStore()
 
 const formatPhone = () => {
-  store_Login.phone = store_Login.formatPhone(store_Login.phone);  // 포맷팅 후 값을 다시 저장
-};
+  store_Login.phone = store_Login.formatPhone(store_Login.phone) // 포맷팅 후 값을 다시 저장
+}
 const formatPassword = () => {
-  store_Login.password = store_Login.formatPassword(store_Login.password);  // 포맷팅 후 값을 다시 저장
-};
+  store_Login.password = store_Login.formatPassword(store_Login.password) // 포맷팅 후 값을 다시 저장
+}
 </script>
 
 <style scoped lang="scss">
-.input_textContainer{
+.input_textContainer {
   /* Auto layout */
   display: flex;
   flex-direction: column;
@@ -61,7 +64,7 @@ const formatPassword = () => {
     line-height: 16px;
 
     font-size: $MBTI_score_size;
-    font-weight: $Bold_weight;
+    font-weight: $textB_weight;
     color: $dark;
     cursor: default;
   }
@@ -106,7 +109,7 @@ const formatPassword = () => {
 
   span {
     font-size: $textS_size;
-    font-weight: $Regular_weight;
+    font-weight: $textS_weight;
     color: $red;
     cursor: default;
   }

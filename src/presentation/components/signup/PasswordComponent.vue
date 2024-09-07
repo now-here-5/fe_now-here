@@ -3,10 +3,10 @@
     <p1>{{ label }}</p1>
     <div class="pinRow">
       <div
-          v-for="(char, index) in 4"
-          :key="index"
-          class="numberInput"
-          :class="{ filled: internalValue[index] }"
+        v-for="(char, index) in 4"
+        :key="index"
+        class="numberInput"
+        :class="{ filled: internalValue[index] }"
       >
         <div class="circle" :class="{ filled: internalValue[index] }">
           {{ internalValue[index] ? '*' : '•' }}
@@ -26,7 +26,7 @@
 </template>
 
 <script setup>
-import { ref, watch, nextTick } from 'vue';
+import { ref, watch, nextTick } from 'vue'
 
 const props = defineProps({
   modelValue: {
@@ -41,28 +41,31 @@ const props = defineProps({
     type: String,
     default: ''
   }
-});
+})
 
-const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits(['update:modelValue'])
 
-const internalValue = ref(props.modelValue);
-const hiddenInput = ref(null);
+const internalValue = ref(props.modelValue)
+const hiddenInput = ref(null)
 
 const onInput = (event) => {
-  const inputValue = event.target.value.replace(/\D/g, '').slice(0, 4);
-  internalValue.value = inputValue;
-  emit('update:modelValue', inputValue);
-};
+  const inputValue = event.target.value.replace(/\D/g, '').slice(0, 4)
+  internalValue.value = inputValue
+  emit('update:modelValue', inputValue)
+}
 
-watch(() => props.modelValue, (newValue) => {
-  internalValue.value = newValue;
-});
+watch(
+  () => props.modelValue,
+  (newValue) => {
+    internalValue.value = newValue
+  }
+)
 
 const focusInput = () => {
   nextTick(() => {
-    hiddenInput.value.focus();
-  });
-};
+    hiddenInput.value.focus()
+  })
+}
 </script>
 
 <style scoped lang="scss">
@@ -83,13 +86,13 @@ const focusInput = () => {
 
   p1 {
     font-size: $textM_size;
-    font-weight: $Bold_weight;
+    font-weight: $textB_weight;
     color: $dark;
   }
 
   p2 {
     font-size: $textS_size;
-    font-weight: $Regular_weight;
+    font-weight: $textS_weight;
     color: $red;
   }
 }

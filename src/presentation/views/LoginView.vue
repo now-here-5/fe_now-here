@@ -8,11 +8,7 @@
     </header>
     <main class="body">
       <InputForm />
-      <SelectBtn
-        isActive= true
-        buttonText= "로그인"
-        @click="handleLogin"
-      />
+      <SelectBtn isActive="true" buttonText="로그인" @click="handleLogin" />
     </main>
     <footer class="bottom">
       <div class="left_content" @click="openBottomSheet">
@@ -29,45 +25,45 @@
 </template>
 
 <script setup>
-import InputForm from "@/presentation/components/login/InputForm.vue";
+import InputForm from '@/presentation/components/login/InputForm.vue'
 import SelectBtn from '@/presentation/components/SelectBtn.vue'
 import BottomSheet_Agree from '@/presentation/components/popUp/BottomSheet_Agree.vue'
 import BottomSheet_Term from '@/presentation/components/popUp/BottomSheet_Term.vue'
 
-import { onMounted } from "vue";
-import { useRoute, useRouter } from 'vue-router';  // useRoute 추가
+import { onMounted } from 'vue'
+import { useRoute, useRouter } from 'vue-router' // useRoute 추가
 
-import { loginStore } from "@/presentation/stores/loginStore.js";
-import { eventStore } from "@/presentation/stores/eventStore.js";
-import { popupStore } from "@/presentation/stores/popUpStore.js";
+import { loginStore } from '@/presentation/stores/loginStore.js'
+import { eventStore } from '@/presentation/stores/eventStore.js'
+import { popupStore } from '@/presentation/stores/popUpStore.js'
 
-const route = useRoute();  // useRoute를 통해 패스 변수를 추출
-const router = useRouter();
+const route = useRoute() // useRoute를 통해 패스 변수를 추출
+const router = useRouter()
 
-const store_Login = loginStore();
-const store_Event = eventStore();
-const store_PopUp = popupStore();
+const store_Login = loginStore()
+const store_Event = eventStore()
+const store_PopUp = popupStore()
 
 // onMounted에서 store의 checkEventExistence 함수를 호출
 onMounted(async () => {
-  store_Event.encodedId = route.params.encodedId;  // 경로 변수 추출
-  console.log("encodedId" ,store_Event.encodedId)
+  store_Event.encodedId = route.params.encodedId // 경로 변수 추출
+  console.log('encodedId', store_Event.encodedId)
 
-  const isExist = await store_Event.checkEventExistence(); // store에서 직접 호출
+  const isExist = await store_Event.checkEventExistence() // store에서 직접 호출
   if (!isExist) {
-    router.push('/error');
+    router.push('/error')
   }
-});
+})
 
 const handleLogin = () => {
-  store_Login.login();
-};
+  store_Login.login()
+}
 
 const openBottomSheet = () => {
-  store_PopUp.bottomSheetVisible.agree = true;
-};
+  store_PopUp.bottomSheetVisible.agree = true
+}
 const navigateToContact = () => {
-  router.push('/contact'); // 원하는 라우트로 이동
+  router.push('/contact') // 원하는 라우트로 이동
 }
 </script>
 
@@ -105,7 +101,7 @@ const navigateToContact = () => {
     align-self: stretch;
     span {
       font-size: $textM_size;
-      font-weight: $Bold_weight;
+      font-weight: $textB_weight;
       color: $point;
       cursor: default;
     }
@@ -145,7 +141,7 @@ const navigateToContact = () => {
     order: 0;
     span {
       font-size: $textMS_size;
-      font-weight: $Bold_weight;
+      font-weight: $textB_weight;
       color: $dark;
       cursor: pointer;
     }
@@ -156,7 +152,6 @@ const navigateToContact = () => {
     align-items: center;
     padding: 0px 30px;
 
-
     height: 20px;
 
     border-left: 1px solid $dark;
@@ -165,7 +160,7 @@ const navigateToContact = () => {
     order: 0;
     span {
       font-size: $textMS_size;
-      font-weight: $Bold_weight;
+      font-weight: $textB_weight;
       color: $dark;
       cursor: pointer;
     }

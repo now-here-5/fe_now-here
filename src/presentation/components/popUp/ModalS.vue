@@ -22,25 +22,24 @@
 </template>
 
 <script setup>
-import { defineProps, defineEmits } from 'vue';
+import { defineProps, defineEmits } from 'vue'
 
 const props = defineProps({
   isVisible: Boolean,
   title: String,
   message: String,
   buttonText: String,
-  imageSrc: String,
-});
+  imageSrc: String
+})
 
-const emit = defineEmits(['close']);
+const emit = defineEmits(['close'])
 
 const handleClick = () => {
-  emit('close');
-};
+  emit('close')
+}
 </script>
 
 <style scoped lang="scss">
-
 /* modal 오버레이 */
 .M_Overlay {
   position: fixed;
@@ -112,7 +111,7 @@ const handleClick = () => {
   width: 100%;
   p {
     font-size: $textM_size;
-    font-weight: $Bold_weight;
+    font-weight: $textB_weight;
     color: $dark;
     text-align: center;
   }
@@ -130,7 +129,7 @@ const handleClick = () => {
   border-bottom: 1px solid $dark;
   p {
     font-size: $textS_size;
-    font-weight: $Regular_weight;
+    font-weight: $textS_weight;
     color: $dark;
     text-align: center;
   }
@@ -146,7 +145,7 @@ const handleClick = () => {
   width: 100%;
   p {
     font-size: $textMS_size;
-    font-weight: $Bold_weight;
+    font-weight: $textB_weight;
     color: $dark;
     cursor: pointer;
   }

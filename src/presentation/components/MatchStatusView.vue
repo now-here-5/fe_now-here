@@ -5,20 +5,17 @@
       <div class="modalL_contentContainer">
         <div class="modalL_header">
           <div class="modalL_titleContainer">
-            <p>
-              1분만!<br>시간 내주실 수 있나요?
-            </p>
+            <p>1분만!<br />시간 내주실 수 있나요?</p>
           </div>
-          <div class="modalL_clearContainer">
-          </div>
+          <div class="modalL_clearContainer"></div>
         </div>
         <div class="modalL_imgContainer">
           <img src="@/assets/images/Modal_Image/modal_Mailbox.png" class="modalL_img" />
         </div>
         <div class="modalL_detailContainer">
           <p>
-            이용해 주셔서 감사합니다.<br>
-            서비스 개선을 위해<br>
+            이용해 주셔서 감사합니다.<br />
+            서비스 개선을 위해<br />
             소중한 의견을 남겨주세요.
           </p>
         </div>
@@ -36,21 +33,20 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-import { matchStore } from "@/presentation/stores/matchStore.js";
-import router from "@/presentation/router/index.js";
+import { ref } from 'vue'
+import { matchStore } from '@/presentation/stores/matchStore.js'
+import router from '@/presentation/router/index.js'
 
-const store_match = matchStore();
+const store_match = matchStore()
 
-const modalL_review = ref(store_match.modalL_review);
+const modalL_review = ref(store_match.modalL_review)
 
 const closeAlertModalL_review = () => {
-  modalL_review.value = false;
-};
+  modalL_review.value = false
+}
 const navigateToReview = () => {
-  router.push('/review');
-};
-
+  router.push('/review')
+}
 </script>
 
 <style scoped lang="scss">
@@ -114,7 +110,7 @@ const navigateToReview = () => {
   flex-grow: 1;
   p {
     font-size: $textM_size;
-    font-weight: $Bold_weight;
+    font-weight: $textB_weight;
     color: $dark;
     text-align: center;
   }
@@ -149,7 +145,7 @@ const navigateToReview = () => {
   flex-grow: 0;
   p {
     font-size: $textS_size;
-    font-weight: $Bold_weight;
+    font-weight: $textB_weight;
     color: $dark;
     text-align: center;
   }
@@ -202,7 +198,7 @@ const navigateToReview = () => {
   flex-grow: 1;
   p {
     font-size: $textM_size;
-    font-weight: $Bold_weight;
+    font-weight: $textB_weight;
     color: $gray;
   }
   &.active {
@@ -235,7 +231,8 @@ const navigateToReview = () => {
   min-width: 100%;
 }
 
-.slide-left-area, .slide-right-area {
+.slide-left-area,
+.slide-right-area {
   position: absolute;
   top: 0;
   height: 100%;

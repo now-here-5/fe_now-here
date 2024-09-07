@@ -3,34 +3,29 @@
     <div class="componentText_mention">
       <p1>자기소개</p1>
       <p2>
-        전화번호, SNS 등의 개인정보를 입력한 경우,<br>
+        전화번호, SNS 등의 개인정보를 입력한 경우,<br />
         임의로 계정이 삭제되며 재가입이 어려울 수 있습니다.
       </p2>
     </div>
     <div class="inputContainer">
-      <textarea
-        class="selfInput"
-        v-model="store_profile.description"
-        maxlength="30"
-      />
+      <textarea class="selfInput" v-model="store_profile.description" maxlength="30" />
       <p>{{ store_profile.description.length }}/30</p>
     </div>
   </div>
 </template>
 
 <script setup>
-import { useRoute, useRouter, onBeforeRouteLeave } from 'vue-router'; // useRouter를 추가로 import
+import { useRoute, useRouter, onBeforeRouteLeave } from 'vue-router' // useRouter를 추가로 import
 
-import { profileStore } from '@/presentation/stores/profileStore';
+import { profileStore } from '@/presentation/stores/profileStore'
 
-const store_profile = profileStore();  // 스토어 사용
-
+const store_profile = profileStore() // 스토어 사용
 
 // 사용자가 페이지를 떠나기 전에 원본 데이터 복구
 onBeforeRouteLeave((to, from, next) => {
-  store_profile.restoreOriginalData();
-  next();
-});
+  store_profile.restoreOriginalData()
+  next()
+})
 </script>
 
 <style scoped lang="scss">
@@ -38,7 +33,7 @@ onBeforeRouteLeave((to, from, next) => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 25px 25px 25px ;
+  padding: 25px 25px 25px;
 
   height: 100vh;
 
@@ -108,7 +103,7 @@ onBeforeRouteLeave((to, from, next) => {
   align-self: stretch;
   p {
     font-size: $textM_size;
-    font-weight: $Bold_weight;
+    font-weight: $textB_weight;
     color: $point;
   }
 }
@@ -121,12 +116,12 @@ onBeforeRouteLeave((to, from, next) => {
 
   p1 {
     font-size: $textXXL_size;
-    font-weight: $Bold_weight;
+    font-weight: $textB_weight;
     color: $dark;
   }
   p2 {
     font-size: $textMS_size;
-    font-weight: $Regular_weight;
+    font-weight: $textS_weight;
     color: $dark;
   }
 }
@@ -154,7 +149,7 @@ onBeforeRouteLeave((to, from, next) => {
   width: 100%;
   p {
     font-size: $textL_size;
-    font-weight: $Bold_weight;
+    font-weight: $textB_weight;
     color: $dark;
   }
 }
@@ -168,7 +163,7 @@ onBeforeRouteLeave((to, from, next) => {
   width: 100%;
   p {
     font-size: $textS_size;
-    font-weight: $Regular_weight;
+    font-weight: $textS_weight;
     color: $green;
   }
 }
@@ -197,13 +192,13 @@ onBeforeRouteLeave((to, from, next) => {
   border-radius: 0px;
 
   font-size: $textM_size;
-  font-weight: $Bold_weight;
+  font-weight: $textB_weight;
   color: $dark;
 
   outline: none;
   &::placeholder {
     font-size: $textMS_size;
-    font-weight: $Regular_weight;
+    font-weight: $textS_weight;
     color: $gray;
   }
 }
@@ -221,7 +216,7 @@ onBeforeRouteLeave((to, from, next) => {
   border-radius: 8px;
   p {
     font-size: $textS_size;
-    font-weight: $Bold_weight;
+    font-weight: $textB_weight;
     color: $gray;
   }
 }
@@ -241,12 +236,12 @@ onBeforeRouteLeave((to, from, next) => {
   flex-direction: column;
   p1 {
     font-size: $textL_size;
-    font-weight: $Bold_weight;
+    font-weight: $textB_weight;
     color: $dark;
   }
   p2 {
     font-size: $textMS_size;
-    font-weight: $Regular_weight;
+    font-weight: $textS_weight;
     color: $gray;
   }
 }
@@ -261,7 +256,6 @@ onBeforeRouteLeave((to, from, next) => {
 
   width: 325px;
   height: 55px;
-
 
   /* Inside auto layout */
   flex: none;
@@ -288,7 +282,7 @@ onBeforeRouteLeave((to, from, next) => {
   border-radius: 5px;
   p {
     font-size: $textM_size;
-    font-weight: $Bold_weight;
+    font-weight: $textB_weight;
     color: $gray;
   }
 }
@@ -304,7 +298,7 @@ onBeforeRouteLeave((to, from, next) => {
   width: 100%;
   p {
     font-size: $textL_size;
-    font-weight: $Bold_weight;
+    font-weight: $textB_weight;
     color: $dark;
   }
 }
@@ -334,7 +328,7 @@ onBeforeRouteLeave((to, from, next) => {
   border-radius: 5px;
   p {
     font-size: $textL_size;
-    font-weight: $Bold_weight;
+    font-weight: $textB_weight;
     color: $gray;
   }
 }
@@ -350,7 +344,7 @@ onBeforeRouteLeave((to, from, next) => {
   width: 100%;
   p {
     font-size: $textL_size;
-    font-weight: $Bold_weight;
+    font-weight: $textB_weight;
     color: $dark;
   }
 }
@@ -380,7 +374,7 @@ onBeforeRouteLeave((to, from, next) => {
   border-radius: 7px;
   p {
     font-size: $textXXL_size;
-    font-weight: $Bold_weight;
+    font-weight: $textB_weight;
     color: $gray;
   }
 }
@@ -403,7 +397,7 @@ onBeforeRouteLeave((to, from, next) => {
   width: 100%;
   p {
     font-size: $textS_size;
-    font-weight: $Regular_weight;
+    font-weight: $textS_weight;
     color: $gray;
   }
 }
@@ -421,7 +415,7 @@ onBeforeRouteLeave((to, from, next) => {
   background: $light_gray;
   border: 1px solid $gray;
   border-radius: 5px;
-  resize: none;  // 사용자가 크기 조절하지 못하게 설정
+  resize: none; // 사용자가 크기 조절하지 못하게 설정
 
   font-size: $textM_size;
   color: $dark;
@@ -429,9 +423,9 @@ onBeforeRouteLeave((to, from, next) => {
   outline: none;
   &::placeholder {
     font-size: $textMS_size;
-    font-weight: $Regular_weight;
+    font-weight: $textS_weight;
     color: $gray;
-    text-align: left;  // 가로 정렬을 왼쪽으로 설정
+    text-align: left; // 가로 정렬을 왼쪽으로 설정
   }
 }
 
@@ -448,14 +442,12 @@ onBeforeRouteLeave((to, from, next) => {
 
 /* 모바일 장치에 적용할 스타일 */
 @media only screen and (max-width: 600px) {
-
   .body {
     height: 520px;
   }
 }
 /* 데스크톱에 적용할 스타일 */
 @media only screen and (min-width: 601px) {
-
   .body {
     align-self: stretch;
     flex-grow: 1;

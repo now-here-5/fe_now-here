@@ -73,7 +73,7 @@ onMounted(async () => {
       align-items: center;
       border-radius: 15px;
       cursor: pointer;
-      box-shadow: 0px 1px 3px 0px $dark;
+      box-shadow: 0px 1px 3px 0px #0000004d;
 
       .heart-text {
         font-size: 15px;

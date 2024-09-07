@@ -18,7 +18,7 @@
               </div>
             </div>
             <div class="imgContainer">
-              <img class="MBTIimg" src="/images/avatar_MBTI_Male/avatar_ENFJ_Male.png"/>
+              <img class="MBTIimg" src="/images/avatar_MBTI_Male/avatar_ENFJ_Male.png" />
             </div>
           </div>
           <div class="contentContainer">
@@ -43,17 +43,17 @@
 <script setup>
 import { popupStore } from '@/presentation/stores/popupStore.js' // useRouter를 추가로 import
 import { getAvatarSrc } from '@/core/usecases/GetAvatar.js'
-getAvatarSrc(gender, mbti); // 아바타 동적 이미지 할당 usecase
+getAvatarSrc(gender, mbti) // 아바타 동적 이미지 할당 usecase
 
-const store_popup = popupStore();
+const store_popup = popupStore()
 
 const rejectHeart = () => {
   // 하트 거절 로직
-  store_popup.modalL_cardL= false;
+  store_popup.modalL_cardL = false
 }
 const acceptHeart = () => {
   // 하트 수락 로직
-  store_popup.modalL_cardL= false;
+  store_popup.modalL_cardL = false
 }
 </script>
 
@@ -117,7 +117,7 @@ const acceptHeart = () => {
   flex-grow: 1;
   p {
     font-size: $textM_size;
-    font-weight: $Bold_weight;
+    font-weight: $textB_weight;
     color: $dark;
     text-align: center;
   }
@@ -152,7 +152,7 @@ const acceptHeart = () => {
   flex-grow: 0;
   p {
     font-size: $textS_size;
-    font-weight: $Bold_weight;
+    font-weight: $textB_weight;
     color: $dark;
     text-align: center;
   }
@@ -205,7 +205,7 @@ const acceptHeart = () => {
   flex-grow: 1;
   p {
     font-size: $textM_size;
-    font-weight: $Bold_weight;
+    font-weight: $textB_weight;
     color: $gray;
   }
   &.active {
@@ -238,7 +238,8 @@ const acceptHeart = () => {
   min-width: 100%;
 }
 
-.slide-left-area, .slide-right-area {
+.slide-left-area,
+.slide-right-area {
   position: absolute;
   top: 0;
   height: 100%;
@@ -260,8 +261,10 @@ const acceptHeart = () => {
   width: 100%;
 
   background: $light_gray;
-  box-shadow: 0px 1px 2px rgba($dark, 0.3), 0px 2px 6px 2px rgba($dark, 0.15);
-  border-radius: 13px 13px 0 0 ;
+  box-shadow:
+    0px 1px 2px rgba($dark, 0.3),
+    0px 2px 6px 2px rgba($dark, 0.15);
+  border-radius: 13px 13px 0 0;
 }
 .infoContainer {
   position: relative;
@@ -282,12 +285,14 @@ const acceptHeart = () => {
   z-index: 10; /* imgContainer보다 위에 위치하도록 설정 */
 
   background: $point;
-  box-shadow: 0px 8px 12px 6px rgba($dark, 0.15), 0px 4px 4px rgba($dark, 0.3);
+  box-shadow:
+    0px 8px 12px 6px rgba($dark, 0.15),
+    0px 4px 4px rgba($dark, 0.3);
   border-radius: 0px 12px 0px 7px;
 
   p1 {
     font-size: $textXXL_size;
-    font-weight: $Bold_weight;
+    font-weight: $textB_weight;
     color: $white;
     text-align: center;
 
@@ -296,7 +301,7 @@ const acceptHeart = () => {
 
   p2 {
     font-size: $textMS_size;
-    font-weight: $Bold_weight;
+    font-weight: $textB_weight;
     color: $white;
     text-align: center;
 
@@ -318,7 +323,7 @@ const acceptHeart = () => {
   height: 50%;
   top: 125px;
 
-  background: linear-gradient(180deg, rgba($white, 0) 0%, #2E2E2E 100%);
+  background: linear-gradient(180deg, rgba($white, 0) 0%, #2e2e2e 100%);
   z-index: 5; /* imgContainer보다 위에 위치하도록 설정 */
 }
 .mbtiContainer {
@@ -329,14 +334,13 @@ const acceptHeart = () => {
   align-items: center;
   padding: 5px 8px;
 
-
   background: $white;
   box-shadow: 0px 4px 4px rgba($dark, 0.25);
   border-radius: 5px;
   p {
     font-size: $textM_size;
-    font-weight: $Bold_weight;
-    color: #1C1C1C;
+    font-weight: $textB_weight;
+    color: #1c1c1c;
   }
 }
 .nameContainer {
@@ -350,7 +354,7 @@ const acceptHeart = () => {
   width: 100%;
   p1 {
     font-size: $textM_size;
-    font-weight: $Bold_weight;
+    font-weight: $textB_weight;
     color: $white;
     align-self: stretch;
     flex-grow: 0;
@@ -358,7 +362,7 @@ const acceptHeart = () => {
 
   p2 {
     font-size: $textS_size;
-    font-weight: $Regular_weight;
+    font-weight: $textS_weight;
     color: $white;
     align-self: stretch;
     flex-grow: 0;
@@ -405,12 +409,14 @@ const acceptHeart = () => {
   height: 64px;
 
   background: $white;
-  box-shadow: 0px 1px 2px rgba($dark, 0.3), 0px 1px 3px 1px rgba($dark, 0.15);
+  box-shadow:
+    0px 1px 2px rgba($dark, 0.3),
+    0px 1px 3px 1px rgba($dark, 0.15);
   border-radius: 0px 0px 10px 10px;
 
   p {
     font-size: $textS_size;
-    font-weight: $Bold_weight;
+    font-weight: $textB_weight;
     color: $dark;
 
     display: flex;

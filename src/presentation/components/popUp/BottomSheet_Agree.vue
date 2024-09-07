@@ -7,10 +7,7 @@
     <div class="bottomSheet" @click.stop>
       <div class="bottomSheet_header">
         <p>약관 동의</p>
-        <img
-          @click="closeBottomSheet('agree')"
-          src="/images/clear.png"
-        />
+        <img @click="closeBottomSheet('agree')" src="/images/clear.png" />
       </div>
       <div class="bottomSheet_contentContainer">
         <div class="bottomSheet_detailContainer">
@@ -23,7 +20,7 @@
               :class="{ active: store_Popup.agreeState.service }"
               @click="toggleSubAgree('service')"
             >
-              <div class="agreeBtnS"/>
+              <div class="agreeBtnS" />
               <p>[필수] 서비스 약관 동의</p>
               <img
                 class="arrowRight"
@@ -36,7 +33,7 @@
               :class="{ active: store_Popup.agreeState.privacy }"
               @click="toggleSubAgree('privacy')"
             >
-              <div class="agreeBtnS"/>
+              <div class="agreeBtnS" />
               <p>[필수] 개인정보 수집 및 이용 동의</p>
               <img
                 class="arrowRight"
@@ -45,7 +42,7 @@
               />
             </div>
             <div class="allAgree" :class="{ active: store_Popup.agreeState.all }">
-              <div class="agreeBtnL" @click="toggleAllAgree"/>
+              <div class="agreeBtnL" @click="toggleAllAgree" />
               <p>전체 동의</p>
             </div>
           </div>
@@ -65,41 +62,41 @@
 <script setup>
 import SelectBtn from '@/presentation/components/SelectBtn.vue'
 
-import { useRouter } from 'vue-router';
+import { useRouter } from 'vue-router'
 
 import { popupStore } from '@/presentation/stores/popupStore.js'
 
-const router = useRouter();
+const router = useRouter()
 
-const store_Popup = popupStore();
+const store_Popup = popupStore()
 
 const closeBottomSheet = (type) => {
-  store_Popup.bottomSheetVisible[type] = false;
-};
+  store_Popup.bottomSheetVisible[type] = false
+}
 
 const toggleSubAgree = (type) => {
-  store_Popup.agreeState[type] = !store_Popup.agreeState[type];
+  store_Popup.agreeState[type] = !store_Popup.agreeState[type]
 
   // Update allAgree based on sub agrees
-  store_Popup.agreeState.all = store_Popup.agreeState.service && store_Popup.agreeState.privacy;
-};
+  store_Popup.agreeState.all = store_Popup.agreeState.service && store_Popup.agreeState.privacy
+}
 const toggleAllAgree = () => {
-  store_Popup.agreeState.all = !store_Popup.agreeState.all;
+  store_Popup.agreeState.all = !store_Popup.agreeState.all
 
-  store_Popup.agreeState.service = store_Popup.agreeState.all;
-  store_Popup.agreeState.privacy = store_Popup.agreeState.all;
-};
+  store_Popup.agreeState.service = store_Popup.agreeState.all
+  store_Popup.agreeState.privacy = store_Popup.agreeState.all
+}
 const openTermBottomSheet = (type) => {
-  store_Popup.termType = type;
-  store_Popup.bottomSheetVisible.terms = true;
-};
+  store_Popup.termType = type
+  store_Popup.bottomSheetVisible.terms = true
+}
 
 const navigateToSignUp = () => {
   if (store_Popup.agreeState.service && store_Popup.agreeState.privacy) {
-    closeBottomSheet('agree');
-    router.push('/signup/signup_mobileAuth');
+    closeBottomSheet('agree')
+    router.push('/signup/signup_mobileAuth')
   }
-};
+}
 </script>
 
 <style scoped lang="scss">
@@ -141,7 +138,7 @@ const navigateToSignUp = () => {
 
   p {
     font-size: $textXXL_size;
-    font-weight: $Bold_weight;
+    font-weight: $textB_weight;
     color: $dark;
   }
   img {
@@ -156,7 +153,6 @@ const navigateToSignUp = () => {
   flex-direction: column;
   align-items: center;
 
-
   width: 375px;
 }
 .bottomSheet_detailContainer {
@@ -170,12 +166,12 @@ const navigateToSignUp = () => {
 
   p {
     font-size: $textM_size;
-    font-weight: $Regular_weight;
+    font-weight: $textS_weight;
     color: $dark;
   }
   p2 {
     font-size: $textXS_size;
-    font-weight: $Regular_weight;
+    font-weight: $textS_weight;
     color: $dark;
   }
 }
@@ -211,7 +207,7 @@ const navigateToSignUp = () => {
   height: 35px;
 
   p {
-    font-weight: $Regular_weight;
+    font-weight: $textS_weight;
     font-size: $textMS_size;
     color: $gray;
     flex: 1;
@@ -261,10 +257,10 @@ const navigateToSignUp = () => {
 
   width: 315px;
 
-  border-top: 2px solid #1C1C1C;
+  border-top: 2px solid #1c1c1c;
   p {
     font-size: $textXL_size;
-    font-weight: $Bold_weight;
+    font-weight: $textB_weight;
     color: $dark;
     flex: 1;
   }
@@ -310,7 +306,7 @@ const navigateToSignUp = () => {
   cursor: not-allowed;
   p {
     font-size: $textM_size;
-    font-weight: $Bold_weight;
+    font-weight: $textB_weight;
     color: $gray;
   }
 }

@@ -6,11 +6,7 @@
           <div class="modalL_titleContainer">
             <p>잠깐! 꼭 확인해주세요.</p>
           </div>
-          <img
-            class="modalL_clearContainer"
-            src="/images/clear.png"
-            @click="navigateToHome"
-          >
+          <img class="modalL_clearContainer" src="/images/clear.png" @click="navigateToHome" />
         </div>
         <div class="slider">
           <div class="slider">
@@ -26,12 +22,12 @@
           </div>
         </div>
         <div class="modalL_detailContainer">
-          <p v-html="currentText"/>
+          <p v-html="currentText" />
           <div class="modalL_progressComponent">
             <div
               v-for="(circle, index) in 3"
               :key="index"
-              :class="{'modalL_circle': true, 'active-circle': index === currentStep}"
+              :class="{ modalL_circle: true, 'active-circle': index === currentStep }"
             />
           </div>
         </div>
@@ -50,47 +46,47 @@
 </template>
 
 <script setup>
-import matchLandingMobile from "/images/Modal_Image/modal_mobile.png";
-import matchLandingCouple from "/images/Modal_Image/modal_Couple.png";
-import matchLandingNotification from "/images/Modal_Image/modal_Notification.png";
+import matchLandingMobile from '/images/Modal_Image/modal_mobile.png'
+import matchLandingCouple from '/images/Modal_Image/modal_Couple.png'
+import matchLandingNotification from '/images/Modal_Image/modal_Notification.png'
 
-import { computed, ref } from "vue";
-import { useRouter } from 'vue-router';
+import { computed, ref } from 'vue'
+import { useRouter } from 'vue-router'
 
-import { popupStore } from "@/presentation/stores/popupStore.js";
+import { popupStore } from '@/presentation/stores/popupStore.js'
 
-const router = useRouter();
-const store_Popup = popupStore();
+const router = useRouter()
+const store_Popup = popupStore()
 
-const currentStep = ref(0); // 현재 슬라이드 위치 (0부터 시작)
-const images = [matchLandingMobile, matchLandingCouple, matchLandingNotification];
+const currentStep = ref(0) // 현재 슬라이드 위치 (0부터 시작)
+const images = [matchLandingMobile, matchLandingCouple, matchLandingNotification]
 const texts = [
   '매칭이 성사되면 서로의 전화번호를<br>동시에 공유해드립니다.',
   '매칭 후의 모든 연락과 만남은<br>사용자의 판단과 책임 하에 이뤄집니다.',
   '서비스 사용 전,<br>주의사항을 꼭 확인해주세요.'
-];
+]
 // 현재 이미지와 텍스트를 상태에 따라 가져옴
-const currentText = computed(() => texts[currentStep.value]);
+const currentText = computed(() => texts[currentStep.value])
 
 const navigateToHome = () => {
-  store_Popup.modalL_matchLanding = false;
-  store_Popup.matchAgree = false;
-  router.push('/');
-};
+  store_Popup.modalL_matchLanding = false
+  store_Popup.matchAgree = false
+  router.push('/')
+}
 const agreeAlertModalL_matchLanding = () => {
-  store_Popup.modalL_matchLanding = false;
-  store_Popup.matchAgree = true;
-};
+  store_Popup.modalL_matchLanding = false
+  store_Popup.matchAgree = true
+}
 const prevSlide = () => {
   if (currentStep.value > 0) {
-    currentStep.value--;
+    currentStep.value--
   }
-};
+}
 const nextSlide = () => {
   if (currentStep.value < images.length - 1) {
-    currentStep.value++;
+    currentStep.value++
   }
-};
+}
 </script>
 
 <style scoped lang="scss">
@@ -154,7 +150,7 @@ const nextSlide = () => {
   flex-grow: 1;
   p {
     font-size: $textM_size;
-    font-weight: $Bold_weight;
+    font-weight: $textB_weight;
     color: $dark;
     text-align: center;
   }
@@ -189,7 +185,7 @@ const nextSlide = () => {
   flex-grow: 0;
   p {
     font-size: $textS_size;
-    font-weight: $Bold_weight;
+    font-weight: $textB_weight;
     color: $dark;
     text-align: center;
   }
@@ -242,7 +238,7 @@ const nextSlide = () => {
   flex-grow: 1;
   p {
     font-size: $textM_size;
-    font-weight: $Bold_weight;
+    font-weight: $textB_weight;
     color: $gray;
   }
   &.active {
@@ -275,7 +271,8 @@ const nextSlide = () => {
   min-width: 100%;
 }
 
-.slide-left-area, .slide-right-area {
+.slide-left-area,
+.slide-right-area {
   position: absolute;
   top: 0;
   height: 100%;

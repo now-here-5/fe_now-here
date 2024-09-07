@@ -68,7 +68,7 @@ const router = createRouter({
     {
       path: '/editProfile', // /match/sent-hearts
       name: 'editProfile',
-      component: () => import('@/presentation/Views/EditProfile.vue'),
+      component: () => import('@/presentation/views/EditProfile.vue'),
       children: [
         {
           path: '/editSelf', // /match/sent-hearts
@@ -90,7 +90,7 @@ const router = createRouter({
     {
       path: '/settings', // /match/sent-hearts
       name: 'settings',
-      component: () => import('@/presentation/Views/SettingsView.vue'),
+      component: () => import('@/presentation/views/SettingsView.vue'),
       children: [
         {
           path: '/deleteAccount', // /match/sent-hearts

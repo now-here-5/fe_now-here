@@ -63,7 +63,7 @@ defineProps({
   flex-grow: 0;
   p {
     font-size: $textM_size;
-    font-weight: $Bold_weight;
+    font-weight: $textB_weight;
     color: $point;
   }
 }
@@ -76,12 +76,12 @@ defineProps({
 
   p1 {
     font-size: $textXXL_size;
-    font-weight: $Bold_weight;
+    font-weight: $textB_weight;
     color: $dark;
   }
   p {
     font-size: $textMS_size;
-    font-weight: $Regular_weight;
+    font-weight: $textS_weight;
     color: $dark;
   }
 }

@@ -2,17 +2,13 @@
   <div class="sexComponent">
     <p>성별</p>
     <div class="btnContainer">
-      <div
-          class="sexBtn"
-          @click="selectSex('Male')"
-          :class="{ selected: selectedSex === 'Male' }"
-      >
+      <div class="sexBtn" @click="selectSex('Male')" :class="{ selected: selectedSex === 'Male' }">
         <p>남자</p>
       </div>
       <div
-          class="sexBtn"
-          @click="selectSex('Female')"
-          :class="{ selected: selectedSex === 'Female' }"
+        class="sexBtn"
+        @click="selectSex('Female')"
+        :class="{ selected: selectedSex === 'Female' }"
       >
         <p>여자</p>
       </div>
@@ -21,21 +17,21 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref } from 'vue'
 
 const props = defineProps({
   store: {
     type: Object,
     required: true
   }
-});
+})
 
-const selectedSex = ref(props.store.selectedSex || '');
+const selectedSex = ref(props.store.selectedSex || '')
 
 const selectSex = (sex) => {
-  selectedSex.value = sex;
-  props.store.selectedSex = selectedSex.value;
-};
+  selectedSex.value = sex
+  props.store.selectedSex = selectedSex.value
+}
 </script>
 
 <style scoped lang="scss">
@@ -50,7 +46,7 @@ const selectSex = (sex) => {
   width: 100%;
   p {
     font-size: $textL_size;
-    font-weight: $Bold_weight;
+    font-weight: $textB_weight;
     color: $dark;
   }
 }
@@ -82,7 +78,7 @@ const selectSex = (sex) => {
   cursor: pointer;
   p {
     font-size: $textL_size;
-    font-weight: $Bold_weight;
+    font-weight: $textB_weight;
     color: $gray;
   }
 }

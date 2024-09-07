@@ -19,52 +19,52 @@
     <div class="optionList">
       <div class="optionItem" @click="navigateToContact">
         <p>문의하기</p>
-        <img src="@/assets/images/keyboard_arrowRight.png" class="navigate_next" alt="navigate_next" />
+        <img src="/images/keyboard_arrowRight.png" class="navigate_next" alt="navigate_next" />
       </div>
       <div class="optionItem" @click="navigateToReview">
         <p>의견 남기기</p>
-        <img src="@/assets/images/keyboard_arrowRight.png" class="navigate_next" alt="navigate_next" />
+        <img src="/images/keyboard_arrowRight.png" class="navigate_next" alt="navigate_next" />
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { computed } from 'vue';
-import { useRouter } from 'vue-router';
-import { onMounted } from "vue"; // useRouter를 추가로 import
+import { computed } from 'vue'
+import { useRouter } from 'vue-router'
+import { onMounted } from 'vue' // useRouter를 추가로 import
 
-import { profileStore } from '@/presentation/stores/profileStore.js';
+import { profileStore } from '@/presentation/stores/profileStore.js'
 import { getAvatarSrc } from '@/core/usecases/GetAvatar.js'
 
-const router = useRouter(); // useRouter 사용
-const store_profile = profileStore();
+const router = useRouter() // useRouter 사용
+const store_profile = profileStore()
 
 onMounted(async () => {
   const profile = await store_profile.fetchProfile()
   if (profile) {
-    console.log(profile);
+    console.log(profile)
   }
-});
+})
 
 // 성별을 영어로 가져오기 위해 store_profile의 원래 값을 유지
 const avatarSrc = computed(() => {
-  const gender = store_profile.gender === "여성" ? "Female" : "Male";
-  const mbti = store_profile.mbti;
+  const gender = store_profile.gender === '여성' ? 'Female' : 'Male'
+  const mbti = store_profile.mbti
 
   const src = getAvatarSrc(gender, mbti)
-  console.log("baseImgSrc", src);
-  return src;
-});
+  console.log('baseImgSrc', src)
+  return src
+})
 
 const navigateToEditProfile = () => {
-  router.push('/editProfile');
+  router.push('/editProfile')
 }
 const navigateToContact = () => {
-  router.push('/contact');
+  router.push('/contact')
 }
 const navigateToReview = () => {
-  router.push('/review');
+  router.push('/review')
 }
 </script>
 
@@ -100,7 +100,9 @@ const navigateToReview = () => {
   height: 110px;
 
   background: $point;
-  box-shadow: 0px 6px 10px 4px rgba($dark, 0.15), 0px 2px 3px rgba($dark, 0.3);
+  box-shadow:
+    0px 6px 10px 4px rgba($dark, 0.15),
+    0px 2px 3px rgba($dark, 0.3);
   border-radius: 18px;
 }
 .imgContainer {
@@ -124,7 +126,7 @@ const navigateToReview = () => {
   align-items: flex-start;
   gap: 5px;
   p {
-    font-weight: $Bold_weight;
+    font-weight: $textB_weight;
     font-size: $textXXL_size;
     color: $white;
     line-height: 30px;
@@ -136,7 +138,7 @@ const navigateToReview = () => {
   align-items: flex-start;
   gap: 5px;
   p {
-    font-weight: $Bold_weight;
+    font-weight: $textB_weight;
     font-size: $textM_size;
     line-height: 19px;
     color: $white;
@@ -150,7 +152,7 @@ const navigateToReview = () => {
 
   gap: 10px;
   p {
-    font-weight: $Regular_weight;
+    font-weight: $textS_weight;
     font-size: $textM_size;
     line-height: 19px;
     color: $white;
@@ -169,12 +171,12 @@ const navigateToReview = () => {
 
   background: $dark;
   p {
-    font-weight: $Bold_weight;
+    font-weight: $textB_weight;
     font-size: $textM_size;
     line-height: 23px;
     text-align: center;
 
-    color: #FFFFFF;
+    color: #ffffff;
   }
 }
 .optionList {
@@ -198,7 +200,7 @@ const navigateToReview = () => {
   align-self: stretch;
   cursor: pointer;
   p {
-    font-weight: $Bold_weight;
+    font-weight: $textB_weight;
     font-size: $textM_size;
     line-height: 23px;
     text-align: center;

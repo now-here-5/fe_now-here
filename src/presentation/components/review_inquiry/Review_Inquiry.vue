@@ -1,8 +1,6 @@
 <template>
   <div class="frame">
-    <BackspaceHeader
-      :title="type === 'review' ? '의견 남기기' : '문의하기'"
-    />
+    <BackspaceHeader :title="type === 'review' ? '의견 남기기' : '문의하기'" />
     <main class="body">
       <div class="text_component">
         <div class="text_container">
@@ -10,7 +8,7 @@
           <p1 v-else>휴대폰 번호</p1>
 
           <p2 v-if="type === 'review'">
-            Now Here를 이용해 주셔서 감사합니다.<br>
+            Now Here를 이용해 주셔서 감사합니다.<br />
             서비스 개선을 위해 소중한 의견을 남겨주세요.
           </p2>
           <p2 v-else>답변받을 휴대폰 번호를 입력해주세요.</p2>
@@ -50,25 +48,21 @@
       </div>
     </main>
     <footer class="bottom">
-      <SelectBtn
-        :isActive="Active"
-        buttonText="작성완료"
-        @click="handleSubmit"
-      />
+      <SelectBtn :isActive="Active" buttonText="작성완료" @click="handleSubmit" />
     </footer>
   </div>
 </template>
 
 <script setup>
 import BackspaceHeader from '@/presentation/components/BackspaceHeader.vue'
-import starFilled from '/images/star_filled.png';
-import starUnfilled from '/images/star.png';
-import SelectBtn from "@/presentation/components/SelectBtn.vue";
+import starFilled from '/images/star_filled.png'
+import starUnfilled from '/images/star.png'
+import SelectBtn from '@/presentation/components/SelectBtn.vue'
 
-import { ref, watch, onMounted } from "vue";
-import { useRouter } from 'vue-router';
+import { ref, watch, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 
-import { review_inquiryStore } from "@/presentation/stores/review_inquiryStore.js";
+import { review_inquiryStore } from '@/presentation/stores/review_inquiryStore.js'
 import { popupStore } from '@/presentation/stores/popupStore.js'
 import { formPhoneNumber } from '@/core/usecases/FormNumber.js'
 
@@ -78,58 +72,58 @@ const props = defineProps({
     type: String,
     required: true
   }
-});
-const store_Review_inquiry = review_inquiryStore();
-const store_Popup = popupStore();
+})
+const store_Review_inquiry = review_inquiryStore()
+const store_Popup = popupStore()
 
-const phoneNumber = ref(store_Review_inquiry.inquiry_Num);
-const contents = ref(store_Review_inquiry.textContent || "");
-const rate = ref(0);
-const Active = ref(false);
-const router = useRouter(); // useRouter 사용
+const phoneNumber = ref(store_Review_inquiry.inquiry_Num)
+const contents = ref(store_Review_inquiry.textContent || '')
+const rate = ref(0)
+const Active = ref(false)
+const router = useRouter() // useRouter 사용
 
 const setRating = (rating) => {
-  rate.value = rating;
-  console.log('별점:', rate.value);
-  store_Review_inquiry.rate = rate.value;
-};
+  rate.value = rating
+  console.log('별점:', rate.value)
+  store_Review_inquiry.rate = rate.value
+}
 
 const handlePhoneNumberInput = () => {
-  phoneNumber.value = formPhoneNumber(phoneNumber.value); // 포맷 적용
-  store_Review_inquiry.inquiry_Num = phoneNumber.value;
-};
+  phoneNumber.value = formPhoneNumber(phoneNumber.value) // 포맷 적용
+  store_Review_inquiry.inquiry_Num = phoneNumber.value
+}
 
 const formContents = () => {
-  store_Review_inquiry.textContent = contents.value;
-  console.log(store_Review_inquiry.textContent);
-};
+  store_Review_inquiry.textContent = contents.value
+  console.log(store_Review_inquiry.textContent)
+}
 
 // 제출 버튼 클릭 시 핸들링
 const handleSubmit = async () => {
-  const isSuccess = await store_Review_inquiry.submitFeedback(props.type); // props.type을 사용
+  const isSuccess = await store_Review_inquiry.submitFeedback(props.type) // props.type을 사용
 
   if (isSuccess) {
-    console.log(props.type === 'review' ? '리뷰 성공!' : '문의 성공!');
-    router.back(); // 3초 후에 뒤로 가기
+    console.log(props.type === 'review' ? '리뷰 성공!' : '문의 성공!')
+    router.back() // 3초 후에 뒤로 가기
     setTimeout(() => {
-      store_Popup.tostMessage.visible = false;
-    }, 3000);
+      store_Popup.tostMessage.visible = false
+    }, 3000)
   }
-};
+}
 
 // 문의 내용과 별점 또는 휴대폰 번호의 변화를 감지하여 버튼 활성화 상태를 업데이트
 watch([phoneNumber, contents, rate], () => {
   if (props.type === 'review') {
-    Active.value = contents.value.length > 0 && rate.value > 0;
+    Active.value = contents.value.length > 0 && rate.value > 0
   } else {
-    Active.value = phoneNumber.value.length === 13 && contents.value.length > 0;
+    Active.value = phoneNumber.value.length === 13 && contents.value.length > 0
   }
-});
+})
 onMounted(() => {
-  store_Review_inquiry.textContent = "";
+  store_Review_inquiry.textContent = ''
   store_Review_inquiry.rate = 0
-  store_Review_inquiry.inquiry_Num = "";
-});
+  store_Review_inquiry.inquiry_Num = ''
+})
 </script>
 
 <style scoped lang="scss">
@@ -137,7 +131,7 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 25px 25px 25px ;
+  padding: 25px 25px 25px;
 
   height: 100vh;
 
@@ -171,12 +165,12 @@ onMounted(() => {
   width: 100%;
   p1 {
     font-size: $textXL_size;
-    font-weight: $Bold_weight;
+    font-weight: $textB_weight;
     color: $dark;
   }
   p2 {
     font-size: $textS_size;
-    font-weight: $Regular_weight;
+    font-weight: $textS_weight;
     color: $dark;
   }
 }
@@ -198,16 +192,16 @@ onMounted(() => {
   height: 36px;
 
   border: none;
-  border-bottom: 1px solid #A4A4A4;
+  border-bottom: 1px solid #a4a4a4;
   border-radius: 0;
   outline: none;
 
   font-size: $textL_size;
-  font-weight: $Bold_weight;
+  font-weight: $textB_weight;
 
   &::placeholder {
     font-size: $textL_size;
-    font-weight: $Bold_weight;
+    font-weight: $textB_weight;
     color: $gray;
   }
 }
@@ -224,7 +218,7 @@ onMounted(() => {
   width: 100%;
   p {
     font-size: $textXL_size;
-    font-weight: $Bold_weight;
+    font-weight: $textB_weight;
     color: $dark;
   }
 }
@@ -237,7 +231,7 @@ onMounted(() => {
   width: 100%;
   p {
     font-size: $textS_size;
-    font-weight: $Regular_weight;
+    font-weight: $textS_weight;
     color: $gray;
   }
 }
@@ -260,18 +254,18 @@ onMounted(() => {
   resize: none;
 
   font-size: $textM_size;
-  font-weight: $Regular_weight;
+  font-weight: $textS_weight;
   color: $dark;
   &::placeholder {
     font-size: $textMS_size;
-    font-weight: $Regular_weight;
+    font-weight: $textS_weight;
     color: $gray;
-    text-align: left;  // 가로 정렬을 왼쪽으로 설정
+    text-align: left; // 가로 정렬을 왼쪽으로 설정
   }
 }
 .input::placeholder {
   font-size: $textMS_size;
-  font-weight: $Regular_weight;
+  font-weight: $textS_weight;
   color: $gray;
 }
 
@@ -287,14 +281,12 @@ onMounted(() => {
 
 /* 모바일 장치에 적용할 스타일 */
 @media only screen and (max-width: 600px) {
-
   .body {
     height: 520px;
   }
 }
 /* 데스크톱에 적용할 스타일 */
 @media only screen and (min-width: 601px) {
-
   .body {
     align-self: stretch;
     flex-grow: 1;
