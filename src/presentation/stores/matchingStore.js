@@ -17,6 +17,7 @@ const matchingRepository = new MatchingRepository()
 
 export const useMatchingStore = defineStore('matching', () => {
   const recommendedMembers = ref([])
+  const heartSendMemebers = ref([])
   const matchedInfoList = ref([])
 
   const fetchRecommendedCards = async () => {
@@ -67,6 +68,15 @@ export const useMatchingStore = defineStore('matching', () => {
     return matchingRepository.postMatchingSendHeart(receiverId)
   }
 
+  const receiveHeart = (senderId) => {
+    return matchingRepository.postMatchingReceiveHeart(senderId)
+  }
+
+  const getReceivedHeartList = async () => {
+    heartSendMemebers.value = await matchingRepository.getMatchingReceivedHeartList()
+    return heartSendMemebers.value
+  }
+
   return {
     recommendedMembers,
     matchedInfoList,
@@ -81,6 +91,8 @@ export const useMatchingStore = defineStore('matching', () => {
     getMatchingSummaryForHomeView,
     fetchMatchingNotificationCounts,
     getMatchingNotificationList,
-    sendHeart
+    sendHeart,
+    receiveHeart,
+    getReceivedHeartList
   }
 })

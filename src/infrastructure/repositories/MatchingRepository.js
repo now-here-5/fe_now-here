@@ -5,7 +5,9 @@ import {
   getMatchingNotificationCount,
   getMatchingNotificationList,
   getMatchingSummary,
+  getReceivedHeartList,
   getRecommendedMembers,
+  postReceivedHeart,
   postSendHeart
 } from '@/infrastructure/http/api/matchingApi'
 
@@ -46,8 +48,29 @@ export class MatchingRepository {
     return data
   }
 
+  // 하트 보내기
   async postMatchingSendHeart(receiverId) {
     const res = await postSendHeart(receiverId)
     return res
+  }
+
+  // 하트 받기
+  async postMatchingReceiveHeart(senderId) {
+    const res = await postReceivedHeart(senderId)
+    return res
+  }
+
+  /**
+   * 서버로부터 나에게 하트를 보낸 멤버 리스트를 받아 엔티티 인스턴스화
+   * @returns {Promise<RecommendedMemberEntity[]>} 멤버 엔티티 배열
+   */
+  async getMatchingReceivedHeartList() {
+    const { data } = await getReceivedHeartList()
+    const recommendedMembers = data.map((member) => {
+      member.memberId = member.senderId
+      delete member.senderId
+      return new RecommendedMemberEntity(member)
+    })
+    return recommendedMembers
   }
 }

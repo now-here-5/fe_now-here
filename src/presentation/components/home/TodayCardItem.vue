@@ -1,5 +1,5 @@
 <template>
-  <div @click="sendHeart" class="character-card" :class="{ 'is-flipped': isFlipped }">
+  <div @click="onCustomClick" class="character-card" :class="{ 'is-flipped': isFlipped }">
     <div class="character-card-front">
       <!-- 앞면 -->
       <div class="character-card__header">
@@ -33,9 +33,7 @@
 <script setup>
 import { useMatchingStore } from '@/presentation/stores/matchingStore'
 import { computed } from 'vue'
-import { useRoute } from 'vue-router'
 import ModalL_Heart from '../popUp/ModalL_Heart.vue'
-import { popupStore } from '@/presentation/stores/popupStore'
 
 const props = defineProps({
   memberInfo: {
@@ -47,13 +45,14 @@ const props = defineProps({
     type: Boolean,
     required: false,
     withDefaults: false
+  },
+  onCustomClick: {
+    type: Function,
+    required: false
   }
 })
 
 const matchingStore = useMatchingStore()
-const store_popup = popupStore()
-const route = useRoute()
-
 const recommendedInfo = computed(() => {
   const gender = matchingStore.getRecommendedMemberGender(props.memberInfo)
   const age = matchingStore.getRecommendedMemberAge(props.memberInfo)
@@ -66,13 +65,6 @@ const gender = computed(() => recommendedInfo.value.gender)
 const age = computed(() => recommendedInfo.value.age)
 const mbtiScore = computed(() => recommendedInfo.value.mbtiScore)
 const avatarImgUrl = computed(() => recommendedInfo.value.avatarImgUrl)
-
-// 하트 보내기
-const sendHeart = () => {
-  if (route.path !== '/match') return
-  // alert('하트  보내기')
-  store_popup.modalL_heart = true
-}
 </script>
 
 <style lang="scss">
@@ -217,6 +209,7 @@ const sendHeart = () => {
       border-bottom-left-radius: 13px;
       border-bottom-right-radius: 13px;
       box-shadow: 0px 1px 3px 1px #00000026;
+      font-size: $textXS_size;
     }
   }
 }

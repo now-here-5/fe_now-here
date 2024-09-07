@@ -2,8 +2,8 @@
   <div class="matching-container">
     <nav class="mathcing-nav-container">
       <router-link to="/match" class="tab">매칭</router-link>
-      <router-link to="/match/sent-hearts" class="tab">보낸 하트</router-link>
       <router-link to="/match/received-hearts" class="tab">받은 하트</router-link>
+      <router-link to="/match/sent-hearts" class="tab">보낸 하트</router-link>
       <router-link to="/match/status" class="tab">매칭 현황</router-link>
     </nav>
     <!-- 매칭 -->
@@ -26,7 +26,8 @@
           <TodayCardItem
             :member-info="recommendedMembers[0]"
             :is-flipped="isFlipped"
-            :show-desc="true" />
+            :show-desc="true"
+            :on-custom-click="sendHeart" />
           <TodayCardItem
             :member-info="recommendedMembers[1]"
             :is-flipped="isFlipped"
@@ -81,6 +82,11 @@ const handleRouteChange = (to) => {
       store_Popup.getReviewModalTF() // 공통 함수 호출
     }
   }
+}
+
+// 하트 보내기
+const sendHeart = () => {
+  store_Popup.modalL_heart = true
 }
 
 onMounted(async () => {
