@@ -28,11 +28,24 @@
     <!-- 하위 라우터에서 설정된 컴포넌트들이 여기에 렌더링됨 -->
     <router-view></router-view>
   </div>
+
+  <ModalL_Landing />
+  <ModalL_Review />
 </template>
 
 <script setup>
 import { RecommendedMemberEntity } from '@/core/entities/RecommendedMemberEntity'
 import TodayCardItem from '@/presentation/components/home/TodayCardItem.vue'
+import ModalL_Landing from '@/presentation/components/popUp/ModalL_Landing.vue'
+import ModalL_Review from '@/presentation/components/popUp/ModalL_Review.vue'
+
+import { onMounted, watch } from 'vue'
+import { useRoute } from 'vue-router'
+
+import { popupStore } from '@/presentation/stores/popupStore.js'
+
+const route = useRoute()
+const store_Popup = popupStore() // 스토어 인스턴스를 가져옴
 
 const dummyData = {
   memberId: 1,
@@ -43,6 +56,28 @@ const dummyData = {
 }
 
 const dummyEntityData = new RecommendedMemberEntity(dummyData)
+
+const handleRouteChange = (to) => {
+  if (to.path === '/match') {
+    // '/match' 라우트일 때
+    if (store_Popup.matchAgree === false) {
+      store_Popup.modalL_matchLanding = true
+    } else {
+      store_Popup.getReviewModalTF() // 함수 호출
+    }
+  } else if (to.path === '/match/status') {
+    // '/match/status' 라우트일 때
+    store_Popup.getReviewModalTF() // 함수 호출
+  }
+}
+
+onMounted(() => {
+  handleRouteChange(route) // 첫 마운트 시에 라우트 확인
+})
+// 라우트가 변경될 때마다 실행
+watch(route, (to) => {
+  handleRouteChange(to)
+})
 </script>
 
 <style scoped lang="scss">
@@ -64,7 +99,7 @@ const dummyEntityData = new RecommendedMemberEntity(dummyData)
 
     .tab {
       text-decoration: none;
-      color: $grey;
+      color: $gray;
       font-size: $textM_size;
       font-weight: $textB_weight;
     }

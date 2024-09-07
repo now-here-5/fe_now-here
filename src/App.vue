@@ -8,28 +8,32 @@
     <RouterLink to="/" class="bottom-nav-menu" active-class="active">홈</RouterLink>
     <RouterLink to="/profile" class="bottom-nav-menu" active-class="active">프로필</RouterLink>
   </div>
+
+  <ToastM />
 </template>
 
 <script setup>
-import { useRoute } from 'vue-router'
 import MainHeader from '@/presentation/components/MainHeader.vue'
+import { useRoute } from 'vue-router'
 import { computed } from 'vue'
 
+import ToastM from '@/presentation/components/popUp/ToastM.vue'
+
 const route = useRoute()
-const showMainHeader = computed(() => route.path === '/' || route.path.startsWith('/match'))
+const showMainHeader = computed(() => route.path === '/' || route.path === '/profile')
 const showBottomNav = computed(() => route.path === '/' || route.path.startsWith('/match'))
 </script>
 
 <style scoped lang="scss">
 .main-container {
+  //padding: 0 20px; 삭제
   width: 400px;
   min-height: 100vh;
   margin: 0 auto;
-  padding: 0 20px;
   box-sizing: border-box;
   overflow-y: auto;
   background-color: white;
-  border: 1px solid #ddd;
+  border: 1px solid $white;
 
   /* 스크롤바 숨기기 설정 */
   scrollbar-width: none; /* Firefox용 설정 */
@@ -57,24 +61,24 @@ const showBottomNav = computed(() => route.path === '/' || route.path.startsWith
   background-color: white;
   width: 400px;
   height: 70px;
-  border-top: 1px solid $grey;
-  border-left: 1px solid #ddd;
-  border-right: 1px solid #ddd;
+  border-top: 1px solid $gray;
+  border-left: 1px solid $white;
+  border-right: 1px solid $white;
 
   .bottom-nav-menu {
     display: flex;
     justify-content: center;
     align-items: center;
     flex: 1;
-    font-size: $textMS_size;
-    font-weight: $textB_weight;
+    font-size: 14px;
+    font-weight: 700;
     text-decoration: none;
     color: inherit;
-    color: $grey;
+    color: $gray;
 
     &.active {
       border-top: 2px solid $dark;
-      font-size: $textXL_size;
+      font-size: 20px;
       color: $dark;
     }
   }

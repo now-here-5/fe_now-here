@@ -1,7 +1,7 @@
 <template>
   <div class="home-container">
     <main class="main-content">
-      <TimerHeader :ends-at="eventEndsAt" />
+      <TimerHeader :ends-at="endsAt" />
       <TodayCards />
       <HeartHistory />
       <MatchingStatus />
@@ -21,16 +21,17 @@ import TodayCards from '@/presentation/components/home/TodayCards.vue'
 import HeartHistory from '@/presentation/components/home/HeartHistory.vue'
 import MatchingStatus from '@/presentation/components/home/MatchingStatus.vue'
 import DirectReview from '@/presentation/components/home/DirectReview.vue'
-import { useEventStore } from '../stores/eventStore'
+import { eventStore } from '../stores/eventStore'
 import { storeToRefs } from 'pinia'
 import { onMounted } from 'vue'
 
-const eventStore = useEventStore()
-const { eventEndsAt } = storeToRefs(eventStore)
+const store_Event = eventStore()
+const { endsAt } = storeToRefs(store_Event)
 
 onMounted(() => {
-  eventStore.fetchEventEndsAt()
+  store_Event.fetchEventEndsAt()
 })
+//로그인, 자동로그인, 로그인 랜딩 시, eventStore에 저장해서 굳이 onMounted로 호출할 필요 없음
 </script>
 
 <style lang="scss">
@@ -38,6 +39,7 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  padding: 0 20px;
 }
 .main-content {
   margin-top: 70px;

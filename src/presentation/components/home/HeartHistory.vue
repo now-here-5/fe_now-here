@@ -68,7 +68,7 @@ onMounted(async () => {
     .heart-item {
       display: flex;
       justify-content: space-between;
-      background-color: $light_grey;
+      background-color: $light_gray;
       padding: 15px;
       align-items: center;
       border-radius: 15px;

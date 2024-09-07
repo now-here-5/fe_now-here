@@ -46,13 +46,13 @@ const sendDirectReview = async () => {
   margin-top: 30px;
 
   .title {
-    font-size: $textL_size;
-    font-weight: $textB_weight;
+    font-size: 18px;
+    font-weight: 700;
   }
 
   .desc {
-    font-size: $textMS_size;
-    font-weight: $textM_weight;
+    font-size: 14px;
+    font-weight: 500;
   }
 
   .input-container {
@@ -63,7 +63,7 @@ const sendDirectReview = async () => {
     height: 60px;
     padding: 10px;
     border-radius: 15px;
-    background-color: #f4f4f4;
+    background-color: $light_gray;
     margin-top: 10px;
 
     .input-background {
@@ -99,7 +99,7 @@ const sendDirectReview = async () => {
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); // 버튼 그림자
 
         span {
-          font-size: $textM_size;
+          font-size: 16px;
           color: $white; // 화살표 색상
         }
       }

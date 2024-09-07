@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { authStore } from '@/presentation/stores/authStore.js'
 
 console.log(import.meta.env.VITE_API_BASE_URL)
 const httpClient = axios.create({
@@ -12,13 +13,13 @@ const httpClient = axios.create({
 // 요청 인터셉터
 httpClient.interceptors.request.use(
   (config) => {
-    // 예: 인증 토큰 추가
-    config.headers.Authorization = `Bearer 9JLsfVdbadlAK_ZPFeWrgphUCbr4iAeC-62b99b1c-06a4-46cb-aabc-7803fe171e64`
-    // const token = localStorage.getItem('token')
-    // if (token) {
-    //   // config.headers.Authorization = `Bearer ${token}`
-    //   config.headers.Authorization = `Bearer    uquXP7bgLNvnCBcc0KYQ9w-b6NyfUvxN-22359b12-2ae3-49dd-a29a-d860c4e39b83`
-    // }
+    const store_Auth = authStore()
+    const token = store_Auth.token
+    console.log('토큰 in', token)
+    if (token) {
+      console.log('토큰 in http:', token)
+      config.headers.Authorization = `Bearer ${token}`
+    }
     return config
   },
   (error) => {
