@@ -348,73 +348,7 @@
     </div>
   </div>
 
-  <div v-if="modalL_heart" class="M_Overlay">
-    <div class="modalL">
-      <div class="modalL_contentContainer">
-        <div class="modalL_header">
-          <div class="modalL_titleContainer">
-            <p>
-              알림
-            </p>
-          </div>
-          <div class="modalL_clearContainer">
-          </div>
-        </div>
-        <div class="modalL_detailContainer">
-          <p>
-            하트를 보내시겠습니까?
-          </p>
-        </div>
-      </div>
-      <div class="modalL_btn">
-        <div class="modalL_btnBg">
-          <p>싫어요</p>
-        </div>
-        <div class="modalL_btnBg active" @click="closeAlertModalL_heart">
-          <p>좋아요</p>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div v-if="modalL_card" class="M_Overlay">
-    <div class="modalL">
-      <div class="modalL_contentContainer">
-        <div class="card_L">
-          <div class="infoContainer">
-            <div class="scoreContainer">
-              <p1>87</p1>
-              <p2>케미 점수</p2>
-            </div>
-            <div class="detailContainer">
-              <div class="mbtiContainer">
-                <p>ENTJ</p>
-              </div>
-              <div class="nameContainer">
-                <p1>심심한 너구리</p1>
-                <p2>27세, 남자</p2>
-              </div>
-            </div>
-            <div class="imgContainer">
-              <img class="MBTIimg" src="@/assets/images/MBTI_Avatar/avatar_MBTI_Male/avatar_ENTJ_Male.jpg.png"/>
-            </div>
-          </div>
-          <div class="contentContainer">
-            <div class="textContainer">
-              <p>안녕하세요 30자를 채워야해서 적어보는데 혹시나 할 얘기</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="modalL_btn">
-        <div class="modalL_btnBg">
-          <p>거절</p>
-        </div>
-        <div class="modalL_btnBg active" @click="closeAlertModalL_card">
-          <p>수락</p>
-        </div>
-      </div>
-    </div>
-  </div>
+
 
   <div v-if="tostM_review" class="tostM_space">
     <div class="mContainer" @click="closetostM_review">

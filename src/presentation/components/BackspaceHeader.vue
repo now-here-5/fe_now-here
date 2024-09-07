@@ -1,8 +1,8 @@
 <template>
   <header class="header">
-    <img class="backspace" src="../../assets/images/backspace.png" alt="backspace" @click="handleBackspaceClick" />
+    <img class="backspace" src="/images/backspace.png" alt="backspace" @click="handleBackspaceClick" />
     <div class="titleContainer">
-      <slot></slot>
+      <p>{{ title }}</p>
     </div>
   </header>
 </template>
@@ -12,12 +12,19 @@ import { useRouter } from 'vue-router';
 
 const router = useRouter();
 
+const props = defineProps({
+  title: {
+    type: String,
+    default: ''
+  }
+});
+
 const handleBackspaceClick = () => {
   router.go(-1);  // 이전 페이지로 이동
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .header {
   /* Auto layout */
   display: flex;
@@ -44,5 +51,10 @@ const handleBackspaceClick = () => {
   height: 24px;
 
   flex: 1;
+  p {
+    font-size: $textXL_size;
+    font-weight: $Bold_weight;
+    color: $dark;
+  }
 }
 </style>

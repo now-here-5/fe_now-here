@@ -4,20 +4,20 @@
       <p>각 이벤트마다 별도 가입이 필요합니다.<br>해당 이벤트에 처음 참여하신다면 "회원가입"을 눌러주세요.</p>
       <div class="inputContainer">
         <input
-            class="inputBox"
-            type="tel"
-            placeholder="휴대폰 번호"
-            v-model="store_Login.phone"
-            @input="formPhoneNumber"
-            maxlength="13"
+          class="inputBox"
+          type="tel"
+          placeholder="휴대폰 번호"
+          v-model="store_Login.phone"
+          @input="formatPhone"
+          maxlength="13"
         />
         <input
-            class="inputBox"
-            type="tel"
-            placeholder="비밀번호"
-            v-model="store_Login.password"
-            @input="formPassword"
-            maxlength="4"
+          class="inputBox"
+          type="tel"
+          placeholder="비밀번호"
+          v-model="store_Login.password"
+          @input="formatPassword"
+          maxlength="4"
         />
       </div>
     </div>
@@ -32,18 +32,11 @@ import { loginStore } from '@/presentation/stores/loginStore.js';
 
 const store_Login = loginStore();
 
-const formPhoneNumber = () => {
-  let number = store_Login.phone.replace(/[^0-9]/g, '');
-  if (number.length > 3 && number.length <= 7) {
-    number = number.replace(/(\d{3})(\d+)/, '$1-$2');
-  } else if (number.length > 7) {
-    number = number.replace(/(\d{3})(\d{4})(\d+)/, '$1-$2-$3');
-  }
-  store_Login.phone = number;
+const formatPhone = () => {
+  store_Login.phone = store_Login.formatPhone(store_Login.phone);  // 포맷팅 후 값을 다시 저장
 };
-
-const formPassword = () => {
-  store_Login.password = store_Login.password.replace(/[^0-9]/g, '').slice(0, 4);
+const formatPassword = () => {
+  store_Login.password = store_Login.formatPassword(store_Login.password);  // 포맷팅 후 값을 다시 저장
 };
 </script>
 
@@ -67,8 +60,8 @@ const formPassword = () => {
   p {
     line-height: 16px;
 
-    font-size: $MBTI_S;
-    font-weight: $font_Bold;
+    font-size: $MBTI_score_size;
+    font-weight: $Bold_weight;
     color: $dark;
     cursor: default;
   }
@@ -112,8 +105,8 @@ const formPassword = () => {
   gap: 10px;
 
   span {
-    font-size: $textS;
-    font-weight: $font_Regular;
+    font-size: $textS_size;
+    font-weight: $Regular_weight;
     color: $red;
     cursor: default;
   }

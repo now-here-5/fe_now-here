@@ -4,8 +4,14 @@
     <span class="desc">더 좋은 서비스를 만들기 위해, 많은 의견을 남겨주세요!</span>
     <div class="input-container">
       <div class="input-background">
-        <input type="text" placeholder="내용을 작성해 주세요" class="input-field" />
-        <button class="submit-button">
+        <input
+          type="text"
+          placeholder="내용을 작성해 주세요"
+          class="input-field"
+          @keyup.enter="sendDirectReview"
+          v-model="reviewValue"
+        />
+        <button class="submit-button" @click="sendDirectReview">
           <span>&rarr;</span>
         </button>
       </div>
@@ -13,7 +19,25 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { useInteractionStore } from '@/presentation/stores/interactionStore'
+import { ref } from 'vue'
+
+const interactionStore = useInteractionStore()
+const reviewValue = ref('')
+const sendDirectReview = async () => {
+  // TODO: field null 가능하도록 수정 요청
+  const body = {
+    content: reviewValue.value,
+    field: 1
+  }
+  const res = await interactionStore.postFeedback(body)
+  if (res.status === 200) alert('소중한 의견을 주셔서 감사합니다!')
+  else alert('피드백 전송 과정에서 오류가 발생했습니다.')
+
+  reviewValue.value = ''
+}
+</script>
 
 <style lang="scss">
 .direct-reivew-container {
@@ -22,13 +46,13 @@
   margin-top: 30px;
 
   .title {
-    font-size: 18px;
-    font-weight: 700;
+    font-size: $textL_size;
+    font-weight: $Bold_weight;
   }
 
   .desc {
-    font-size: 14px;
-    font-weight: 500;
+    font-size: $textMS_size;
+    font-weight: $Medium_weight;
   }
 
   .input-container {
@@ -39,7 +63,7 @@
     height: 60px;
     padding: 10px;
     border-radius: 15px;
-    background-color: #f4f4f4;
+    background-color: $light_gray;
     margin-top: 10px;
 
     .input-background {
@@ -57,7 +81,7 @@
         border: none;
         outline: none; // 포커스 시 외곽선 제거
         background: none; // 기본 배경 제거
-        font-size: 14px;
+        font-size: $textMS_size;
         color: #888; // 텍스트 색상
       }
 
@@ -75,7 +99,7 @@
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); // 버튼 그림자
 
         span {
-          font-size: 16px;
+          font-size: $Medium_weight;
           color: $white; // 화살표 색상
         }
       }

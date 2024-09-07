@@ -113,8 +113,8 @@ const navigateToReview = () => {
   align-self: stretch;
   flex-grow: 1;
   p {
-    font-size: $textM_B;
-    font-weight: $font_Bold;
+    font-size: $textM_size;
+    font-weight: $Bold_weight;
     color: $dark;
     text-align: center;
   }
@@ -148,8 +148,8 @@ const navigateToReview = () => {
   align-self: stretch;
   flex-grow: 0;
   p {
-    font-size: $textS_B;
-    font-weight: $font_Bold;
+    font-size: $textS_size;
+    font-weight: $Bold_weight;
     color: $dark;
     text-align: center;
   }
@@ -201,8 +201,8 @@ const navigateToReview = () => {
 
   flex-grow: 1;
   p {
-    font-size: $textM_B;
-    font-weight: $font_Bold;
+    font-size: $textM_size;
+    font-weight: $Bold_weight;
     color: $gray;
   }
   &.active {

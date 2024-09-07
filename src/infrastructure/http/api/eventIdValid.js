@@ -1,8 +1,8 @@
-import httpClient from '../httpClient'
+import httpClient_noneToken from '../httpClient_noneToken'
 
 export const getEventList = async () => {
 	try {
-		const response = await httpClient.get('/admin/event/list?status=true');
+		const response = await httpClient_noneToken.get('/admin/event/list?status=true');
 		console.log(`data`, response.data);
 		console.log(`data.data`, response.data.data)
 		console.log(`data.data`, response.data.data.eventList)

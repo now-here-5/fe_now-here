@@ -24,7 +24,7 @@ const router = createRouter({
         {
           path: 'signup_mobileAuth', // /match/sent-hearts
           name: 'signup_mobileAuth',
-          component: () => import('@/presentation/components/signup/Signup_MobileAuth.vue')
+          component: () => import('@/presentation/components/signup/Signup_PhoneAuth.vue')
         },
         {
           path: 'signup_password', // /match/received-hearts
@@ -129,7 +129,6 @@ router.beforeEach(async (to, from, next) => {
   
   // 페이지가 'login' 또는 'error'일 경우 이동을 허용
   if (to.name === 'login' || to.name === 'error' || to.name === 'contact') {
-    console.log('login 또는 error 페이지로 이동합니다.');
     next();
     return;
   }
@@ -160,7 +159,7 @@ router.beforeEach(async (to, from, next) => {
   
   try {
     // 서버에서 이벤트 정보를 받아와 토큰 유효성 판단
-    await store_Event.fetchEventDetail( store_Event );
+    await store_Event.fetchEventDetail();
     
     if (store_Event.status === true) {
       console.log('토큰이 유효합니다.');

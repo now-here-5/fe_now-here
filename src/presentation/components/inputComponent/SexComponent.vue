@@ -4,15 +4,15 @@
     <div class="btnContainer">
       <div
           class="sexBtn"
-          @click="selectSex('male')"
-          :class="{ selected: selectedSex === 'male' }"
+          @click="selectSex('Male')"
+          :class="{ selected: selectedSex === 'Male' }"
       >
         <p>남자</p>
       </div>
       <div
           class="sexBtn"
-          @click="selectSex('female')"
-          :class="{ selected: selectedSex === 'female' }"
+          @click="selectSex('Female')"
+          :class="{ selected: selectedSex === 'Female' }"
       >
         <p>여자</p>
       </div>
@@ -49,8 +49,8 @@ const selectSex = (sex) => {
 
   width: 100%;
   p {
-    font-size: $textL_B;
-    font-weight: $font_Bold;
+    font-size: $textL_size;
+    font-weight: $Bold_weight;
     color: $dark;
   }
 }
@@ -81,8 +81,8 @@ const selectSex = (sex) => {
 
   cursor: pointer;
   p {
-    font-size: $textL_B;
-    font-weight: $font_Bold;
+    font-size: $textL_size;
+    font-weight: $Bold_weight;
     color: $gray;
   }
 }

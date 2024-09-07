@@ -20,8 +20,8 @@
 
   height: 100vh;
   p {
-    font-weight: $font_Regular;
-    font-size: $textM;
+    font-weight: $Regular_weight;
+    font-size: $textM_size;
     text-align: center;
 
     color: $dark;

@@ -35,8 +35,8 @@ const handleClick = () => {
   border-radius: 7px;
   cursor: pointer;
   p {
-    font-size: $textM_B;
-    font-weight: $font_Bold;
+    font-size: $textM_size;
+    font-weight: $Bold_weight;
     color: $white;
   }
 }
@@ -45,8 +45,8 @@ const handleClick = () => {
   background-color: $middle_gray;
   cursor: not-allowed;
   p {
-    font-size: $textM_B;
-    font-weight: $font_Bold;
+    font-size: $textM_size;
+    font-weight: $Bold_weight;
     color: $gray;
   }
 }

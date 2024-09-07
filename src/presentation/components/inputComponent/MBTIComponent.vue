@@ -106,8 +106,8 @@ const selectMBTI = (value, index) => {
 
   width: 100%;
   p {
-    font-size: $textL_B;
-    font-weight: $font_Bold;
+    font-size: $textL_size;
+    font-weight: $Bold_weight;
     color: $dark;
   }
 }
@@ -145,8 +145,8 @@ const selectMBTI = (value, index) => {
   border: 1px solid $gray;
   border-radius: 7px;
   p {
-    font-size: $textXXL_B;
-    font-weight: $font_Bold;
+    font-size: $textXXL_size;
+    font-weight: $Bold_weight;
     color: $gray;
   }
 }

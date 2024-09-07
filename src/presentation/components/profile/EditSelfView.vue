@@ -19,9 +19,18 @@
 </template>
 
 <script setup>
-import { profileStore } from '@/presentation/stores/profile.js';
+import { useRoute, useRouter, onBeforeRouteLeave } from 'vue-router'; // useRouter를 추가로 import
+
+import { profileStore } from '@/presentation/stores/profileStore';
 
 const store_profile = profileStore();  // 스토어 사용
+
+
+// 사용자가 페이지를 떠나기 전에 원본 데이터 복구
+onBeforeRouteLeave((to, from, next) => {
+  store_profile.restoreOriginalData();
+  next();
+});
 </script>
 
 <style scoped lang="scss">
@@ -98,8 +107,8 @@ const store_profile = profileStore();  // 스토어 사용
 
   align-self: stretch;
   p {
-    font-size: $textM_B;
-    font-weight: $font_Bold;
+    font-size: $textM_size;
+    font-weight: $Bold_weight;
     color: $point;
   }
 }
@@ -111,13 +120,13 @@ const store_profile = profileStore();  // 스토어 사용
   gap: 5px;
 
   p1 {
-    font-size: $textXXL_B;
-    font-weight: $font_Bold;
+    font-size: $textXXL_size;
+    font-weight: $Bold_weight;
     color: $dark;
   }
   p2 {
-    font-size: $textMS;
-    font-weight: $font_Regular;
+    font-size: $textMS_size;
+    font-weight: $Regular_weight;
     color: $dark;
   }
 }
@@ -144,8 +153,8 @@ const store_profile = profileStore();  // 스토어 사용
 
   width: 100%;
   p {
-    font-size: $textL_B;
-    font-weight: $font_Bold;
+    font-size: $textL_size;
+    font-weight: $Bold_weight;
     color: $dark;
   }
 }
@@ -158,8 +167,8 @@ const store_profile = profileStore();  // 스토어 사용
 
   width: 100%;
   p {
-    font-size: $textS;
-    font-weight: $font_Regular;
+    font-size: $textS_size;
+    font-weight: $Regular_weight;
     color: $green;
   }
 }
@@ -187,14 +196,14 @@ const store_profile = profileStore();  // 스토어 사용
   border-bottom: 1px solid $dark;
   border-radius: 0px;
 
-  font-size: $textM_B;
-  font-weight: $font_Bold;
+  font-size: $textM_size;
+  font-weight: $Bold_weight;
   color: $dark;
 
   outline: none;
   &::placeholder {
-    font-size: $textMS;
-    font-weight: $font_Regular;
+    font-size: $textMS_size;
+    font-weight: $Regular_weight;
     color: $gray;
   }
 }
@@ -211,8 +220,8 @@ const store_profile = profileStore();  // 스토어 사용
   background: $middle_gray;
   border-radius: 8px;
   p {
-    font-size: $textS_B;
-    font-weight: $font_Bold;
+    font-size: $textS_size;
+    font-weight: $Bold_weight;
     color: $gray;
   }
 }
@@ -231,13 +240,13 @@ const store_profile = profileStore();  // 스토어 사용
   display: flex;
   flex-direction: column;
   p1 {
-    font-size: $textL_B;
-    font-weight: $font_Bold;
+    font-size: $textL_size;
+    font-weight: $Bold_weight;
     color: $dark;
   }
   p2 {
-    font-size: $textMS;
-    font-weight: $font_Regular;
+    font-size: $textMS_size;
+    font-weight: $Regular_weight;
     color: $gray;
   }
 }
@@ -278,8 +287,8 @@ const store_profile = profileStore();  // 스토어 사용
   border: 1px solid $gray;
   border-radius: 5px;
   p {
-    font-size: $textM_B;
-    font-weight: $font_Bold;
+    font-size: $textM_size;
+    font-weight: $Bold_weight;
     color: $gray;
   }
 }
@@ -294,8 +303,8 @@ const store_profile = profileStore();  // 스토어 사용
 
   width: 100%;
   p {
-    font-size: $textL_B;
-    font-weight: $font_Bold;
+    font-size: $textL_size;
+    font-weight: $Bold_weight;
     color: $dark;
   }
 }
@@ -324,8 +333,8 @@ const store_profile = profileStore();  // 스토어 사용
   border: 1px solid $gray;
   border-radius: 5px;
   p {
-    font-size: $textL_B;
-    font-weight: $font_Bold;
+    font-size: $textL_size;
+    font-weight: $Bold_weight;
     color: $gray;
   }
 }
@@ -340,8 +349,8 @@ const store_profile = profileStore();  // 스토어 사용
 
   width: 100%;
   p {
-    font-size: $textL_B;
-    font-weight: $font_Bold;
+    font-size: $textL_size;
+    font-weight: $Bold_weight;
     color: $dark;
   }
 }
@@ -370,8 +379,8 @@ const store_profile = profileStore();  // 스토어 사용
   border: 1px solid $gray;
   border-radius: 7px;
   p {
-    font-size: $textXXL_B;
-    font-weight: $font_Bold;
+    font-size: $textXXL_size;
+    font-weight: $Bold_weight;
     color: $gray;
   }
 }
@@ -393,8 +402,8 @@ const store_profile = profileStore();  // 스토어 사용
 
   width: 100%;
   p {
-    font-size: $textS;
-    font-weight: $font_Regular;
+    font-size: $textS_size;
+    font-weight: $Regular_weight;
     color: $gray;
   }
 }
@@ -414,13 +423,13 @@ const store_profile = profileStore();  // 스토어 사용
   border-radius: 5px;
   resize: none;  // 사용자가 크기 조절하지 못하게 설정
 
-  font-size: $textM_B;
+  font-size: $textM_size;
   color: $dark;
 
   outline: none;
   &::placeholder {
-    font-size: $textMS;
-    font-weight: $font_Regular;
+    font-size: $textMS_size;
+    font-weight: $Regular_weight;
     color: $gray;
     text-align: left;  // 가로 정렬을 왼쪽으로 설정
   }

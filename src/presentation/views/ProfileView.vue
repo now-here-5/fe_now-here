@@ -33,14 +33,12 @@
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { onMounted } from "vue"; // useRouter를 추가로 import
-import { profileStore } from '@/presentation/stores/profile.js'; // useRouter를 추가로 import
+
+import { profileStore } from '@/presentation/stores/profileStore.js';
+import { getAvatarSrc } from '@/core/usecases/GetAvatar.js'
 
 const router = useRouter(); // useRouter 사용
 const store_profile = profileStore();
-
-const navigateToEditProfile = () => {
-  router.push('/editProfile');
-}
 
 onMounted(async () => {
   const profile = await store_profile.fetchProfile()
@@ -51,12 +49,17 @@ onMounted(async () => {
 
 // 성별을 영어로 가져오기 위해 store_profile의 원래 값을 유지
 const avatarSrc = computed(() => {
-  const gender = store_profile.gender === "여성" ? "female" : "male";
-  const baseImgSrc = new URL(`../../assets/images/MBTI_Avatar/avatar_MBTI_${gender}/avatar_${store_profile.mbti}_${gender}.png`, import.meta.url).href;
-  console.log("baseImgSrc", baseImgSrc);
-  return baseImgSrc;
+  const gender = store_profile.gender === "여성" ? "Female" : "Male";
+  const mbti = store_profile.mbti;
+
+  const src = getAvatarSrc(gender, mbti)
+  console.log("baseImgSrc", src);
+  return src;
 });
 
+const navigateToEditProfile = () => {
+  router.push('/editProfile');
+}
 const navigateToContact = () => {
   router.push('/contact');
 }
@@ -121,8 +124,8 @@ const navigateToReview = () => {
   align-items: flex-start;
   gap: 5px;
   p {
-    font-weight: $font_Bold;
-    font-size: $textXXL_B;
+    font-weight: $Bold_weight;
+    font-size: $textXXL_size;
     color: $white;
     line-height: 30px;
   }
@@ -133,8 +136,8 @@ const navigateToReview = () => {
   align-items: flex-start;
   gap: 5px;
   p {
-    font-weight: $font_Bold;
-    font-size: $textM_B;
+    font-weight: $Bold_weight;
+    font-size: $textM_size;
     line-height: 19px;
     color: $white;
   }
@@ -147,8 +150,8 @@ const navigateToReview = () => {
 
   gap: 10px;
   p {
-    font-weight: $font_Regular;
-    font-size: $textM;
+    font-weight: $Regular_weight;
+    font-size: $textM_size;
     line-height: 19px;
     color: $white;
   }
@@ -166,8 +169,8 @@ const navigateToReview = () => {
 
   background: $dark;
   p {
-    font-weight: $font_Bold;
-    font-size: $textM_B;
+    font-weight: $Bold_weight;
+    font-size: $textM_size;
     line-height: 23px;
     text-align: center;
 
@@ -195,8 +198,8 @@ const navigateToReview = () => {
   align-self: stretch;
   cursor: pointer;
   p {
-    font-weight: $font_Bold;
-    font-size: $textM_B;
+    font-weight: $Bold_weight;
+    font-size: $textM_size;
     line-height: 23px;
     text-align: center;
 

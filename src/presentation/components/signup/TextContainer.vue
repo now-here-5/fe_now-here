@@ -62,8 +62,8 @@ const props = defineProps({
   align-self: stretch;
   flex-grow: 0;
   p {
-    font-size: $textM_B;
-    font-weight: $font_Bold;
+    font-size: $textM_size;
+    font-weight: $Bold_weight;
     color: $point;
   }
 }
@@ -75,13 +75,13 @@ const props = defineProps({
   gap: 5px;
 
   p1 {
-    font-size: $textXXL_B;
-    font-weight: $font_Bold;
+    font-size: $textXXL_size;
+    font-weight: $Bold_weight;
     color: $dark;
   }
   p {
-    font-size: $textMS;
-    font-weight: $font_Regular;
+    font-size: $textMS_size;
+    font-weight: $Regular_weight;
     color: $dark;
   }
 }

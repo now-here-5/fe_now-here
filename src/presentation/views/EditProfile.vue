@@ -1,7 +1,7 @@
 <template>
   <div class="frame">
     <header class="header">
-      <img class="backspace" src="@/assets/images/backspace.png" alt="backspace" @click="navigateToBack"/>
+      <img class="backspace" src="/images/backspace.png" alt="backspace" @click="navigateToBack"/>
       <div class="titleContainer">
         <p v-if="route.path === '/editProfile'">프로필 수정</p>
         <p v-if="route.path === '/editSelf'">자기소개 수정</p>
@@ -14,7 +14,7 @@
       <div class="selfEdit" v-if="route.path === '/editProfile'">
         <div class="optionItem" @click="navigateToSelf">
           <p>자기소개</p>
-          <img src="@/assets/images/keyboard_arrowRight.png" class="navigate_next" alt="navigate_next"/>
+          <img src="/images/keyboard_arrowRight.png" class="navigate_next" alt="navigate_next"/>
         </div>
         <div class="selfText">
           <div class="textContainer">
@@ -37,7 +37,7 @@
           <div class="text_component">
             <p>{{ store_profile.nickname }}</p>
             <div class="componentSpace">
-              <img src="@/assets/images/keyboard_arrowRight.png" class="navigate_next" alt="navigate_next" />
+              <img src="/images/keyboard_arrowRight.png" class="navigate_next" alt="navigate_next" />
             </div>
           </div>
         </div>
@@ -62,7 +62,7 @@
           <div class="text_component">
             <p>{{ store_profile.mbti }}</p>
             <div class="componentSpace">
-              <img src="@/assets/images/keyboard_arrowRight.png" class="navigate_next" alt="navigate_next" />
+              <img src="/images/keyboard_arrowRight.png" class="navigate_next" alt="navigate_next" />
             </div>
           </div>
         </div>
@@ -80,8 +80,8 @@
 </template>
 
 <script setup>
-import { useRoute, useRouter } from 'vue-router'; // useRouter를 추가로 import
-import { profileStore } from '@/presentation/stores/profile.js';
+import { useRoute, useRouter, onBeforeRouteLeave } from 'vue-router'; // useRouter를 추가로 import
+import { profileStore } from '@/presentation/stores/profileStore';
 import SelectBtn from "@/presentation/components/SelectBtn.vue"; // useRouter를 추가로 import
 
 const route = useRoute();
@@ -103,8 +103,10 @@ const navigateToMBTI = () => {
   router.push('/editMBTI');
 }
 const navigateToBack = () => {
+  store_profile.restoreOriginalData();
   router.back();
-}
+};
+
 </script>
 
 <style scoped lang="scss">
@@ -144,8 +146,8 @@ const navigateToBack = () => {
 
   flex: 1;
   p {
-    font-size: $textXL_B;
-    font-weight: $font_Bold;
+    font-size: $textXL_size;
+    font-weight: $Bold_weight;
     color: $dark;
   }
 }
@@ -186,8 +188,8 @@ const navigateToBack = () => {
   align-self: stretch;
 
   p {
-    font-weight: $font_Bold;
-    font-size: $textM_B;
+    font-weight: $Bold_weight;
+    font-size: $textM_size;
     line-height: 23px;
     text-align: center;
 
@@ -207,8 +209,8 @@ const navigateToBack = () => {
 
   width: 100%;
   p {
-    font-weight: $font_Regular;
-    font-size: $textS;
+    font-weight: $Regular_weight;
+    font-size: $textS_size;
 
     color: $gray;
   }
@@ -228,8 +230,8 @@ const navigateToBack = () => {
   border: 1px solid $gray;
   border-radius: 5px;
   p {
-    font-weight: $font_Regular;
-    font-size: $textMS_B;
+    font-weight: $Regular_weight;
+    font-size: $textMS_size;
 
     color: $dark;
   }
@@ -256,8 +258,8 @@ const navigateToBack = () => {
 
   background: $white;
   p {
-    font-weight: $font_Regular;
-    font-size: $textM;
+    font-weight: $Regular_weight;
+    font-size: $textM_size;
 
     color: $gray;
   }
@@ -271,8 +273,8 @@ const navigateToBack = () => {
 
   height: 24px;
   p {
-    font-weight: $font_Bold;
-    font-size: $textM_B;
+    font-weight: $Regular_weight;
+    font-size: $textM_size;
 
     color: $dark;
   }

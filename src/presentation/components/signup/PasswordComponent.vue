@@ -82,14 +82,14 @@ const focusInput = () => {
   width: 100%;
 
   p1 {
-    font-size: $textM_B;
-    font-weight: $font_Bold;
+    font-size: $textM_size;
+    font-weight: $Bold_weight;
     color: $dark;
   }
 
   p2 {
-    font-size: $textS;
-    font-weight: $font_Regular;
+    font-size: $textS_size;
+    font-weight: $Regular_weight;
     color: $red;
   }
 }

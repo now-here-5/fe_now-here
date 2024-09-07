@@ -50,13 +50,13 @@ watch(selfIntroduction, (newValue) => {
   display: flex;
   flex-direction: column;
   p1 {
-    font-size: $textL_B;
-    font-weight: $font_Bold;
+    font-size: $textL_size;
+    font-weight: $Bold_weight;
     color: $dark;
   }
   p2 {
-    font-size: $textMS;
-    font-weight: $font_Regular;
+    font-size: $textMS_size;
+    font-weight: $Regular_weight;
     color: $gray;
   }
 }
@@ -68,8 +68,8 @@ watch(selfIntroduction, (newValue) => {
 
   width: 100%;
   p {
-    font-size: $textS;
-    font-weight: $font_Regular;
+    font-size: $textS_size;
+    font-weight: $Regular_weight;
     color: $gray;
     align-self: flex-end;
   }
@@ -91,10 +91,10 @@ watch(selfIntroduction, (newValue) => {
   resize: none;  // 사용자가 크기 조절하지 못하게 설정
 
 
-  font-size: $textML;
+  font-size: $textML_size;
   &::placeholder {
-    font-size: $textML;
-    font-weight: $font_Regular;
+    font-size: $textML_size;
+    font-weight: $Regular_weight;
     color: $gray;
     text-align: left;  // 가로 정렬을 왼쪽으로 설정
   }

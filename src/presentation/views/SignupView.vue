@@ -5,8 +5,8 @@
       <div class="contentContainer" :class="{ profile: store_Signup.signupStep === 2 }">
         <TextContainer
           :location= store_Event.eventName
-          :title= store_Signup.textTitleSelect
-          :mention= store_Signup.textMentionSelect
+          :title= "store_Signup.textTitle[store_Signup.signupStep]"
+          :mention= "store_Signup.textMention[store_Signup.signupStep]"
         />
         <router-view />
       </div>
@@ -14,32 +14,32 @@
     <footer class="bottom">
       <SelectBtn
         :isActive="store_Signup.isActive"
-        :buttonText="store_Signup.BtnTextSelect"
+        :buttonText="store_Signup.btnText[store_Signup.signupStep]"
         @click="handleSubmit"
       />
     </footer>
 
     <ModalS
-      :isVisible="store_Signup.ModalS_duplicated"
-      :title="store_Signup.modalSTitle"
-      :message="store_Signup.modalSMessage"
-      :buttonText="store_Signup.modalSBtnText[0]"
-      @close= "store_Signup.closeModalS_duplicated"
+      :isVisible="store_Popup.ModalS_duplicated"
+      :title="store_Popup.modalSTitle"
+      :message="`이미 가입된 휴대폰 번호입니다.<br>다시 한 번 확인해주세요.`"
+      buttonText="확인"
+      @close="store_Popup.closeModal"
     />
     <ModalS
-      :isVisible="store_Signup.ModalS_authError"
-      :title="store_Signup.modalSTitle"
-      :message="store_Signup.modalSMessage"
-      :buttonText="store_Signup.modalSBtnText[0]"
-      @close= "store_Signup.closeModalS_authError"
+      :isVisible="store_Popup.ModalS_authError"
+      :title="store_Popup.modalSTitle"
+      :message="`인증 번호가 일치하지 않습니다.<br>다시 입력해주세요.`"
+      buttonText="확인"
+      @close="store_Popup.closeModal"
     />
     <ModalS
-      :isVisible="store_Signup.ModalS_completed"
-      :title="store_Signup.modalSTitle"
-      :message="store_Signup.modalSMessage"
+      :isVisible="store_Popup.ModalS_completed"
+      :title="store_Popup.modalSTitle"
+      :message="`어떤 인연이 기다리고 있을까요?<br>지금 바로 만나보세요.`"
       buttonText="매칭하러 가기"
       :imageSrc="store_ProfileSignup.modalImag"
-      @close="store_Signup.closeModalS_completed"
+      @close="store_Popup.closeModal"
     />
   </div>
 </template>
@@ -54,15 +54,13 @@ import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { signupStore } from "@/presentation/stores/SignupStore.js";
 import { eventStore } from '@/presentation/stores/eventStore.js';
-import { phoneAuthStore } from '@/presentation/stores/signupSub/phoneAuthStore.js';
-import { passwordStore } from '@/presentation/stores/signupSub/passwordStore.js';
 import { profileSignupStore } from "@/presentation/stores/signupSub/profileSignupStore.js";
+import { popupStore } from '@/presentation/stores/popupStore.js';
 
 const router = useRouter();
+const store_Popup = popupStore();
 const store_Signup = signupStore();
 const store_Event = eventStore();
-const store_PhoneAuth = phoneAuthStore();
-const store_Password = passwordStore();
 const store_ProfileSignup = profileSignupStore();
 
 const handleSubmit = () => {
@@ -70,27 +68,11 @@ const handleSubmit = () => {
 };
 
 onMounted(() => {
-  store_Signup.ModalS_duplicated = false;
-  store_Signup.ModalS_authError = false;
-  store_Signup.ModalS_completed = false;
-
-  console.log('Loaded event_id from store:', store_Event.encodedId);
-  console.log('Loaded event_name from store:', store_Event.eventName);
-
-  console.log('Loaded phone from store:', store_PhoneAuth.phoneNumber);
-
-  console.log('Loaded password from store:', store_Password.password);
-  console.log('Loaded passwordConfirm from store:', store_Password.passwordConfirm);
-
-  console.log('Loaded name from store:', store_Signup.name);
-  console.log('Loaded email from store:', store_Signup.duplicateName);
-  console.log('Loaded isDuplicate from store:', store_Signup.isDuplicate);
-  console.log('Loaded birth from store:', store_Signup.birth);
-  console.log('Loaded selectedSex from store:', store_Signup.selectedSex);
-  console.log('Loaded selectedMBTI from store:', store_Signup.selectedMBTI);
-  console.log('Loaded selfIntro from store:', store_Signup.selfIntro);
-  console.log('Loaded signupStep from store:', store_Signup.signupStep);
+  store_Popup.ModalS_duplicated = false;
+  store_Popup.ModalS_authError = false;
+  store_Popup.ModalS_completed = false;
 });
+
 </script>
 
 <style scoped lang="scss">

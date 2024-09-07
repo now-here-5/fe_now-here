@@ -35,7 +35,9 @@
 </template>
 
 <script setup>
-import { profileStore } from '@/presentation/stores/profile.js';
+import { useRoute, useRouter, onBeforeRouteLeave } from 'vue-router'; // useRouter를 추가로 import
+
+import { profileStore } from '@/presentation/stores/profileStore';
 import { onMounted, ref, watch } from "vue";
 import { eventStore } from "@/presentation/stores/eventStore.js";
 import { NameDuplicateRepository } from "@/infrastructure/repositories/NameDuplicateRepository.js";
@@ -104,7 +106,11 @@ const checkDuplicate = async () => {
     console.error('name Duplicate :', error);
   }
 }
-
+// 사용자가 페이지를 떠나기 전에 원본 데이터 복구
+onBeforeRouteLeave((to, from, next) => {
+  store_profile.restoreOriginalData();
+  next();
+});
 </script>
 
 <style scoped lang="scss">
@@ -118,8 +124,8 @@ const checkDuplicate = async () => {
 
   width: 100%;
   p {
-    font-size: $textL_B;
-    font-weight: $font_Bold;
+    font-size: $textL_size;
+    font-weight: $Bold_weight;
     color: $dark;
   }
 }
@@ -132,8 +138,8 @@ const checkDuplicate = async () => {
 
   width: 100%;
   p {
-    font-size: $textS;
-    font-weight: $font_Regular;
+    font-size: $textS_size;
+    font-weight: $Regular_weight;
     color: $gray;
   }
   .success {
@@ -171,12 +177,12 @@ const checkDuplicate = async () => {
   border-radius: 0px;
 
   outline: none;
-  font-size: $textM;
-  font-weight: $font_Regular;
+  font-size: $textM_size;
+  font-weight: $Regular_weight;
   color: $dark;
   &::placeholder {
-    font-size: $textMS;
-    font-weight: $font_Regular;
+    font-size: $textMS_size;
+    font-weight: $Regular_weight;
     color: $gray;
   }
 }
@@ -193,8 +199,8 @@ const checkDuplicate = async () => {
   background: $middle_gray;
   border-radius: 8px;
   p {
-    font-size: $textS_B;
-    font-weight: $font_Bold;
+    font-size: $textS_size;
+    font-weight: $Bold_weight;
     color: $gray;
   }
 }

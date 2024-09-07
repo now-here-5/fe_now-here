@@ -102,8 +102,8 @@ onMounted(() => {
 
   width: 100%;
   p {
-    font-size: $textL_B;
-    font-weight: $font_Bold;
+    font-size: $textL_size;
+    font-weight: $Bold_weight;
     color: $dark;
   }
 }
@@ -116,8 +116,8 @@ onMounted(() => {
 
   width: 100%;
   p {
-    font-size: $textS;
-    font-weight: $font_Regular;
+    font-size: $textS_size;
+    font-weight: $Regular_weight;
     color: $gray;
   }
   .success {
@@ -155,12 +155,12 @@ onMounted(() => {
   border-radius: 0px;
 
   outline: none;
-  font-size: $textM;
-  font-weight: $font_Regular;
+  font-size: $textM_size;
+  font-weight: $Regular_weight;
   color: $dark;
   &::placeholder {
-    font-size: $textMS;
-    font-weight: $font_Regular;
+    font-size: $textMS_size;
+    font-weight: $Regular_weight;
     color: $gray;
   }
 }
@@ -177,8 +177,8 @@ onMounted(() => {
   background: $middle_gray;
   border-radius: 8px;
   p {
-    font-size: $textS_B;
-    font-weight: $font_Bold;
+    font-size: $textS_size;
+    font-weight: $Bold_weight;
     color: $gray;
   }
 }

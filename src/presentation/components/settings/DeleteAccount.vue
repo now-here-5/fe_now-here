@@ -92,8 +92,8 @@ watch([contents], () => {
 
   flex: 1;
   p {
-    font-size: $textXL_B;
-    font-weight: $font_Bold;
+    font-size: $textXL_size;
+    font-weight: $Bold_weight;
     color: $dark;
   }
 }
@@ -127,13 +127,13 @@ watch([contents], () => {
 
   width: 100%;
   p1 {
-    font-size: $textXL_B;
-    font-weight: $font_Bold;
+    font-size: $textXL_size;
+    font-weight: $Bold_weight;
     color: $dark;
   }
   p2 {
-    font-size: $textS;
-    font-weight: $font_Regular;
+    font-size: $textS_size;
+    font-weight: $Regular_weight;
     color: $dark;
   }
 }
@@ -149,16 +149,16 @@ watch([contents], () => {
   height: 36px;
 
   border: none;
-  border-bottom: 1px solid #A4A4A4;
+  border-bottom: 1px solid $gray;
   border-radius: 0px;
   outline: none;
 
-  font-size: $textL_B;
-  font-weight: $font_Bold;
+  font-size: $textL_size;
+  font-weight: $Bold_weight;
 
   &::placeholder {
-    font-size: $textL_B;
-    font-weight: $font_Bold;
+    font-size: $textL_size;
+    font-weight: $Bold_weight;
     color: $gray;
   }
 }
@@ -171,8 +171,8 @@ watch([contents], () => {
 
   width: 100%;
   p {
-    font-size: $textXL_B;
-    font-weight: $font_Bold;
+    font-size: $textXL_size;
+    font-weight: $Bold_weight;
     color: $dark;
   }
 }
@@ -185,8 +185,8 @@ watch([contents], () => {
 
   width: 100%;
   p {
-    font-size: $textS;
-    font-weight: $font_Regular;
+    font-size: $textS_size;
+    font-weight: $Regular_weight;
     color: $gray;
   }
 }
@@ -208,14 +208,14 @@ watch([contents], () => {
   border-radius: 5px;
   resize: none;  // 사용자가 크기 조절하지 못하게 설정
 
-  font-size: $textM;
-  font-weight: $font_Regular;
+  font-size: $textM_size;
+  font-weight: $Regular_weight;
   color: $dark;
 
   outline: none;
   &::placeholder {
-    font-size: $textMS;
-    font-weight: $font_Regular;
+    font-size: $textMS_size;
+    font-weight: $Regular_weight;
     color: $gray;
     text-align: left;  // 가로 정렬을 왼쪽으로 설정
   }

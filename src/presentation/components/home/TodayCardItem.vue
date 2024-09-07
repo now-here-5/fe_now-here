@@ -1,18 +1,14 @@
 <template>
   <div class="character-card">
     <div class="character-card__header">
-      <img
-        src="@/assets/images/avatar_ESTP_Female.png"
-        alt="심심한너구리자너"
-        class="character-card__image"
-      />
+      <img :src="avatarImgUrl" alt="profile_img" class="character-card__image" />
       <div class="character-card__score">
-        <span class="character-card__score-value">87</span>
+        <span class="character-card__score-value">{{ mbtiScore }}</span>
         <span class="character-card__score-text-value">케미 점수</span>
       </div>
       <div class="character-card__body">
-        <h2 class="character-card__name">심심한너구리자너</h2>
-        <p class="character-card__info">23세, 남자</p>
+        <h2 class="character-card__name">{{ memberInfo?.nickname }}</h2>
+        <p class="character-card__info">{{ age }}세, {{ gender }}</p>
       </div>
     </div>
     <div class="character-card__footer">
@@ -21,17 +17,42 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { useMatchingStore } from '@/presentation/stores/matchingStore'
+import { computed } from 'vue'
+
+const props = defineProps({
+  memberInfo: {
+    type: Object,
+    required: true
+  }
+})
+
+const memberInfo = props.memberInfo
+const matchingStore = useMatchingStore()
+
+const recommendedInfo = computed(() => {
+  const gender = matchingStore.getRecommendedMemberGender(memberInfo)
+  const age = matchingStore.getRecommendedMemberAge(memberInfo)
+  const mbtiScore = matchingStore.getRecommendedMemberMbtiScore(memberInfo)
+  const avatarImgUrl = matchingStore.getRecommendedMemberAvatarImgUrl(memberInfo)
+  return { gender, age, mbtiScore, avatarImgUrl }
+})
+
+const gender = computed(() => recommendedInfo.value.gender)
+const age = computed(() => recommendedInfo.value.age)
+const mbtiScore = computed(() => recommendedInfo.value.mbtiScore)
+const avatarImgUrl = computed(() => recommendedInfo.value.avatarImgUrl)
+</script>
 
 <style lang="scss">
 .character-card {
   width: 170px;
   border-radius: 13px;
-
   box-shadow: 0px 1px 3px 1px #00000026;
-
   background-color: #fff;
   overflow: hidden;
+  cursor: pointer;
 
   &__header {
     position: relative;
@@ -48,9 +69,9 @@
       width: 100%;
       height: 100%;
       background: linear-gradient(
-        to top,
-        rgba(0, 0, 0, 0.5) 0%,
-        rgba(0, 0, 0, 0) 50%
+          to top,
+          rgba(0, 0, 0, 0.5) 0%,
+          rgba(0, 0, 0, 0) 50%
       ); // 그라데이션 설정
       pointer-events: none; // 마우스 이벤트를 무시하도록 설정
     }
@@ -65,7 +86,7 @@
     position: absolute;
     top: 0px;
     right: 0px;
-    background-color: #6200ea;
+    background-color: $point;
     color: #fff;
     border-bottom-left-radius: 13px;
     padding: 5px 10px;
@@ -73,13 +94,13 @@
     flex-direction: column;
 
     &-value {
-      font-size: 18px;
-      font-weight: 700;
+      font-size: $textL_size;
+      font-weight: $Bold_weight;
     }
 
     &-text-value {
-      font-size: 9px;
-      font-weight: 700;
+      font-size: $textXXS_size;
+      font-weight: $Bold_weight;
     }
   }
 
@@ -94,13 +115,13 @@
 
   &__name {
     margin: 0;
-    font-size: 14px;
-    font-weight: 700;
+    font-size: $textMS_size;
+    font-weight: $Bold_weight;
     color: $white;
   }
 
   &__info {
-    font-size: 10px;
+    font-size: $textXS_size;
     color: $white;
   }
 
@@ -108,7 +129,7 @@
     background-color: $light_gray;
     text-align: center;
     padding: 5px;
-    font-size: 16px;
+    font-size: $textM_size;
     font-weight: 700;
     height: 60px;
     .character-card__footer_content {

@@ -80,7 +80,7 @@ export const settingStore = defineStore('profileOption', () => {
 		const content = {
 			content: textContent.value,
 		};
-		
+		console.log('content', content);
 		try {
 			const response = await logoutRepository.deleteAccount(content);
 			console.log('response', response);

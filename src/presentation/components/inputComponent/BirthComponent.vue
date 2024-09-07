@@ -125,8 +125,8 @@ const isLeapYear = (year) => {
 
   width: 100%;
   p {
-    font-size: $textS;
-    font-weight: $font_Regular;
+    font-size: $textS_size;
+    font-weight: $Regular_weight;
     color: $red; /* 닉네임 중복 시 */
   }
 }
@@ -134,13 +134,13 @@ const isLeapYear = (year) => {
   display: flex;
   flex-direction: column;
   p1 {
-    font-size: $textL_B;
-    font-weight: $font_Bold;
+    font-size: $textL_size;
+    font-weight: $Bold_weight;
     color: $dark;
   }
   p2 {
-    font-size: $textMS;
-    font-weight: $font_Regular;
+    font-size: $textMS_size;
+    font-weight: $Regular_weight;
     color: $gray;
   }
 }
@@ -174,8 +174,8 @@ const isLeapYear = (year) => {
   border: 1px solid $gray;
   border-radius: 5px;
   p {
-    font-size: $textM_B;
-    font-weight: $font_Bold;
+    font-size: $textM_size;
+    font-weight: $Bold_weight;
     color: $gray;
   }
 }

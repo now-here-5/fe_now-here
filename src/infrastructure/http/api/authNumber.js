@@ -1,8 +1,8 @@
-import httpClient from '../httpClient'
+import httpClient_noneToken from '../httpClient_noneToken'
 
 export const getAuthNumber = async ( eventId, phone ) => {
 	try {
-		const response = await httpClient.get(`/member/verify/${eventId}?phone=${phone}`);
+		const response = await httpClient_noneToken.get(`/member/verify/${eventId}?phone=${phone}`);
 		console.log(`data`, response.data);
 		return response.data;
 	} catch (error) {
@@ -13,7 +13,7 @@ export const getAuthNumber = async ( eventId, phone ) => {
 
 export const postAuthNumber = async ( phone, authNum ) => {
 	try {
-		const response = await httpClient.post(`/member/verify/code?phone=${phone}&code=${authNum}`);
+		const response = await httpClient_noneToken.post(`/member/verify/code?phone=${phone}&code=${authNum}`);
 		console.log(`data`, response.data);
 		return response.data;
 	} catch (error) {

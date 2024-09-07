@@ -14,11 +14,12 @@ const httpClient = axios.create({
 httpClient.interceptors.request.use(
   (config) => {
     const store_Auth = authStore();
-    if (store_Auth.token) {
-      console.log('토큰 in http:', store_Auth.token);
-      config.headers.Authorization = `Bearer ${store_Auth.token}`
+    const token = store_Auth.token;
+    console.log('토큰 in', token);
+    if (token) {
+      console.log('토큰 in http:', token);
+      config.headers.Authorization = `Bearer ${token}`
     }
-    console.log('인터셉터 Authorization 헤더:', config.headers.Authorization);  // 여기서 확인
     return config
   },
   (error) => {

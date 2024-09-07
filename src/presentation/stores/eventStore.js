@@ -1,11 +1,17 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-import { EventDetailRepository } from '@/infrastructure/repositories/eventDetailRepository.js';
+import { EventIdValidRepository } from '@/infrastructure/repositories/EventIdValidRepository.js';
+import { EventDetailRepository } from '@/infrastructure/repositories/EventDetailRepository.js';
+import { EventRepository } from '@/infrastructure/repositories/eventRepository'
 
+const eventIdValidRepository = new EventIdValidRepository();
 const eventDetailRepository = new EventDetailRepository();
+
+const eventRepository = new EventRepository()
 
 export const eventStore = defineStore('event', () => {
 	const event_detail = ref({});
+	const eventList = ref([]);
 	
 	const encodedId = ref('')
 	const endsAt = ref('')
@@ -15,34 +21,48 @@ export const eventStore = defineStore('event', () => {
 	const startsAt = ref('')
 	const status = ref(null)
 	
-	const fetchEventDetail = async ( store ) => {
+	const eventEndsAt = ref('')
+	
+	const setEventData = (data) => {
+		event_detail.value = data;
+		encodedId.value = data.encodedId;
+		endsAt.value = data.endsAt;
+		eventId.value = data.eventId;
+		eventName.value = data.eventName;
+		location.value = data.location;
+		startsAt.value = data.startsAt;
+		status.value = data.status;
+	};
+	
+	const fetchEventList = async () => {
+		try {
+			const data = await eventIdValidRepository.getEventList();
+			eventList.value = data.eventList;
+		} catch (error) {
+			console.error('Event detail fetch failed:', error);
+		}
+	};
+	const checkEventExistence = async () => {
+		if (eventList.value.length === 0) {
+			await fetchEventList();
+		}
+		
+		const data = eventList.value.find(event => event.encodedId === encodedId.value);
+		if (data) {
+			setEventData(data);  // 공통 로직 사용
+			return true;
+		}
+		
+		return false;
+	};
+	
+	
+	const fetchEventDetail = async () => {
 		try {
 			const data = await eventDetailRepository.getEventDetail();
 			
 			if (data) {
-				store.event_detail = data;
-				console.log('event_detail:', store.event_detail);
-				
-				store.encodedId = data.encodedId;
-				console.log('encodedId:', store.encodedId);
-				
-				store.endsAt = data.endsAt;
-				console.log('endsAt:', store.endsAt);
-				
-				store.eventId = data.eventId;
-				console.log('eventId:', store.eventId);
-				
-				store.eventName = data.eventName;
-				console.log('eventName:', store.eventName);
-				
-				store.location = data.location;
-				console.log('location:', store.location);
-				
-				store.startsAt = data.startsAt;
-				console.log('startsAt:', store.startsAt);
-				
-				store.status = data.status;
-				console.log('status:', store.status);
+				setEventData(data);  // 공통 로직 사용
 			} else {
 				status.value = false;
 				console.error('No event detail found');
@@ -53,9 +73,15 @@ export const eventStore = defineStore('event', () => {
 		}
 	};
 	
+	const fetchEventEndsAt = async () => {
+		const { data } = await eventRepository.getEventEndsAt()
+		eventEndsAt.value = data.eventTime
+	}
+	
 	// 상태와 메서드를 return 해야 컴포넌트에서 사용할 수 있습니다.
 	return {
 		event_detail,
+		eventList,
 		
 		encodedId,
 		endsAt,
@@ -65,7 +91,9 @@ export const eventStore = defineStore('event', () => {
 		startsAt,
 		status,
 		
+		checkEventExistence,
 		fetchEventDetail,
+		fetchEventEndsAt,
 	};
 }, {
 	persist: {

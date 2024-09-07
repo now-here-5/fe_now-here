@@ -98,7 +98,7 @@ const handleClick = () => {
   width: 150px;
   height: 150px;
 
-  border: 3px solid #1C1C1C;
+  border: 3px solid $dark;
   border-radius: 8px;
 }
 .modalS_titleContainer {
@@ -111,8 +111,8 @@ const handleClick = () => {
 
   width: 100%;
   p {
-    font-size: $textM_B;
-    font-weight: $font_Bold;
+    font-size: $textM_size;
+    font-weight: $Bold_weight;
     color: $dark;
     text-align: center;
   }
@@ -129,8 +129,8 @@ const handleClick = () => {
 
   border-bottom: 1px solid $dark;
   p {
-    font-size: $textS;
-    font-weight: $font_Regular;
+    font-size: $textS_size;
+    font-weight: $Regular_weight;
     color: $dark;
     text-align: center;
   }
@@ -145,8 +145,8 @@ const handleClick = () => {
 
   width: 100%;
   p {
-    font-size: $textMS_B;
-    font-weight: $font_Bold;
+    font-size: $textMS_size;
+    font-weight: $Bold_weight;
     color: $dark;
     cursor: pointer;
   }

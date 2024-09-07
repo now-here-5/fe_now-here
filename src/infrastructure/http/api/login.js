@@ -1,15 +1,8 @@
-import httpClient from '../httpClient'
+import httpClient_noneToken from '../httpClient_noneToken'
 
 export const postLogin = async (encodedId, loginData) => {
 	try {
-		const response = await httpClient.post(`/auth/login/${encodedId}`, loginData,
-		{
-			headers: {
-				// 토큰을 제거하려면 Authorization 헤더를 명시적으로 제거합니다.
-				Authorization: undefined
-			}
-		}
-	);
+		const response = await httpClient_noneToken.post(`/auth/login/${encodedId}`, loginData);
 		return response.data;
 	} catch (error) {
 		console.error('Event detail fetching failed:', error);
