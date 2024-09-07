@@ -11,22 +11,22 @@
 </template>
 
 <script setup>
-import { defineProps } from 'vue';
+import { defineProps } from 'vue'
 
-const props = defineProps({
+defineProps({
   location: {
     type: String,
-    required: true,
+    required: true
   },
   title: {
     type: String,
-    required: true,
+    required: true
   },
   mention: {
     type: String,
-    required: true,
-  },
-});
+    required: true
+  }
+})
 </script>
 
 <style scoped lang="scss">

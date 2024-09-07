@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { authStore } from '@/presentation/stores/AuthStore.js'
+import { authStore } from '@/presentation/stores/authStore.js'
 
 console.log(import.meta.env.VITE_API_BASE_URL)
 const httpClient = axios.create({
