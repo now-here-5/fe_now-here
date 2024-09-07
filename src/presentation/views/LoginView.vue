@@ -35,7 +35,7 @@ import { useRoute, useRouter } from 'vue-router' // useRoute 추가
 
 import { loginStore } from '@/presentation/stores/loginStore.js'
 import { eventStore } from '@/presentation/stores/eventStore.js'
-import { popupStore } from '@/presentation/stores/popUpStore.js'
+import { popupStore } from '@/presentation/stores/popupStore.js'
 
 const route = useRoute() // useRoute를 통해 패스 변수를 추출
 const router = useRouter()
