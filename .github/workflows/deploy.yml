@@ -3,62 +3,60 @@ name: Deploy to Oracle Object Storage
 on:
   push:
     branches:
-        
-prod
+      - prod
 
   pull_request:
-      branches:
-        
-prod
+    branches:
+      - prod
 
 jobs:
   build:
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/${{ github.repository }}/oci-node-image:latest
+      image: ghcr.io/${{ github.repository }}/oci-node-image:latest # GitHub Container Registry에 저장된 Docker 이미지
 
     steps:
-      
-name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-      
-name: Cache Node.js modules
-      uses: actions/cache@v2
-      with:
-        path: ~/.npm
-        key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
-        restore-keys: |${{ runner.os }}-node-
 
-      
-name: Install dependencies
-      run: npm install
+      # npm 캐시를 사용해 의존성 설치 속도 최적화
+      - name: Cache Node.js modules
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
-      
-name: Build project
-      run: npm run build
+      - name: Install dependencies
+        run: npm install
 
-      
-name: Configure OCI CLI
-      run: |
-        mkdir -p ~/.oci
-        echo "[DEFAULT]" > ~/.oci/config
-        echo "user=${{ secrets.OCI_USER_OCID }}" >> ~/.oci/config
-        echo "fingerprint=${{ secrets.OCI_KEY_FINGERPRINT }}" >> ~/.oci/config
-        echo "key_file=~/.oci/api_key.pem" >> ~/.oci/config
-        echo "tenancy=${{ secrets.OCI_TENANCY_OCID }}" >> ~/.oci/config
-        echo "region=${{ secrets.OCI_REGION }}" >> ~/.oci/config
+      - name: Build project
+        run: npm run build
 
-          echo "${{ secrets.OCI_API_KEY }}" > ~/.oci/api_key.pem
-          chmod 600 ~/.oci/api_key.pem
 
-      
-name: Upload to Oracle Object Storage
-      run: |
-        oci os object bulk-upload -bn "now-here-bucket" \--src-dir "./dist" \--overwrite \--parallel-upload-count 5 \--retry-count 3 \--include ".js" \
-                                  --include ".css" \--include ".html" \
-                                  --include ".png" \
+      - name: Configure OCI CLI
+        run: |
+          # OCI CLI && node.js는 oci-node-image에 포함되어 있음.
+          # Configure OCI CLI credentials
+            mkdir -p ~/.oci
 
+            echo "[DEFAULT]" > ~/.oci/config
+            echo "user=${{ secrets.OCI_USER_OCID }}" >> ~/.oci/config
+            echo "fingerprint=${{ secrets.OCI_KEY_FINGERPRINT }}" >> ~/.oci/config
+            echo "key_file=~/.oci/api_key.pem" >> ~/.oci/config
+            echo "tenancy=${{ secrets.OCI_TENANCY_OCID }}" >> ~/.oci/config
+            echo "region=${{ secrets.OCI_REGION }}" >> ~/.oci/config
+          
+            echo "${{ secrets.OCI_API_KEY }}" > ~/.oci/api_key.pem
+            chmod 600 ~/.oci/api_key.pem
+
+      - name: Upload to Oracle Object Storage
+        run: |
+          oci os object bulk-upload -bn "now-here-bucket" \
+                                    --src-dir "./dist" \
+                                    --overwrite
       
 name: Verify Upload Success
       run: |

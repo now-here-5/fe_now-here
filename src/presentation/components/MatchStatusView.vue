@@ -10,7 +10,7 @@
           <div class="modalL_clearContainer"></div>
         </div>
         <div class="modalL_imgContainer">
-          <img src="@/assets/images/Modal_Image/modal_Mailbox.png" class="modalL_img" />
+          <img src="/images/Modal_Image/modal_Mailbox.png" class="modalL_img" />
         </div>
         <div class="modalL_detailContainer">
           <p>

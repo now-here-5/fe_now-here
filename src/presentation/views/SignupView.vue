@@ -52,7 +52,7 @@ import ModalS from "@/presentation/components/popUp/ModalS.vue";
 
 import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { signupStore } from "@/presentation/stores/SignupStore.js";
+import { signupStore } from "@/presentation/stores/signupStore.js";
 import { eventStore } from '@/presentation/stores/eventStore.js';
 import { profileSignupStore } from "@/presentation/stores/signupSub/profileSignupStore.js";
 import { popupStore } from '@/presentation/stores/popupStore.js';
