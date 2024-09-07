@@ -3,11 +3,11 @@ name: Deploy to Oracle Object Storage
 on:
   push:
     branches:
-      - prod
+        - prod
 
   pull_request:
-    branches:
-      - prod
+      branches:
+        - prod   
 
 jobs:
   build:
@@ -48,7 +48,7 @@ jobs:
             echo "key_file=~/.oci/api_key.pem" >> ~/.oci/config
             echo "tenancy=${{ secrets.OCI_TENANCY_OCID }}" >> ~/.oci/config
             echo "region=${{ secrets.OCI_REGION }}" >> ~/.oci/config
-          
+        
             echo "${{ secrets.OCI_API_KEY }}" > ~/.oci/api_key.pem
             chmod 600 ~/.oci/api_key.pem
 
