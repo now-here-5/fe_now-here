@@ -13,7 +13,7 @@ import SexComponent from "@/presentation/components/inputComponent/SexComponent.
 import MBTIComponent from "@/presentation/components/inputComponent/MBTIComponent.vue";
 import SelfComponent from "@/presentation/components/inputComponent/SelfComponent.vue";
 
-import { signupStore } from "@/presentation/stores/SignupStore.js";
+import { signupStore } from "@/presentation/stores/signupStore.js";
 import { profileSignupStore } from "@/presentation/stores/signupSub/profileSignupStore.js";
 
 const store_Signup = signupStore();
