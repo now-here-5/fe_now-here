@@ -52,3 +52,9 @@ export const getSentHeartList = async () => {
   const { data } = await httpClient.get(`/matching/receiverList`)
   return data
 }
+
+// 매칭 현황 페이지 조회
+export const getMatchStatusList = async () => {
+  const { data } = await httpClient.get(`/matching/summaryDetail`)
+  return data
+}

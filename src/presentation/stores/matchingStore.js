@@ -84,6 +84,11 @@ export const useMatchingStore = defineStore('matching', () => {
     return heartReceivedMemebers.value
   }
 
+  // 매칭 현황 리스트 조회
+  const getMatchStatusList = async () => {
+    return await matchingRepository.getMatchingMatchStatusList()
+  }
+
   return {
     recommendedMembers,
     matchedInfoList,
@@ -101,6 +106,7 @@ export const useMatchingStore = defineStore('matching', () => {
     sendHeart,
     receiveHeart,
     getReceivedHeartList,
-    getSentHeartList
+    getSentHeartList,
+    getMatchStatusList
   }
 })

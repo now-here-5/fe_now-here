@@ -68,6 +68,7 @@ const showBottomNav = computed(() => shouldShowElements(route.path))
   border-top: 1px solid $gray;
   border-left: 1px solid $white;
   border-right: 1px solid $white;
+  z-index: 100;
 
   .bottom-nav-menu {
     display: flex;

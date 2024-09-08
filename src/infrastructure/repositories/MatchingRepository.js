@@ -5,6 +5,7 @@ import {
   getMatchingNotificationCount,
   getMatchingNotificationList,
   getMatchingSummary,
+  getMatchStatusList,
   getReceivedHeartList,
   getRecommendedMembers,
   getSentHeartList,
@@ -87,5 +88,17 @@ export class MatchingRepository {
       return new RecommendedMemberEntity(member)
     })
     return sentHeartMembers
+  }
+
+  /**
+   * 서버로부터 매칭 현황 리스트를 받아 엔티티 인스턴스화
+   * @returns {Promise<RecommendedMemberEntity[]>} 멤버 엔티티 배열
+   */
+  async getMatchingMatchStatusList() {
+    const { data } = await getMatchStatusList()
+    const mathStatusList = data.map((member) => {
+      return new RecommendedMemberEntity(member)
+    })
+    return mathStatusList
   }
 }

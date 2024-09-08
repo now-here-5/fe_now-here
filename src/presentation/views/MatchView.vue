@@ -114,6 +114,7 @@ watch(route, (to) => {
     height: 30px;
     justify-content: space-around;
     background-color: white;
+    z-index: 100;
 
     .tab {
       text-decoration: none;

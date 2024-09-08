@@ -2,31 +2,7 @@
   <div v-if="store_popup.modalL_cardL" class="M_Overlay">
     <div class="modalL">
       <div class="modalL_contentContainer">
-        <div class="card_L">
-          <div class="infoContainer">
-            <div class="scoreContainer">
-              <p class="score">{{ mbtiScore }}</p>
-              <p class="text">케미 점수</p>
-            </div>
-            <div class="detailContainer">
-              <div class="mbtiContainer">
-                <p>ENTJ</p>
-              </div>
-              <div class="nameContainer">
-                <p class="name">{{ memberInfo.nickname }}</p>
-                <p class="age-gender">{{ age }}세, {{ gender }}</p>
-              </div>
-            </div>
-            <div class="imgContainer">
-              <img class="MBTIimg" :src="avatarImgUrl" />
-            </div>
-          </div>
-          <div class="contentContainer">
-            <div class="textContainer">
-              <p>{{ memberInfo?.description }}</p>
-            </div>
-          </div>
-        </div>
+        <MemberLargeCard :member-info="memberInfo" />
       </div>
       <div class="modalL_btn">
         <div class="modalL_btnBg" @click="rejectHeart">
@@ -43,8 +19,8 @@
 <script setup>
 import { useMatchingStore } from '@/presentation/stores/matchingStore'
 import { popupStore } from '@/presentation/stores/popupStore.js'
-import { computed } from 'vue'
 import { useRouter } from 'vue-router'
+import MemberLargeCard from '../MemberLargeCard.vue'
 
 const props = defineProps({
   memberInfo: {
@@ -57,22 +33,6 @@ const store_popup = popupStore()
 const matchingStore = useMatchingStore()
 const router = useRouter()
 
-const memberInfo = computed(() => {
-  const gender = matchingStore.getRecommendedMemberGender(props.memberInfo)
-  const age = matchingStore.getRecommendedMemberAge(props.memberInfo)
-  const mbtiScore = matchingStore.getRecommendedMemberMbtiScore(props.memberInfo)
-  const avatarImgUrl = matchingStore.getRecommendedMemberAvatarImgUrl(props.memberInfo)
-  const description = props.memberInfo.description
-  const memberId = props.memberInfo.memberId
-
-  return { gender, age, mbtiScore, avatarImgUrl, description, memberId }
-})
-
-const gender = computed(() => memberInfo.value.gender)
-const age = computed(() => memberInfo.value.age)
-const mbtiScore = computed(() => memberInfo.value.mbtiScore)
-const avatarImgUrl = computed(() => memberInfo.value.avatarImgUrl)
-
 const rejectHeart = () => {
   // 하트 거절 로직
   store_popup.modalL_cardL = false
@@ -80,7 +40,7 @@ const rejectHeart = () => {
 const acceptHeart = async () => {
   // 하트 수락 로직
   try {
-    await matchingStore.receiveHeart(memberInfo.value.memberId)
+    await matchingStore.receiveHeart(props.memberInfo.memberId)
     alert('매칭되었습니다.')
     router.push('/match/status')
   } catch (err) {

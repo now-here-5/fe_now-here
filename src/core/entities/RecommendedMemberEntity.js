@@ -7,6 +7,7 @@ export class RecommendedMemberEntity {
    * @param {Date} birthdate
    * @param {string} gender
    * @param {string} description
+   * @param {string} phoneNumber
    */
   constructor(member) {
     this.memberId = member.memberId
@@ -15,5 +16,6 @@ export class RecommendedMemberEntity {
     this.birthdate = member.birthdate
     this.gender = member.gender
     this.description = member.description
+    if (member.phoneNumber) this.phoneNumber = member.phoneNumber
   }
 }
