@@ -46,3 +46,9 @@ export const postReceivedHeart = async (senderId) => {
   const { data } = await httpClient.patch(`/matching/receive/${senderId}`)
   return data
 }
+
+// 보낸 하트 페이지 조회
+export const getSentHeartList = async () => {
+  const { data } = await httpClient.get(`/matching/receiverList`)
+  return data
+}
