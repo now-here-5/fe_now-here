@@ -7,6 +7,7 @@ const requestPermission = async () => {
   else {
     try {
       const permission = await Notification.requestPermission()
+      alert('permission', permission)
       if (permission === 'granted') {
         const token = await getToken(messaging, {
           vapidKey:
