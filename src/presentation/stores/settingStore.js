@@ -1,20 +1,21 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { useEventStore } from '@/presentation/stores/eventStore.js';
-import { useAuthStore } from '@/presentation/stores/authStore.js';
 import { NotificationRepository } from '@/infrastructure/repositories/NotificationRepository.js';
 import { LogoutRepository } from '@/infrastructure/repositories/LogoutRepository.js';
+import { useAuthStore } from '@/presentation/stores/authStore.js';
+import { useEventStore } from '@/presentation/stores/eventStore.js';
 
-const eventStore = useEventStore();
-const authStore = useAuthStore();
+
 const notificationRepository = new NotificationRepository();
 const logoutRepository = new LogoutRepository();
 
 export const useSettingStore = defineStore('setting', () => {
-	const notification = ref(true);
 	const router = useRouter();
+	const authStore = useAuthStore();
+	const eventStore = useEventStore();
 	
+	const notification = ref(true);
 	const textContent = ref('');
 	
 	const getNotiOption = async () => {

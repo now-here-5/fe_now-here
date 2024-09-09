@@ -13,12 +13,12 @@
 
 <script setup>
 import { onMounted, ref } from 'vue'
-import { useMatchingStore } from '../stores/matchingStore'
 import { useRoute } from 'vue-router'
+import { useMatchingStore } from '../stores/matchingStore'
 
 const route = useRoute()
-const notificationCounts = ref(0)
 const matchingStore = useMatchingStore()
+const notificationCounts = ref(0)
 
 onMounted(async () => {
   const { data } = await matchingStore.fetchMatchingNotificationCounts()

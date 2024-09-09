@@ -24,7 +24,7 @@
 <script setup>
 import { defineProps, defineEmits } from 'vue'
 
-const props = defineProps({
+defineProps({
   isVisible: Boolean,
   title: String,
   message: String,

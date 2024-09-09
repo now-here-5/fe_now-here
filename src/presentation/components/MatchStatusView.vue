@@ -34,9 +34,10 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { useMatchStore } from '@/presentation/stores/matchStore.js'
-import router from '@/presentation/router/index.js'
 
+const router = useRouter()
 const matchStore = useMatchStore()
 
 const modalL_review = ref(matchStore.modalL_review)

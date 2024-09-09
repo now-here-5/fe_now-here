@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue';
-import { usePopupStore } from '@/presentation/stores/popupStore.js';
 import { InteractionRepository } from '@/infrastructure/repositories/InteractionRepository'
+import { usePopupStore } from '@/presentation/stores/popupStore.js';
 
 const interactionRepository = new InteractionRepository()
 

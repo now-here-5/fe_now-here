@@ -1,19 +1,17 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-
 import { formPhoneNumber, formPassword, cleanPhoneNumber } from '@/core/usecases/FormNumber.js';
-
 import { LoginRepository } from "@/infrastructure/repositories/LoginRepository.js";
-import { useEventStore } from '@/presentation/stores/eventStore.js';
 import { useAuthStore } from '@/presentation/stores/authStore.js';
+import { useEventStore } from '@/presentation/stores/eventStore.js';
 
 const loginRepository = new LoginRepository();
-const eventStore = useEventStore();
-const authStore = useAuthStore();
 
 export const useLoginStore = defineStore('login', () => {
 	const router = useRouter();
+	const authStore = useAuthStore();
+	const eventStore = useEventStore();
 	
 	const phone = ref('');
 	const password = ref('');

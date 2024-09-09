@@ -29,19 +29,16 @@ import InputForm from '@/presentation/components/login/InputForm.vue'
 import SelectBtn from '@/presentation/components/SelectBtn.vue'
 import BottomSheet_Agree from '@/presentation/components/popUp/BottomSheet_Agree.vue'
 import BottomSheet_Term from '@/presentation/components/popUp/BottomSheet_Term.vue'
-
 import { onMounted } from 'vue'
-import { useRoute, useRouter } from 'vue-router' // useRoute 추가
-
-import { useLoginStore } from '@/presentation/stores/loginStore.js'
+import { useRoute, useRouter } from 'vue-router'
 import { useEventStore } from '@/presentation/stores/eventStore.js'
+import { useLoginStore } from '@/presentation/stores/loginStore.js'
 import { usePopupStore } from '@/presentation/stores/popupStore.js'
 
 const route = useRoute() // useRoute를 통해 패스 변수를 추출
 const router = useRouter()
-
-const loginStore = useLoginStore()
 const eventStore = useEventStore()
+const loginStore = useLoginStore()
 const popupStore = usePopupStore()
 
 // onMounted에서 store의 checkEventExistence 함수를 호출

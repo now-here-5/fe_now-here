@@ -31,7 +31,6 @@ const { endsAt } = storeToRefs(eventStore)
 onMounted(() => {
   eventStore.fetchEventEndsAt()
 })
-//로그인, 자동로그인, 로그인 랜딩 시, eventStore에 저장해서 굳이 onMounted로 호출할 필요 없음
 </script>
 
 <style lang="scss">

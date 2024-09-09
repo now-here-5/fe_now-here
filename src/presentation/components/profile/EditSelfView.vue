@@ -15,8 +15,7 @@
 </template>
 
 <script setup>
-import { useRoute, useRouter, onBeforeRouteLeave } from 'vue-router' // useRouter를 추가로 import
-
+import { onBeforeRouteLeave } from 'vue-router' // useRouter를 추가로 import
 import { useProfileStore } from '@/presentation/stores/profileStore'
 
 const profileStore = useProfileStore() // 스토어 사용

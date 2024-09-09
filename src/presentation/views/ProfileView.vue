@@ -30,9 +30,8 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { onMounted } from 'vue' // useRouter를 추가로 import
 import { useProfileStore } from '@/presentation/stores/profileStore.js'
 import { getAvatarSrc } from '@/core/usecases/GetAvatar.js'
 

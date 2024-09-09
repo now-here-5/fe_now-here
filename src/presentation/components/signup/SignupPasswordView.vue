@@ -13,11 +13,11 @@
 <script setup>
 import PasswordComponent from "@/presentation/components/signup/PasswordComponent.vue";
 import { ref, watch, computed } from 'vue';
-import { signupStore } from "@/presentation/stores/signupStore.js";
-import { passwordStore } from "@/presentation/stores/signupSub/passwordStore.js";
+import { useSignupStore } from "@/presentation/stores/signupStore.js";
+import { usePasswordSignupStore } from "@/presentation/stores/signupSub/passwordSignupStore.js";
 
-const store_Signup = signupStore();
-const store_Password = passwordStore();
+const store_Password = usePasswordSignupStore();
+const store_Signup = useSignupStore();
 store_Signup.signupCompleted.password = false;
 store_Signup.signupStep = 1;
 

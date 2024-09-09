@@ -27,9 +27,9 @@
 </template>
 
 <script setup>
+import SelectBtn from '@/presentation/components/SelectBtn.vue'
 import { ref, watch } from 'vue'
 import { useSettingStore } from '@/presentation/stores/settingStore.js'
-import SelectBtn from '@/presentation/components/SelectBtn.vue'
 
 const settingStore = useSettingStore()
 

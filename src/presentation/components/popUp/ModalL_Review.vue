@@ -33,7 +33,6 @@
 
 <script setup>
 import { useRouter } from 'vue-router'
-
 import { usePopupStore } from '@/presentation/stores/popupStore.js'
 
 const router = useRouter()

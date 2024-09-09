@@ -55,25 +55,24 @@
 
 <script setup>
 import BackspaceHeader from '@/presentation/components/BackspaceHeader.vue'
+import SelectBtn from '@/presentation/components/SelectBtn.vue'
 import starFilled from '/images/star_filled.png'
 import starUnfilled from '/images/star.png'
-import SelectBtn from '@/presentation/components/SelectBtn.vue'
 import { ref, watch, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
+import { formPhoneNumber } from '@/core/usecases/FormNumber.js'
 import { useInteractionStore } from '@/presentation/stores/interactionStore.js'
 import { usePopupStore } from '@/presentation/stores/popupStore.js'
-import { formPhoneNumber } from '@/core/usecases/FormNumber.js'
 
+const route = useRoute() // useRoute 사용
+const type = route.params.type
 const interactionStore = useInteractionStore()
 const popupStore = usePopupStore()
-
 const phoneNumber = ref(interactionStore.number)
 const contents = ref(interactionStore.textContent || '')
 const rate = ref(0)
 const Active = ref(false)
 const router = useRouter() // useRouter 사용
-const route = useRoute() // useRoute 사용
-const type = route.params.type
 
 const setRating = (rating) => {
   interactionStore.rate = rate.value = rating;

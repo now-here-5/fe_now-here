@@ -91,7 +91,6 @@ import { useProfileStore } from '@/presentation/stores/profileStore'
 
 const route = useRoute()
 const router = useRouter() // useRouter 사용
-
 const profileStore = useProfileStore()
 
 const handleSubmit = () => {

@@ -363,10 +363,10 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';  // computed를 추가로 import
-import matchLandingMobile from '@/assets/images/Modal_Image/modal_mobile.png';
-import matchLandingCouple from '@/assets/images/Modal_Image/modal_Couple.png';
-import matchLandingNotification from '@/assets/images/Modal_Image/modal_Notification.png';
+import { ref, computed } from 'vue';
+import matchLandingMobile from '/images/Modal_Image/modal_mobile.png';
+import matchLandingCouple from '/images/Modal_Image/modal_Couple.png';
+import matchLandingNotification from '/images/Modal_Image/modal_Notification.png';
 
 const selectBottomSheetVisible = ref(false); // 모달의 가시성을 제어하는 상태 변수
 const nowEvent = ref('건국대학교'); // 현재 선택된 이벤트 서버에서 받아와야 함

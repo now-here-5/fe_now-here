@@ -49,19 +49,18 @@ import BackspaceHeader from "@/presentation/components/BackspaceHeader.vue";
 import TextContainer from "@/presentation/components/signup/TextContainer.vue";
 import SelectBtn from "@/presentation/components/SelectBtn.vue";
 import ModalS from "@/presentation/components/popUp/ModalS.vue";
-
 import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { useSignupStore } from "@/presentation/stores/signupStore.js";
-import { useEventStore } from '@/presentation/stores/eventStore.js';
 import { useProfileSignupStore } from "@/presentation/stores/signupSub/profileSignupStore.js";
+import { useEventStore } from '@/presentation/stores/eventStore.js';
 import { usePopupStore } from '@/presentation/stores/popupStore.js';
+import { useSignupStore } from "@/presentation/stores/signupStore.js";
 
 const router = useRouter();
-const signupStore = useSignupStore();
-const eventStore = useEventStore();
 const profileSignupStore = useProfileSignupStore();
+const eventStore = useEventStore();
 const popupStore = usePopupStore();
+const signupStore = useSignupStore();
 
 const handleSubmit = () => {
   signupStore.submit(router);

@@ -49,10 +49,8 @@
 import matchLandingMobile from '/images/Modal_Image/modal_mobile.png'
 import matchLandingCouple from '/images/Modal_Image/modal_Couple.png'
 import matchLandingNotification from '/images/Modal_Image/modal_Notification.png'
-
 import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
-
 import { usePopupStore } from '@/presentation/stores/popupStore.js'
 
 const router = useRouter()

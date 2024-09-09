@@ -1,15 +1,14 @@
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
-
 import { PhoneAuthRepository } from "@/infrastructure/repositories/PhoneAuthRepository.js";
 import { RegisterRepository } from "@/infrastructure/repositories/RegisterRepository.js";
-import { useAuthStore } from '@/presentation/stores/authStore.js';
-import { usePopupStore } from '@/presentation/stores/popupStore.js';
-import { useEventStore } from '@/presentation/stores/eventStore.js';
-import { usePhoneAuthSignupStore } from '@/presentation/stores/signupSub/phoneAuthSignupStore.js';
 import { usePasswordSignupStore } from '@/presentation/stores/signupSub/passwordSignupStore.js';
+import { usePhoneAuthSignupStore } from '@/presentation/stores/signupSub/phoneAuthSignupStore.js';
 import { useProfileSignupStore } from '@/presentation/stores/signupSub/profileSignupStore.js';
+import { useAuthStore } from '@/presentation/stores/authStore.js';
+import { useEventStore } from '@/presentation/stores/eventStore.js';
+import { usePopupStore } from '@/presentation/stores/popupStore.js';
 import { cleanPhoneNumber } from '@/core/usecases/FormNumber.js'
 import { getAvatarSrc } from '@/core/usecases/GetAvatar.js'
 
@@ -18,13 +17,12 @@ const registerRepository = new RegisterRepository();
 
 export const useSignupStore = defineStore('signup', () => {
 	const router = useRouter();
-	
-	const authStore = useAuthStore();
-	const popupStore = usePopupStore();
-	const phoneAuthSignupStore = usePhoneAuthSignupStore();
 	const passwordSignupStore = usePasswordSignupStore();
+	const phoneAuthSignupStore = usePhoneAuthSignupStore();
 	const profileSignupStore = useProfileSignupStore();
+	const authStore = useAuthStore();
 	const eventStore = useEventStore();
+	const popupStore = usePopupStore();
 	
 	const signupStep = ref(0);
 	// 회원가입 완료 여부

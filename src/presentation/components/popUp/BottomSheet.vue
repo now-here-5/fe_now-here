@@ -88,11 +88,11 @@
 </template>
 
 <script setup>
-import { useLoginStore } from '@/presentation/stores/loginStore.js';
 import { useRouter } from 'vue-router';
+import { useLoginStore } from '@/presentation/stores/loginStore.js';
 
-const loginStore = useLoginStore();
 const router = useRouter();
+const loginStore = useLoginStore();
 
 const closeBottomSheet = (type) => {
   loginStore.bottomSheetVisible[type] = false;

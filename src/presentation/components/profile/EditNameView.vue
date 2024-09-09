@@ -35,16 +35,15 @@
 </template>
 
 <script setup>
-import { useRoute, useRouter, onBeforeRouteLeave } from 'vue-router' // useRouter를 추가로 import
-
-import { useProfileStore } from '@/presentation/stores/profileStore'
-import { onMounted, ref, watch } from 'vue'
-import { useEventStore } from '@/presentation/stores/eventStore.js'
+import { ref, watch } from 'vue'
+import { onBeforeRouteLeave } from 'vue-router'
 import { NameDuplicateRepository } from '@/infrastructure/repositories/NameDuplicateRepository.js'
+import { useEventStore } from '@/presentation/stores/eventStore.js'
+import { useProfileStore } from '@/presentation/stores/profileStore'
 
 const nameDuplicateRepository = new NameDuplicateRepository()
-const profileStore = useProfileStore() // 스토어 사용
 const eventStore = useEventStore()
+const profileStore = useProfileStore()
 
 const name = ref(profileStore.nickname)
 const duplicateBtn = ref(false)

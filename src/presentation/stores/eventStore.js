@@ -6,7 +6,6 @@ import { EventRepository } from '@/infrastructure/repositories/eventRepository'
 
 const eventIdValidRepository = new EventIdValidRepository()
 const eventDetailRepository = new EventDetailRepository()
-
 const eventRepository = new EventRepository()
 
 export const useEventStore = defineStore(

@@ -69,11 +69,9 @@ import { useRoute, useRouter } from 'vue-router'
 import { ref, onMounted } from 'vue'
 import { useSettingStore } from '@/presentation/stores/settingStore.js'
 
-const settingStore = useSettingStore()
-
 const route = useRoute()
 const router = useRouter()
-
+const settingStore = useSettingStore()
 const modalL_deleteAccount = ref(false)
 
 onMounted(() => {

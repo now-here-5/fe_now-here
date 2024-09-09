@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { useEventStore } from '@/presentation/stores/eventStore.js'
 import { useAuthStore } from '@/presentation/stores/authStore.js'
+import { useEventStore } from '@/presentation/stores/eventStore.js'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -119,8 +119,8 @@ const router = createRouter({
 
 // 라우터 가드 추가
 router.beforeEach(async (to, from, next) => {
-  const store_Event = useEventStore()
   const store_Auth = useAuthStore()
+  const store_Event = useEventStore()
 
   // 페이지가 'login' 또는 'error'일 경우 이동을 허용
   if (to.name === 'login' || to.name === 'error' || to.name === 'interaction') {
