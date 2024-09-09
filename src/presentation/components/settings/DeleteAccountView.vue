@@ -28,21 +28,21 @@
 
 <script setup>
 import { ref, watch } from 'vue'
-import { settingStore } from '@/presentation/stores/settingStore.js'
+import { useSettingStore } from '@/presentation/stores/settingStore.js'
 import SelectBtn from '@/presentation/components/SelectBtn.vue'
 
-const store_setting = settingStore()
+const settingStore = useSettingStore()
 
 const contents = ref('') // 문의 내용 추가
 const Active = ref(false)
 
 const handleSubmit = async () => {
-  await store_setting.deleteTo()
+  await settingStore.deleteTo()
 }
 
 const formContents = () => {
-  store_setting.textContent = contents.value
-  console.log(store_setting.textContent)
+  settingStore.textContent = contents.value
+  console.log(settingStore.textContent)
 }
 // 휴대폰 번호와 문의 내용의 변화를 감지하여 버튼 활성화 상태를 업데이트
 watch([contents], () => {
