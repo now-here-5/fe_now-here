@@ -55,7 +55,7 @@ export const loginStore = defineStore('login', () => {
 		try {
 			const response = await loginRepository.postLogin(store_Event.encodedId, loginData);
       if (response.message !== "로그인에 실패했습니다.") {
-	      store_Auth.token = response.data.token.token
+	      store_Auth.token = response.data.token
 	      router.push({ name: 'home' });
       } else {
 	      alertMessage.value = alertMessageInventory.value[3];
