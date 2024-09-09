@@ -20,12 +20,13 @@ const requestPermission = async () => {
         //   }
         alert(`FCM 토큰: ${token}`)
         const res = await httpClient.post(
-          `/notification/saveFCMToken?token=${token}&memberId=${47}`
+          `/notification/saveFCMToken?token=${token}&memberId=${54}`
         )
         console.log('API res', res)
         alert(`서버에 FCM 토큰 저장 완료`)
       } else {
         console.log('알림 권한이 거부되었습니다.')
+        alert('알림 권한이 거부되었습니다.')
       }
     } catch (error) {
       console.error('FCM 토큰 가져오기 실패:', error)
