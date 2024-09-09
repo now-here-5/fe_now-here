@@ -22,19 +22,19 @@ const router = createRouter({
       redirect: { name: 'signup_mobileAuth' }, // 기본 리다이렉트 설정
       children: [
         {
-          path: 'signup_mobileAuth', // /match/sent-hearts
-          name: 'signup_mobileAuth',
-          component: () => import('@/presentation/components/signup/Signup_PhoneAuth.vue')
+          path: 'signup-mobileAuth',
+          name: 'signup-mobileAuth',
+          component: () => import('@/presentation/components/signup/SignupPhoneAuthView.vue')
         },
         {
-          path: 'signup_password', // /match/received-hearts
-          name: 'signup_password',
-          component: () => import('@/presentation/components/signup/Signup_Password.vue')
+          path: 'signup-password',
+          name: 'signup-password',
+          component: () => import('@/presentation/components/signup/SignupPasswordView.vue')
         },
         {
-          path: 'signup_profile', // /match/status
-          name: 'signup_profile',
-          component: () => import('@/presentation/components/signup/Signup_Profile.vue')
+          path: 'signup-profile',
+          name: 'signup-profile',
+          component: () => import('@/presentation/components/signup/SignupProfileView.vue')
         }
       ]
     },
@@ -95,7 +95,7 @@ const router = createRouter({
         {
           path: '/deleteAccount', // /match/sent-hearts
           name: 'deleteAccount',
-          component: () => import('@/presentation/components/settings/DeleteAccount.vue')
+          component: () => import('@/presentation/components/settings/DeleteAccountView.vue')
         }
       ]
     },
@@ -105,14 +105,9 @@ const router = createRouter({
       component: () => import('@/presentation/views/NoticeView.vue')
     },
     {
-      path: '/contact',
-      name: 'contact',
-      component: () => import('@/presentation/views/ContactView.vue')
-    },
-    {
-      path: '/review',
-      name: 'review',
-      component: () => import('@/presentation/views/ReviewView.vue')
+      path: '/interaction/:type',
+      name: 'interaction',
+      component: () => import('@/presentation/views/InteractionView.vue')
     },
     {
       path: '/error',
@@ -128,7 +123,7 @@ router.beforeEach(async (to, from, next) => {
   const store_Auth = authStore()
 
   // 페이지가 'login' 또는 'error'일 경우 이동을 허용
-  if (to.name === 'login' || to.name === 'error' || to.name === 'contact') {
+  if (to.name === 'login' || to.name === 'error' || to.name === 'interaction') {
     next()
     return
   }
