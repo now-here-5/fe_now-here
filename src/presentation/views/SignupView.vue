@@ -2,44 +2,44 @@
   <div class="frame">
     <BackspaceHeader />
     <main class="body">
-      <div class="contentContainer" :class="{ profile: store_Signup.signupStep === 2 }">
+      <div class="contentContainer" :class="{ profile: signupStore.signupStep === 2 }">
         <TextContainer
-          :location= store_Event.eventName
-          :title= "store_Signup.textTitle[store_Signup.signupStep]"
-          :mention= "store_Signup.textMention[store_Signup.signupStep]"
+          :location= eventStore.eventName
+          :title= "signupStore.textTitle[signupStore.signupStep]"
+          :mention= "signupStore.textMention[signupStore.signupStep]"
         />
         <router-view />
       </div>
     </main>
     <footer class="bottom">
       <SelectBtn
-        :isActive="store_Signup.isActive"
-        :buttonText="store_Signup.btnText[store_Signup.signupStep]"
+        :isActive="signupStore.isActive"
+        :buttonText="signupStore.btnText[signupStore.signupStep]"
         @click="handleSubmit"
       />
     </footer>
 
     <ModalS
-      :isVisible="store_Popup.ModalS_duplicated"
-      :title="store_Popup.modalSTitle"
+      :isVisible="popupStore.ModalS_duplicated"
+      :title="popupStore.modalSTitle"
       :message="`이미 가입된 휴대폰 번호입니다.<br>다시 한 번 확인해주세요.`"
       buttonText="확인"
-      @close="store_Popup.closeModal"
+      @close="popupStore.closeModal"
     />
     <ModalS
-      :isVisible="store_Popup.ModalS_authError"
-      :title="store_Popup.modalSTitle"
+      :isVisible="popupStore.ModalS_authError"
+      :title="popupStore.modalSTitle"
       :message="`인증 번호가 일치하지 않습니다.<br>다시 입력해주세요.`"
       buttonText="확인"
-      @close="store_Popup.closeModal"
+      @close="popupStore.closeModal"
     />
     <ModalS
-      :isVisible="store_Popup.ModalS_completed"
-      :title="store_Popup.modalSTitle"
+      :isVisible="popupStore.ModalS_completed"
+      :title="popupStore.modalSTitle"
       :message="`어떤 인연이 기다리고 있을까요?<br>지금 바로 만나보세요.`"
       buttonText="매칭하러 가기"
-      :imageSrc="store_ProfileSignup.modalImag"
-      @close="store_Popup.closeModal"
+      :imageSrc="profileSignupStore.modalImag"
+      @close="popupStore.closeModal"
     />
   </div>
 </template>
@@ -52,25 +52,25 @@ import ModalS from "@/presentation/components/popUp/ModalS.vue";
 
 import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { signupStore } from "@/presentation/stores/signupStore.js";
-import { eventStore } from '@/presentation/stores/eventStore.js';
-import { profileSignupStore } from "@/presentation/stores/signupSub/profileSignupStore.js";
-import { popupStore } from '@/presentation/stores/popupStore.js';
+import { useSignupStore } from "@/presentation/stores/signupStore.js";
+import { useEventStore } from '@/presentation/stores/eventStore.js';
+import { useProfileSignupStore } from "@/presentation/stores/signupSub/profileSignupStore.js";
+import { usePopupStore } from '@/presentation/stores/popupStore.js';
 
 const router = useRouter();
-const store_Popup = popupStore();
-const store_Signup = signupStore();
-const store_Event = eventStore();
-const store_ProfileSignup = profileSignupStore();
+const signupStore = useSignupStore();
+const eventStore = useEventStore();
+const profileSignupStore = useProfileSignupStore();
+const popupStore = usePopupStore();
 
 const handleSubmit = () => {
-  store_Signup.submit(router);
+  signupStore.submit(router);
 };
 
 onMounted(() => {
-  store_Popup.ModalS_duplicated = false;
-  store_Popup.ModalS_authError = false;
-  store_Popup.ModalS_completed = false;
+  popupStore.ModalS_duplicated = false;
+  popupStore.ModalS_authError = false;
+  popupStore.ModalS_completed = false;
 });
 
 </script>

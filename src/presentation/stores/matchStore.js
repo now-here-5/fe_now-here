@@ -4,7 +4,7 @@ import { FeedbackRepository } from '@/infrastructure/repositories/FeedbackReposi
 
 const feedbackRepository = new FeedbackRepository();
 
-export const matchStore = defineStore('match', () => {
+export const useMatchStore = defineStore('match', () => {
 	const matchAgree = ref(false); // 초기 매치 동의 값을 false로 설정합니다.
 	
 	const modalL_review = ref(false);

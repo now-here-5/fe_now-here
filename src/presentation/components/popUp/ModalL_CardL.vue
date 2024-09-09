@@ -1,5 +1,5 @@
 <template>
-  <div v-if="store_popup.modalL_cardL" class="M_Overlay">
+  <div v-if="popupStore.modalL_cardL" class="M_Overlay">
     <div class="modalL">
       <div class="modalL_contentContainer">
         <div class="card_L">
@@ -41,19 +41,19 @@
 </template>
 
 <script setup>
-import { popupStore } from '@/presentation/stores/popupStore.js' // useRouter를 추가로 import
+import { usePopupStore } from '@/presentation/stores/popupStore.js' // useRouter를 추가로 import
 import { getAvatarSrc } from '@/core/usecases/GetAvatar.js'
 getAvatarSrc(gender, mbti) // 아바타 동적 이미지 할당 usecase
 
-const store_popup = popupStore()
+const popupStore = usePopupStore()
 
 const rejectHeart = () => {
   // 하트 거절 로직
-  store_popup.modalL_cardL = false
+  popupStore.modalL_cardL = false
 }
 const acceptHeart = () => {
   // 하트 수락 로직
-  store_popup.modalL_cardL = false
+  popupStore.modalL_cardL = false
 }
 </script>
 

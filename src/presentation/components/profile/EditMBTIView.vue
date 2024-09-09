@@ -74,27 +74,27 @@
 import { useRoute, useRouter, onBeforeRouteLeave } from 'vue-router' // useRouter를 추가로 import
 
 import { ref } from 'vue'
-import { profileStore } from '@/presentation/stores/profileStore'
+import { useProfileStore } from '@/presentation/stores/profileStore'
 
-const store_profile = profileStore() // 스토어 사용
+const profileStore = useProfileStore() // 스토어 사용
 
 const selectedMBTI = ref(
-  typeof store_profile.mbti === 'string'
-    ? store_profile.mbti.split('')
-    : Array.isArray(store_profile.mbti)
-      ? store_profile.mbti
+  typeof profileStore.mbti === 'string'
+    ? profileStore.mbti.split('')
+    : Array.isArray(profileStore.mbti)
+      ? profileStore.mbti
       : ['', '', '', '']
 )
 
 const selectMBTI = (value, index) => {
   selectedMBTI.value[index] = value
-  store_profile.mbti = selectedMBTI.value.join('')
-  console.log(store_profile.mbti)
+  profileStore.mbti = selectedMBTI.value.join('')
+  console.log(profileStore.mbti)
 }
 
 // 사용자가 페이지를 떠나기 전에 원본 데이터 복구
 onBeforeRouteLeave((to, from, next) => {
-  store_profile.restoreOriginalData()
+  profileStore.restoreOriginalData()
   next()
 })
 </script>

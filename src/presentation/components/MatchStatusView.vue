@@ -34,12 +34,12 @@
 
 <script setup>
 import { ref } from 'vue'
-import { matchStore } from '@/presentation/stores/matchStore.js'
+import { useMatchStore } from '@/presentation/stores/matchStore.js'
 import router from '@/presentation/router/index.js'
 
-const store_match = matchStore()
+const matchStore = useMatchStore()
 
-const modalL_review = ref(store_match.modalL_review)
+const modalL_review = ref(matchStore.modalL_review)
 
 const closeAlertModalL_review = () => {
   modalL_review.value = false

@@ -8,8 +8,8 @@
       </p2>
     </div>
     <div class="inputContainer">
-      <textarea class="selfInput" v-model="store_profile.description" maxlength="30" />
-      <p>{{ store_profile.description.length }}/30</p>
+      <textarea class="selfInput" v-model="profileStore.description" maxlength="30" />
+      <p>{{ profileStore.description.length }}/30</p>
     </div>
   </div>
 </template>
@@ -17,13 +17,13 @@
 <script setup>
 import { useRoute, useRouter, onBeforeRouteLeave } from 'vue-router' // useRouter를 추가로 import
 
-import { profileStore } from '@/presentation/stores/profileStore'
+import { useProfileStore } from '@/presentation/stores/profileStore'
 
-const store_profile = profileStore() // 스토어 사용
+const profileStore = useProfileStore() // 스토어 사용
 
 // 사용자가 페이지를 떠나기 전에 원본 데이터 복구
 onBeforeRouteLeave((to, from, next) => {
-  store_profile.restoreOriginalData()
+  profileStore.restoreOriginalData()
   next()
 })
 </script>

@@ -18,23 +18,23 @@
         </div>
         <div class="selfText">
           <div class="textContainer">
-            <p>{{ store_profile.description }}</p>
+            <p>{{ profileStore.description }}</p>
           </div>
-          <p>{{ store_profile.description.length }}/30</p>
+          <p>{{ profileStore.description.length }}/30</p>
         </div>
       </div>
       <div class="editItemList" v-if="route.path === '/editProfile'">
         <div class="editItem">
           <p>휴대폰 번호</p>
           <div class="text_component">
-            <p>{{ store_profile.phone }}</p>
+            <p>{{ profileStore.phone }}</p>
             <div class="componentSpace"></div>
           </div>
         </div>
         <div class="editItem" @click="navigateToName">
           <p>닉네임</p>
           <div class="text_component">
-            <p>{{ store_profile.nickname }}</p>
+            <p>{{ profileStore.nickname }}</p>
             <div class="componentSpace">
               <img
                 src="/images/keyboard_arrowRight.png"
@@ -47,21 +47,21 @@
         <div class="editItem">
           <p>나이</p>
           <div class="text_component">
-            <p>만 {{ store_profile.birthdate }}세</p>
+            <p>만 {{ profileStore.birthdate }}세</p>
             <div class="componentSpace"></div>
           </div>
         </div>
         <div class="editItem">
           <p>성별</p>
           <div class="text_component">
-            <p>{{ store_profile.gender }}</p>
+            <p>{{ profileStore.gender }}</p>
             <div class="componentSpace"></div>
           </div>
         </div>
         <div class="editItem" @click="navigateToMBTI">
           <p>MBTI</p>
           <div class="text_component">
-            <p>{{ store_profile.mbti }}</p>
+            <p>{{ profileStore.mbti }}</p>
             <div class="componentSpace">
               <img
                 src="/images/keyboard_arrowRight.png"
@@ -76,7 +76,7 @@
     <footer class="bottom">
       <SelectBtn
         v-if="route.path !== '/editProfile'"
-        :isActive="store_profile.hasChanges"
+        :isActive="profileStore.hasChanges"
         buttonText="수정 완료"
         @click="handleSubmit"
       />
@@ -85,17 +85,17 @@
 </template>
 
 <script setup>
-import { useRoute, useRouter, onBeforeRouteLeave } from 'vue-router' // useRouter를 추가로 import
-import { profileStore } from '@/presentation/stores/profileStore'
-import SelectBtn from '@/presentation/components/SelectBtn.vue' // useRouter를 추가로 import
+import SelectBtn from '@/presentation/components/SelectBtn.vue'
+import { useRoute, useRouter } from 'vue-router'
+import { useProfileStore } from '@/presentation/stores/profileStore'
 
 const route = useRoute()
 const router = useRouter() // useRouter 사용
 
-const store_profile = profileStore()
+const profileStore = useProfileStore()
 
 const handleSubmit = () => {
-  store_profile.submit(route.path) // 현재 라우트를 전달
+  profileStore.submit(route.path) // 현재 라우트를 전달
 }
 
 const navigateToSelf = () => {
@@ -108,7 +108,7 @@ const navigateToMBTI = () => {
   router.push('/editMBTI')
 }
 const navigateToBack = () => {
-  store_profile.restoreOriginalData()
+  profileStore.restoreOriginalData()
   router.back()
 }
 </script>

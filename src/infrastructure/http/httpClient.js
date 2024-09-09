@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { authStore } from '@/presentation/stores/authStore.js'
+import { useAuthStore } from '@/presentation/stores/authStore.js'
 
 console.log(import.meta.env.VITE_API_BASE_URL)
 const httpClient = axios.create({
@@ -13,7 +13,7 @@ const httpClient = axios.create({
 // 요청 인터셉터
 httpClient.interceptors.request.use(
   (config) => {
-    const store_Auth = authStore()
+    const store_Auth = useAuthStore()
     const token = store_Auth.token
     console.log('토큰 in', token)
     if (token) {

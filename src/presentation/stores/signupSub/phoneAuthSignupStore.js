@@ -1,15 +1,14 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-
 import { PhoneAuthRepository } from "@/infrastructure/repositories/PhoneAuthRepository.js";
-import { eventStore } from '@/presentation/stores/eventStore.js';
-import { popupStore } from '@/presentation/stores/popupStore.js';
+import { useEventStore } from '@/presentation/stores/eventStore.js';
+import { usePopupStore } from '@/presentation/stores/popupStore.js';
 
 const phoneAuthRepository = new PhoneAuthRepository();
 
-export const phoneAuthStore = defineStore('phoneAuth', () => {
-	const store_Event = eventStore();
-	const store_Popup = popupStore();
+export const usePhoneAuthSignupStore = defineStore('phoneAuth', () => {
+	const eventStore = useEventStore();
+	const popupStore = usePopupStore();
 	
 	const phoneNumber = ref("");
 	const authNumber = ref("");
@@ -21,14 +20,14 @@ export const phoneAuthStore = defineStore('phoneAuth', () => {
 	
 	const fetchAuthNumber = async () => {
 		const phone = phoneNumber.value.replace(/[^0-9]/g, '');
-		const eventId = store_Event.encodedId;
+		const eventId = eventStore.encodedId;
 		
 		try {
 			const data = await phoneAuthRepository.getAuthNumber(eventId, phone);
 			if ( data.message === '현재 이벤트로 이미 가입된 번호입니다.' ) {
-				store_Popup.ModalS_duplicated = true;
+				popupStore.ModalS_duplicated = true;
 			} else {
-				store_Popup.ModalS_duplicated = false;
+				popupStore.ModalS_duplicated = false;
 				authBtnText.value = '재전송';
 				isAuthSend.value = true;
 			}

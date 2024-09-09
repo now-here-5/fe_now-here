@@ -10,7 +10,7 @@
           class="inputBox"
           type="tel"
           placeholder="휴대폰 번호"
-          v-model="store_Login.phone"
+          v-model="loginStore.phone"
           @input="formatPhone"
           maxlength="13"
         />
@@ -18,28 +18,28 @@
           class="inputBox"
           type="tel"
           placeholder="비밀번호"
-          v-model="store_Login.password"
+          v-model="loginStore.password"
           @input="formatPassword"
           maxlength="4"
         />
       </div>
     </div>
     <div class="alertContainer">
-      <span v-if="store_Login.alertMessage" v-html="store_Login.alertMessage"></span>
+      <span v-if="loginStore.alertMessage" v-html="loginStore.alertMessage"></span>
     </div>
   </div>
 </template>
 
 <script setup>
-import { loginStore } from '@/presentation/stores/loginStore.js'
+import { useLoginStore } from '@/presentation/stores/loginStore.js'
 
-const store_Login = loginStore()
+const loginStore = useLoginStore()
 
 const formatPhone = () => {
-  store_Login.phone = store_Login.formatPhone(store_Login.phone) // 포맷팅 후 값을 다시 저장
+  loginStore.phone = loginStore.formatPhone(loginStore.phone) // 포맷팅 후 값을 다시 저장
 }
 const formatPassword = () => {
-  store_Login.password = store_Login.formatPassword(store_Login.password) // 포맷팅 후 값을 다시 저장
+  loginStore.password = loginStore.formatPassword(loginStore.password) // 포맷팅 후 값을 다시 저장
 }
 </script>
 

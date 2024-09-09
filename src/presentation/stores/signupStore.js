@@ -4,27 +4,27 @@ import { useRouter } from 'vue-router';
 
 import { PhoneAuthRepository } from "@/infrastructure/repositories/PhoneAuthRepository.js";
 import { RegisterRepository } from "@/infrastructure/repositories/RegisterRepository.js";
-import { authStore } from '@/presentation/stores/authStore.js';
-import { popupStore } from '@/presentation/stores/popupStore.js';
-import { eventStore } from '@/presentation/stores/eventStore.js';
-import { phoneAuthStore } from '@/presentation/stores/signupSub/phoneAuthStore.js';
-import { passwordStore } from '@/presentation/stores/signupSub/passwordStore.js';
-import { profileSignupStore } from '@/presentation/stores/signupSub/profileSignupStore.js';
+import { useAuthStore } from '@/presentation/stores/authStore.js';
+import { usePopupStore } from '@/presentation/stores/popupStore.js';
+import { useEventStore } from '@/presentation/stores/eventStore.js';
+import { usePhoneAuthSignupStore } from '@/presentation/stores/signupSub/phoneAuthSignupStore.js';
+import { usePasswordSignupStore } from '@/presentation/stores/signupSub/passwordSignupStore.js';
+import { useProfileSignupStore } from '@/presentation/stores/signupSub/profileSignupStore.js';
 import { cleanPhoneNumber } from '@/core/usecases/FormNumber.js'
 import { getAvatarSrc } from '@/core/usecases/GetAvatar.js'
 
 const phoneAuthRepository = new PhoneAuthRepository();
 const registerRepository = new RegisterRepository();
 
-export const signupStore = defineStore('signup', () => {
+export const useSignupStore = defineStore('signup', () => {
 	const router = useRouter();
 	
-	const store_Popup = popupStore();
-	const store_PhoneAuth = phoneAuthStore();
-	
-	const store_Password = passwordStore();
-	const store_ProfileSignup = profileSignupStore();
-
+	const authStore = useAuthStore();
+	const popupStore = usePopupStore();
+	const phoneAuthSignupStore = usePhoneAuthSignupStore();
+	const passwordSignupStore = usePasswordSignupStore();
+	const profileSignupStore = useProfileSignupStore();
+	const eventStore = useEventStore();
 	
 	const signupStep = ref(0);
 	// 회원가입 완료 여부
@@ -54,14 +54,14 @@ export const signupStore = defineStore('signup', () => {
 		switch (signupStep.value) {
 			case 0: // 휴대폰 인증 단계
 				try {
-					const phone = cleanPhoneNumber(store_PhoneAuth.phoneNumber);
-					const authNum = store_PhoneAuth.authNumber;
+					const phone = cleanPhoneNumber(phoneAuthSignupStore.phoneNumber);
+					const authNum = phoneAuthSignupStore.authNumber;
 					const data = await phoneAuthRepository.postAuthNumber(phone, authNum);
 					if ( data.message === '휴대폰 인증에 실패했습니다.' ) {
-						store_Popup.ModalS_authError = true;
+						popupStore.ModalS_authError = true;
 						console.error('Auth failed:', data.message);
 					} else {
-						store_Popup.ModalS_authError = false;
+						popupStore.ModalS_authError = false;
 						router.push('/signup/signup_password');
 					}
 				} catch (error) {
@@ -70,48 +70,35 @@ export const signupStore = defineStore('signup', () => {
 				break;
 			
 			case 1: // 비밀번호 설정 단계
-				if ( store_Password.password === store_Password.passwordConfirm ) {
+				if ( passwordSignupStore.password === passwordSignupStore.passwordConfirm ) {
 					console.log("비밀번호가 일치합니다.");
-					console.log("1", store_Password.password);
-					console.log("1", store_Password.passwordConfirm);
+					console.log("1", passwordSignupStore.password);
+					console.log("1", passwordSignupStore.passwordConfirm);
 					
-					store_Password.alertMessage = false;
+					passwordSignupStore.alertMessage = false;
 					router.push('/signup/signup_profile');
 				} else {
-					console.log("2", store_Password.password);
-					console.log("2", store_Password.passwordConfirm);
+					console.log("2", passwordSignupStore.password);
+					console.log("2", passwordSignupStore.passwordConfirm);
 					console.log("비밀번호가 일치하지 않습니다.");
-					store_Password.alertMessage = true;
+					passwordSignupStore.alertMessage = true;
 				}
 				break;
 			
 			case 2: // 프로필 정보 입력 단계
-				if (store_ProfileSignup.signupReady) {
-					const store_Event = eventStore();
-					const store_PhoneAuth = phoneAuthStore();
-					const store_Password = passwordStore();
-					const store_ProfileSignup = profileSignupStore();
-					
+				if (profileSignupStore.signupReady) {
 					console.log("프로필 정보가 입력되었습니다.");
 					
-					console.log("phone", store_PhoneAuth.phoneNumber);
-					console.log("password", store_Password.password);
-					console.log("nickname", store_ProfileSignup.name);
-					console.log("birth", store_ProfileSignup.birth);
-					console.log("mbti", store_ProfileSignup.selectedMBTI);
-					console.log("gender", store_ProfileSignup.selectedSex);
-					console.log("selfIntro", store_ProfileSignup.selfIntro);
-					
 					try {
-						const encodedId = store_Event.encodedId;
+						const encodedId = eventStore.encodedId;
 						const userData = {
-						"phone": store_PhoneAuth.phoneNumber.replace(/[^0-9]/g, ''),
-						"password": store_Password.password,
-						"nickname": store_ProfileSignup.name,
-						"birth": store_ProfileSignup.birth,
-						"mbti": store_ProfileSignup.selectedMBTI,
-						"gender": store_ProfileSignup.selectedSex,
-						"description": store_ProfileSignup.selfIntro,
+						"phone": phoneAuthSignupStore.phoneNumber.replace(/[^0-9]/g, ''),
+						"password": passwordSignupStore.password,
+						"nickname": profileSignupStore.name,
+						"birth": profileSignupStore.birth,
+						"mbti": profileSignupStore.selectedMBTI,
+						"gender": profileSignupStore.selectedSex,
+						"description": profileSignupStore.selfIntro,
 						};
 						
 						console.log("encodedId", encodedId);
@@ -120,19 +107,19 @@ export const signupStore = defineStore('signup', () => {
 						const response = await registerRepository.postRegister(encodedId, userData);
 						console.log("response.data", response.data);
 						if (response.message === "회원가입에 성공했습니다.") {
-							const store_Auth = authStore();
+
 							console.log('Login success:', response.data);
-							store_Auth.token = response.data
-							console.log('store_Auth.token:', store_Auth.token);
+							authStore.token = response.data
+							console.log('store_Auth.token:', authStore.token);
 							
-							if (store_Auth.token) {
-								await store_Event.fetchEventDetail(store_Event);
-								const baseImgSrc = getAvatarSrc(store_ProfileSignup.selectedSex, store_ProfileSignup.selectedMBTI);
-								store_ProfileSignup.modalImag = baseImgSrc;
+							if (authStore.token) {
+								await eventStore.fetchEventDetail(eventStore);
+								const baseImgSrc = getAvatarSrc(profileSignupStore.selectedSex, profileSignupStore.selectedMBTI);
+								profileSignupStore.modalImag = baseImgSrc;
 								
-								console.log("modalImag", store_ProfileSignup.modalImag);
+								console.log("modalImag", profileSignupStore.modalImag);
 								
-								store_Popup.ModalS_completed = true;
+								popupStore.ModalS_completed = true;
 							}
 						} else {
 							console.error('Login failed:', response.message);

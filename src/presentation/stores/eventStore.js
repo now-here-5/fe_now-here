@@ -9,7 +9,7 @@ const eventDetailRepository = new EventDetailRepository()
 
 const eventRepository = new EventRepository()
 
-export const eventStore = defineStore(
+export const useEventStore = defineStore(
   'event',
   () => {
     const event_detail = ref({})

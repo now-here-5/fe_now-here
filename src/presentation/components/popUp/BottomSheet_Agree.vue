@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="store_Popup.bottomSheetVisible.agree"
+    v-if="popupStore.bottomSheetVisible.agree"
     class="overlay"
     @click="closeBottomSheet('agree')"
   >
@@ -17,7 +17,7 @@
           <div class="subAgreeContainer">
             <div
               class="subAgree"
-              :class="{ active: store_Popup.agreeState.service }"
+              :class="{ active: popupStore.agreeState.service }"
               @click="toggleSubAgree('service')"
             >
               <div class="agreeBtnS" />
@@ -30,7 +30,7 @@
             </div>
             <div
               class="subAgree"
-              :class="{ active: store_Popup.agreeState.privacy }"
+              :class="{ active: popupStore.agreeState.privacy }"
               @click="toggleSubAgree('privacy')"
             >
               <div class="agreeBtnS" />
@@ -41,7 +41,7 @@
                 @click="openTermBottomSheet('privacy')"
               />
             </div>
-            <div class="allAgree" :class="{ active: store_Popup.agreeState.all }">
+            <div class="allAgree" :class="{ active: popupStore.agreeState.all }">
               <div class="agreeBtnL" @click="toggleAllAgree" />
               <p>전체 동의</p>
             </div>
@@ -50,7 +50,7 @@
       </div>
       <div class="bottomSheet_bottom">
         <SelectBtn
-          :isActive="store_Popup.agreeState.service && store_Popup.agreeState.privacy"
+          :isActive="popupStore.agreeState.service && popupStore.agreeState.privacy"
           buttonText="확인"
           @click="navigateToSignUp"
         />
@@ -64,35 +64,35 @@ import SelectBtn from '@/presentation/components/SelectBtn.vue'
 
 import { useRouter } from 'vue-router'
 
-import { popupStore } from '@/presentation/stores/popupStore.js'
+import { usePopupStore } from '@/presentation/stores/popupStore.js'
 
 const router = useRouter()
 
-const store_Popup = popupStore()
+const popupStore = usePopupStore()
 
 const closeBottomSheet = (type) => {
-  store_Popup.bottomSheetVisible[type] = false
+  popupStore.bottomSheetVisible[type] = false
 }
 
 const toggleSubAgree = (type) => {
-  store_Popup.agreeState[type] = !store_Popup.agreeState[type]
+  popupStore.agreeState[type] = !popupStore.agreeState[type]
 
   // Update allAgree based on sub agrees
-  store_Popup.agreeState.all = store_Popup.agreeState.service && store_Popup.agreeState.privacy
+  popupStore.agreeState.all = popupStore.agreeState.service && popupStore.agreeState.privacy
 }
 const toggleAllAgree = () => {
-  store_Popup.agreeState.all = !store_Popup.agreeState.all
+  popupStore.agreeState.all = !popupStore.agreeState.all
 
-  store_Popup.agreeState.service = store_Popup.agreeState.all
-  store_Popup.agreeState.privacy = store_Popup.agreeState.all
+  popupStore.agreeState.service = popupStore.agreeState.all
+  popupStore.agreeState.privacy = popupStore.agreeState.all
 }
 const openTermBottomSheet = (type) => {
-  store_Popup.termType = type
-  store_Popup.bottomSheetVisible.terms = true
+  popupStore.termType = type
+  popupStore.bottomSheetVisible.terms = true
 }
 
 const navigateToSignUp = () => {
-  if (store_Popup.agreeState.service && store_Popup.agreeState.privacy) {
+  if (popupStore.agreeState.service && popupStore.agreeState.privacy) {
     closeBottomSheet('agree')
     router.push('/signup/signup_mobileAuth')
   }

@@ -1,13 +1,13 @@
 <template>
   <div
-    v-if="store_Popup.bottomSheetVisible.terms"
+    v-if="popupStore.bottomSheetVisible.terms"
     class="overlay"
     @click="closeBottomSheet('terms')"
   >
     <div class="bottomSheet" @click.stop>
       <div class="bottomSheet_header">
-        <p v-if="store_Popup.termType === 'service'">서비스 약관</p>
-        <p v-else-if="store_Popup.termType === 'privacy'">
+        <p v-if="popupStore.termType === 'service'">서비스 약관</p>
+        <p v-else-if="popupStore.termType === 'privacy'">
           개인정보 수집 및<br />
           이용 동의
         </p>
@@ -15,7 +15,7 @@
       </div>
       <div class="bottomSheet_contentContainer">
         <div class="bottomSheet_detailContainer">
-          <p2 v-if="store_Popup.termType === 'service'">
+          <p2 v-if="popupStore.termType === 'service'">
             <br />1. 서비스 설명 <br /><span class="indent"
               >• 'Now, Here'는 특정 이벤트에 참여하는 사용자가 서로를 매칭하여 새로운 인연을 맺을 수
               있도록 도와주는 온라인 매칭 서비스입니다. 이 서비스는 휴대폰 번호 인증을 통해 가입할
@@ -58,7 +58,7 @@
               있습니다.</span
             >
           </p2>
-          <p2 v-else-if="store_Popup.termType === 'privacy'">
+          <p2 v-else-if="popupStore.termType === 'privacy'">
             <br />1. 수집하는 개인정보의 항목 <br /><span class="indent"
               >• 필수 항목: 닉네임, 생년월일, 성별, MBTI, 자기소개, 휴대폰 번호(인증용).</span
             >
@@ -110,12 +110,12 @@
 </template>
 
 <script setup>
-import { popupStore } from '@/presentation/stores/popupStore.js'
+import { usePopupStore } from '@/presentation/stores/popupStore.js'
 
-const store_Popup = popupStore()
+const popupStore = usePopupStore()
 
 const closeBottomSheet = (type) => {
-  store_Popup.bottomSheetVisible[type] = false
+  popupStore.bottomSheetVisible[type] = false
 }
 </script>
 

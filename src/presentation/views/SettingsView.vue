@@ -16,13 +16,13 @@
             <input
               type="checkbox"
               id="switch"
-              :checked="!store_setting.notification"
-              @change="store_setting.fetchNotification"
+              :checked="!settingStore.notification"
+              @change="settingStore.fetchNotification"
             />
             <label for="switch"></label>
           </div>
         </div>
-        <div class="optionItem" @click="store_setting.logout">
+        <div class="optionItem" @click="settingStore.logout">
           <p>로그아웃</p>
         </div>
         <div class="optionItem" @click="openAlertModalL_deleteAccount">
@@ -67,9 +67,9 @@
 <script setup>
 import { useRoute, useRouter } from 'vue-router'
 import { ref, onMounted } from 'vue'
-import { settingStore } from '@/presentation/stores/settingStore.js'
+import { useSettingStore } from '@/presentation/stores/settingStore.js'
 
-const store_setting = settingStore()
+const settingStore = useSettingStore()
 
 const route = useRoute()
 const router = useRouter()
@@ -77,7 +77,7 @@ const router = useRouter()
 const modalL_deleteAccount = ref(false)
 
 onMounted(() => {
-  store_setting.getNotiOption()
+  settingStore.getNotiOption()
 })
 
 const openAlertModalL_deleteAccount = () => {

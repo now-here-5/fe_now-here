@@ -1,5 +1,5 @@
 <template>
-  <div v-if="store_Popup.modalL_review" class="M_Overlay">
+  <div v-if="popupStore.modalL_review" class="M_Overlay">
     <div class="modalL">
       <div class="modalL_contentContainer">
         <div class="modalL_header">
@@ -34,13 +34,13 @@
 <script setup>
 import { useRouter } from 'vue-router'
 
-import { popupStore } from '@/presentation/stores/popupStore.js'
+import { usePopupStore } from '@/presentation/stores/popupStore.js'
 
 const router = useRouter()
-const store_Popup = popupStore()
+const popupStore = usePopupStore()
 
 const closeAlertModalL_review = () => {
-  store_Popup.modalL_review = false
+  popupStore.modalL_review = false
 }
 const navigateToReview = () => {
   router.push('/review')

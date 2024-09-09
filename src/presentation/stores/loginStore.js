@@ -5,14 +5,14 @@ import { useRouter } from 'vue-router';
 import { formPhoneNumber, formPassword, cleanPhoneNumber } from '@/core/usecases/FormNumber.js';
 
 import { LoginRepository } from "@/infrastructure/repositories/LoginRepository.js";
-import { eventStore } from '@/presentation/stores/eventStore.js';
-import { authStore } from '@/presentation/stores/authStore.js';
+import { useEventStore } from '@/presentation/stores/eventStore.js';
+import { useAuthStore } from '@/presentation/stores/authStore.js';
 
 const loginRepository = new LoginRepository();
-const store_Event = eventStore();
-const store_Auth = authStore();
+const eventStore = useEventStore();
+const authStore = useAuthStore();
 
-export const loginStore = defineStore('login', () => {
+export const useLoginStore = defineStore('login', () => {
 	const router = useRouter();
 	
 	const phone = ref('');
@@ -53,9 +53,9 @@ export const loginStore = defineStore('login', () => {
 			password: password.value,
 		};
 		try {
-			const response = await loginRepository.postLogin(store_Event.encodedId, loginData);
+			const response = await loginRepository.postLogin(eventStore.encodedId, loginData);
       if (response.message !== "로그인에 실패했습니다.") {
-	      store_Auth.token = response.data.token
+	      authStore.token = response.data.token
 	      router.push({ name: 'home' });
       } else {
 	      alertMessage.value = alertMessageInventory.value[3];

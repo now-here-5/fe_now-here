@@ -1,16 +1,14 @@
 import { defineStore } from 'pinia';
 import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
-
 import { PopupRepository } from '@/infrastructure/repositories/PopupRepository.js';
-import { profileSignupStore } from '@/presentation/stores/signupSub/profileSignupStore.js';
-
+import { useProfileSignupStore } from '@/presentation/stores/signupSub/profileSignupStore.js';
 
 const popupRepository = new PopupRepository();
 
-export const popupStore = defineStore('popup', () => {
+export const usePopupStore = defineStore('popup', () => {
   const router = useRouter();
-  const store_ProfileSignup = profileSignupStore();
+  const profileSignupStore = useProfileSignupStore();
   
   //BS
   const bottomSheetVisible = ref({
@@ -31,7 +29,7 @@ export const popupStore = defineStore('popup', () => {
   
   const modalSTitle = computed(() => {
     if (ModalS_completed.value) {
-      return `${store_ProfileSignup.selectedMBTI} ${store_ProfileSignup.name}님 <br> 회원가입 완료`;
+      return `${profileSignupStore.selectedMBTI} ${profileSignupStore.name}님 <br> 회원가입 완료`;
     } else {
       return "알림";
     }
@@ -104,7 +102,7 @@ export const popupStore = defineStore('popup', () => {
     getReviewModalTF,
     
     //TM
-    tostMessage
+    tostMessage,
   };
 }, {
   persist: {

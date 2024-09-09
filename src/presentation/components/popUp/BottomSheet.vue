@@ -1,5 +1,5 @@
 <template>
-  <div v-if="store_Login.bottomSheetVisible.agree" class="overlay" @click="closeBottomSheet('agree')">
+  <div v-if="loginStore.bottomSheetVisible.agree" class="overlay" @click="closeBottomSheet('agree')">
     <div class="bottomSheet" @click.stop>
       <div class="bottomSheet_header">
         <p>약관 동의</p>
@@ -11,17 +11,17 @@
         </div>
         <div class="bottomSheet_componentCotainer">
           <div class="subAgreeContainer">
-            <div class="subAgree" :class="{ active: store_Login.agreeState.service }">
+            <div class="subAgree" :class="{ active: loginStore.agreeState.service }">
               <div class="agreeBtnS" @click="toggleSubAgree('service')"></div>
               <p>[필수] 서비스 약관 동의</p>
               <img class="arrowRight" src="@/assets/images/keyboard_arrowRight.png" @click="openTermBottomSheet('service')"/>
             </div>
-            <div class="subAgree" :class="{ active: store_Login.agreeState.privacy }">
+            <div class="subAgree" :class="{ active: loginStore.agreeState.privacy }">
               <div class="agreeBtnS" @click="toggleSubAgree('privacy')"></div>
               <p>[필수] 개인정보 수집 및 이용 동의</p>
               <img class="arrowRight" src="@/assets/images/keyboard_arrowRight.png" @click="openTermBottomSheet('privacy')"/>
             </div>
-            <div class="allAgree" :class="{ active: store_Login.agreeState.all }">
+            <div class="allAgree" :class="{ active: loginStore.agreeState.all }">
               <div class="agreeBtnL" @click="toggleAllAgree"></div>
               <p>전체 동의</p>
             </div>
@@ -29,23 +29,23 @@
         </div>
       </div>
       <div class="bottomSheet_bottom">
-        <div class="agreeBtn" :class="{ active: store_Login.agreeState.service && store_Login.agreeState.privacy }" @click="navigateToSignUp">
+        <div class="agreeBtn" :class="{ active: loginStore.agreeState.service && loginStore.agreeState.privacy }" @click="navigateToSignUp">
           <p>확인</p>
         </div>
       </div>
     </div>
   </div>
 
-  <div v-if="store_Login.bottomSheetVisible.terms" class="overlay" @click="closeBottomSheet('terms')">
+  <div v-if="loginStore.bottomSheetVisible.terms" class="overlay" @click="closeBottomSheet('terms')">
     <div class="bottomSheet" @click.stop>
       <div class="bottomSheet_header">
-        <p v-if="store_Login.termType === 'service'">서비스 약관</p>
-        <p v-else-if="store_Login.termType === 'privacy'">개인정보 수집 및<br> 이용 동의</p>
+        <p v-if="loginStore.termType === 'service'">서비스 약관</p>
+        <p v-else-if="loginStore.termType === 'privacy'">개인정보 수집 및<br> 이용 동의</p>
         <img @click="closeBottomSheet('terms')" src="@/assets/images/clear.png"/>
       </div>
       <div class="bottomSheet_contentContainer">
         <div class="bottomSheet_detailContainer">
-          <p2 v-if="store_Login.termType === 'service'">
+          <p2 v-if="loginStore.termType === 'service'">
             <br>1. 서비스 설명
             <br>  • 'Now, Here'는 특정 이벤트에 참여하는 사용자가 서로를 매칭하여 새로운 인연을 맺을 수 있도록 도와주는 온라인 매칭 서비스입니다. 이 서비스는 휴대폰 번호 인증을 통해 가입할 수 있으며, 닉네임, 생년월일, 성별, MBTI, 자기소개를 기입하여 서비스를 이용할 수 있습니다.            가입 및 이용 조건
             <br>2. 사용자는 정확한 정보를 제공해야 하며, 허위 정보 제공 시 서비스 이용이 제한될 수 있습니다.
@@ -61,7 +61,7 @@
             <br>6. 약관의 변경
             <br>  • 서비스 제공자는 필요에 따라 본 약관을 변경할 수 있으며, 변경된 약관은 공지 후 효력이 발생합니다. 사용자는 변경된 약관에 동의하지 않을 경우 서비스 이용을 중단할 수 있습니다.
           </p2>
-          <p2 v-else-if="store_Login.termType === 'privacy'">
+          <p2 v-else-if="loginStore.termType === 'privacy'">
             <br>1. 수집하는 개인정보의 항목
             <br>  • 필수 항목: 닉네임, 생년월일, 성별, MBTI, 자기소개, 휴대폰 번호(인증용).
             <br>  • 추가 항목: 문의하기 또는 의견 남기기 기능을 통해 사용자가 자발적으로 제공하는 정보(예: 이메일 주소, 메시지 내용).
@@ -88,35 +88,35 @@
 </template>
 
 <script setup>
-import { loginStore } from '@/presentation/stores/loginStore.js';
+import { useLoginStore } from '@/presentation/stores/loginStore.js';
 import { useRouter } from 'vue-router';
 
-const store_Login = loginStore();
+const loginStore = useLoginStore();
 const router = useRouter();
 
 const closeBottomSheet = (type) => {
-  store_Login.bottomSheetVisible[type] = false;
+  loginStore.bottomSheetVisible[type] = false;
 };
 
 const toggleSubAgree = (type) => {
-  store_Login.agreeState[type] = !store_Login.agreeState[type];
+  loginStore.agreeState[type] = !loginStore.agreeState[type];
 
   // Update allAgree based on sub agrees
-  store_Login.agreeState.all = store_Login.agreeState.service && store_Login.agreeState.privacy;
+  loginStore.agreeState.all = loginStore.agreeState.service && loginStore.agreeState.privacy;
 };
 const toggleAllAgree = () => {
-  store_Login.agreeState.all = !store_Login.agreeState.all;
+  loginStore.agreeState.all = !loginStore.agreeState.all;
 
-  store_Login.agreeState.service = store_Login.agreeState.all;
-  store_Login.agreeState.privacy = store_Login.agreeState.all;
+  loginStore.agreeState.service = loginStore.agreeState.all;
+  loginStore.agreeState.privacy = loginStore.agreeState.all;
 };
 const openTermBottomSheet = (type) => {
-  store_Login.termType = type;
-  store_Login.bottomSheetVisible.terms = true;
+  loginStore.termType = type;
+  loginStore.bottomSheetVisible.terms = true;
 };
 
 const navigateToSignUp = () => {
-  if (store_Login.agreeState.service && store_Login.agreeState.privacy) {
+  if (loginStore.agreeState.service && loginStore.agreeState.privacy) {
     closeBottomSheet('agree');
     router.push('/signup/signup_mobileAuth');
   }

@@ -58,10 +58,8 @@ import BackspaceHeader from '@/presentation/components/BackspaceHeader.vue'
 import starFilled from '/images/star_filled.png'
 import starUnfilled from '/images/star.png'
 import SelectBtn from '@/presentation/components/SelectBtn.vue'
-
 import { ref, watch, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-
 import { useInteractionStore } from '@/presentation/stores/interactionStore.js'
 import { usePopupStore } from '@/presentation/stores/popupStore.js'
 import { formPhoneNumber } from '@/core/usecases/FormNumber.js'

@@ -3,12 +3,12 @@
     <div class="profileCardContainer">
       <img class="imgContainer" :src="avatarSrc" alt="profile" />
       <div class="textContainer">
-        <p>{{ store_profile.mbti }}</p>
+        <p>{{ profileStore.mbti }}</p>
         <div class="subContainer">
-          <p>{{ store_profile.nickname }}</p>
+          <p>{{ profileStore.nickname }}</p>
           <div class="detailContainer">
-            <p>만 {{ store_profile.birthdate }}세</p>
-            <p>{{ store_profile.gender }}</p>
+            <p>만 {{ profileStore.birthdate }}세</p>
+            <p>{{ profileStore.gender }}</p>
           </div>
         </div>
       </div>
@@ -33,15 +33,14 @@
 import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { onMounted } from 'vue' // useRouter를 추가로 import
-
-import { profileStore } from '@/presentation/stores/profileStore.js'
+import { useProfileStore } from '@/presentation/stores/profileStore.js'
 import { getAvatarSrc } from '@/core/usecases/GetAvatar.js'
 
 const router = useRouter() // useRouter 사용
-const store_profile = profileStore()
+const profileStore = useProfileStore()
 
 onMounted(async () => {
-  const profile = await store_profile.fetchProfile()
+  const profile = await profileStore.fetchProfile()
   if (profile) {
     console.log(profile)
   }
@@ -49,8 +48,8 @@ onMounted(async () => {
 
 // 성별을 영어로 가져오기 위해 store_profile의 원래 값을 유지
 const avatarSrc = computed(() => {
-  const gender = store_profile.gender === '여성' ? 'Female' : 'Male'
-  const mbti = store_profile.mbti
+  const gender = profileStore.gender === '여성' ? 'Female' : 'Male'
+  const mbti = profileStore.mbti
 
   const src = getAvatarSrc(gender, mbti)
   console.log('baseImgSrc', src)

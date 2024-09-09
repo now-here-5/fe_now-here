@@ -38,14 +38,12 @@ import { RecommendedMemberEntity } from '@/core/entities/RecommendedMemberEntity
 import TodayCardItem from '@/presentation/components/home/TodayCardItem.vue'
 import ModalL_Landing from '@/presentation/components/popUp/ModalL_Landing.vue'
 import ModalL_Review from '@/presentation/components/popUp/ModalL_Review.vue'
-
 import { onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
-
-import { popupStore } from '@/presentation/stores/popupStore.js'
+import { usePopupStore } from '@/presentation/stores/popupStore.js'
 
 const route = useRoute()
-const store_Popup = popupStore() // 스토어 인스턴스를 가져옴
+const popupStore = usePopupStore() // 스토어 인스턴스를 가져옴
 
 const dummyData = {
   memberId: 1,
@@ -60,14 +58,14 @@ const dummyEntityData = new RecommendedMemberEntity(dummyData)
 const handleRouteChange = (to) => {
   if (to.path === '/match') {
     // '/match' 라우트일 때
-    if (store_Popup.matchAgree === false) {
-      store_Popup.modalL_matchLanding = true
+    if (popupStore.matchAgree === false) {
+      popupStore.modalL_matchLanding = true
     } else {
-      store_Popup.getReviewModalTF() // 함수 호출
+      popupStore.getReviewModalTF() // 함수 호출
     }
   } else if (to.path === '/match/status') {
     // '/match/status' 라우트일 때
-    store_Popup.getReviewModalTF() // 함수 호출
+    popupStore.getReviewModalTF() // 함수 호출
   }
 }
 

@@ -1,13 +1,15 @@
 import { defineStore } from 'pinia';
 import { computed, ref, reactive } from 'vue';
+import { useRouter } from 'vue-router'
 import { ProfileRepository } from '@/infrastructure/repositories/ProfileRepository.js';
 import { EditProfileRepository } from '@/infrastructure/repositories/EditProfileRepository.js';
-import router from "@/presentation/router/index.js";
 
 const profileRepository = new ProfileRepository();
 const editProfileRepository = new EditProfileRepository();
 
-export const profileStore = defineStore('profile', () => {
+export const useProfileStore = defineStore('profile', () => {
+	const router = useRouter();
+	
 	const mbti = ref("");
 	const nickname = ref("");
 	const birthdate = ref("");

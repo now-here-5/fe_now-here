@@ -21,15 +21,15 @@ import TodayCards from '@/presentation/components/home/TodayCards.vue'
 import HeartHistory from '@/presentation/components/home/HeartHistory.vue'
 import MatchingStatus from '@/presentation/components/home/MatchingStatus.vue'
 import DirectReview from '@/presentation/components/home/DirectReview.vue'
-import { eventStore } from '../stores/eventStore'
-import { storeToRefs } from 'pinia'
 import { onMounted } from 'vue'
+import { storeToRefs } from 'pinia'
+import { useEventStore } from '../stores/eventStore'
 
-const store_Event = eventStore()
-const { endsAt } = storeToRefs(store_Event)
+const eventStore = useEventStore()
+const { endsAt } = storeToRefs(eventStore)
 
 onMounted(() => {
-  store_Event.fetchEventEndsAt()
+  eventStore.fetchEventEndsAt()
 })
 //로그인, 자동로그인, 로그인 랜딩 시, eventStore에 저장해서 굳이 onMounted로 호출할 필요 없음
 </script>

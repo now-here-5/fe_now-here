@@ -33,34 +33,34 @@ import BottomSheet_Term from '@/presentation/components/popUp/BottomSheet_Term.v
 import { onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router' // useRoute 추가
 
-import { loginStore } from '@/presentation/stores/loginStore.js'
-import { eventStore } from '@/presentation/stores/eventStore.js'
-import { popupStore } from '@/presentation/stores/popupStore.js'
+import { useLoginStore } from '@/presentation/stores/loginStore.js'
+import { useEventStore } from '@/presentation/stores/eventStore.js'
+import { usePopupStore } from '@/presentation/stores/popupStore.js'
 
 const route = useRoute() // useRoute를 통해 패스 변수를 추출
 const router = useRouter()
 
-const store_Login = loginStore()
-const store_Event = eventStore()
-const store_PopUp = popupStore()
+const loginStore = useLoginStore()
+const eventStore = useEventStore()
+const popupStore = usePopupStore()
 
 // onMounted에서 store의 checkEventExistence 함수를 호출
 onMounted(async () => {
-  store_Event.encodedId = route.params.encodedId // 경로 변수 추출
-  console.log('encodedId', store_Event.encodedId)
+  eventStore.encodedId = route.params.encodedId // 경로 변수 추출
+  console.log('encodedId', eventStore.encodedId)
 
-  const isExist = await store_Event.checkEventExistence() // store에서 직접 호출
+  const isExist = await eventStore.checkEventExistence() // store에서 직접 호출
   if (!isExist) {
     router.push('/error')
   }
 })
 
 const handleLogin = () => {
-  store_Login.login()
+  loginStore.login()
 }
 
 const openBottomSheet = () => {
-  store_PopUp.bottomSheetVisible.agree = true
+  popupStore.bottomSheetVisible.agree = true
 }
 const navigateToContact = () => {
   router.push(`/interaction/inquiry`);

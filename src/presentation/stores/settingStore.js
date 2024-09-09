@@ -1,18 +1,17 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { eventStore } from '@/presentation/stores/eventStore.js';
-import { authStore } from '@/presentation/stores/authStore.js';
+import { useEventStore } from '@/presentation/stores/eventStore.js';
+import { useAuthStore } from '@/presentation/stores/authStore.js';
 import { NotificationRepository } from '@/infrastructure/repositories/NotificationRepository.js';
 import { LogoutRepository } from '@/infrastructure/repositories/LogoutRepository.js';
-import {deleteAccount} from "@/infrastructure/http/api/logout.js";
 
-const store_Event = eventStore();
-const store_Auth = authStore();
+const eventStore = useEventStore();
+const authStore = useAuthStore();
 const notificationRepository = new NotificationRepository();
 const logoutRepository = new LogoutRepository();
 
-export const settingStore = defineStore('profileOption', () => {
+export const useSettingStore = defineStore('setting', () => {
 	const notification = ref(true);
 	const router = useRouter();
 	
@@ -53,13 +52,13 @@ export const settingStore = defineStore('profileOption', () => {
 	
 	const logout = async () => {
 		console.log('logout');
-		console.log('notification', store_Event.encodedId);
-		const event_id = store_Event.encodedId
+		console.log('notification', eventStore.encodedId);
+		const event_id = eventStore.encodedId
 		try {
 			const response = await logoutRepository.deletLogout();
 			console.log('response', response);
 			if (response.message === "로그아웃에 성공했습니다.") {
-				store_Auth.token = '';
+				authStore.token = '';
 				localStorage.removeItem('pinia'); // Pinia persist 데이터 제거
 				localStorage.clear();
 				router.push(`/login/${event_id}`);
@@ -74,8 +73,8 @@ export const settingStore = defineStore('profileOption', () => {
 		console.log('deleteAccount');
 		console.log('textContent', textContent.value);
 		
-		console.log('notification', store_Event.encodedId);
-		const event_id = store_Event.encodedId
+		console.log('notification', eventStore.encodedId);
+		const event_id = eventStore.encodedId
 		
 		const content = {
 			content: textContent.value,
@@ -85,7 +84,7 @@ export const settingStore = defineStore('profileOption', () => {
 			const response = await logoutRepository.deleteAccount(content);
 			console.log('response', response);
 			if (response.message === "회원탈퇴에 성공했습니다.") {
-				store_Auth.token = '';
+				authStore.token = '';
 				localStorage.removeItem('pinia'); // Pinia persist 데이터 제거
 				localStorage.clear();
 				router.push(`/login/${event_id}`);

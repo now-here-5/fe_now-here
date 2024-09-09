@@ -2,13 +2,13 @@ import { defineStore } from 'pinia';
 import { ref, computed, watch } from 'vue';
 
 import { NameDuplicateRepository } from "@/infrastructure/repositories/NameDuplicateRepository.js";
-import { signupStore } from "@/presentation/stores/signupStore.js";
-import { eventStore } from '@/presentation/stores/eventStore.js';
+import { useSignupStore } from "@/presentation/stores/signupStore.js";
+import { useEventStore } from '@/presentation/stores/eventStore.js';
 
 
 const nameDuplicateRepository = new NameDuplicateRepository();
 
-export const profileSignupStore = defineStore('profileSignup', () => {
+export const useProfileSignupStore = defineStore('profileSignup', () => {
 	const name = ref("");
 	const isDuplicate = ref(null);
 	
@@ -48,18 +48,18 @@ export const profileSignupStore = defineStore('profileSignup', () => {
 
 	// watch를 사용해 isBtnReady의 변화를 감지하고, profile을 업데이트
 	watch(signupReady, (newValue) => {
-		const store_Signup = signupStore();
+		const signupStore = useSignupStore();
 		if (newValue) {
-			store_Signup.signupCompleted.profile = true;
+			signupStore.signupCompleted.profile = true;
 		} else {
-			store_Signup.signupCompleted.profile = false;
+			signupStore.signupCompleted.profile = false;
 		}
 	});
 	
 	const checkDuplicate = async () => {
-		const store_Event = eventStore();
+		const eventStore = useEventStore();
 		
-		const eventId = store_Event.encodedId;
+		const eventId = eventStore.encodedId;
 		const nameTo = name.value
 		
 		try {

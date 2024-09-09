@@ -37,15 +37,16 @@
 <script setup>
 import { useRoute, useRouter, onBeforeRouteLeave } from 'vue-router' // useRouter를 추가로 import
 
-import { profileStore } from '@/presentation/stores/profileStore'
+import { useProfileStore } from '@/presentation/stores/profileStore'
 import { onMounted, ref, watch } from 'vue'
-import { eventStore } from '@/presentation/stores/eventStore.js'
+import { useEventStore } from '@/presentation/stores/eventStore.js'
 import { NameDuplicateRepository } from '@/infrastructure/repositories/NameDuplicateRepository.js'
 
 const nameDuplicateRepository = new NameDuplicateRepository()
-const store_profile = profileStore() // 스토어 사용
+const profileStore = useProfileStore() // 스토어 사용
+const eventStore = useEventStore()
 
-const name = ref(store_profile.nickname)
+const name = ref(profileStore.nickname)
 const duplicateBtn = ref(false)
 
 const isDuplicate = ref(null)
@@ -60,7 +61,7 @@ const alertMessageInventory = [
 
 // watch를 사용하여 name을 store와 동기화합니다.
 watch(name, (newName) => {
-  store_profile.nickname = newName
+  profileStore.nickname = newName
 })
 
 const formName = () => {
@@ -72,8 +73,8 @@ const formName = () => {
 
   // 이름이 비어 있으면 중복 확인 메시지를 초기화하고, 더 이상 처리하지 않음
   if (!name.value) {
-    store_profile.alertMessage = ''
-    store_profile.alertMessageVisible = false
+    profileStore.alertMessage = ''
+    profileStore.alertMessageVisible = false
     duplicateBtn.value = false
     return
   }
@@ -87,10 +88,8 @@ const formName = () => {
 }
 
 const checkDuplicate = async () => {
-  const store_Event = eventStore()
-
-  const eventId = store_Event.encodedId
-  const nameTo = store_profile.nickname
+  const eventId = eventStore.encodedId
+  const nameTo = profileStore.nickname
 
   try {
     const data = await nameDuplicateRepository.getNameDuplicate(eventId, nameTo)
@@ -108,7 +107,7 @@ const checkDuplicate = async () => {
 }
 // 사용자가 페이지를 떠나기 전에 원본 데이터 복구
 onBeforeRouteLeave((to, from, next) => {
-  store_profile.restoreOriginalData()
+  profileStore.restoreOriginalData()
   next()
 })
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="store_Popup.modalL_matchLanding" class="M_Overlay">
+  <div v-if="popupStore.modalL_matchLanding" class="M_Overlay">
     <div class="modalL">
       <div class="modalL_contentContainer">
         <div class="modalL_header">
@@ -53,10 +53,10 @@ import matchLandingNotification from '/images/Modal_Image/modal_Notification.png
 import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
-import { popupStore } from '@/presentation/stores/popupStore.js'
+import { usePopupStore } from '@/presentation/stores/popupStore.js'
 
 const router = useRouter()
-const store_Popup = popupStore()
+const popupStore = usePopupStore()
 
 const currentStep = ref(0) // 현재 슬라이드 위치 (0부터 시작)
 const images = [matchLandingMobile, matchLandingCouple, matchLandingNotification]
@@ -69,13 +69,13 @@ const texts = [
 const currentText = computed(() => texts[currentStep.value])
 
 const navigateToHome = () => {
-  store_Popup.modalL_matchLanding = false
-  store_Popup.matchAgree = false
+  popupStore.modalL_matchLanding = false
+  popupStore.matchAgree = false
   router.push('/')
 }
 const agreeAlertModalL_matchLanding = () => {
-  store_Popup.modalL_matchLanding = false
-  store_Popup.matchAgree = true
+  popupStore.modalL_matchLanding = false
+  popupStore.matchAgree = true
 }
 const prevSlide = () => {
   if (currentStep.value > 0) {
