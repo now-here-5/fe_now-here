@@ -1,5 +1,5 @@
 // src/composables/useNotification.js
-// import httpClient from '@/infrastructure/http/httpClient'
+import httpClient from '@/infrastructure/http/httpClient'
 import { messaging, getToken } from '../firebase'
 
 const requestPermission = async () => {
@@ -17,9 +17,9 @@ const requestPermission = async () => {
       //     memberId: 47
       //   }
       alert(`FCM 토큰: ${token}`)
-      //   const res = await httpClient.post(`/notification/saveFCMToken?token=${token}&memberId=${47}`)
-      //   console.log('API res', res)
-      //   alert(`서버에 FCM 토큰 저장 완료`)
+      const res = await httpClient.post(`/notification/saveFCMToken?token=${token}&memberId=${47}`)
+      console.log('API res', res)
+      alert(`서버에 FCM 토큰 저장 완료`)
     } else {
       console.log('알림 권한이 거부되었습니다.')
     }
