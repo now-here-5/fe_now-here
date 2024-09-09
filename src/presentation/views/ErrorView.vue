@@ -2,10 +2,13 @@
   <div class="Frame">
     <img class="imageContainer" src="/images/404_error.png" alt="error" />
     <p v-html="'페이지에 접근할 수 없습니다.<br> QR코드를 통해 접속해주세요'"></p>
+    <button @click="requestPermission">allow</button>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { requestPermission } from '@/composables/useNotification'
+</script>
 
 <style scoped lang="scss">
 .Frame {
