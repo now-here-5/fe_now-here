@@ -14,14 +14,13 @@
 
 <script setup>
 import MainHeader from '@/presentation/components/MainHeader.vue'
-import { useRoute } from 'vue-router'
-import { computed } from 'vue'
-
 import ToastM from '@/presentation/components/popUp/ToastM.vue'
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
 
 const route = useRoute()
-const showMainHeader = computed(() => route.path === '/' || route.path === '/profile')
-const showBottomNav = computed(() => route.path === '/' || route.path.startsWith('/match'))
+const showMainHeader = computed(() => route.path === '/' || route.path === '/profile' || route.path.startsWith('/match'))
+const showBottomNav = computed(() => route.path === '/' || route.path === '/profile' || route.path.startsWith('/match'))
 </script>
 
 <style scoped lang="scss">
