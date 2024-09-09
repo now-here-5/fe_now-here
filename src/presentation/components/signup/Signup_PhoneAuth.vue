@@ -39,7 +39,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { phoneAuthStore } from '@/presentation/stores/signupSub/phoneAuthStore.js'
-import { signupStore } from '@/presentation/stores/signupStore.js'
+import { signupStore } from '@/presentation/stores/SignupStore.js'
 import { formPhoneNumber } from '@/core/usecases/FormNumber.js'
 
 const store_PhoneAuth = phoneAuthStore()
