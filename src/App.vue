@@ -18,6 +18,7 @@ import { useRoute } from 'vue-router'
 import { computed } from 'vue'
 
 import ToastM from '@/presentation/components/popUp/ToastM.vue'
+import { requestPermission } from './composables/useNotification'
 
 const route = useRoute()
 
@@ -26,6 +27,20 @@ const shouldShowElements = (path) =>
 
 const showMainHeader = computed(() => shouldShowElements(route.path))
 const showBottomNav = computed(() => shouldShowElements(route.path))
+
+// FCM test
+requestPermission()
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker
+    .register('/firebase-messaging-sw.js')
+    .then((registration) => {
+      console.log('서비스 워커 등록 성공:', registration)
+    })
+    .catch((error) => {
+      console.error('서비스 워커 등록 실패:', error)
+    })
+}
 </script>
 
 <style scoped lang="scss">
