@@ -1,27 +1,17 @@
 <template>
   <div class="frame">
-    <BackspaceHeader :title="type === 'review' ? '의견 남기기' : '문의하기'" />
+    <BackspaceHeader :title="type === 'inquiry' ? '문의하기' : '의견 남기기'" />
     <main class="body">
       <div class="text_component">
         <div class="text_container">
-          <p1 v-if="type === 'review'">별점 등록</p1>
-          <p1 v-else>휴대폰 번호</p1>
+          <p1 v-if="type === 'inquiry'">휴대폰 번호</p1>
+          <p1 v-else>별점 등록</p1>
 
-          <p2 v-if="type === 'review'">
-            Now Here를 이용해 주셔서 감사합니다.<br />
-            서비스 개선을 위해 소중한 의견을 남겨주세요.
+          <p2 v-if="type === 'inquiry'">
+            답변받을 휴대폰 번호를 입력해주세요.
           </p2>
-          <p2 v-else>답변받을 휴대폰 번호를 입력해주세요.</p2>
-        </div>
-        <div v-if="type === 'review'" class="componentContainer_Review">
-          <img
-            v-for="n in 5"
-            :key="n"
-            :src="n <= rate ? starFilled : starUnfilled"
-            alt="star"
-            class="star"
-            @click="setRating(n)"
-          />
+          <p2 v-else>Now Here를 이용해 주셔서 감사합니다.<br/>
+            서비스 개선을 위해 소중한 의견을 남겨주세요.</p2>
         </div>
         <input
           v-if="type === 'inquiry'"
@@ -32,14 +22,24 @@
           @input="handlePhoneNumberInput"
           maxlength="13"
         />
+        <div v-if="type === 'feedback'" class="componentContainer_Feedback">
+          <img
+            v-for="n in 5"
+            :key="n"
+            :src="n <= rate ? starFilled : starUnfilled"
+            alt="star"
+            class="star"
+            @click="setRating(n)"
+          />
+        </div>
       </div>
       <div class="text_Input">
-        <p v-if="type === 'review'">의견 작성</p>
-        <p v-else>문의 내용</p>
+        <p v-if="type === 'inquiry'">문의 내용</p>
+        <p v-else>의견 작성</p>
         <div class="input_conunt">
           <textarea
             class="input"
-            :placeholder="type === 'review' ? '내용을 작성해주세요.' : '문의 내용을 작성해주세요.'"
+            :placeholder="type === 'inquiry' ? '문의 내용을 작성해주세요.' : '내용을 작성해주세요.'"
             v-model="contents"
             @input="formContents"
           />
@@ -60,69 +60,55 @@ import starUnfilled from '/images/star.png'
 import SelectBtn from '@/presentation/components/SelectBtn.vue'
 
 import { ref, watch, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 
-import { review_inquiryStore } from '@/presentation/stores/review_inquiryStore.js'
-import { popupStore } from '@/presentation/stores/popupStore.js'
+import { useInteractionStore } from '@/presentation/stores/interactionStore.js'
+import { usePopupStore } from '@/presentation/stores/popupStore.js'
 import { formPhoneNumber } from '@/core/usecases/FormNumber.js'
 
-// 여기서 props로 type을 받아옴
-const props = defineProps({
-  type: {
-    type: String,
-    required: true
-  }
-})
-const store_Review_inquiry = review_inquiryStore()
-const store_Popup = popupStore()
+const interactionStore = useInteractionStore()
+const popupStore = usePopupStore()
 
-const phoneNumber = ref(store_Review_inquiry.inquiry_Num)
-const contents = ref(store_Review_inquiry.textContent || '')
+const phoneNumber = ref(interactionStore.number)
+const contents = ref(interactionStore.textContent || '')
 const rate = ref(0)
 const Active = ref(false)
 const router = useRouter() // useRouter 사용
+const route = useRoute() // useRoute 사용
+const type = route.params.type
 
 const setRating = (rating) => {
-  rate.value = rating
-  console.log('별점:', rate.value)
-  store_Review_inquiry.rate = rate.value
+  interactionStore.rate = rate.value = rating;
 }
-
 const handlePhoneNumberInput = () => {
   phoneNumber.value = formPhoneNumber(phoneNumber.value) // 포맷 적용
-  store_Review_inquiry.inquiry_Num = phoneNumber.value
+  interactionStore.inquiry_Num = phoneNumber.value
 }
-
 const formContents = () => {
-  store_Review_inquiry.textContent = contents.value
-  console.log(store_Review_inquiry.textContent)
+  interactionStore.textContent = contents.value
+  console.log(interactionStore.textContent)
 }
-
-// 제출 버튼 클릭 시 핸들링
 const handleSubmit = async () => {
-  const isSuccess = await store_Review_inquiry.submitFeedback(props.type) // props.type을 사용
-
+  const isSuccess = await interactionStore.sendInteraction(type) // props.type을 사용
   if (isSuccess) {
-    console.log(props.type === 'review' ? '리뷰 성공!' : '문의 성공!')
+    console.log(type === 'inquiry' ? '문의 성공!' : '리뷰 성공!')
     router.back() // 3초 후에 뒤로 가기
     setTimeout(() => {
-      store_Popup.tostMessage.visible = false
+      popupStore.tostMessage.visible = false
     }, 3000)
   }
 }
-
-// 문의 내용과 별점 또는 휴대폰 번호의 변화를 감지하여 버튼 활성화 상태를 업데이트
 watch([phoneNumber, contents, rate], () => {
-  if (props.type === 'review') {
-    Active.value = contents.value.length > 0 && rate.value > 0
-  } else {
+  if (type === 'inquiry') {
     Active.value = phoneNumber.value.length === 13 && contents.value.length > 0
+  } else {
+    Active.value = contents.value.length > 0 && rate.value > 0
   }
 })
 onMounted(() => {
-  store_Review_inquiry.textContent = ''
-  store_Review_inquiry.rate = 0
-  store_Review_inquiry.inquiry_Num = ''
+  contents.value = interactionStore.textContent = ''
+  interactionStore.rate = 0
+  interactionStore.inquiry_Num = ''
 })
 </script>
 
@@ -174,7 +160,7 @@ onMounted(() => {
     color: $dark;
   }
 }
-.componentContainer_Review {
+.componentContainer_Feedback {
   display: flex;
   flex-direction: row;
   align-items: flex-start;

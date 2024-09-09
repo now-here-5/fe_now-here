@@ -63,7 +63,7 @@ const openBottomSheet = () => {
   store_PopUp.bottomSheetVisible.agree = true
 }
 const navigateToContact = () => {
-  router.push('/contact') // 원하는 라우트로 이동
+  router.push(`/interaction/inquiry`);
 }
 </script>
 

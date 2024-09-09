@@ -61,10 +61,10 @@ const navigateToEditProfile = () => {
   router.push('/editProfile')
 }
 const navigateToContact = () => {
-  router.push('/contact')
+  router.push(`/interaction/inquiry`);
 }
 const navigateToReview = () => {
-  router.push('/review')
+  router.push(`/interaction/feedback`);
 }
 </script>
 
