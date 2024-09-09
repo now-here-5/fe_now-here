@@ -4,9 +4,9 @@
     <main class="body">
       <div class="contentContainer" :class="{ profile: store_Signup.signupStep === 2 }">
         <TextContainer
-          :location= store_Event.eventName
-          :title= "store_Signup.textTitle[store_Signup.signupStep]"
-          :mention= "store_Signup.textMention[store_Signup.signupStep]"
+          :location="store_Event.eventName"
+          :title="store_Signup.textTitle[store_Signup.signupStep]"
+          :mention="store_Signup.textMention[store_Signup.signupStep]"
         />
         <router-view />
       </div>
@@ -45,34 +45,33 @@
 </template>
 
 <script setup>
-import BackspaceHeader from "@/presentation/components/BackspaceHeader.vue";
-import TextContainer from "@/presentation/components/signup/TextContainer.vue";
-import SelectBtn from "@/presentation/components/SelectBtn.vue";
-import ModalS from "@/presentation/components/popUp/ModalS.vue";
+import BackspaceHeader from '@/presentation/components/BackspaceHeader.vue'
+import TextContainer from '@/presentation/components/signup/TextContainer.vue'
+import SelectBtn from '@/presentation/components/SelectBtn.vue'
+import ModalS from '@/presentation/components/popUp/ModalS.vue'
 
-import { onMounted } from 'vue';
-import { useRouter } from 'vue-router';
-import { signupStore } from "@/presentation/stores/SignupStore.js";
-import { eventStore } from '@/presentation/stores/eventStore.js';
-import { profileSignupStore } from "@/presentation/stores/signupSub/profileSignupStore.js";
-import { popupStore } from '@/presentation/stores/popupStore.js';
+import { onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import { signupStore } from '@/presentation/stores/signupStore.js'
+import { eventStore } from '@/presentation/stores/eventStore.js'
+import { profileSignupStore } from '@/presentation/stores/signupSub/profileSignupStore.js'
+import { popupStore } from '@/presentation/stores/popupStore.js'
 
-const router = useRouter();
-const store_Popup = popupStore();
-const store_Signup = signupStore();
-const store_Event = eventStore();
-const store_ProfileSignup = profileSignupStore();
+const router = useRouter()
+const store_Popup = popupStore()
+const store_Signup = signupStore()
+const store_Event = eventStore()
+const store_ProfileSignup = profileSignupStore()
 
 const handleSubmit = () => {
-  store_Signup.submit(router);
-};
+  store_Signup.submit(router)
+}
 
 onMounted(() => {
-  store_Popup.ModalS_duplicated = false;
-  store_Popup.ModalS_authError = false;
-  store_Popup.ModalS_completed = false;
-});
-
+  store_Popup.ModalS_duplicated = false
+  store_Popup.ModalS_authError = false
+  store_Popup.ModalS_completed = false
+})
 </script>
 
 <style scoped lang="scss">
@@ -80,7 +79,7 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 25px 25px 25px ;
+  padding: 25px 25px 25px;
 
   height: 100vh;
 
@@ -127,14 +126,12 @@ onMounted(() => {
 }
 /* 모바일 장치에 적용할 스타일 */
 @media only screen and (max-width: 600px) {
-
   .body {
     height: 520px;
   }
 }
 /* 데스크톱에 적용할 스타일 */
 @media only screen and (min-width: 601px) {
-
   .body {
     align-self: stretch;
     flex-grow: 1;
