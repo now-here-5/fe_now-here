@@ -26,7 +26,7 @@
   </div>
 
   <div v-if="memberInfo.phoneNumber" class="phoneContainer">
-    <p>{{ memberInfo?.phoneNumber }}</p>
+    <p>{{ formatPhoneNumber(memberInfo?.phoneNumber) }}</p>
   </div>
 </template>
 
@@ -59,6 +59,11 @@ const gender = computed(() => memberInfo.value.gender)
 const age = computed(() => memberInfo.value.age)
 const mbtiScore = computed(() => memberInfo.value.mbtiScore)
 const avatarImgUrl = computed(() => memberInfo.value.avatarImgUrl)
+
+const formatPhoneNumber = (phoneNumber) => {
+  if (!phoneNumber) return '-'
+  return phoneNumber.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3')
+}
 </script>
 
 <style lang="scss">

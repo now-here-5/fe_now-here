@@ -9,6 +9,7 @@
           <span class="character-card__score-text-value">케미 점수</span>
         </div>
         <div class="character-card__body">
+          <div v-if="showMbti" class="character-card__mbti">{{ memberInfo?.mbti }}</div>
           <h2 class="character-card__name">{{ memberInfo?.nickname }}</h2>
           <p class="character-card__info">{{ age }}세, {{ gender }}</p>
         </div>
@@ -42,6 +43,11 @@ const props = defineProps({
   },
   isFlipped: { type: Boolean, required: false },
   showDesc: {
+    type: Boolean,
+    required: false,
+    withDefaults: false
+  },
+  showMbti: {
     type: Boolean,
     required: false,
     withDefaults: false
@@ -179,6 +185,21 @@ const avatarImgUrl = computed(() => recommendedInfo.value.avatarImgUrl)
     bottom: 0;
     text-align: start;
     z-index: 100;
+  }
+
+  &__mbti {
+    width: 36px;
+    height: 18px;
+    font-size: $MBTI_score_size;
+    font-weight: $textB_weight;
+    background-color: $white;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3px 5px;
+    box-shadow: 0px 4px 4px 0px #00000040;
+    margin-bottom: 3px;
   }
 
   &__name {

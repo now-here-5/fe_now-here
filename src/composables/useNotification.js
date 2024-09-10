@@ -7,13 +7,11 @@ const requestPermission = async () => {
   else {
     try {
       const permission = await Notification.requestPermission()
-      alert('permission', permission)
       if (permission === 'granted') {
         const token = await getToken(messaging, {
           vapidKey:
             'BIHejXNCvYuh1XSvQ6XnP347S0Z_DDuZcM_ptKNBhVsEyUzrCzjw2Cc7hvYhJ-PyzNzGtc1X1cAUNXiAu7lkj9A'
         })
-        console.log('FCM 토큰:', token)
         // 여기서 서버로 토큰을 전송하는 로직을 추가하세요
         //   const body = {
         //     token: token,

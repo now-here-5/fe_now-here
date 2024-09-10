@@ -27,11 +27,13 @@
             :member-info="recommendedMembers[0]"
             :is-flipped="isFlipped"
             :show-desc="true"
+            :show-mbti="true"
             :on-custom-click="sendHeart" />
           <TodayCardItem
             :member-info="recommendedMembers[1]"
             :is-flipped="isFlipped"
             :show-desc="true"
+            :show-mbti="true"
         /></template>
       </div>
       <div class="reroll-button-wrapper">
