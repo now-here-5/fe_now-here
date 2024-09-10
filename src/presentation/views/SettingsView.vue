@@ -1,12 +1,6 @@
 <template>
   <div class="frame">
-    <header class="header">
-      <img class="backspace" src="/images/backspace.png" alt="backspace" @click="navigateToBack" />
-      <div class="titleContainer">
-        <p v-if="route.path === '/settings'">설정</p>
-        <p v-if="route.path === '/deleteAccount'">계정 탈퇴</p>
-      </div>
-    </header>
+    <BackspaceHeader :title="pageTitle" />
     <router-view />
     <main class="body" v-if="route.path === '/settings'">
       <div class="optionList">
@@ -22,75 +16,40 @@
             <label for="switch"></label>
           </div>
         </div>
-        <div class="optionItem" @click="settingStore.logout">
-          <p>로그아웃</p>
-        </div>
-        <div class="optionItem" @click="openAlertModalL_deleteAccount">
-          <p>계정 탈퇴</p>
-        </div>
+        <OptionItem label="로그아웃" :on-click="settingStore.logout" :visible="false"/>
+        <OptionItem label="계정 탈퇴" :on-click="openWithdrawModal" :visible="false"/>
       </div>
     </main>
   </div>
 
-  <div v-if="modalL_deleteAccount" class="M_Overlay">
-    <div class="modalL">
-      <div class="modalL_contentContainer">
-        <div class="modalL_header">
-          <div class="modalL_titleContainer">
-            <p>잠깐! 진짜 떠나시나요?..</p>
-          </div>
-          <div class="modalL_clearContainer"></div>
-        </div>
-        <div class="modalL_imgContainer">
-          <img src="/images/Modal_Image/modal_Crying.png" class="modalL_img" />
-        </div>
-        <div class="modalL_detailContainer">
-          <p>
-            축제가 끝나면 자동 탈퇴 후,<br />
-            개인정보가 파기됩니다.<br />
-            벌써 떠나실 건가요?
-          </p>
-        </div>
-      </div>
-      <div class="modalL_btn">
-        <div class="modalL_btnBg" @click="navigateToDeleteAccount">
-          <p>탈퇴하기</p>
-        </div>
-        <div class="modalL_btnBg active" @click="closeAlertModalL_deleteAccount">
-          <p>돌아가기</p>
-        </div>
-      </div>
-    </div>
-  </div>
+  <WithdrawModal />
 </template>
 
 <script setup>
-import { useRoute, useRouter } from 'vue-router'
-import { ref, onMounted } from 'vue'
+import BackspaceHeader from '@/presentation/components/BackspaceHeader.vue'
+import WithdrawModal from '@/presentation/components/popUp/WithdrawModal.vue'
+import OptionItem from '@/presentation/components/settings/OptionItem.vue'
+import { useRoute } from 'vue-router'
+import { onMounted, computed } from 'vue'
 import { useSettingStore } from '@/presentation/stores/settingStore.js'
+import { usePopupStore } from '@/presentation/stores/popupStore.js'
 
 const route = useRoute()
-const router = useRouter()
 const settingStore = useSettingStore()
-const modalL_deleteAccount = ref(false)
+const popupStore = usePopupStore()
 
 onMounted(() => {
-  settingStore.getNotiOption()
+  settingStore.getNotification()
 })
-
-const openAlertModalL_deleteAccount = () => {
-  modalL_deleteAccount.value = true
-}
-const closeAlertModalL_deleteAccount = () => {
-  modalL_deleteAccount.value = false
-}
-const navigateToDeleteAccount = () => {
-  closeAlertModalL_deleteAccount()
-  router.push('deleteAccount')
-}
-
-const navigateToBack = () => {
-  router.back()
+const pageTitle = computed(() => {
+  if (route.path === '/settings') {
+    return '설정'
+  } else {
+    return '계정 탈퇴'
+  }
+})
+const openWithdrawModal = () => {
+  popupStore.modalLVisible.withdraw = true
 }
 </script>
 
