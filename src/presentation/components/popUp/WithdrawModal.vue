@@ -1,30 +1,30 @@
 <template>
-  <div v-if="popupStore.modalLVisible.withdraw" class="M_Overlay">
+  <div v-if="popupStore.modalLVisible.withdraw" class="overlay">
     <div class="modalL">
-      <div class="modalL_contentContainer">
-        <div class="modalL_header">
-          <div class="modalL_titleContainer">
-            <p>잠깐! 진짜 떠나시나요?..</p>
+      <div class="contentContainer">
+        <div class="header">
+          <div class="titleContainer">
+            <span>잠깐! 진짜 떠나시나요?..</span>
           </div>
-          <div class="modalL_clearContainer"></div>
+          <div class="clearContainer"></div>
         </div>
-        <div class="modalL_imgContainer">
-          <img src="/images/Modal_Image/modal_Crying.png" class="modalL_img" />
+        <div class="imgContainer">
+          <img src="/images/Modal_Image/modal_Crying.png" class="modalImg" alt="modalImg"/>
         </div>
-        <div class="modalL_detailContainer">
-          <p>
+        <div class="detailContainer">
+          <span>
             축제가 끝나면 자동 탈퇴 후,<br />
             개인정보가 파기됩니다.<br />
             벌써 떠나실 건가요?
-          </p>
+          </span>
         </div>
       </div>
-      <div class="modalL_btn">
-        <div class="modalL_btnBg" @click="navigateToDeleteAccount">
-          <p>탈퇴하기</p>
+      <div class="btn">
+        <div class="btnBg" @click="navigateToDWithdraw">
+          <span>탈퇴하기</span>
         </div>
-        <div class="modalL_btnBg active" @click="closeAlertModalL_deleteAccount">
-          <p>돌아가기</p>
+        <div class="btnBg active" @click="closeModal">
+          <span>돌아가기</span>
         </div>
       </div>
     </div>
@@ -38,18 +38,17 @@ import { usePopupStore } from '@/presentation/stores/popupStore.js'
 const router = useRouter()
 const popupStore = usePopupStore()
 
-const navigateToDeleteAccount = () => {
+const navigateToDWithdraw = () => {
   popupStore.modalLVisible.withdraw = false
   router.push('withdraw')
 }
-const closeAlertModalL_deleteAccount = () => {
+const closeModal = () => {
   popupStore.modalLVisible.withdraw = false
 }
 </script>
 
 <style scoped lang="scss">
-/* modal 오버레이 */
-.M_Overlay {
+.overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -62,7 +61,6 @@ const closeAlertModalL_deleteAccount = () => {
   z-index: 101;
 }
 
-/* modalL */
 .modalL {
   display: flex;
   flex-direction: column;
@@ -70,7 +68,7 @@ const closeAlertModalL_deleteAccount = () => {
 
   width: 250px;
 }
-.modalL_contentContainer {
+.contentContainer {
   box-sizing: border-box;
 
   display: flex;
@@ -84,7 +82,7 @@ const closeAlertModalL_deleteAccount = () => {
   border-bottom: 1px solid $dark;
   border-radius: 15px 15px 0px 0px;
 }
-.modalL_header {
+.header {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -94,7 +92,7 @@ const closeAlertModalL_deleteAccount = () => {
   width: 100%;
   height: 60px;
 }
-.modalL_titleContainer {
+.titleContainer {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -106,29 +104,29 @@ const closeAlertModalL_deleteAccount = () => {
   order: 0;
   align-self: stretch;
   flex-grow: 1;
-  p {
+  span {
     font-size: $textM_size;
     font-weight: $textB_weight;
     color: $dark;
     text-align: center;
   }
 }
-.modalL_clearContainer {
+.clearContainer {
   width: 34px;
   height: 34px;
   cursor: pointer;
 }
-.modalL_imgContainer {
+.imgContainer {
   width: 100%;
   height: 150px;
   display: flex;
   justify-content: center;
 }
-.modalL_img {
+.modalImg {
   width: 150px;
   height: 150px;
 }
-.modalL_detailContainer {
+.detailContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -141,34 +139,14 @@ const closeAlertModalL_deleteAccount = () => {
   order: 2;
   align-self: stretch;
   flex-grow: 0;
-  p {
+  span {
     font-size: $textS_size;
     font-weight: $textB_weight;
     color: $dark;
     text-align: center;
   }
 }
-.modalL_progressComponent {
-  /* Auto layout */
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 10px;
-
-  width: 55px;
-}
-.modalL_circle {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-
-  background: $middle_gray;
-}
-.active-circle {
-  background: $dark;
-}
-.modalL_btn {
+.btn {
   /* Auto layout */
   display: flex;
   flex-direction: row;
@@ -182,7 +160,7 @@ const closeAlertModalL_deleteAccount = () => {
   background: $white;
   border-radius: 0px 0px 15px 15px;
 }
-.modalL_btnBg {
+.btnBg {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -194,53 +172,23 @@ const closeAlertModalL_deleteAccount = () => {
   border-radius: 12px;
 
   flex-grow: 1;
-  p {
+  span {
     font-size: $textM_size;
     font-weight: $textB_weight;
     color: $gray;
   }
   &.active {
     background: $point; /* active 클래스가 있을 때의 배경 색상 */
-    p {
+    span {
       color: $white;
     }
   }
 }
-.modalL_btnBg.active {
+.btnBg.active {
   background: $point;
   cursor: pointer;
 }
-.modalL_btnBg.active p {
+.btnBg.active span {
   color: $white;
-}
-
-.slider {
-  position: relative;
-  width: 100%;
-  height: 150px;
-  overflow: hidden;
-  justify-content: center;
-}
-.slides {
-  display: flex;
-  transition: transform 0.5s ease;
-}
-.slide {
-  min-width: 100%;
-}
-
-.slide-left-area,
-.slide-right-area {
-  position: absolute;
-  top: 0;
-  height: 100%;
-  width: 50%;
-  cursor: pointer;
-}
-.slide-left-area {
-  left: 0;
-}
-.slide-right-area {
-  right: 0;
 }
 </style>

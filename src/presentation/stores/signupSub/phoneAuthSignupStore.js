@@ -24,9 +24,9 @@ export const usePhoneAuthSignupStore = defineStore('phoneAuth', () => {
 		try {
 			const data = await memberAccountRepository.getAuthNumber(eventId, phone);
 			if ( data.message === '현재 이벤트로 이미 가입된 번호입니다.' ) {
-				popupStore.ModalS_duplicated = true;
+				popupStore.duplicateModal = true;
 			} else {
-				popupStore.ModalS_duplicated = false;
+				popupStore.duplicateModal = false;
 				authBtnText.value = '재전송';
 				isAuthSend.value = true;
 			}

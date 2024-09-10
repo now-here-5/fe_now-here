@@ -9,7 +9,7 @@ export const postRegister = async (encodedId, userData) => {
   return response.data;
 }
 export const getAuthNumber = async (eventId, phone) => {
-  const response = await httpClient().get(`/member/verify/${eventId}?phone=${phone}`);
+  const response = await httpClient.get(`/member/verify/${eventId}?phone=${phone}`);
   return response.data;
 }
 export const getNameDuplicate = async (eventId, name) => {

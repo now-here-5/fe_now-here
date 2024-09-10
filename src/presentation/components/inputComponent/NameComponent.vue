@@ -1,8 +1,8 @@
 <template>
   <div class="nameComponent">
-    <p>닉네임</p>
-    <div class="input_btn_text">
-      <div class="input_btn">
+    <span>닉네임</span>
+    <div class="inputBtnAlert">
+      <div class="inputBtn">
         <input
           class="nameInput"
           type="text"
@@ -17,10 +17,10 @@
           :disabled="!duplicateBtn"
           @click="checkDuplicate"
         >
-          <p>중복 확인</p>
+          <span>중복 확인</span>
         </div>
       </div>
-      <p
+      <span
         :class="{
           success: store.isDuplicate === false,
           error: store.isDuplicate === true,
@@ -29,7 +29,7 @@
         v-if="store.alertMessageVisible"
       >
         {{ store.alertMessage }}
-      </p>
+      </span>
     </div>
   </div>
 </template>
@@ -37,7 +37,6 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue'
 
-// 부모로부터 store를 props로 받습니다.
 const props = defineProps({
   store: {
     type: Object,
@@ -45,47 +44,33 @@ const props = defineProps({
   }
 })
 
-// 로컬 상태를 store에서 받아옵니다.
 const name = ref(props.store.name)
 const duplicateBtn = ref(false)
 
-// watch를 사용하여 name을 store와 동기화합니다.
 watch(name, (newName) => {
   props.store.name = newName
 })
-
-// 이름 형식 처리 함수
 const formName = () => {
   let formedName = name.value.replace(/[^a-zA-Z가-힣0-9\s]/g, '')
   if (formedName.length > 8) {
     formedName = formedName.slice(0, 8)
   }
   name.value = formedName
-
-  // 이름이 비어 있으면 중복 확인 메시지를 초기화하고, 더 이상 처리하지 않음
   if (!name.value) {
     props.store.alertMessage = ''
     props.store.alertMessageVisible = false
     duplicateBtn.value = false
     return
   }
-
-  // store에 name 값을 업데이트하여 반응성을 유지
   props.store.name = name.value
-
-  // 이름이 변경될 때 중복 확인 메시지를 초기 상태로 되돌림
   props.store.isDuplicate = null
   props.store.alertMessage = props.store.alertMessageInventory[0]
   props.store.alertMessageVisible = true
-
   duplicateBtn.value = formedName.length >= 2 && formedName.length <= 8
 }
-
-// 닉네임 중복 확인 함수
 const checkDuplicate = () => {
   props.store.checkDuplicate()
 }
-
 onMounted(() => {
   formName()
 })
@@ -93,67 +78,57 @@ onMounted(() => {
 
 <style scoped lang="scss">
 .nameComponent {
-  /* Auto layout */
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 15px 0px 0px;
+  padding: 15px 0 0;
   gap: 10px;
-
   width: 100%;
-  p {
+  span {
     font-size: $textL_size;
     font-weight: $textB_weight;
     color: $dark;
   }
 }
-.input_btn_text {
-  /* Auto layout */
+.inputBtnAlert {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 10px;
-
   width: 100%;
-  p {
+  span {
     font-size: $textS_size;
     font-weight: $textS_weight;
     color: $gray;
   }
   .success {
-    color: $green; /* 사용 가능한 닉네임일 때 */
+    color: $green;
   }
   .error {
-    color: $red; /* 닉네임 중복 시 */
+    color: $red;
   }
   .warning {
-    color: $red; /* 닉네임 중복 시 */
+    color: $red;
   }
 }
-.input_btn {
-  /* Auto layout */
+.inputBtn {
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 10px;
-
   width: 100%;
 }
 .nameInput {
   box-sizing: border-box;
-
   display: flex;
   flex-direction: row;
   align-items: flex-end;
-  padding: 8px 0px;
-
+  padding: 8px 0;
   flex: 1;
   height: 48px;
-
   border: none;
   border-bottom: 1px solid $dark;
-  border-radius: 0px;
-
+  border-radius: 0;
   outline: none;
   font-size: $textM_size;
   font-weight: $textS_weight;
@@ -170,13 +145,11 @@ onMounted(() => {
   justify-content: center;
   align-items: center;
   padding: 14px 5px;
-
   width: 90px;
   height: 45px;
-
   background: $middle_gray;
   border-radius: 8px;
-  p {
+  span {
     font-size: $textS_size;
     font-weight: $textB_weight;
     color: $gray;
@@ -185,8 +158,8 @@ onMounted(() => {
 .duplicateBtn.filled {
   background: $point;
   cursor: pointer;
-  p {
-    color: $white; /* 입력된 숫자의 색상 */
+  span {
+    color: $white;
   }
 }
 </style>

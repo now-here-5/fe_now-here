@@ -36,17 +36,8 @@ export const useProfileSignupStore = defineStore('profileSignup', () => {
 	const isSelfIntroductionValid = computed(() => selfIntro.value.length >= 10 && selfIntro.value.length <= 30);
 	
 	const signupReady = computed(() => {
-		console.log('isNameFilled.value :', isNameFilled.value);
-		console.log('isNameValid.value :', isNameValid.value);
-		console.log('isBirthValid.value :', isBirthValid.value);
-		console.log('isSexValid.value :', isSexValid.value);
-		console.log('isMBTIValid.value :', isMBTIValid.value);
-		console.log('isSelfIntroductionValid.value :', isSelfIntroductionValid.value);
-		
 		return isNameFilled.value && isNameValid.value && isBirthValid.value && isSexValid.value && isMBTIValid.value && isSelfIntroductionValid.value;
 	});
-
-	// watch를 사용해 isBtnReady의 변화를 감지하고, profile을 업데이트
 	watch(signupReady, (newValue) => {
 		if (newValue) {
 			signupStore.signupCompleted.profile = true;
@@ -56,10 +47,8 @@ export const useProfileSignupStore = defineStore('profileSignup', () => {
 	});
 	
 	const checkDuplicate = async () => {
-		
 		const eventId = eventStore.encodedId;
 		const nameTo = name.value
-		
 		try {
 			const data = await memberAccountRepository.getNameDuplicate(eventId, nameTo);
 			if ( data.message === "사용 가능한 닉네임입니다." ) {
@@ -74,7 +63,6 @@ export const useProfileSignupStore = defineStore('profileSignup', () => {
 			console.error('name Duplicate :', error);
 		}
 	}
-	// 상태와 메서드를 return 해야 컴포넌트에서 사용할 수 있습니다.
 	return {
 		name,
 		isDuplicate,

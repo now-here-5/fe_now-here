@@ -6,7 +6,7 @@
   <PasswordComponent
     v-model="passwordConfirmInput"
     label="비밀번호 확인"
-    :errorMessage="store_Password.alertMessage ? '비밀번호가 일치하지 않습니다.' : ''"
+    :errorMessage="passwordSignupStore.alertMessage ? '비밀번호가 일치하지 않습니다.' : ''"
   />
 </template>
 
@@ -16,13 +16,13 @@ import { ref, watch, computed } from 'vue';
 import { useSignupStore } from "@/presentation/stores/signupStore.js";
 import { usePasswordSignupStore } from "@/presentation/stores/signupSub/passwordSignupStore.js";
 
-const store_Password = usePasswordSignupStore();
-const store_Signup = useSignupStore();
-store_Signup.signupCompleted.password = false;
-store_Signup.signupStep = 1;
+const passwordSignupStore = usePasswordSignupStore();
+const signupStore = useSignupStore();
+signupStore.signupCompleted.password = false;
+signupStore.signupStep = 1;
 
-const passwordInput = ref(store_Password.password || '');
-const passwordConfirmInput = ref(store_Password.passwordConfirm || '');
+const passwordInput = ref(passwordSignupStore.password || '');
+const passwordConfirmInput = ref(passwordSignupStore.passwordConfirm || '');
 
 const isPasswordValid = computed(() => {
   return (
@@ -33,10 +33,10 @@ const isPasswordValid = computed(() => {
 
 // watch를 사용하여 isPasswordValid 변경 시 store의 상태를 업데이트
 watch([passwordInput, passwordConfirmInput], () => {
-  store_Password.password = passwordInput.value;
-  store_Password.passwordConfirm = passwordConfirmInput.value;
+  passwordSignupStore.password = passwordInput.value;
+  passwordSignupStore.passwordConfirm = passwordConfirmInput.value;
 
-  store_Signup.signupCompleted.password = isPasswordValid.value;
+  signupStore.signupCompleted.password = isPasswordValid.value;
 }, { immediate: true });  // immediate: true 추가하여 컴포넌트가 마운트될 때도 실행되도록 함
 </script>
 

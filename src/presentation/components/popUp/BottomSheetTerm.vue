@@ -202,7 +202,7 @@ const closeBottomSheet = (type) => {
 }
 .descContainer {
   display: flex;
-  align-items: flex-start; /* 좌측 정렬 */
+  align-items: flex-start;
   padding: 0 28px;
   height: 400px;
   width: 375px;
@@ -213,7 +213,7 @@ const closeBottomSheet = (type) => {
     color: $dark;
   }
   .indent {
-    padding-left: 10px; /* 들여쓰기 값, 필요에 따라 조정 */
+    padding-left: 10px;
     font-size: $textS_size;
     font-weight: $textS_weight;
     color: $dark;

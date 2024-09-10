@@ -1,19 +1,19 @@
 <template>
-  <div v-if="popupStore.modalLVisible.matchLanding" class="M_Overlay">
+  <div v-if="popupStore.modalLVisible.matchLanding" class="overlay">
     <div class="modalL">
-      <div class="modalL_contentContainer">
-        <div class="modalL_header">
-          <div class="modalL_titleContainer">
-            <p>잠깐! 꼭 확인해주세요.</p>
+      <div class="contentContainer">
+        <div class="header">
+          <div class="titleContainer">
+            <span>잠깐! 꼭 확인해주세요.</span>
           </div>
-          <img class="modalL_clearContainer" src="/images/clear.png" @click="navigateToHome" />
+          <img class="clearContainer" src="/images/clear.png" @click="navigateToHome" alt="clear"/>
         </div>
         <div class="slider">
           <div class="slider">
             <div class="slides" :style="{ transform: `translateX(-${currentStep * 100}%)` }">
               <div v-for="(image, index) in images" :key="index" class="slide">
-                <div class="modalL_imgContainer">
-                  <img :src="image" class="modalL_img" />
+                <div class="imgContainer">
+                  <img :src="image" class="img" alt="modalImg"/>
                 </div>
               </div>
             </div>
@@ -21,24 +21,24 @@
             <div class="slide-right-area" @click="nextSlide"></div>
           </div>
         </div>
-        <div class="modalL_detailContainer">
-          <p v-html="currentText" />
-          <div class="modalL_progressComponent">
+        <div class="detailContainer">
+          <span v-html="currentText" />
+          <div class="progressComponent">
             <div
               v-for="(circle, index) in 3"
               :key="index"
-              :class="{ modalL_circle: true, 'active-circle': index === currentStep }"
+              :class="{ mod: true, 'active-circle': index === currentStep }"
             />
           </div>
         </div>
       </div>
-      <div class="modalL_btn">
+      <div class="btn">
         <div
-          class="modalL_btnBg"
+          class="btnBg"
           :class="{ active: currentStep === 2 }"
-          @click="currentStep === 2 ? agreeAlertModalL_matchLanding() : null"
+          @click="currentStep === 2 ? agreeModal() : null"
         >
-          <p>동의하고 계속하기</p>
+          <span>동의하고 계속하기</span>
         </div>
       </div>
     </div>
@@ -63,7 +63,6 @@ const texts = [
   '매칭 후의 모든 연락과 만남은<br>사용자의 판단과 책임 하에 이뤄집니다.',
   '서비스 사용 전,<br>주의사항을 꼭 확인해주세요.'
 ]
-// 현재 이미지와 텍스트를 상태에 따라 가져옴
 const currentText = computed(() => texts[currentStep.value])
 
 const navigateToHome = () => {
@@ -71,7 +70,7 @@ const navigateToHome = () => {
   popupStore.matchAgree = false
   router.push('/')
 }
-const agreeAlertModalL_matchLanding = () => {
+const agreeModal = () => {
   popupStore.modalLVisible.matchLanding = false
   popupStore.matchAgree = true
 }
@@ -88,8 +87,7 @@ const nextSlide = () => {
 </script>
 
 <style scoped lang="scss">
-/* modal 오버레이 */
-.M_Overlay {
+.overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -101,159 +99,138 @@ const nextSlide = () => {
   align-items: center;
   z-index: 101;
 }
-
-/* modalL */
 .modalL {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-
   width: 250px;
 }
-.modalL_contentContainer {
+.contentContainer {
   box-sizing: border-box;
-
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 10px;
-
   width: 100%;
-
   background: $white;
   border-bottom: 1px solid $dark;
-  border-radius: 15px 15px 0px 0px;
+  border-radius: 15px 15px 0 0;
 }
-.modalL_header {
+.header {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: flex-start;
-  padding: 10px 10px 0px;
-
+  padding: 10px 10px 0;
   width: 100%;
   height: 60px;
 }
-.modalL_titleContainer {
+.titleContainer {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: flex-end;
-  padding: 0px 0px 0px 34px;
-
-  /* Inside auto layout */
+  padding: 0 0 0 34px;
   flex: none;
   order: 0;
   align-self: stretch;
   flex-grow: 1;
-  p {
+  span {
     font-size: $textM_size;
     font-weight: $textB_weight;
     color: $dark;
     text-align: center;
   }
 }
-.modalL_clearContainer {
+.clearContainer {
   width: 34px;
   height: 34px;
   cursor: pointer;
 }
-.modalL_imgContainer {
+.imgContainer {
   width: 100%;
   height: 150px;
   display: flex;
   justify-content: center;
 }
-.modalL_img {
+.img {
   width: 150px;
   height: 150px;
 }
-.modalL_detailContainer {
+.detailContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 0px 0px 20px;
   gap: 15px;
-
   width: 100%;
-
   flex: none;
   order: 2;
   align-self: stretch;
   flex-grow: 0;
-  p {
+  span {
     font-size: $textS_size;
     font-weight: $textB_weight;
     color: $dark;
     text-align: center;
   }
 }
-.modalL_progressComponent {
-  /* Auto layout */
+.progressComponent {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-start;
   gap: 10px;
-
   width: 55px;
 }
-.modalL_circle {
+.circle {
   width: 10px;
   height: 10px;
   border-radius: 50%;
-
   background: $middle_gray;
 }
 .active-circle {
   background: $dark;
 }
-.modalL_btn {
-  /* Auto layout */
+.btn {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   padding: 15px;
   gap: 20px;
-
   width: 100%;
-
   background: $white;
   border-radius: 0px 0px 15px 15px;
 }
-.modalL_btnBg {
+.btnBg {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-
   height: 40px;
-
   background: $middle_gray;
   border-radius: 12px;
-
   flex-grow: 1;
-  p {
+  span {
     font-size: $textM_size;
     font-weight: $textB_weight;
     color: $gray;
   }
   &.active {
-    background: $point; /* active 클래스가 있을 때의 배경 색상 */
-    p {
+    background: $point;
+    span {
       color: $white;
     }
   }
 }
-.modalL_btnBg.active {
+.btnBg.active {
   background: $point;
   cursor: pointer;
 }
-.modalL_btnBg.active p {
+.btnBg.active span {
   color: $white;
 }
-
 .slider {
   position: relative;
   width: 100%;
@@ -268,7 +245,6 @@ const nextSlide = () => {
 .slide {
   min-width: 100%;
 }
-
 .slide-left-area,
 .slide-right-area {
   position: absolute;

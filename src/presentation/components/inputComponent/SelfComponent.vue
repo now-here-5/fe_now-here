@@ -1,20 +1,20 @@
 <template>
   <div class="selfComponent">
-    <div class="componentText_mention">
-      <p1>자기소개</p1>
-      <p2>
+    <div class="titleDesc">
+      <span class="title">자기소개</span>
+      <span class="desc">
         전화번호, SNS 등의 개인정보를 입력한 경우,<br />
         임의로 계정이 삭제되며 재가입이 어려울 수 있습니다.
-      </p2>
+      </span>
     </div>
     <div class="inputContainer">
       <textarea
         class="selfInput"
         placeholder="자기소개를 입력해주세요."
-        v-model="selfIntroduction"
+        v-model="selfIntro"
         maxlength="30"
       />
-      <p>{{ selfIntroduction.length }}/30</p>
+      <span>{{ selfIntroduction.length }}/30</span>
     </div>
   </div>
 </template>
@@ -29,9 +29,9 @@ const props = defineProps({
   }
 })
 
-const selfIntroduction = ref(props.store.selfIntro || '')
+const selfIntro = ref(props.store.selfIntro || '')
 
-watch(selfIntroduction, (newValue) => {
+watch(selfIntro, (newValue) => {
   props.store.selfIntro = newValue
 })
 </script>
@@ -41,20 +41,19 @@ watch(selfIntroduction, (newValue) => {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 15px 0px 0px;
+  padding: 15px 0 0;
   gap: 10px;
-
   width: 100%;
 }
-.componentText_mention {
+.titleDesc {
   display: flex;
   flex-direction: column;
-  p1 {
+  .title {
     font-size: $textL_size;
     font-weight: $textB_weight;
     color: $dark;
   }
-  p2 {
+  .desc {
     font-size: $textMS_size;
     font-weight: $textS_weight;
     color: $gray;
@@ -65,9 +64,8 @@ watch(selfIntroduction, (newValue) => {
   flex-direction: column;
   align-items: center;
   gap: 5px;
-
   width: 100%;
-  p {
+  span {
     font-size: $textS_size;
     font-weight: $textS_weight;
     color: $gray;
@@ -76,26 +74,22 @@ watch(selfIntroduction, (newValue) => {
 }
 .selfInput {
   box-sizing: border-box;
-
   display: flex;
   flex-direction: row;
   align-items: flex-start;
   padding: 12px;
-
   width: 98%;
   height: 110px;
-
   background: $light_gray;
   border: 1px solid $gray;
   border-radius: 5px;
-  resize: none; // 사용자가 크기 조절하지 못하게 설정
-
+  resize: none;
   font-size: $textML_size;
   &::placeholder {
     font-size: $textML_size;
     font-weight: $textS_weight;
     color: $gray;
-    text-align: left; // 가로 정렬을 왼쪽으로 설정
+    text-align: left;
   }
 }
 </style>

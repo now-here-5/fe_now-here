@@ -34,8 +34,6 @@ export const useProfileStore = defineStore('profile', () => {
 		const today = new Date();
 		let age = today.getFullYear() - birth.getFullYear();
 		const monthDiff = today.getMonth() - birth.getMonth();
-		
-		// 생일이 지나지 않았다면 나이를 1살 줄임
 		if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
 			age--;
 		}
@@ -56,7 +54,6 @@ export const useProfileStore = defineStore('profile', () => {
 		try {
 			const response = await memberSettingRepository.getProfileInfo();
 			console.log('response', response);
-			// response.data가 true일 때만 동작을 수행
 			if (response.message === "개인정보 조회에 성공했습니다.") {
 				originalData.mbti = response.data.mbti;
 				originalData.nickname = response.data.nickname;
@@ -75,7 +72,7 @@ export const useProfileStore = defineStore('profile', () => {
 			}
 		} catch (error) {
 			console.error('Error fetching profile info:', error);
-			return null; // 혹은 다른 기본 값
+			return null;
 		}
 	};
 	

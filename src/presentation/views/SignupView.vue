@@ -3,10 +3,10 @@
     <BackspaceHeader />
     <main class="body">
       <div class="contentContainer" :class="{ profile: signupStore.signupStep === 2 }">
-        <TextContainer
+        <LocationDescComponent
           :location= eventStore.eventName
           :title= "signupStore.textTitle[signupStore.signupStep]"
-          :mention= "signupStore.textMention[signupStore.signupStep]"
+          :Desc= "signupStore.textMention[signupStore.signupStep]"
         />
         <router-view />
       </div>
@@ -20,21 +20,21 @@
     </footer>
 
     <ModalS
-      :isVisible="popupStore.ModalS_duplicated"
+      :isVisible="popupStore.duplicateModal"
       :title="popupStore.modalSTitle"
       :message="`이미 가입된 휴대폰 번호입니다.<br>다시 한 번 확인해주세요.`"
       buttonText="확인"
       @close="popupStore.closeModal"
     />
     <ModalS
-      :isVisible="popupStore.ModalS_authError"
+      :isVisible="popupStore.authErrorModal"
       :title="popupStore.modalSTitle"
       :message="`인증 번호가 일치하지 않습니다.<br>다시 입력해주세요.`"
       buttonText="확인"
       @close="popupStore.closeModal"
     />
     <ModalS
-      :isVisible="popupStore.ModalS_completed"
+      :isVisible="popupStore.completeModal"
       :title="popupStore.modalSTitle"
       :message="`어떤 인연이 기다리고 있을까요?<br>지금 바로 만나보세요.`"
       buttonText="매칭하러 가기"
@@ -46,7 +46,7 @@
 
 <script setup>
 import BackspaceHeader from "@/presentation/components/BackspaceHeader.vue";
-import TextContainer from "@/presentation/components/signup/TextContainer.vue";
+import LocationDescComponent from "@/presentation/components/signup/LocationDescComponent.vue";
 import SelectBtn from "@/presentation/components/SelectBtn.vue";
 import ModalS from "@/presentation/components/popUp/ModalS.vue";
 import { onMounted } from 'vue';
@@ -67,9 +67,9 @@ const handleSubmit = () => {
 };
 
 onMounted(() => {
-  popupStore.ModalS_duplicated = false;
-  popupStore.ModalS_authError = false;
-  popupStore.ModalS_completed = false;
+  popupStore.modalSDuplicated = false;
+  popupStore.modalSDuplicated = false;
+  popupStore.modalSDuplicated = false;
 });
 
 </script>

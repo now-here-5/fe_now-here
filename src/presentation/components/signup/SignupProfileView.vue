@@ -12,7 +12,6 @@ import BirthComponent from "@/presentation/components/inputComponent/BirthCompon
 import SexComponent from "@/presentation/components/inputComponent/SexComponent.vue";
 import MBTIComponent from "@/presentation/components/inputComponent/MBTIComponent.vue";
 import SelfComponent from "@/presentation/components/inputComponent/SelfComponent.vue";
-
 import { useSignupStore } from "@/presentation/stores/signupStore.js";
 import { useProfileSignupStore } from "@/presentation/stores/signupSub/profileSignupStore.js";
 

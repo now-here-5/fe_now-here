@@ -1,21 +1,21 @@
 <template>
-  <div v-if="isVisible" class="M_Overlay">
+  <div v-if="isVisible" class="overlay">
     <div class="modalS">
-      <div class="modalS_body">
-        <div class="modalS_contentContainer">
-          <div v-if="imageSrc" class="modalS_imgContainer">
-            <img class="modalS_img" :src="imageSrc" alt="modal image" />
+      <div class="body">
+        <div class="contentContainer">
+          <div v-if="imageSrc" class="imgContainer">
+            <img class="modalImg" :src="imageSrc" alt="modalImg" />
           </div>
-          <div class="modalS_titleContainer">
-            <p v-html="title"></p>
+          <div class="titleContainer">
+            <span v-html="title"></span>
           </div>
-          <div class="modalS_detailContainer">
-            <p v-html="message"></p>
+          <div class="detailContainer">
+            <span v-html="message"></span>
           </div>
         </div>
       </div>
-      <div class="modalS_btn" @click="handleClick">
-        <p>{{ buttonText }}</p>
+      <div class="btn" @click="handleClick">
+        <span>{{ buttonText }}</span>
       </div>
     </div>
   </div>
@@ -40,8 +40,7 @@ const handleClick = () => {
 </script>
 
 <style scoped lang="scss">
-/* modal 오버레이 */
-.M_Overlay {
+.overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -53,7 +52,6 @@ const handleClick = () => {
   align-items: center;
   z-index: 1;
 }
-/* modalS */
 .modalS {
   display: flex;
   flex-direction: column;
@@ -64,86 +62,72 @@ const handleClick = () => {
   background: $white;
   border-radius: 12px;
 }
-.modalS_body {
-  /* Auto layout */
+.body {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 0px 0px 12px;
-
+  padding: 0 0 12px;
   width: 100%;
 }
-.modalS_contentContainer {
-  /* Auto layout */
+.contentContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
-
   width: 100%;
-
   border-radius: 12px;
 }
-.modalS_imgContainer {
-  /* Auto layout */
+.imgContainer {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: flex-end;
-  padding: 17px 0px 0px;
-
+  padding: 17px 0 0;
   width: 100%;
 }
-.modalS_img {
+.modalImg {
   width: 150px;
   height: 150px;
-
   border: 3px solid $dark;
   border-radius: 8px;
 }
-.modalS_titleContainer {
-  /* Auto layout */
+.titleContainer {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: flex-end;
-  padding: 17px 0px 0px;
-
+  padding: 17px 0 0;
   width: 100%;
-  p {
+  span {
     font-size: $textM_size;
     font-weight: $textB_weight;
     color: $dark;
     text-align: center;
   }
 }
-.modalS_detailContainer {
+.detailContainer {
   box-sizing: border-box;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-
   width: 205px;
   min-height: 65px;
-
   border-bottom: 1px solid $dark;
-  p {
+  span {
     font-size: $textS_size;
     font-weight: $textS_weight;
     color: $dark;
     text-align: center;
   }
 }
-.modalS_btn {
-  /* Auto layout */
+.btn {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   padding: 0px 12px 12px;
-
   width: 100%;
-  p {
+  span {
     font-size: $textMS_size;
     font-weight: $textB_weight;
     color: $dark;

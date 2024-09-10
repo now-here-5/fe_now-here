@@ -54,10 +54,10 @@ export const useSignupStore = defineStore('signup', () => {
 					const authNum = phoneAuthSignupStore.authNumber;
 					const data = await memberAccountRepository.postAuthNumber(phone, authNum);
 					if ( data.message === '휴대폰 인증에 실패했습니다.' ) {
-						popupStore.ModalS_authError = true;
+						popupStore.authErrorModal = true;
 						console.error('Auth failed:', data.message);
 					} else {
-						popupStore.ModalS_authError = false;
+						popupStore.authErrorModal = false;
 						router.push('/signup/signup_password');
 					}
 				} catch (error) {
@@ -115,7 +115,7 @@ export const useSignupStore = defineStore('signup', () => {
 								
 								console.log("modalImag", profileSignupStore.modalImag);
 								
-								popupStore.ModalS_completed = true;
+								popupStore.completeModal = true;
 							}
 						} else {
 							console.error('Login failed:', response.message);

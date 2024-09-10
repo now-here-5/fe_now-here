@@ -3,9 +3,9 @@
     <div class="locatnion">
       <p>Now, Here in "{{ location }}"</p>
     </div>
-    <div class="title_mention">
+    <div class="titleDesc">
       <p1>{{ title }}</p1>
-      <p v-html="mention" v-if="mention"></p>
+      <p v-html="Desc" v-if="Desc"></p>
     </div>
   </div>
 </template>
@@ -22,7 +22,7 @@ defineProps({
     type: String,
     required: true
   },
-  mention: {
+  Desc: {
     type: String,
     required: true
   }
@@ -67,7 +67,7 @@ defineProps({
     color: $point;
   }
 }
-.title_mention {
+.titleDesc {
   /* Auto layout */
   display: flex;
   flex-direction: column;

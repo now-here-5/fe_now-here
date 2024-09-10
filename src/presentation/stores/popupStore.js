@@ -22,26 +22,26 @@ export const usePopupStore = defineStore('popup', () => {
   });
   const termType = ref('');
   //M_S
-  const ModalS_duplicated = ref(false);
-  const ModalS_authError = ref(false);
-  const ModalS_completed = ref(false);
+  const duplicateModal = ref(false);
+  const authErrorModal = ref(false);
+  const completeModal = ref(false);
   
   const modalSTitle = computed(() => {
-    if (ModalS_completed.value) {
+    if (completeModal.value) {
       return `${profileSignupStore.selectedMBTI} ${profileSignupStore.name}님 <br> 회원가입 완료`;
     } else {
       return "알림";
     }
   });
   const closeModal = () => {
-    if (ModalS_duplicated.value) {
-      ModalS_duplicated.value = false;
+    if (duplicateModal.value) {
+      duplicateModal.value = false;
     }
-    if (ModalS_authError.value) {
-      ModalS_authError.value = false;
+    if (authErrorModal.value) {
+      authErrorModal.value = false;
     }
-    if (ModalS_completed.value) {
-      ModalS_completed.value = false;
+    if (completeModal.value) {
+      completeModal.value = false;
       router.push('/match');
     }
   };
@@ -59,8 +59,6 @@ export const usePopupStore = defineStore('popup', () => {
       const response = await interactionRepository.getFeedbackModal();
       if (response.data === true) {
         modalLVisible.value.review = true;
-      } else {
-        console.log("피드백 모달을 표시하지 않습니다.");
       }
       return response.data;
     } catch (error) {
@@ -77,9 +75,9 @@ export const usePopupStore = defineStore('popup', () => {
     termType,
     
     //M_S
-    ModalS_duplicated,
-    ModalS_authError,
-    ModalS_completed,
+    duplicateModal,
+    authErrorModal,
+    completeModal,
     modalSTitle,
     
     closeModal,
