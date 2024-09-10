@@ -47,11 +47,12 @@ export const useInteractionStore = defineStore('interaction', () => {
   }
 
   return {
-    postFeedback,
     textContent,
     number,
     rate,
     
     sendInteraction,
+    
+    postFeedback,
   }
 });

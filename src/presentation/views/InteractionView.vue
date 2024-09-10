@@ -2,27 +2,27 @@
   <div class="frame">
     <BackspaceHeader :title="type === 'inquiry' ? '문의하기' : '의견 남기기'" />
     <main class="body">
-      <div class="text_component">
-        <div class="text_container">
-          <p1 v-if="type === 'inquiry'">휴대폰 번호</p1>
-          <p1 v-else>별점 등록</p1>
-
-          <p2 v-if="type === 'inquiry'">
+      <div class="textComponent">
+        <div class="titleDesc">
+          <span class="title" v-if="type === 'inquiry'">휴대폰 번호</span>
+          <span class="title" v-else>별점 등록</span>
+          <span class="desc" v-if="type === 'inquiry'">
             답변받을 휴대폰 번호를 입력해주세요.
-          </p2>
-          <p2 v-else>Now Here를 이용해 주셔서 감사합니다.<br/>
-            서비스 개선을 위해 소중한 의견을 남겨주세요.</p2>
+          </span>
+          <span class="desc" v-else>Now Here를 이용해 주셔서 감사합니다.<br/>
+            서비스 개선을 위해 소중한 의견을 남겨주세요.
+          </span>
         </div>
         <input
           v-if="type === 'inquiry'"
-          class="componentContainer_Inquiry"
+          class="componentInquiry"
           type="tel"
           placeholder="010-0000-0000"
           v-model="phoneNumber"
           @input="handlePhoneNumberInput"
           maxlength="13"
         />
-        <div v-if="type === 'feedback'" class="componentContainer_Feedback">
+        <div v-if="type === 'feedback'" class="componentFeedback">
           <img
             v-for="n in 5"
             :key="n"
@@ -33,22 +33,26 @@
           />
         </div>
       </div>
-      <div class="text_Input">
-        <p v-if="type === 'inquiry'">문의 내용</p>
-        <p v-else>의견 작성</p>
-        <div class="input_conunt">
+      <div class="titleInput">
+        <span v-if="type === 'inquiry'">문의 내용</span>
+        <span v-else>의견 작성</span>
+        <div class="inputContainer">
           <textarea
             class="input"
             :placeholder="type === 'inquiry' ? '문의 내용을 작성해주세요.' : '내용을 작성해주세요.'"
             v-model="contents"
             @input="formContents"
           />
-          <p>{{ contents.length }}/30</p>
+          <span>{{ contents.length }}/30</span>
         </div>
       </div>
     </main>
     <footer class="bottom">
-      <SelectBtn :isActive="Active" buttonText="작성완료" @click="handleSubmit" />
+      <SelectBtn
+        :isActive="Active"
+        buttonText="작성완료"
+        @click="handleSubmit"
+      />
     </footer>
   </div>
 </template>
@@ -60,11 +64,12 @@ import starFilled from '/images/star_filled.png'
 import starUnfilled from '/images/star.png'
 import { ref, watch, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { formPhoneNumber } from '@/core/usecases/FormNumber.js'
+import { formPhoneNumber } from '@/Composition/FormNumber.js'
 import { useInteractionStore } from '@/presentation/stores/interactionStore.js'
 import { usePopupStore } from '@/presentation/stores/popupStore.js'
 
-const route = useRoute() // useRoute 사용
+const route = useRoute()
+const router = useRouter()
 const type = route.params.type
 const interactionStore = useInteractionStore()
 const popupStore = usePopupStore()
@@ -72,23 +77,20 @@ const phoneNumber = ref(interactionStore.number)
 const contents = ref(interactionStore.textContent || '')
 const rate = ref(0)
 const Active = ref(false)
-const router = useRouter() // useRouter 사용
 
 const setRating = (rating) => {
   interactionStore.rate = rate.value = rating;
 }
 const handlePhoneNumberInput = () => {
-  phoneNumber.value = formPhoneNumber(phoneNumber.value) // 포맷 적용
+  phoneNumber.value = formPhoneNumber(phoneNumber.value)
   interactionStore.inquiry_Num = phoneNumber.value
 }
 const formContents = () => {
   interactionStore.textContent = contents.value
-  console.log(interactionStore.textContent)
 }
 const handleSubmit = async () => {
-  const isSuccess = await interactionStore.sendInteraction(type) // props.type을 사용
+  const isSuccess = await interactionStore.sendInteraction(type)
   if (isSuccess) {
-    console.log(type === 'inquiry' ? '문의 성공!' : '리뷰 성공!')
     router.back() // 3초 후에 뒤로 가기
     setTimeout(() => {
       popupStore.tostMessage.visible = false
@@ -115,104 +117,90 @@ onMounted(() => {
   flex-direction: column;
   align-items: center;
   padding: 25px 25px 25px;
-
   height: 100vh;
-
-  background: $white;
 }
-
 .body {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   justify-content: flex-start;
-  padding: 15px 0px;
+  padding: 15px 0;
   gap: 30px;
-
   width: 100%;
 }
-.text_component {
+.textComponent {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 10px;
-
   width: 100%;
 }
-.text_container {
+.titleDesc {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 2px;
-
   width: 100%;
-  p1 {
+  .title {
     font-size: $textXL_size;
     font-weight: $textB_weight;
     color: $dark;
   }
-  p2 {
+  .desc {
     font-size: $textS_size;
     font-weight: $textS_weight;
     color: $dark;
   }
 }
-.componentContainer_Feedback {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  gap: 5px;
-}
-.componentContainer_Inquiry {
+.componentInquiry {
   box-sizing: border-box;
-
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 5px;
-
   width: 100%;
   height: 36px;
-
   border: none;
-  border-bottom: 1px solid #a4a4a4;
+  border-bottom: 1px solid $gray;
   border-radius: 0;
   outline: none;
-
   font-size: $textL_size;
   font-weight: $textB_weight;
-
   &::placeholder {
     font-size: $textL_size;
     font-weight: $textB_weight;
     color: $gray;
   }
 }
+.componentFeedback {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 5px;
+}
 .star {
   width: 55px;
   height: 55px;
 }
-.text_Input {
+.titleInput {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 15px;
-
   width: 100%;
-  p {
+  span {
     font-size: $textXL_size;
     font-weight: $textB_weight;
     color: $dark;
   }
 }
-.input_conunt {
+.inputContainer {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   gap: 5px;
-
   width: 100%;
-  p {
+  span {
     font-size: $textS_size;
     font-weight: $textS_weight;
     color: $gray;
@@ -220,25 +208,20 @@ onMounted(() => {
 }
 .input {
   box-sizing: border-box;
-
   display: flex;
   flex-direction: row;
   align-items: flex-start;
   padding: 10px 12px;
   gap: 10px;
-
   width: 100%;
   height: 180px;
-
   background: $light_gray;
   border: 1px solid $gray;
   border-radius: 5px;
   outline: none;
   resize: none;
-
   font-size: $textM_size;
   font-weight: $textS_weight;
-  color: $dark;
   &::placeholder {
     font-size: $textMS_size;
     font-weight: $textS_weight;
@@ -246,30 +229,20 @@ onMounted(() => {
     text-align: left; // 가로 정렬을 왼쪽으로 설정
   }
 }
-.input::placeholder {
-  font-size: $textMS_size;
-  font-weight: $textS_weight;
-  color: $gray;
-}
-
 .bottom {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 10px 0px;
+  padding: 10px 0;
   gap: 10px;
-
   height: 110px;
 }
-
-/* 모바일 장치에 적용할 스타일 */
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 767px) {
   .body {
     height: 520px;
   }
 }
-/* 데스크톱에 적용할 스타일 */
-@media only screen and (min-width: 601px) {
+@media only screen and (min-width: 767px) {
   .body {
     align-self: stretch;
     flex-grow: 1;
