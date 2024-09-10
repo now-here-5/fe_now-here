@@ -1,10 +1,10 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-import { PhoneAuthRepository } from "@/infrastructure/repositories/PhoneAuthRepository.js";
+import { MemberAccountRepository } from "@/infrastructure/repositories/MemberAccountRepository.js";
 import { useEventStore } from '@/presentation/stores/eventStore.js';
 import { usePopupStore } from '@/presentation/stores/popupStore.js';
 
-const phoneAuthRepository = new PhoneAuthRepository();
+const memberAccountRepository = new MemberAccountRepository();
 
 export const usePhoneAuthSignupStore = defineStore('phoneAuth', () => {
 	const eventStore = useEventStore();
@@ -21,9 +21,8 @@ export const usePhoneAuthSignupStore = defineStore('phoneAuth', () => {
 	const fetchAuthNumber = async () => {
 		const phone = phoneNumber.value.replace(/[^0-9]/g, '');
 		const eventId = eventStore.encodedId;
-		
 		try {
-			const data = await phoneAuthRepository.getAuthNumber(eventId, phone);
+			const data = await memberAccountRepository.getAuthNumber(eventId, phone);
 			if ( data.message === '현재 이벤트로 이미 가입된 번호입니다.' ) {
 				popupStore.ModalS_duplicated = true;
 			} else {
@@ -36,7 +35,6 @@ export const usePhoneAuthSignupStore = defineStore('phoneAuth', () => {
 		}
 	}
 	
-	// 상태와 메서드를 return 해야 컴포넌트에서 사용할 수 있습니다.
 	return {
 		phoneNumber,
 		authNumber,
@@ -54,5 +52,5 @@ export const usePhoneAuthSignupStore = defineStore('phoneAuth', () => {
 		paths: [
 			'phoneNumber',
 		]
-	}
-});
+	}}
+);

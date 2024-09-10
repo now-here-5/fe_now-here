@@ -1,8 +1,8 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-import { FeedbackRepository } from '@/infrastructure/repositories/FeedbackRepository.js';
+import { InteractionRepository } from '@/infrastructure/repositories/InteractionRepository.js';
 
-const feedbackRepository = new FeedbackRepository();
+const interactionRepository = new InteractionRepository();
 
 export const useMatchStore = defineStore('match', () => {
 	const matchAgree = ref(false); // 초기 매치 동의 값을 false로 설정합니다.
@@ -11,7 +11,7 @@ export const useMatchStore = defineStore('match', () => {
 	
 	const getFeedbackModalTF = async () => {
 		try {
-			const response = await feedbackRepository.getFeedbackTF();
+			const response = await interactionRepository.getFeedbackModal();
 			console.log('response', response);
 			
 			// response.data가 true일 때만 동작을 수행

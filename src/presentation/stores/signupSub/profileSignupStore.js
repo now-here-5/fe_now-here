@@ -1,10 +1,10 @@
 import { defineStore } from 'pinia';
 import { ref, computed, watch } from 'vue';
-import { NameDuplicateRepository } from "@/infrastructure/repositories/NameDuplicateRepository.js";
+import { MemberAccountRepository } from "@/infrastructure/repositories/MemberAccountRepository.js";
 import { useEventStore } from '@/presentation/stores/eventStore.js';
 import { useSignupStore } from "@/presentation/stores/signupStore.js";
 
-const nameDuplicateRepository = new NameDuplicateRepository();
+const memberAccountRepository = new MemberAccountRepository();
 
 export const useProfileSignupStore = defineStore('profileSignup', () => {
 	const eventStore = useEventStore();
@@ -61,7 +61,7 @@ export const useProfileSignupStore = defineStore('profileSignup', () => {
 		const nameTo = name.value
 		
 		try {
-			const data = await nameDuplicateRepository.getNameDuplicate(eventId, nameTo);
+			const data = await memberAccountRepository.getNameDuplicate(eventId, nameTo);
 			if ( data.message === "사용 가능한 닉네임입니다." ) {
 				console.log('사용 가능한 닉네임입니다.');
 				alertMessage.value = alertMessageInventory[1];

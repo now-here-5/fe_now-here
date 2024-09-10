@@ -1,12 +1,12 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { formPhoneNumber, formPassword, cleanPhoneNumber } from '@/core/usecases/FormNumber.js';
-import { LoginRepository } from "@/infrastructure/repositories/LoginRepository.js";
+import { formPhoneNumber, formPassword, cleanPhoneNumber } from '@/Composition/FormNumber.js';
+import { MemberAuthRepository } from "@/infrastructure/repositories/MemberAuthRepository.js";
 import { useAuthStore } from '@/presentation/stores/authStore.js';
 import { useEventStore } from '@/presentation/stores/eventStore.js';
 
-const loginRepository = new LoginRepository();
+const memberAuthRepository = new MemberAuthRepository();
 
 export const useLoginStore = defineStore('login', () => {
 	const router = useRouter();
@@ -51,7 +51,7 @@ export const useLoginStore = defineStore('login', () => {
 			password: password.value,
 		};
 		try {
-			const response = await loginRepository.postLogin(eventStore.encodedId, loginData);
+			const response = await memberAuthRepository.postLogin(eventStore.encodedId, loginData);
       if (response.message !== "로그인에 실패했습니다.") {
 	      authStore.token = response.data.token
 	      router.push({ name: 'home' });

@@ -1,19 +1,17 @@
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
-import { PhoneAuthRepository } from "@/infrastructure/repositories/PhoneAuthRepository.js";
-import { RegisterRepository } from "@/infrastructure/repositories/RegisterRepository.js";
+import { MemberAccountRepository } from "@/infrastructure/repositories/MemberAccountRepository.js";
 import { usePasswordSignupStore } from '@/presentation/stores/signupSub/passwordSignupStore.js';
 import { usePhoneAuthSignupStore } from '@/presentation/stores/signupSub/phoneAuthSignupStore.js';
 import { useProfileSignupStore } from '@/presentation/stores/signupSub/profileSignupStore.js';
 import { useAuthStore } from '@/presentation/stores/authStore.js';
 import { useEventStore } from '@/presentation/stores/eventStore.js';
 import { usePopupStore } from '@/presentation/stores/popupStore.js';
-import { cleanPhoneNumber } from '@/core/usecases/FormNumber.js'
-import { getAvatarSrc } from '@/core/usecases/GetAvatar.js'
+import { cleanPhoneNumber } from '@/composition/FormNumber.js';
+import { getAvatarSrc } from '@/Composition/GetAvatar.js'
 
-const phoneAuthRepository = new PhoneAuthRepository();
-const registerRepository = new RegisterRepository();
+const memberAccountRepository = new MemberAccountRepository();
 
 export const useSignupStore = defineStore('signup', () => {
 	const router = useRouter();
@@ -54,7 +52,7 @@ export const useSignupStore = defineStore('signup', () => {
 				try {
 					const phone = cleanPhoneNumber(phoneAuthSignupStore.phoneNumber);
 					const authNum = phoneAuthSignupStore.authNumber;
-					const data = await phoneAuthRepository.postAuthNumber(phone, authNum);
+					const data = await memberAccountRepository.postAuthNumber(phone, authNum);
 					if ( data.message === '휴대폰 인증에 실패했습니다.' ) {
 						popupStore.ModalS_authError = true;
 						console.error('Auth failed:', data.message);
@@ -102,7 +100,7 @@ export const useSignupStore = defineStore('signup', () => {
 						console.log("encodedId", encodedId);
 						console.log("userData", userData);
 						
-						const response = await registerRepository.postRegister(encodedId, userData);
+						const response = await memberAccountRepository.postRegister(encodedId, userData);
 						console.log("response.data", response.data);
 						if (response.message === "회원가입에 성공했습니다.") {
 
@@ -132,8 +130,6 @@ export const useSignupStore = defineStore('signup', () => {
 				console.log("모든 단계가 완료되었습니다.");
 		}
 	}
-	
-	// 상태와 메서드를 return 해야 컴포넌트에서 사용할 수 있습니다.
 	return {
 		textTitle,
 		textMention,

@@ -1,11 +1,9 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import { EventIdValidRepository } from '@/infrastructure/repositories/EventIdValidRepository.js'
-import { EventDetailRepository } from '@/infrastructure/repositories/EventDetailRepository.js'
+import { AdminEventRepository } from '@/infrastructure/repositories/AdminEventRepository.js'
 import { EventRepository } from '@/infrastructure/repositories/eventRepository'
 
-const eventIdValidRepository = new EventIdValidRepository()
-const eventDetailRepository = new EventDetailRepository()
+const adminEventRepository = new AdminEventRepository()
 const eventRepository = new EventRepository()
 
 export const useEventStore = defineStore(
@@ -37,7 +35,7 @@ export const useEventStore = defineStore(
 
     const fetchEventList = async () => {
       try {
-        const data = await eventIdValidRepository.getEventList()
+        const data = await adminEventRepository.getEventList()
         eventList.value = data.eventList
       } catch (error) {
         console.error('Event detail fetch failed:', error)
@@ -59,7 +57,7 @@ export const useEventStore = defineStore(
 
     const fetchEventDetail = async () => {
       try {
-        const data = await eventDetailRepository.getEventDetail()
+        const data = await eventRepository.getEventDetail()
 
         if (data) {
           setEventData(data) // 공통 로직 사용

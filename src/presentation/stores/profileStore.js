@@ -1,11 +1,9 @@
 import { defineStore } from 'pinia';
 import { computed, ref, reactive } from 'vue';
 import { useRouter } from 'vue-router'
-import { ProfileRepository } from '@/infrastructure/repositories/ProfileRepository.js';
-import { EditProfileRepository } from '@/infrastructure/repositories/EditProfileRepository.js';
+import { MemberSettingRepository } from '@/infrastructure/repositories/MemberSettingRepository.js';
 
-const profileRepository = new ProfileRepository();
-const editProfileRepository = new EditProfileRepository();
+const memberSettingRepository = new MemberSettingRepository();
 
 export const useProfileStore = defineStore('profile', () => {
 	const router = useRouter();
@@ -17,14 +15,12 @@ export const useProfileStore = defineStore('profile', () => {
 	const description = ref("");
 	const phone = ref("");
 	
-	// 원본 데이터를 저장해 변경 여부를 추적
 	const originalData = reactive({
 		mbti: "",
 		nickname: "",
 		description: "",
 	});
 	
-	// 필드 값 변경 여부를 체크하는 computed 속성
 	const hasChanges = computed(() => {
 		return (
 			mbti.value !== originalData.mbti ||
@@ -58,7 +54,7 @@ export const useProfileStore = defineStore('profile', () => {
 		console.log('description', description.value);
 		console.log('phone', phone.value);
 		try {
-			const response = await profileRepository.profileInfo();
+			const response = await memberSettingRepository.getProfileInfo();
 			console.log('response', response);
 			// response.data가 true일 때만 동작을 수행
 			if (response.message === "개인정보 조회에 성공했습니다.") {
@@ -83,7 +79,6 @@ export const useProfileStore = defineStore('profile', () => {
 		}
 	};
 	
-	// 원본 데이터로 복원
 	const restoreOriginalData = () => {
 		mbti.value = originalData.mbti;
 		nickname.value = originalData.nickname;
@@ -93,21 +88,21 @@ export const useProfileStore = defineStore('profile', () => {
 		try {
 			if (currentRoute === '/editSelf') {
 				const submitData = { description: description.value };
-				const response = await editProfileRepository.editSelfIntro(submitData);
+				const response = await memberSettingRepository.patchSelfIntro(submitData);
 				if (response.message === "자기소개 수정에 성공했습니다.") {
 					originalData.description = description.value;
 					router.back();
 				}
 			} else if (currentRoute === '/editName') {
 				const submitData = { nickname: nickname.value };
-				const response = await editProfileRepository.editNickname(submitData);
+				const response = await memberSettingRepository.patchNickname(submitData);
 				if (response.message === "닉네임 수정에 성공했습니다.") {
 					originalData.nickname = nickname.value;
 					router.back();
 				}
 			} else if (currentRoute === '/editMBTI') {
 				const submitData = { mbti: mbti.value };
-				const response = await editProfileRepository.editMBTI(submitData);
+				const response = await memberSettingRepository.patchMBTI(submitData);
 				if (response.message === "MBTI 수정에 성공했습니다.") {
 					originalData.mbti = mbti.value;
 					router.back();
@@ -119,7 +114,6 @@ export const useProfileStore = defineStore('profile', () => {
 			console.error('Error during profile submission:', error);
 		}
 	};
-	
 	
 	return {
 		mbti,

@@ -1,10 +1,10 @@
 import { defineStore } from 'pinia';
 import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { PopupRepository } from '@/infrastructure/repositories/PopupRepository.js';
+import { InteractionRepository } from '@/infrastructure/repositories/InteractionRepository.js';
 import { useProfileSignupStore } from '@/presentation/stores/signupSub/profileSignupStore.js';
 
-const popupRepository = new PopupRepository();
+const interactionRepository = new InteractionRepository();
 
 export const usePopupStore = defineStore('popup', () => {
   const router = useRouter();
@@ -58,7 +58,7 @@ export const usePopupStore = defineStore('popup', () => {
   
   const getReviewModalTF = async () => {
     try {
-      const response = await popupRepository.getReviewTF();
+      const response = await interactionRepository.getFeedbackModal();
       console.log('response', response);
       
       // response.data가 true일 때만 동작을 수행

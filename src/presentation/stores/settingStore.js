@@ -1,14 +1,14 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { NotificationRepository } from '@/infrastructure/repositories/NotificationRepository.js';
-import { LogoutRepository } from '@/infrastructure/repositories/LogoutRepository.js';
+import { MemberSettingRepository } from '@/infrastructure/repositories/MemberSettingRepository.js';
+import { MemberAuthRepository } from '@/infrastructure/repositories/MemberAuthRepository.js';
+import { MemberAccountRepository } from '@/infrastructure/repositories/MemberAccountRepository.js';
 import { useAuthStore } from '@/presentation/stores/authStore.js';
 import { useEventStore } from '@/presentation/stores/eventStore.js';
 
-
-const notificationRepository = new NotificationRepository();
-const logoutRepository = new LogoutRepository();
+const memberSettingRepository = new MemberSettingRepository();
+const memberAuthRepository = new MemberAuthRepository();
 
 export const useSettingStore = defineStore('setting', () => {
 	const router = useRouter();
@@ -19,7 +19,7 @@ export const useSettingStore = defineStore('setting', () => {
 	const textContent = ref('');
 	
 	const getNotiOption = async () => {
-		const response = await notificationRepository.getNotification();
+		const response = await memberSettingRepository.getNotification();
 		console.log('response', response);
 		if (response.message === "알림 설정 변경에 성공했습니다.") {
 			notification.value = response.data;
@@ -34,7 +34,7 @@ export const useSettingStore = defineStore('setting', () => {
 		};
 		console.log('notificationForm', notificationForm);
 		try {
-			const response = await notificationRepository.patchNotification(notificationForm);
+			const response = await memberSettingRepository.patchNotification(notificationForm);
 			console.log('response', response);
 			
 			// response.data가 true일 때만 동작을 수행
@@ -56,7 +56,7 @@ export const useSettingStore = defineStore('setting', () => {
 		console.log('notification', eventStore.encodedId);
 		const event_id = eventStore.encodedId
 		try {
-			const response = await logoutRepository.deletLogout();
+			const response = await memberAuthRepository.deletLogout();
 			console.log('response', response);
 			if (response.message === "로그아웃에 성공했습니다.") {
 				authStore.token = '';
@@ -82,7 +82,7 @@ export const useSettingStore = defineStore('setting', () => {
 		};
 		console.log('content', content);
 		try {
-			const response = await logoutRepository.deleteAccount(content);
+			const response = await MemberAccountRepository.deleteAccount(content);
 			console.log('response', response);
 			if (response.message === "회원탈퇴에 성공했습니다.") {
 				authStore.token = '';
