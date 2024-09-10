@@ -13,11 +13,18 @@ const httpClient = axios.create({
 // 요청 인터셉터
 httpClient.interceptors.request.use(
   (config) => {
-    const store_Auth = useAuthStore()
-    const token = store_Auth.token
-    console.log('토큰 in', token)
-    if (token) {
-      console.log('토큰 in http:', token)
+    const authStore = useAuthStore()
+    const token = authStore.token
+    const excludeUrls = [
+      '/admin/event/list',
+      '/interaction/inquiry',
+      '/member/verify/code',
+      '/member/register',
+      '/member/verify/nickname',
+      '/auth/login'
+    ];
+    const isExcluded = excludeUrls.some((url) => config.url.includes(url));
+    if (token && !isExcluded) {
       config.headers.Authorization = `Bearer ${token}`
     }
     return config
