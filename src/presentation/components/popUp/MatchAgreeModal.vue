@@ -1,5 +1,5 @@
 <template>
-  <div v-if="popupStore.modalL_matchLanding" class="M_Overlay">
+  <div v-if="popupStore.modalLVisible.matchLanding" class="M_Overlay">
     <div class="modalL">
       <div class="modalL_contentContainer">
         <div class="modalL_header">
@@ -67,12 +67,12 @@ const texts = [
 const currentText = computed(() => texts[currentStep.value])
 
 const navigateToHome = () => {
-  popupStore.modalL_matchLanding = false
+  popupStore.modalLVisible.matchLanding = false
   popupStore.matchAgree = false
   router.push('/')
 }
 const agreeAlertModalL_matchLanding = () => {
-  popupStore.modalL_matchLanding = false
+  popupStore.modalLVisible.matchLanding = false
   popupStore.matchAgree = true
 }
 const prevSlide = () => {

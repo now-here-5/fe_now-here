@@ -42,7 +42,7 @@
 
 <script setup>
 import { usePopupStore } from '@/presentation/stores/popupStore.js' // useRouter를 추가로 import
-import { getAvatarSrc } from '@/core/usecases/GetAvatar.js'
+import { getAvatarSrc } from '@/Composition/GetAvatar.js'
 getAvatarSrc(gender, mbti) // 아바타 동적 이미지 할당 usecase
 
 const popupStore = usePopupStore()

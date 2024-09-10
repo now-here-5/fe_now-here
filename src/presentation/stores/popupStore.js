@@ -46,18 +46,19 @@ export const usePopupStore = defineStore('popup', () => {
     }
   };
   //M_L
-  const modalL_review = ref(false);
-  const modalL_matchLanding = ref(false);
-  const modalL_heart = ref(false);
-  const modalL_cardL = ref(false);
-  const modalL_withdraw = ref(false);
-  const matchAgree = ref(false);
+  const modalLVisible = ref({
+    review: false,
+    matchLanding: false,
+    heart: false,
+    cardL: false,
+    withdraw: false,
+  });
   
   const fetchFeedbackModal = async () => {
     try {
       const response = await interactionRepository.getFeedbackModal();
       if (response.data === true) {
-        modalL_review.value = true;
+        modalLVisible.value.review = true;
       } else {
         console.log("피드백 모달을 표시하지 않습니다.");
       }
@@ -67,7 +68,7 @@ export const usePopupStore = defineStore('popup', () => {
     }
   };
   //TM
-  const tostMessage = ref({ visible: false, type: '' });
+  const toastMessage = ref({ visible: false, type: '' });
   
   return {
     //BS
@@ -84,17 +85,12 @@ export const usePopupStore = defineStore('popup', () => {
     closeModal,
     
     //M_L
-    modalL_review,
-    modalL_matchLanding,
-    modalL_heart,
-    modalL_cardL,
-    modalL_withdraw,
-    matchAgree,
+    modalLVisible,
     
     fetchFeedbackModal,
     
     //TM
-    tostMessage,
+    toastMessage,
   };
 }, {
   persist: {

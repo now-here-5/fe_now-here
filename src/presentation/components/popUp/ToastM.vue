@@ -1,8 +1,8 @@
 <template>
-  <div v-if="popupStore.tostMessage.visible" class="tostM_space">
+  <div v-if="popupStore.toastMessage.visible" class="tostM_space">
     <div class="mContainer">
-      <p v-if="popupStore.tostMessage.type === 'inquiry'">문의 내용이 정상 접수되었습니다.</p>
-      <p v-if="popupStore.tostMessage.type === 'feedback'">소중한 의견을 주셔서 감사합니다!</p>
+      <p v-if="popupStore.toastMessage.type === 'inquiry'">문의 내용이 정상 접수되었습니다.</p>
+      <p v-if="popupStore.toastMessage.type === 'feedback'">소중한 의견을 주셔서 감사합니다!</p>
     </div>
   </div>
 </template>

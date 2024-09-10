@@ -1,5 +1,5 @@
 <template>
-  <div v-if="popupStore.modalL_review" class="M_Overlay">
+  <div v-if="popupStore.modalLVisible.review" class="M_Overlay">
     <div class="modalL">
       <div class="modalL_contentContainer">
         <div class="modalL_header">
@@ -39,7 +39,7 @@ const router = useRouter()
 const popupStore = usePopupStore()
 
 const closeAlertModalL_review = () => {
-  popupStore.modalL_review = false
+  popupStore.modalLVisible.review = false
 }
 const navigateToReview = () => {
   router.push('/review')

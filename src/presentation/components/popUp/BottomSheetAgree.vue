@@ -225,7 +225,7 @@ const navigateToSignUp = () => {
   gap: 10px;
   width: 315px;
   border-top: 2px solid $dark;
-  p {
+  span {
     font-size: $textXL_size;
     font-weight: $textB_weight;
     color: $dark;
