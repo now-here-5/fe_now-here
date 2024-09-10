@@ -29,15 +29,15 @@
     <router-view></router-view>
   </div>
 
-  <ModalL_Landing />
-  <ModalL_Review />
+  <MatchAgreeModal />
+  <FeedbackModal />
 </template>
 
 <script setup>
 import { RecommendedMemberEntity } from '@/core/entities/RecommendedMemberEntity'
 import TodayCardItem from '@/presentation/components/home/TodayCardItem.vue'
-import ModalL_Landing from '@/presentation/components/popUp/ModalL_Landing.vue'
-import ModalL_Review from '@/presentation/components/popUp/ModalL_Review.vue'
+import MatchAgreeModal from '@/presentation/components/popUp/MatchAgreeModal.vue'
+import FeedbackModal from '@/presentation/components/popUp/FeedbackModal.vue'
 import { onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { usePopupStore } from '@/presentation/stores/popupStore.js'
@@ -57,22 +57,18 @@ const dummyEntityData = new RecommendedMemberEntity(dummyData)
 
 const handleRouteChange = (to) => {
   if (to.path === '/match') {
-    // '/match' 라우트일 때
     if (popupStore.matchAgree === false) {
       popupStore.modalL_matchLanding = true
     } else {
-      popupStore.getReviewModalTF() // 함수 호출
+      popupStore.fetchFeedbackModal() // 함수 호출
     }
   } else if (to.path === '/match/status') {
-    // '/match/status' 라우트일 때
-    popupStore.getReviewModalTF() // 함수 호출
+    popupStore.fetchFeedbackModal() // 함수 호출
   }
 }
-
 onMounted(() => {
-  handleRouteChange(route) // 첫 마운트 시에 라우트 확인
+  handleRouteChange(route)
 })
-// 라우트가 변경될 때마다 실행
 watch(route, (to) => {
   handleRouteChange(to)
 })
@@ -187,6 +183,4 @@ watch(route, (to) => {
     }
   }
 }
-
-/* 모바일 환경을 위한 미디어 쿼리 */
 </style>

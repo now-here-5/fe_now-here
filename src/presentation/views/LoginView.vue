@@ -7,7 +7,7 @@
       </div>
     </header>
     <main class="body">
-      <InputForm />
+      <loginInput />
       <SelectBtn
         isActive="true"
         buttonText="로그인"
@@ -29,7 +29,7 @@
 </template>
 
 <script setup>
-import InputForm from '@/presentation/components/login/InputForm.vue'
+import loginInput from '@/presentation/components/login/loginInput.vue'
 import SelectBtn from '@/presentation/components/SelectBtn.vue'
 import BottomSheetAgree from '@/presentation/components/popUp/BottomSheetAgree.vue'
 import BottomSheetTerm from '@/presentation/components/popUp/BottomSheetTerm.vue'

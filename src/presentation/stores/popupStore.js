@@ -21,7 +21,6 @@ export const usePopupStore = defineStore('popup', () => {
     all: false
   });
   const termType = ref('');
-  
   //M_S
   const ModalS_duplicated = ref(false);
   const ModalS_authError = ref(false);
@@ -46,34 +45,27 @@ export const usePopupStore = defineStore('popup', () => {
       router.push('/match');
     }
   };
-  
   //M_L
   const modalL_review = ref(false);
   const modalL_matchLanding = ref(false);
   const modalL_heart = ref(false);
   const modalL_cardL = ref(false);
   const modalL_withdraw = ref(false);
+  const matchAgree = ref(false);
   
-  const matchAgree = ref(false); // 초기 매치 동의 값을 false로 설정합니다.
-  
-  const getReviewModalTF = async () => {
+  const fetchFeedbackModal = async () => {
     try {
       const response = await interactionRepository.getFeedbackModal();
-      console.log('response', response);
-      
-      // response.data가 true일 때만 동작을 수행
       if (response.data === true) {
         modalL_review.value = true;
       } else {
         console.log("피드백 모달을 표시하지 않습니다.");
       }
-      
       return response.data;
     } catch (error) {
       console.error('Error fetching feedback modal status:', error);
     }
   };
-  
   //TM
   const tostMessage = ref({ visible: false, type: '' });
   
@@ -99,7 +91,7 @@ export const usePopupStore = defineStore('popup', () => {
     modalL_withdraw,
     matchAgree,
     
-    getReviewModalTF,
+    fetchFeedbackModal,
     
     //TM
     tostMessage,
