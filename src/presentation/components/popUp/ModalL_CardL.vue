@@ -2,31 +2,7 @@
   <div v-if="store_popup.modalL_cardL" class="M_Overlay">
     <div class="modalL">
       <div class="modalL_contentContainer">
-        <div class="card_L">
-          <div class="infoContainer">
-            <div class="scoreContainer">
-              <p1>87</p1>
-              <p2>케미 점수</p2>
-            </div>
-            <div class="detailContainer">
-              <div class="mbtiContainer">
-                <p>ENTJ</p>
-              </div>
-              <div class="nameContainer">
-                <p1>심심한 너구리</p1>
-                <p2>27세, 남자</p2>
-              </div>
-            </div>
-            <div class="imgContainer">
-              <img class="MBTIimg" src="/images/avatar_MBTI_Male/avatar_ENFJ_Male.png" />
-            </div>
-          </div>
-          <div class="contentContainer">
-            <div class="textContainer">
-              <p>안녕하세요 30자를 채워야해서 적어보는데 혹시나 할 얘기</p>
-            </div>
-          </div>
-        </div>
+        <MemberLargeCard :member-info="memberInfo" />
       </div>
       <div class="modalL_btn">
         <div class="modalL_btnBg" @click="rejectHeart">
@@ -41,19 +17,37 @@
 </template>
 
 <script setup>
-import { popupStore } from '@/presentation/stores/popupStore.js' // useRouter를 추가로 import
-import { getAvatarSrc } from '@/core/usecases/GetAvatar.js'
-getAvatarSrc(gender, mbti) // 아바타 동적 이미지 할당 usecase
+import { useMatchingStore } from '@/presentation/stores/matchingStore'
+import { popupStore } from '@/presentation/stores/popupStore.js'
+import { useRouter } from 'vue-router'
+import MemberLargeCard from '../MemberLargeCard.vue'
+
+const props = defineProps({
+  memberInfo: {
+    type: Object,
+    required: true
+  }
+})
 
 const store_popup = popupStore()
+const matchingStore = useMatchingStore()
+const router = useRouter()
 
 const rejectHeart = () => {
   // 하트 거절 로직
   store_popup.modalL_cardL = false
 }
-const acceptHeart = () => {
+const acceptHeart = async () => {
   // 하트 수락 로직
-  store_popup.modalL_cardL = false
+  try {
+    await matchingStore.receiveHeart(props.memberInfo.memberId)
+    alert('매칭되었습니다.')
+    router.push('/match/status')
+  } catch (err) {
+    alert('오류가 발생했습니다.')
+  } finally {
+    store_popup.modalL_cardL = false
+  }
 }
 </script>
 
@@ -290,7 +284,7 @@ const acceptHeart = () => {
     0px 4px 4px rgba($dark, 0.3);
   border-radius: 0px 12px 0px 7px;
 
-  p1 {
+  .score {
     font-size: $textXXL_size;
     font-weight: $textB_weight;
     color: $white;
@@ -299,7 +293,7 @@ const acceptHeart = () => {
     line-height: 30pt;
   }
 
-  p2 {
+  .text {
     font-size: $textMS_size;
     font-weight: $textB_weight;
     color: $white;
@@ -352,7 +346,7 @@ const acceptHeart = () => {
   gap: 2px;
 
   width: 100%;
-  p1 {
+  .name {
     font-size: $textM_size;
     font-weight: $textB_weight;
     color: $white;
@@ -360,7 +354,7 @@ const acceptHeart = () => {
     flex-grow: 0;
   }
 
-  p2 {
+  .age-gender {
     font-size: $textS_size;
     font-weight: $textS_weight;
     color: $white;
@@ -395,12 +389,14 @@ const acceptHeart = () => {
   justify-content: center;
   align-items: center;
   padding: 5px;
+  width: 100%;
 
   border-radius: 8px;
 }
 .textContainer {
   /* Auto layout */
   display: flex;
+  width: 100%;
   flex-direction: row;
   justify-content: center;
   align-items: center;

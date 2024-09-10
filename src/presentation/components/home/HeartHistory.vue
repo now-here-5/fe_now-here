@@ -14,7 +14,7 @@
       <div class="heart-item" @click="router.push('/match/received-hearts')">
         <LoadingSpinner v-if="isLoading" />
         <template v-else>
-          <span class="heart-text">보낸 하트</span>
+          <span class="heart-text">받은 하트</span>
           <span class="heart-count">{{ matchingSummary.receiveLove }}</span>
           <span v-if="matchingSummary.sendLove !== 0" class="new-badge">N</span>
         </template>

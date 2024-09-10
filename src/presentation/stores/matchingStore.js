@@ -17,6 +17,8 @@ const matchingRepository = new MatchingRepository()
 
 export const useMatchingStore = defineStore('matching', () => {
   const recommendedMembers = ref([])
+  const heartSendMemebers = ref([])
+  const heartReceivedMemebers = ref([])
   const matchedInfoList = ref([])
 
   const fetchRecommendedCards = async () => {
@@ -63,6 +65,30 @@ export const useMatchingStore = defineStore('matching', () => {
     return matchingRepository.getMatchingNotificationList()
   }
 
+  const sendHeart = (receiverId) => {
+    return matchingRepository.postMatchingSendHeart(receiverId)
+  }
+
+  const receiveHeart = (senderId) => {
+    return matchingRepository.postMatchingReceiveHeart(senderId)
+  }
+
+  const getReceivedHeartList = async () => {
+    heartSendMemebers.value = await matchingRepository.getMatchingReceivedHeartList()
+    return heartSendMemebers.value
+  }
+
+  // 나에게 하트를 받은 멤버들 조회
+  const getSentHeartList = async () => {
+    heartReceivedMemebers.value = await matchingRepository.getMatchingSentHeartList()
+    return heartReceivedMemebers.value
+  }
+
+  // 매칭 현황 리스트 조회
+  const getMatchStatusList = async () => {
+    return await matchingRepository.getMatchingMatchStatusList()
+  }
+
   return {
     recommendedMembers,
     matchedInfoList,
@@ -76,6 +102,11 @@ export const useMatchingStore = defineStore('matching', () => {
     getMatchedInfoAvatarImgUrls,
     getMatchingSummaryForHomeView,
     fetchMatchingNotificationCounts,
-    getMatchingNotificationList
+    getMatchingNotificationList,
+    sendHeart,
+    receiveHeart,
+    getReceivedHeartList,
+    getSentHeartList,
+    getMatchStatusList
   }
 })

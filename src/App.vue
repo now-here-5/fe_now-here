@@ -18,10 +18,29 @@ import { useRoute } from 'vue-router'
 import { computed } from 'vue'
 
 import ToastM from '@/presentation/components/popUp/ToastM.vue'
+// import { requestPermission } from './composables/useNotification'
 
 const route = useRoute()
-const showMainHeader = computed(() => route.path === '/' || route.path === '/profile')
-const showBottomNav = computed(() => route.path === '/' || route.path.startsWith('/match'))
+
+const shouldShowElements = (path) =>
+  path === '/' || path === '/profile' || path.startsWith('/match')
+
+const showMainHeader = computed(() => shouldShowElements(route.path))
+const showBottomNav = computed(() => shouldShowElements(route.path))
+
+// FCM test
+// requestPermission()
+
+// if ('serviceWorker' in navigator) {
+//   navigator.serviceWorker
+//     .register('/firebase-messaging-sw.js')
+//     .then((registration) => {
+//       console.log('서비스 워커 등록 성공:', registration)
+//     })
+//     .catch((error) => {
+//       console.error('서비스 워커 등록 실패:', error)
+//     })
+// }
 </script>
 
 <style scoped lang="scss">
@@ -64,6 +83,7 @@ const showBottomNav = computed(() => route.path === '/' || route.path.startsWith
   border-top: 1px solid $gray;
   border-left: 1px solid $white;
   border-right: 1px solid $white;
+  z-index: 100;
 
   .bottom-nav-menu {
     display: flex;

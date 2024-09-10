@@ -13,6 +13,7 @@ const httpClient = axios.create({
 // 요청 인터셉터
 httpClient.interceptors.request.use(
   (config) => {
+    // config.headers.Authorization = `Bearer EUpGGO6Xc2jVcOjGXqDA7FzIDBqp8S6C-546f8211-76ff-4bc2-9822-aa2b2d2c1671`
     const store_Auth = authStore()
     const token = store_Auth.token
     console.log('토큰 in', token)
@@ -32,8 +33,9 @@ httpClient.interceptors.request.use(
 //   (response) => response,
 //   (error) => {
 //     // 예: 인증 오류 처리
-//     if (error.response?.status === 401) {
-//       // 리다이렉트 또는 다른 처리
+//     if (error.response?.status === 400) {
+//       alert(error.response?.data.message)
+//       // alert(error.response.message)
 //     }
 //     return Promise.reject(error)
 //   }

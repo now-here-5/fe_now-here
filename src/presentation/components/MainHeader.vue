@@ -50,5 +50,21 @@ onMounted(async () => {
     cursor: pointer;
     margin-top: 5px;
   }
+  .count {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    color: white;
+    background-color: red;
+    border-radius: 50%;
+    text-decoration: none;
+    width: 16px;
+    height: 16px;
+    top: 10px;
+    right: 17px;
+    font-size: 8px;
+    font-weight: $textB_weight;
+  }
 }
 </style>
