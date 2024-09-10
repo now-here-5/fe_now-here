@@ -58,7 +58,7 @@ const dummyEntityData = new RecommendedMemberEntity(dummyData)
 const handleRouteChange = (to) => {
   if (to.path === '/match') {
     if (popupStore.matchAgree === false) {
-      popupStore.modalL_matchLanding = true
+      popupStore.modalLVisible.matchLanding = true
     } else {
       popupStore.fetchFeedbackModal() // 함수 호출
     }

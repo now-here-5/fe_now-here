@@ -93,9 +93,9 @@ const router = createRouter({
       component: () => import('@/presentation/views/SettingsView.vue'),
       children: [
         {
-          path: '/deleteAccount', // /match/sent-hearts
-          name: 'deleteAccount',
-          component: () => import('@/presentation/components/settings/DeleteAccountView.vue')
+          path: '/withdraw', // /match/sent-hearts
+          name: 'withdraw',
+          component: () => import('@/presentation/components/settings/WithdrawView.vue')
         }
       ]
     },

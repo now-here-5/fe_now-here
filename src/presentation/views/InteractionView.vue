@@ -9,7 +9,8 @@
           <span class="desc" v-if="type === 'inquiry'">
             답변받을 휴대폰 번호를 입력해주세요.
           </span>
-          <span class="desc" v-else>Now Here를 이용해 주셔서 감사합니다.<br/>
+          <span class="desc" v-else>
+            Now Here를 이용해 주셔서 감사합니다.<br/>
             서비스 개선을 위해 소중한 의견을 남겨주세요.
           </span>
         </div>
@@ -226,7 +227,7 @@ onMounted(() => {
     font-size: $textMS_size;
     font-weight: $textS_weight;
     color: $gray;
-    text-align: left; // 가로 정렬을 왼쪽으로 설정
+    text-align: left;
   }
 }
 .bottom {
