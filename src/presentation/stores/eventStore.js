@@ -9,7 +9,6 @@ const eventRepository = new EventRepository()
 export const useEventStore = defineStore(
   'event',
   () => {
-    const event_detail = ref({})
     const eventList = ref([])
 
     const encodedId = ref('')
@@ -23,7 +22,6 @@ export const useEventStore = defineStore(
     const eventEndsAt = ref('')
 
     const setEventData = (data) => {
-      event_detail.value = data
       encodedId.value = data.encodedId
       endsAt.value = data.endsAt
       eventId.value = data.eventId
@@ -32,7 +30,6 @@ export const useEventStore = defineStore(
       startsAt.value = data.startsAt
       status.value = data.status
     }
-
     const fetchEventList = async () => {
       try {
         const data = await adminEventRepository.getEventList()
@@ -45,16 +42,13 @@ export const useEventStore = defineStore(
       if (eventList.value.length === 0) {
         await fetchEventList()
       }
-
       const data = eventList.value.find((event) => event.encodedId === encodedId.value)
       if (data) {
-        setEventData(data) // 공통 로직 사용
+        setEventData(data)
         return true
       }
-
       return false
     }
-
     const fetchEventDetail = async () => {
       try {
         const data = await eventRepository.getEventDetail()
@@ -70,15 +64,11 @@ export const useEventStore = defineStore(
         console.error('Event detail fetch failed:', error)
       }
     }
-
     const fetchEventEndsAt = async () => {
       const { data } = await eventRepository.getEventEndsAt()
       eventEndsAt.value = data.eventTime
     }
-
-    // 상태와 메서드를 return 해야 컴포넌트에서 사용할 수 있습니다.
     return {
-      event_detail,
       eventList,
       encodedId,
       endsAt,

@@ -45,7 +45,6 @@ export const useLoginStore = defineStore('login', () => {
 		}
 		alertMessage.value  = '';
 		const cleaningPhone = cleanPhoneNumber(phone.value);
-		// 전화번호에서 하이픈(-)을 제거하여 숫자만 남김
 		const loginData = {
 			phone: cleaningPhone,
 			password: password.value,
@@ -66,18 +65,9 @@ export const useLoginStore = defineStore('login', () => {
 	return {
 		phone,
 		password,
-		
 		alertMessage,
-		
 		formatPhone,
 		formatPassword,
-		
 		login,
 	};
-}, {
-	persist: {
-		enabled: true,
-		paths: [
-		]
-	}
 });
