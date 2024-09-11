@@ -35,8 +35,6 @@ const profileStore = useProfileStore()
 
 onMounted(async () => {
   await profileStore.fetchProfile()
-
-  console.log(profileStore.selectedMBTI)
 })
 
 const avatarSrc = computed(() => {

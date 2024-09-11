@@ -86,7 +86,6 @@ const updateBirth = (event) => {
     const userInputYear = parseInt(yearPart, 10)
     const century = userInputYear > currentYearTwoDigits ? '19' : '20'
     props.store.birth = `${century}${yearPart}-${monthPart}-${dayPart}`
-    console.log('store Birth', props.store.birth)
   } else {
     props.store.birth = ''
   }

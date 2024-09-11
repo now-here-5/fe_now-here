@@ -67,24 +67,15 @@ export const useSignupStore = defineStore('signup', () => {
 			
 			case 1: // 비밀번호 설정 단계
 				if ( passwordSignupStore.password === passwordSignupStore.passwordConfirm ) {
-					console.log("비밀번호가 일치합니다.");
-					console.log("1", passwordSignupStore.password);
-					console.log("1", passwordSignupStore.passwordConfirm);
-					
 					passwordSignupStore.alertMessage = false;
 					router.push('/signup/signup_profile');
 				} else {
-					console.log("2", passwordSignupStore.password);
-					console.log("2", passwordSignupStore.passwordConfirm);
-					console.log("비밀번호가 일치하지 않습니다.");
 					passwordSignupStore.alertMessage = true;
 				}
 				break;
 			
 			case 2: // 프로필 정보 입력 단계
 				if (profileSignupStore.signupReady) {
-					console.log("프로필 정보가 입력되었습니다.");
-					
 					try {
 						const encodedId = eventStore.encodedId;
 						const userData = {
@@ -96,25 +87,13 @@ export const useSignupStore = defineStore('signup', () => {
 						"gender": profileSignupStore.selectedSex,
 						"description": profileSignupStore.selfIntro,
 						};
-						
-						console.log("encodedId", encodedId);
-						console.log("userData", userData);
-						
 						const response = await memberAccountRepository.postRegister(encodedId, userData);
-						console.log("response.data", response.data);
 						if (response.message === "회원가입에 성공했습니다.") {
-
-							console.log('Login success:', response.data);
 							authStore.token = response.data
-							console.log('store_Auth.token:', authStore.token);
-							
 							if (authStore.token) {
 								await eventStore.fetchEventDetail(eventStore);
 								const baseImgSrc = getAvatarSrc(profileSignupStore.selectedSex, profileSignupStore.selectedMBTI);
 								profileSignupStore.modalImag = baseImgSrc;
-								
-								console.log("modalImag", profileSignupStore.modalImag);
-								
 								popupStore.completeModal = true;
 							}
 						} else {
@@ -127,7 +106,6 @@ export const useSignupStore = defineStore('signup', () => {
 				break;
 			
 			default:
-				console.log("모든 단계가 완료되었습니다.");
 		}
 	}
 	return {

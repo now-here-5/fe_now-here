@@ -1,7 +1,6 @@
 import axios from 'axios'
 import { useAuthStore } from '@/presentation/stores/authStore.js'
 
-console.log(import.meta.env.VITE_API_BASE_URL)
 const httpClient = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
   timeout: 10000,

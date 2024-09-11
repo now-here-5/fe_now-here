@@ -47,7 +47,6 @@ const selectedMBTI = ref(
 const selectMBTI = (value, index) => {
   selectedMBTI.value[index] = value
   props.store.selectedMBTI = selectedMBTI.value.join('')
-  console.log(props.store.selectedMBTI)
 }
 </script>
 

@@ -37,7 +37,6 @@ const handleSubmit = async () => {
 }
 const formContents = () => {
   settingStore.textContent = contents.value
-  console.log(settingStore.textContent)
 }
 watch([contents], () => {
   Active.value = contents.value.length > 0

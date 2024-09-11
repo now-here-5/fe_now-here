@@ -52,7 +52,6 @@ export const useProfileSignupStore = defineStore('profileSignup', () => {
 		try {
 			const data = await memberAccountRepository.getNameDuplicate(eventId, nameTo);
 			if ( data.message === "사용 가능한 닉네임입니다." ) {
-				console.log('사용 가능한 닉네임입니다.');
 				alertMessage.value = alertMessageInventory[1];
 				isDuplicate.value = false; // 중복 확인 완료
 			} else {

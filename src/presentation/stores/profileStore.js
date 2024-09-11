@@ -39,7 +39,6 @@ export const useProfileStore = defineStore('profile', () => {
 		try {
 			const data = await memberAccountRepository.getNameDuplicate(eventId, nameTo);
 			if ( data.message === "사용 가능한 닉네임입니다." ) {
-				console.log('사용 가능한 닉네임입니다.');
 				alertMessage.value = alertMessageInventory[1];
 				isDuplicate.value = false; // 중복 확인 완료
 			} else {
@@ -75,34 +74,19 @@ export const useProfileStore = defineStore('profile', () => {
 	};
 	
 	const fetchProfile = async () => {
-		console.log('selectedMBTI', selectedMBTI.value);
-		console.log('name', name.value);
-		console.log('birthdate', birthdate.value);
-		console.log('gender', gender.value);
-		console.log('selfIntro', selfIntro.value);
-		console.log('phone', phone.value);
 		try {
 			const response = await memberSettingRepository.getProfileInfo();
-			console.log('response', response);
 			if (response.message === "개인정보 조회에 성공했습니다.") {
-				console.log('message', response.data.nickname);
-				
 				originalData.selectedMBTI = response.data.mbti;
 				originalData.name = response.data.nickname;
 				originalData.selfIntro = response.data.description;
-				
 				selectedMBTI.value = response.data.mbti;
 				name.value = response.data.nickname;
 				birthdate.value = calculateAge(response.data.birthdate);
 				gender.value = getGenderInKorean(response.data.gender);
 				selfIntro.value = response.data.description;
-				console.log('description', response.data.description);
-				console.log('selfIntro', selfIntro.value);
 				phone.value = response.data.phone;
-				
 				return true;
-			} else {
-				console.log("피드백 모달을 표시하지 않습니다.");
 			}
 		} catch (error) {
 			console.error('Error fetching profile info:', error);
@@ -135,7 +119,6 @@ export const useProfileStore = defineStore('profile', () => {
 				const submitData = { mbti: selectedMBTI.value };
 				const response = await memberSettingRepository.patchMBTI(submitData);
 				if (response.message === "MBTI 수정에 성공했습니다.") {
-					console.log('selectedMBTI', selectedMBTI.value);
 					originalData.selectedMBTI = selectedMBTI.value;
 					router.back();
 				}
