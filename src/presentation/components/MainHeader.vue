@@ -13,12 +13,12 @@
 
 <script setup>
 import { onMounted, ref } from 'vue'
-import { useRoute } from 'vue-router'
 import { useMatchingStore } from '../stores/matchingStore'
+import { useRoute } from 'vue-router'
 
 const route = useRoute()
-const matchingStore = useMatchingStore()
 const notificationCounts = ref(0)
+const matchingStore = useMatchingStore()
 
 onMounted(async () => {
   const { data } = await matchingStore.fetchMatchingNotificationCounts()
@@ -49,6 +49,22 @@ onMounted(async () => {
     width: 30px;
     cursor: pointer;
     margin-top: 5px;
+  }
+  .count {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    color: white;
+    background-color: red;
+    border-radius: 50%;
+    text-decoration: none;
+    width: 16px;
+    height: 16px;
+    top: 10px;
+    right: 17px;
+    font-size: 8px;
+    font-weight: $textB_weight;
   }
 }
 </style>
