@@ -28,7 +28,7 @@ import OptionItem from '@/presentation/components/settings/OptionItem.vue'
 import { computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useProfileStore } from '@/presentation/stores/profileStore.js'
-import { getAvatarSrc } from '@/Composition/GetAvatar.js'
+import { getAvatarSrc } from '@/composition/GetAvatar.js'
 
 const router = useRouter() // useRouter 사용
 const profileStore = useProfileStore()

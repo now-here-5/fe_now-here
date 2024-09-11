@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { formPhoneNumber, formPassword, cleanPhoneNumber } from '@/Composition/FormNumber.js';
+import { formPhoneNumber, formPassword, cleanPhoneNumber } from '@/composition/FormNumber.js';
 import { MemberAuthRepository } from "@/infrastructure/repositories/MemberAuthRepository.js";
 import { useAuthStore } from '@/presentation/stores/authStore.js';
 import { useEventStore } from '@/presentation/stores/eventStore.js';

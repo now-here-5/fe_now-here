@@ -65,7 +65,7 @@ import starFilled from '/images/star_filled.png'
 import starUnfilled from '/images/star.png'
 import { ref, watch, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { formPhoneNumber } from '@/Composition/FormNumber.js'
+import { formPhoneNumber } from '@/composition/FormNumber.js'
 import { useInteractionStore } from '@/presentation/stores/interactionStore.js'
 import { usePopupStore } from '@/presentation/stores/popupStore.js'
 

@@ -9,7 +9,7 @@ import { useAuthStore } from '@/presentation/stores/authStore.js';
 import { useEventStore } from '@/presentation/stores/eventStore.js';
 import { usePopupStore } from '@/presentation/stores/popupStore.js';
 import { cleanPhoneNumber } from '@/composition/FormNumber.js';
-import { getAvatarSrc } from '@/Composition/GetAvatar.js'
+import { getAvatarSrc } from '@/composition/GetAvatar.js'
 
 const memberAccountRepository = new MemberAccountRepository();
 

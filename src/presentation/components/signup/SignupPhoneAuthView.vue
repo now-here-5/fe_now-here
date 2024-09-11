@@ -38,7 +38,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { formPhoneNumber } from '@/Composition/FormNumber.js'
+import { formPhoneNumber } from '@/composition/FormNumber.js'
 import { usePhoneAuthSignupStore } from '@/presentation/stores/signupSub/phoneAuthSignupStore.js'
 import { useSignupStore } from '@/presentation/stores/signupStore.js'
 
