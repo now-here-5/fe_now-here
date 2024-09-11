@@ -2,11 +2,12 @@
   <div class="matching-container">
     <nav class="mathcing-nav-container">
       <router-link to="/match" class="tab">매칭</router-link>
-      <router-link to="/match/sent-hearts" class="tab">보낸 하트</router-link>
       <router-link to="/match/received-hearts" class="tab">받은 하트</router-link>
+      <router-link to="/match/sent-hearts" class="tab">보낸 하트</router-link>
       <router-link to="/match/status" class="tab">매칭 현황</router-link>
     </nav>
-    <main class="matching-content">
+    <!-- 매칭 -->
+    <main v-if="route.path === '/match'" class="matching-content">
       <div class="info-wrapper">
         <div class="event-info">
           <span class="sub-info">Now Here in</span>
@@ -18,11 +19,25 @@
         </div>
       </div>
       <div class="cards-wrapper">
-        <TodayCardItem :member-info="dummyEntityData" />
-        <TodayCardItem :member-info="dummyEntityData" />
+        <div v-if="!recommendedMembers.length" class="loading-wrapper">
+          <LoadingSpinner />
+        </div>
+        <template v-else>
+          <TodayCardItem
+            :member-info="recommendedMembers[0]"
+            :is-flipped="isFlipped"
+            :show-desc="true"
+            :show-mbti="true"
+            :on-custom-click="sendHeart" />
+          <TodayCardItem
+            :member-info="recommendedMembers[1]"
+            :is-flipped="isFlipped"
+            :show-desc="true"
+            :show-mbti="true"
+          /></template>
       </div>
       <div class="reroll-button-wrapper">
-        <button>다시 뽑기</button>
+        <button @click="reroll">다시 뽑기</button>
       </div>
     </main>
     <!-- 하위 라우터에서 설정된 컴포넌트들이 여기에 렌더링됨 -->
@@ -34,26 +49,35 @@
 </template>
 
 <script setup>
-import { RecommendedMemberEntity } from '@/core/entities/RecommendedMemberEntity'
 import TodayCardItem from '@/presentation/components/home/TodayCardItem.vue'
 import MatchAgreeModal from '@/presentation/components/popUp/MatchAgreeModal.vue'
 import FeedbackModal from '@/presentation/components/popUp/FeedbackModal.vue'
-import { onMounted, watch } from 'vue'
+
+import { onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
+
 import { usePopupStore } from '@/presentation/stores/popupStore.js'
+import { useMatchingStore } from '../stores/matchingStore'
+import { storeToRefs } from 'pinia'
+import LoadingSpinner from '../components/LoadingSpinner.vue'
 
 const route = useRoute()
 const popupStore = usePopupStore() // 스토어 인스턴스를 가져옴
 
-const dummyData = {
-  memberId: 1,
-  nickname: '인수인수',
-  mbti: 'ESTJ',
-  birthdate: '1999-12-02',
-  gender: 'FEMALE'
+const matchingStore = useMatchingStore()
+const { recommendedMembers } = storeToRefs(matchingStore)
+
+const isFlipped = ref(false)
+const reroll = () => {
+  isFlipped.value = !isFlipped.value
+  setTimeout(async () => {
+    await matchingStore.fetchRecommendedCards()
+  }, 1000)
 }
 
-const dummyEntityData = new RecommendedMemberEntity(dummyData)
+const sendHeart = () => {
+  popupStore.modalLVisible.heart = true
+}
 
 const handleRouteChange = (to) => {
   if (to.path === '/match') {
@@ -66,8 +90,9 @@ const handleRouteChange = (to) => {
     popupStore.fetchFeedbackModal() // 함수 호출
   }
 }
-onMounted(() => {
-  handleRouteChange(route)
+onMounted(async () => {
+  handleRouteChange(route) // 첫 마운트 시에 라우트 확인
+  await matchingStore.fetchRecommendedCards()
 })
 watch(route, (to) => {
   handleRouteChange(to)
