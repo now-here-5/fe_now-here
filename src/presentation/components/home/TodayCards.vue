@@ -2,13 +2,13 @@
   <div class="today-card-container">
     <span class="title">오늘의 카드</span>
     <span class="desc">카드를 누르면 더 많은 정보를 확인할 수 있어요!</span>
-    <div class="cards-wrapper">
+    <div class="cards-wrapper" @click="moveToMatch">
       <div v-if="!recommendedMembers.length" class="loading-wrapper">
         <LoadingSpinner />
       </div>
       <template v-else>
-        <TodayCardItem :member-info="recommendedMembers[0]" @click="router.push('/match')" />
-        <TodayCardItem :member-info="recommendedMembers[1]" @click="router.push('/match')" />
+        <TodayCardItem :member-info="recommendedMembers[0]" />
+        <TodayCardItem :member-info="recommendedMembers[1]" />
       </template>
     </div>
   </div>
@@ -25,6 +25,10 @@ import { useRouter } from 'vue-router'
 const matchingStore = useMatchingStore()
 const { recommendedMembers } = storeToRefs(matchingStore)
 const router = useRouter()
+
+const moveToMatch = () => {
+  router.push('/match')
+}
 
 onMounted(async () => {
   await matchingStore.fetchRecommendedCards()
