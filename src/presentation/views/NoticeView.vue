@@ -27,12 +27,12 @@
 
 <script setup>
 import { onMounted, ref } from 'vue'
-import { useRouter } from 'vue-router'
 import { useMatchingStore } from '../stores/matchingStore'
+import { useRouter } from 'vue-router'
 
-const router = useRouter()
-const matchingStore = useMatchingStore()
 const notificationList = ref([])
+const matchingStore = useMatchingStore()
+const router = useRouter()
 
 const routeTo = (title) => {
   if (title === '받은 하트') router.push('/match/received-hearts')
