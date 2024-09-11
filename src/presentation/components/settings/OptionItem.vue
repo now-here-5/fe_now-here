@@ -1,7 +1,11 @@
 <template>
   <div class="optionItem" @click="handleClick">
-    <span>{{ label }}</span>
-    <img v-if="visible" src="/images/keyboard_arrowRight.png" class="navigate_next" alt="navigate_next" />
+    <span :class="detail ? 'subItile' : ''">{{ label }}</span>
+    <div class="align">
+      <span v-if="detail">{{ detail }}</span>
+      <img v-if="visible" src="/images/keyboard_arrowRight.png" class="navigateNext" alt="navigate_next" />
+      <div v-if="!visible" class="navigateNext"></div>
+    </div>
   </div>
 </template>
 
@@ -13,11 +17,15 @@ const props = defineProps({
   },
   onClick: {
     type: Function,
-    required: true
+    required: false
   },
   visible: {
     type: Boolean,
     default: true
+  },
+  detail: {
+    type: String,
+    required: false
   }
 })
 const handleClick = () => {
@@ -42,8 +50,23 @@ const handleClick = () => {
     text-align: center;
     color: $dark;
   }
+  .subItile {
+    font-weight: $textS_weight;
+    font-size: $textM_size;
+    color: $gray;
+  }
 }
-.navigate_next {
+.align {
+  display: flex;
+  flex-direction: row;
+  span {
+    font-weight: $textS_weight;
+    font-size: $textM_size;
+    color: $dark;
+  }
+}
+.navigateNext {
+  margin-left: 5px;
   width: 24px;
   height: 24px;
 }
