@@ -1,5 +1,5 @@
 <template>
-  <div v-if="popupStore.modalL_heart" class="M_Overlay">
+  <div v-if="store_popup.modalL_heart" class="M_Overlay">
     <div class="modalL">
       <div class="modalL_contentContainer">
         <div class="modalL_header">
@@ -25,17 +25,35 @@
 </template>
 
 <script setup>
-import { usePopupStore } from '@/presentation/stores/popupStore.js' // useRouter를 추가로 import
+import { useMatchingStore } from '@/presentation/stores/matchingStore'
+import { popupStore } from '@/presentation/stores/popupStore.js' // useRouter를 추가로 import
 
-const popupStore = usePopupStore()
+const props = defineProps({
+  memberInfo: {
+    type: Object,
+    required: true
+  }
+})
+
+const store_popup = popupStore()
+const matchingStore = useMatchingStore()
 
 const sendNotHeart = () => {
   // 하트 중단 로직
-  popupStore.modalL_heart = false
+  store_popup.modalL_heart = false
 }
-const sendHeart = () => {
+const sendHeart = async () => {
   // 하트 송신 로직
-  popupStore.modalL_heart = false
+  try {
+    await matchingStore.sendHeart(props.memberInfo.memberId)
+    alert('하트가 전송되었습니다.')
+    // 하트 전송이 되면 추천 회원을 새로운 응답으로 업데이트
+    await matchingStore.fetchRecommendedCards()
+  } catch (err) {
+    alert('하트 전송 과정에서 에러가 발생했습니다.')
+  } finally {
+    store_popup.modalL_heart = false
+  }
 }
 </script>
 
