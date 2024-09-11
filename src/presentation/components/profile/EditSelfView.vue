@@ -1,26 +1,14 @@
 <template>
-  <div class="selfComponent">
-    <div class="componentText_mention">
-      <p1>자기소개</p1>
-      <p2>
-        전화번호, SNS 등의 개인정보를 입력한 경우,<br />
-        임의로 계정이 삭제되며 재가입이 어려울 수 있습니다.
-      </p2>
-    </div>
-    <div class="inputContainer">
-      <textarea class="selfInput" v-model="profileStore.description" maxlength="30" />
-      <p>{{ profileStore.description.length }}/30</p>
-    </div>
-  </div>
+  <SelfComponent :store="profileStore" />
 </template>
 
 <script setup>
+import SelfComponent from '@/presentation/components/inputComponent/SelfComponent.vue'
 import { onBeforeRouteLeave } from 'vue-router' // useRouter를 추가로 import
 import { useProfileStore } from '@/presentation/stores/profileStore'
 
 const profileStore = useProfileStore() // 스토어 사용
 
-// 사용자가 페이지를 떠나기 전에 원본 데이터 복구
 onBeforeRouteLeave((to, from, next) => {
   profileStore.restoreOriginalData()
   next()

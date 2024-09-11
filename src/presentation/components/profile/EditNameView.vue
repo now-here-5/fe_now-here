@@ -1,110 +1,14 @@
 <template>
-  <div class="nameComponent">
-    <p>닉네임</p>
-    <div class="input_btn_text">
-      <div class="input_btn">
-        <input
-          class="nameInput"
-          type="text"
-          placeholder="2자리 이상 8자리 이하 입력"
-          v-model="store_profile.nickname"
-          @input="formName"
-          maxlength="8"
-        />
-        <div
-          class="duplicateBtn"
-          :class="{ filled: duplicateBtn }"
-          :disabled="!duplicateBtn"
-          @click="checkDuplicate"
-        >
-          <p>중복 확인</p>
-        </div>
-      </div>
-      <p
-        :class="{
-          success: isDuplicate === false,
-          error: isDuplicate === true,
-          warning: isDuplicate === null
-        }"
-        v-if="alertMessageVisible"
-      >
-        {{ alertMessage }}
-      </p>
-    </div>
-  </div>
+  <NameComponent :store="profileStore" />
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
+import NameComponent from '@/presentation/components/inputComponent/NameComponent.vue'
 import { onBeforeRouteLeave } from 'vue-router'
-import { NameDuplicateRepository } from '@/infrastructure/repositories/NameDuplicateRepository.js'
-import { useEventStore } from '@/presentation/stores/eventStore.js'
 import { useProfileStore } from '@/presentation/stores/profileStore'
 
-const nameDuplicateRepository = new NameDuplicateRepository()
-const eventStore = useEventStore()
 const profileStore = useProfileStore()
 
-const name = ref(profileStore.nickname)
-const duplicateBtn = ref(false)
-
-const isDuplicate = ref(null)
-
-const alertMessageVisible = ref(false)
-const alertMessage = ref('')
-const alertMessageInventory = [
-  '중복 여부를 확인해주세요.',
-  '사용 가능한 닉네임입니다.',
-  '이미 사용 중인 닉네임입니다.'
-]
-
-// watch를 사용하여 name을 store와 동기화합니다.
-watch(name, (newName) => {
-  profileStore.nickname = newName
-})
-
-const formName = () => {
-  let formedName = name.value.replace(/[^a-zA-Z가-힣0-9\s]/g, '')
-  if (formedName.length > 8) {
-    formedName = formedName.slice(0, 8)
-  }
-  name.value = formedName
-
-  // 이름이 비어 있으면 중복 확인 메시지를 초기화하고, 더 이상 처리하지 않음
-  if (!name.value) {
-    profileStore.alertMessage = ''
-    profileStore.alertMessageVisible = false
-    duplicateBtn.value = false
-    return
-  }
-
-  // 이름이 변경될 때 중복 확인 메시지를 초기 상태로 되돌림
-  isDuplicate.value = null
-  alertMessage.value = alertMessageInventory[0]
-  alertMessageVisible.value = true
-
-  duplicateBtn.value = formedName.length >= 2 && formedName.length <= 8
-}
-
-const checkDuplicate = async () => {
-  const eventId = eventStore.encodedId
-  const nameTo = profileStore.nickname
-
-  try {
-    const data = await nameDuplicateRepository.getNameDuplicate(eventId, nameTo)
-    if (data.message === '사용 가능한 닉네임입니다.') {
-      console.log('사용 가능한 닉네임입니다.')
-      alertMessage.value = alertMessageInventory[1]
-      isDuplicate.value = false // 중복 확인 완료
-    } else {
-      alertMessage.value = alertMessageInventory[2]
-      isDuplicate.value = true // 중복 확인 완료
-    }
-  } catch (error) {
-    console.error('name Duplicate :', error)
-  }
-}
-// 사용자가 페이지를 떠나기 전에 원본 데이터 복구
 onBeforeRouteLeave((to, from, next) => {
   profileStore.restoreOriginalData()
   next()

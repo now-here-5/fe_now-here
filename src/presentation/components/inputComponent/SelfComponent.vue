@@ -14,7 +14,7 @@
         v-model="selfIntro"
         maxlength="30"
       />
-      <span>{{ selfIntroduction.length }}/30</span>
+      <span>{{ selfIntro.length }}/30</span>
     </div>
   </div>
 </template>

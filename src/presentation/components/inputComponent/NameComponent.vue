@@ -56,13 +56,19 @@ const formName = () => {
     formedName = formedName.slice(0, 8)
   }
   name.value = formedName
+  props.store.name = name.value
   if (!name.value) {
     props.store.alertMessage = ''
     props.store.alertMessageVisible = false
     duplicateBtn.value = false
     return
   }
-  props.store.name = name.value
+  if (props.store.name === props.store.originalData.name) {
+    props.store.alertMessage = ''
+    props.store.alertMessageVisible = false
+    duplicateBtn.value = false
+    return
+  }
   props.store.isDuplicate = null
   props.store.alertMessage = props.store.alertMessageInventory[0]
   props.store.alertMessageVisible = true

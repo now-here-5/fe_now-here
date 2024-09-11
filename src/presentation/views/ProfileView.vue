@@ -3,9 +3,9 @@
     <div class="profileCard">
       <img class="imgContainer" :src="avatarSrc" alt="profile" />
       <div class="profileInfo">
-        <span>{{ profileStore.mbti }}</span>
+        <span>{{ profileStore.selectedMBTI }}</span>
         <div class="profileNickname">
-          <span>{{ profileStore.nickname }}</span>
+          <span>{{ profileStore.name }}</span>
           <div class="profileDetail">
             <span>만 {{ profileStore.birthdate }}세</span>
             <span>{{ profileStore.gender }}</span>
@@ -35,11 +35,13 @@ const profileStore = useProfileStore()
 
 onMounted(async () => {
   await profileStore.fetchProfile()
+
+  console.log(profileStore.selectedMBTI)
 })
 
 const avatarSrc = computed(() => {
   const gender = profileStore.gender === '여성' ? 'Female' : 'Male'
-  const src = getAvatarSrc(gender, profileStore.mbti)
+  const src = getAvatarSrc(gender, profileStore.selectedMBTI)
   return src
 })
 const navigateToEditProfile = () => {

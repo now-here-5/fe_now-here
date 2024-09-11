@@ -18,9 +18,9 @@
         </div>
         <div class="selfText">
           <div class="textContainer">
-            <p>{{ profileStore.description }}</p>
+            <p>{{ profileStore.selfIntro }}</p>
           </div>
-          <p>{{ profileStore.description.length }}/30</p>
+          <p>{{ profileStore.selfIntro.length }}/30</p>
         </div>
       </div>
       <div class="editItemList" v-if="route.path === '/editProfile'">
@@ -34,7 +34,7 @@
         <div class="editItem" @click="navigateToName">
           <p>닉네임</p>
           <div class="text_component">
-            <p>{{ profileStore.nickname }}</p>
+            <p>{{ profileStore.name }}</p>
             <div class="componentSpace">
               <img
                 src="/images/keyboard_arrowRight.png"
@@ -61,7 +61,7 @@
         <div class="editItem" @click="navigateToMBTI">
           <p>MBTI</p>
           <div class="text_component">
-            <p>{{ profileStore.mbti }}</p>
+            <p>{{ profileStore.selectedMBTI }}</p>
             <div class="componentSpace">
               <img
                 src="/images/keyboard_arrowRight.png"
@@ -88,10 +88,15 @@
 import SelectBtn from '@/presentation/components/SelectBtn.vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useProfileStore } from '@/presentation/stores/profileStore'
+import { onMounted } from 'vue'
 
 const route = useRoute()
 const router = useRouter() // useRouter 사용
 const profileStore = useProfileStore()
+
+onMounted(async () => {
+  console.log("fdfdf", profileStore.selectedMBTI)
+})
 
 const handleSubmit = () => {
   profileStore.submit(route.path) // 현재 라우트를 전달

@@ -2,30 +2,60 @@ import { defineStore } from 'pinia';
 import { computed, ref, reactive } from 'vue';
 import { useRouter } from 'vue-router'
 import { MemberSettingRepository } from '@/infrastructure/repositories/MemberSettingRepository.js';
+import { MemberAccountRepository } from "@/infrastructure/repositories/MemberAccountRepository.js";
+import { useEventStore } from '@/presentation/stores/eventStore.js';
 
 const memberSettingRepository = new MemberSettingRepository();
+const memberAccountRepository = new MemberAccountRepository();
 
 export const useProfileStore = defineStore('profile', () => {
 	const router = useRouter();
+	const eventStore = useEventStore();
 	
-	const mbti = ref("");
-	const nickname = ref("");
+	const selectedMBTI = ref("");
+	const name = ref("");
 	const birthdate = ref("");
 	const gender = ref("");
-	const description = ref("");
+	const selfIntro = ref("");
 	const phone = ref("");
 	
+	const isDuplicate = ref(null);
+	const alertMessageVisible = ref(false);
+	const alertMessage = ref('');
+	const alertMessageInventory = [
+		"중복 여부를 확인해주세요.",
+		"사용 가능한 닉네임입니다.",
+		"이미 사용 중인 닉네임입니다.",
+	];
+	
 	const originalData = reactive({
-		mbti: "",
-		nickname: "",
-		description: "",
+		selectedMBTI: "",
+		name: "",
+		selfIntro: "",
 	});
+	const checkDuplicate = async () => {
+		const eventId = eventStore.encodedId;
+		const nameTo = name.value
+		try {
+			const data = await memberAccountRepository.getNameDuplicate(eventId, nameTo);
+			if ( data.message === "사용 가능한 닉네임입니다." ) {
+				console.log('사용 가능한 닉네임입니다.');
+				alertMessage.value = alertMessageInventory[1];
+				isDuplicate.value = false; // 중복 확인 완료
+			} else {
+				alertMessage.value = alertMessageInventory[2];
+				isDuplicate.value = true; // 중복 확인 완료
+			}
+		} catch (error) {
+			console.error('name Duplicate :', error);
+		}
+	}
 	
 	const hasChanges = computed(() => {
 		return (
-			mbti.value !== originalData.mbti ||
-			nickname.value !== originalData.nickname ||
-			description.value !== originalData.description
+			selectedMBTI.value !== originalData.selectedMBTI ||
+			name.value !== originalData.name ||
+			selfIntro.value !== originalData.selfIntro
 		);
 	});
 	
@@ -45,25 +75,29 @@ export const useProfileStore = defineStore('profile', () => {
 	};
 	
 	const fetchProfile = async () => {
-		console.log('mbti', mbti.value);
-		console.log('nickname', nickname.value);
+		console.log('selectedMBTI', selectedMBTI.value);
+		console.log('name', name.value);
 		console.log('birthdate', birthdate.value);
 		console.log('gender', gender.value);
-		console.log('description', description.value);
+		console.log('selfIntro', selfIntro.value);
 		console.log('phone', phone.value);
 		try {
 			const response = await memberSettingRepository.getProfileInfo();
 			console.log('response', response);
 			if (response.message === "개인정보 조회에 성공했습니다.") {
-				originalData.mbti = response.data.mbti;
-				originalData.nickname = response.data.nickname;
-				originalData.description = response.data.description;
+				console.log('message', response.data.nickname);
 				
-				mbti.value = response.data.mbti;
-				nickname.value = response.data.nickname;
+				originalData.selectedMBTI = response.data.mbti;
+				originalData.name = response.data.nickname;
+				originalData.selfIntro = response.data.description;
+				
+				selectedMBTI.value = response.data.mbti;
+				name.value = response.data.nickname;
 				birthdate.value = calculateAge(response.data.birthdate);
 				gender.value = getGenderInKorean(response.data.gender);
-				description.value = response.data.description;
+				selfIntro.value = response.data.description;
+				console.log('description', response.data.description);
+				console.log('selfIntro', selfIntro.value);
 				phone.value = response.data.phone;
 				
 				return true;
@@ -77,31 +111,32 @@ export const useProfileStore = defineStore('profile', () => {
 	};
 	
 	const restoreOriginalData = () => {
-		mbti.value = originalData.mbti;
-		nickname.value = originalData.nickname;
-		description.value = originalData.description;
+		selectedMBTI.value = originalData.selectedMBTI;
+		name.value = originalData.name;
+		selfIntro.value = originalData.selfIntro;
 	};
 	const submit = async (currentRoute) => {
 		try {
 			if (currentRoute === '/editSelf') {
-				const submitData = { description: description.value };
+				const submitData = { description: selfIntro.value };
 				const response = await memberSettingRepository.patchSelfIntro(submitData);
 				if (response.message === "자기소개 수정에 성공했습니다.") {
-					originalData.description = description.value;
+					originalData.selfIntro = selfIntro.value;
 					router.back();
 				}
 			} else if (currentRoute === '/editName') {
-				const submitData = { nickname: nickname.value };
+				const submitData = { nickname: name.value };
 				const response = await memberSettingRepository.patchNickname(submitData);
 				if (response.message === "닉네임 수정에 성공했습니다.") {
-					originalData.nickname = nickname.value;
+					originalData.name = name.value;
 					router.back();
 				}
 			} else if (currentRoute === '/editMBTI') {
-				const submitData = { mbti: mbti.value };
+				const submitData = { mbti: selectedMBTI.value };
 				const response = await memberSettingRepository.patchMBTI(submitData);
 				if (response.message === "MBTI 수정에 성공했습니다.") {
-					originalData.mbti = mbti.value;
+					console.log('selectedMBTI', selectedMBTI.value);
+					originalData.selectedMBTI = selectedMBTI.value;
 					router.back();
 				}
 			} else {
@@ -113,13 +148,22 @@ export const useProfileStore = defineStore('profile', () => {
 	};
 	
 	return {
-		mbti,
-		nickname,
+		selectedMBTI,
+		name,
 		birthdate,
 		gender,
-		description,
+		selfIntro,
 		phone,
 		hasChanges,
+		
+		originalData,
+		
+		isDuplicate,
+		alertMessageVisible,
+		alertMessage,
+		alertMessageInventory,
+		checkDuplicate,
+		
 		fetchProfile,
 		submit,
 		restoreOriginalData,
@@ -129,10 +173,10 @@ export const useProfileStore = defineStore('profile', () => {
 		enabled: true,
 		paths: [
 			`mbti`,
-			`nickname`,
+			`name`,
 			`birthdate`,
 			`gender`,
-			`description`,
+			`selfIntro`,
 			`phone`,
 		]
 	}
