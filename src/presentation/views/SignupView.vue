@@ -20,9 +20,9 @@
     </footer>
 
     <ModalS
-      :isVisible="popupStore.duplicateModal"
+      :isVisible="popupStore.modalSVisible.duplicateID"
       :title="popupStore.modalSTitle"
-      :message="`이미 가입된 휴대폰 번호입니다.<br>다시 한 번 확인해주세요.`"
+      :message="`이미 사용 중인 아이디입니다.<br>다른 아이디를 사용해주세요.`"
       buttonText="확인"
       @close="popupStore.closeModal"
     />

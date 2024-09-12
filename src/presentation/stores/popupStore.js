@@ -22,26 +22,24 @@ export const usePopupStore = defineStore('popup', () => {
   });
   const termType = ref('');
   //M_S
-  const duplicateModal = ref(false);
-  const authErrorModal = ref(false);
-  const completeModal = ref(false);
+  const modalSVisible = ref({
+    duplicateID: false,
+    complete: false,
+  });
   
   const modalSTitle = computed(() => {
-    if (completeModal.value) {
+    if (modalSVisible.value.complete) {
       return `${profileSignupStore.selectedMBTI} ${profileSignupStore.name}님 <br> 회원가입 완료`;
     } else {
       return "알림";
     }
   });
   const closeModal = () => {
-    if (duplicateModal.value) {
-      duplicateModal.value = false;
+    if (modalSVisible.value.duplicateID) {
+      modalSVisible.value.duplicateID = false;
     }
-    if (authErrorModal.value) {
-      authErrorModal.value = false;
-    }
-    if (completeModal.value) {
-      completeModal.value = false;
+    if (modalSVisible.value.complete) {
+      modalSVisible.value.complete = false;
       router.push('/match');
     }
   };
@@ -75,9 +73,7 @@ export const usePopupStore = defineStore('popup', () => {
     termType,
     
     //M_S
-    duplicateModal,
-    authErrorModal,
-    completeModal,
+    modalSVisible,
     modalSTitle,
     
     closeModal,

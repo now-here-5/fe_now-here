@@ -19,12 +19,12 @@ const router = createRouter({
       path: '/signup',
       name: 'signup',
       component: () => import('@/presentation/views/SignupView.vue'),
-      redirect: { name: 'signup-phoneAuth' }, // 기본 리다이렉트 설정
+      redirect: { name: 'signup-ID' }, // 기본 리다이렉트 설정
       children: [
         {
-          path: 'signup-phoneAuth',
-          name: 'signup-phoneAuth',
-          component: () => import('@/presentation/components/signup/SignupPhoneAuthView.vue')
+          path: 'signup-ID',
+          name: 'signup-ID',
+          component: () => import('@/presentation/components/signup/SignupIDView.vue')
         },
         {
           path: 'signup-password',
