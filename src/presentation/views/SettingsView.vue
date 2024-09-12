@@ -16,8 +16,8 @@
             <label for="switch"></label>
           </div>
         </div>
-        <OptionItem label="로그아웃" :on-click="settingStore.logout" :visible=false />
-        <OptionItem label="계정 탈퇴" :on-click="openWithdrawModal" :visible=false />
+        <OptionItem label="로그아웃" :boldText= true :on-click="settingStore.logout" :visible=false />
+        <OptionItem label="계정 탈퇴" :boldText= true :on-click="openWithdrawModal" :visible=false />
       </div>
     </main>
   </div>

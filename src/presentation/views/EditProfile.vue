@@ -4,7 +4,15 @@
     <main class="body">
       <router-view />
       <div class="selfContainer" v-if="route.path === '/editProfile'">
-        <OptionItem label="자기소개" :onClick="navigateToSelf" />
+        <OptionItem
+          label="아이디"
+          :boldText= true
+          :none= false
+          :detail="profileStore.accountId"
+          :visible=false
+          :boldDetail=true
+        />
+        <OptionItem label="자기소개" :boldText= true :onClick="navigateToSelf" />
         <div class="selfTextArea">
           <div class="textContainer">
             <span>{{ profileStore.selfIntro }}</span>
@@ -14,9 +22,9 @@
       </div>
       <div class="editItemList" v-if="route.path === '/editProfile'">
         <OptionItem
-          label="휴대폰 번호"
-          :detail="profileStore.phone"
-          :visible=false
+          label="카카오톡 ID"
+          :detail="profileStore.snsId"
+          :onClick="navigateToName"
         />
         <OptionItem
           label="닉네임"
@@ -27,7 +35,8 @@
         <OptionItem
           label="나이"
           :detail="'만 ' + profileStore.birthdate + '세'"
-          :visible=false
+          :onClick="navigateToName"
+          :visible=true
         />
         <OptionItem
           label="성별"

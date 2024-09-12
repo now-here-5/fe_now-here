@@ -17,8 +17,8 @@
       <span>프로필 수정</span>
     </div>
     <div class="optionList">
-      <OptionItem label="문의하기" :onClick="navigateToContact" />
-      <OptionItem label="의견 남기기" :onClick="navigateToReview" />
+      <OptionItem label="문의하기" :boldText= true :onClick="navigateToContact" />
+      <OptionItem label="의견 남기기" :boldText= true :onClick="navigateToReview" />
     </div>
   </div>
 </template>

@@ -12,12 +12,13 @@ export const useProfileStore = defineStore('profile', () => {
 	const router = useRouter();
 	const eventStore = useEventStore();
 	
+	const accountId = ref("");
+	const birthdate = ref("");
+	const selfIntro = ref("");
+	const gender = ref("");
 	const selectedMBTI = ref("");
 	const name = ref("");
-	const birthdate = ref("");
-	const gender = ref("");
-	const selfIntro = ref("");
-	const phone = ref("");
+	const snsId = ref("");
 	
 	const isDuplicate = ref(null);
 	const alertMessageVisible = ref(false);
@@ -77,15 +78,20 @@ export const useProfileStore = defineStore('profile', () => {
 		try {
 			const response = await memberSettingRepository.getProfileInfo();
 			if (response.message === "개인정보 조회에 성공했습니다.") {
+				console.log('Profile info:', response.data);
+				
 				originalData.selectedMBTI = response.data.mbti;
 				originalData.name = response.data.nickname;
 				originalData.selfIntro = response.data.description;
+				
+				accountId.value = response.data.accountId;
+				snsId.value = response.data.snsId;
 				selectedMBTI.value = response.data.mbti;
 				name.value = response.data.nickname;
 				birthdate.value = calculateAge(response.data.birthdate);
 				gender.value = getGenderInKorean(response.data.gender);
 				selfIntro.value = response.data.description;
-				phone.value = response.data.phone;
+
 				return true;
 			}
 		} catch (error) {
@@ -136,7 +142,8 @@ export const useProfileStore = defineStore('profile', () => {
 		birthdate,
 		gender,
 		selfIntro,
-		phone,
+		accountId,
+		snsId,
 		hasChanges,
 		
 		originalData,

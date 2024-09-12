@@ -1,10 +1,12 @@
 <template>
   <div class="optionItem" @click="handleClick">
-    <span :class="detail ? 'subItile' : ''">{{ label }}</span>
+    <span :class="boldText ? '' : 'subTitle'">{{ label }}</span>
     <div class="align">
-      <span v-if="detail">{{ detail }}</span>
-      <img v-if="visible" src="/images/keyboard_arrowRight.png" class="navigateNext" alt="navigate_next" />
-      <div v-if="!visible" class="navigateNext"></div>
+      <span v-if="detail" :class="boldDetail ? 'Bold' : ''">{{ detail }}</span>
+      <div v-if="none">
+        <img v-if="visible" src="/images/keyboard_arrowRight.png" class="navigateNext" alt="navigate_next" />
+        <div v-if="!visible" class="navigateNext" />
+      </div>
     </div>
   </div>
 </template>
@@ -26,6 +28,18 @@ const props = defineProps({
   detail: {
     type: String,
     required: false
+  },
+  boldText: {
+    type: Boolean,
+    default: false
+  },
+  none: {
+    type: Boolean,
+    default: true
+  },
+  boldDetail: {
+    type: Boolean,
+    default: false
   }
 })
 const handleClick = () => {
@@ -50,7 +64,7 @@ const handleClick = () => {
     text-align: center;
     color: $dark;
   }
-  .subItile {
+  .subTitle {
     font-weight: $textS_weight;
     font-size: $textM_size;
     color: $gray;
@@ -61,6 +75,11 @@ const handleClick = () => {
   flex-direction: row;
   span {
     font-weight: $textS_weight;
+    font-size: $textM_size;
+    color: $dark;
+  }
+  .Bold {
+    font-weight: $textB_weight;
     font-size: $textM_size;
     color: $dark;
   }
