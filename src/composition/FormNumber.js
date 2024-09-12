@@ -7,6 +7,9 @@ export const formPhoneNumber = (phoneNumber) => {
   }
   return number;
 };
+export const formID = (id) => {
+  return id.replace(/[^a-z0-9]/g, '');
+};
 export const cleanPhoneNumber = (phoneNumber) => {
   return phoneNumber.replace(/[^0-9]/g, '');
 }

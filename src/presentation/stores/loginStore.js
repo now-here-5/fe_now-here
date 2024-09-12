@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { formPhoneNumber, formPassword, cleanPhoneNumber } from '@/composition/FormNumber.js';
+import { formPhoneNumber, formID, formPassword, cleanPhoneNumber } from '@/composition/FormNumber.js';
 import { MemberAuthRepository } from "@/infrastructure/repositories/MemberAuthRepository.js";
 import { useAuthStore } from '@/presentation/stores/authStore.js';
 import { useEventStore } from '@/presentation/stores/eventStore.js';
@@ -13,40 +13,42 @@ export const useLoginStore = defineStore('login', () => {
 	const authStore = useAuthStore();
 	const eventStore = useEventStore();
 	
-	const phone = ref('');
+	const ID = ref('');
 	const password = ref('');
 	const alertMessage = ref('');
 	const alertMessageInventory = ref([
-		'휴대폰 번호를 입력해 주세요.',
+		'아이디를 입력해 주세요.',
 		'비밀번호를 입력해 주세요.',
-		'휴대폰 번호와 비밀번호를 입력해 주세요',
-		`휴대폰 번호 또는 비밀번호가 잘못되었습니다.<br>확인 후 다시 입력해 주세요.`,
+		'아이디와 비밀번호를 입력해 주세요',
+		`아이디 또는 비밀번호가 잘못되었습니다.<br>확인 후 다시 입력해 주세요.`,
 	]);
 	
+	const formatID = (id) => {
+		return formID(id);
+	}
 	const formatPhone = (phoneNumber) => {
-		return formPhoneNumber(phoneNumber);  // 포맷팅 후 값을 반환
+		return formPhoneNumber(phoneNumber);
 	}
 	const formatPassword = (passwordNumber) => {
-		return formPassword(passwordNumber);  // 포맷팅 후 값을 반환
+		return formPassword(passwordNumber);
 	};
 	
 	const login = async () => {
-		if (!phone.value && password.value) {
+		if (!ID.value && password.value) {
 			alertMessage.value = alertMessageInventory.value[0];
 			return;
 		}
-		if (phone.value && !password.value) {
+		if (ID.value && !password.value) {
 			alertMessage.value = alertMessageInventory.value[1];
 			return;
 		}
-		if (!phone.value && !password.value) {
+		if (!ID.value && !password.value) {
 			alertMessage.value = alertMessageInventory.value[2];
 			return;
 		}
 		alertMessage.value  = '';
-		const cleaningPhone = cleanPhoneNumber(phone.value);
 		const loginData = {
-			phone: cleaningPhone,
+			accountId: ID.value,
 			password: password.value,
 		};
 		try {
@@ -63,9 +65,10 @@ export const useLoginStore = defineStore('login', () => {
 	}
 	
 	return {
-		phone,
+		ID,
 		password,
 		alertMessage,
+		formatID,
 		formatPhone,
 		formatPassword,
 		login,

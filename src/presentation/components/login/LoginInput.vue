@@ -9,10 +9,10 @@
         <input
           class="inputBox"
           type="tel"
-          placeholder="휴대폰 번호"
-          v-model="loginStore.phone"
-          @input="formatPhone"
-          maxlength="13"
+          placeholder="아이디"
+          v-model="loginStore.ID"
+          @input="formatID"
+          maxlength="15"
         />
         <input
           class="inputBox"
@@ -35,8 +35,8 @@ import { useLoginStore } from '@/presentation/stores/loginStore.js'
 
 const loginStore = useLoginStore()
 
-const formatPhone = () => {
-  loginStore.phone = loginStore.formatPhone(loginStore.phone)
+const formatID = () => {
+  loginStore.ID = loginStore.formatID(loginStore.ID)
 }
 const formatPassword = () => {
   loginStore.password = loginStore.formatPassword(loginStore.password)
