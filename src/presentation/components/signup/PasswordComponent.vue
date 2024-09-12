@@ -1,6 +1,6 @@
 <template>
   <div class="pinContainer" @click="focusInput">
-    <p1>{{ label }}</p1>
+    <span class="title">{{ label }}</span>
     <div class="pinRow">
       <div
         v-for="(char, index) in 4"
@@ -21,7 +21,7 @@
       v-model="internalValue"
       @input="onInput"
     />
-    <p2 v-if="errorMessage">{{ errorMessage }}</p2>
+    <span class="error" v-if="errorMessage">{{ errorMessage }}</span>
   </div>
 </template>
 
@@ -44,7 +44,6 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['update:modelValue'])
-
 const internalValue = ref(props.modelValue)
 const hiddenInput = ref(null)
 
@@ -53,14 +52,12 @@ const onInput = (event) => {
   internalValue.value = inputValue
   emit('update:modelValue', inputValue)
 }
-
 watch(
   () => props.modelValue,
   (newValue) => {
     internalValue.value = newValue
   }
 )
-
 const focusInput = () => {
   nextTick(() => {
     hiddenInput.value.focus()
@@ -76,21 +73,18 @@ const focusInput = () => {
   opacity: 0;
   pointer-events: none;
 }
-
 .pinContainer {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 10px;
   width: 100%;
-
-  p1 {
+  .title {
     font-size: $textM_size;
     font-weight: $textB_weight;
     color: $dark;
   }
-
-  p2 {
+  .error {
     font-size: $textS_size;
     font-weight: $textS_weight;
     color: $red;

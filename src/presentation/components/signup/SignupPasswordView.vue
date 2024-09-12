@@ -31,7 +31,6 @@ const isPasswordValid = computed(() => {
   );
 });
 
-// watch를 사용하여 isPasswordValid 변경 시 store의 상태를 업데이트
 watch([passwordInput, passwordConfirmInput], () => {
   passwordSignupStore.password = passwordInput.value;
   passwordSignupStore.passwordConfirm = passwordConfirmInput.value;
