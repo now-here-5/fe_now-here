@@ -8,7 +8,7 @@
       <div class="inputContainer">
         <input
           class="inputBox"
-          type="tel"
+          type="text"
           placeholder="아이디"
           v-model="loginStore.ID"
           @input="formatID"

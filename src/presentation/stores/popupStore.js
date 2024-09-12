@@ -51,7 +51,7 @@ export const usePopupStore = defineStore('popup', () => {
     cardL: false,
     withdraw: false,
   });
-  
+  const matchAgree = ref(false);
   const fetchFeedbackModal = async () => {
     try {
       const response = await interactionRepository.getFeedbackModal();
@@ -80,6 +80,7 @@ export const usePopupStore = defineStore('popup', () => {
     
     //M_L
     modalLVisible,
+    matchAgree,
     
     fetchFeedbackModal,
     
