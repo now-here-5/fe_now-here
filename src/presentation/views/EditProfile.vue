@@ -23,7 +23,7 @@
       <div class="editItemList" v-if="route.path === '/editProfile'">
         <OptionItem
           label="카카오톡 ID"
-          :detail="profileStore.snsId"
+          :detail="profileStore.snsID"
           :onClick="navigateToSnsID"
         />
         <OptionItem
@@ -34,7 +34,7 @@
         />
         <OptionItem
           label="나이"
-          :detail="'만 ' + profileStore.birthdate + '세'"
+          :detail="'만 ' + profileStore.age + '세'"
           :onClick="navigateToBirth"
           :visible=true
         />

@@ -14,48 +14,28 @@ export const useProfileStore = defineStore('profile', () => {
 	
 	const accountId = ref("");
 	const birthdate = ref("");
+	const age = ref("");
 	const selfIntro = ref("");
 	const gender = ref("");
 	const selectedMBTI = ref("");
 	const name = ref("");
-	const snsId = ref("");
-	
-	const isDuplicate = ref(null);
-	const alertMessageVisible = ref(false);
-	const alertMessage = ref('');
-	const alertMessageInventory = [
-		"중복 여부를 확인해주세요.",
-		"사용 가능한 닉네임입니다.",
-		"이미 사용 중인 닉네임입니다.",
-	];
+	const snsID = ref("");
 	
 	const originalData = reactive({
-		selectedMBTI: "",
-		name: "",
 		selfIntro: "",
+		snsId: "",
+		name: "",
+		birthdate: "",
+		selectedMBTI: "",
 	});
-	const checkDuplicate = async () => {
-		const eventId = eventStore.encodedId;
-		const nameTo = name.value
-		try {
-			const data = await memberAccountRepository.getNameDuplicate(eventId, nameTo);
-			if ( data.message === "사용 가능한 닉네임입니다." ) {
-				alertMessage.value = alertMessageInventory[1];
-				isDuplicate.value = false; // 중복 확인 완료
-			} else {
-				alertMessage.value = alertMessageInventory[2];
-				isDuplicate.value = true; // 중복 확인 완료
-			}
-		} catch (error) {
-			console.error('name Duplicate :', error);
-		}
-	}
 	
 	const hasChanges = computed(() => {
 		return (
-			selectedMBTI.value !== originalData.selectedMBTI ||
+			selfIntro.value !== originalData.selfIntro ||
+			snsID.value !== originalData.snsID ||
 			name.value !== originalData.name ||
-			selfIntro.value !== originalData.selfIntro
+			selectedMBTI.value !== originalData.selectedMBTI ||
+			birthdate.value !== originalData.birthdate
 		);
 	});
 	
@@ -69,7 +49,6 @@ export const useProfileStore = defineStore('profile', () => {
 		}
 		return age;
 	};
-	
 	const getGenderInKorean = (gender) => {
 		return gender === "FEMALE" ? "여성" : "남성";
 	};
@@ -80,15 +59,18 @@ export const useProfileStore = defineStore('profile', () => {
 			if (response.message === "개인정보 조회에 성공했습니다.") {
 				console.log('Profile info:', response.data);
 				
-				originalData.selectedMBTI = response.data.mbti;
-				originalData.name = response.data.nickname;
 				originalData.selfIntro = response.data.description;
+				originalData.snsID = response.data.snsId;
+				originalData.name = response.data.nickname;
+				originalData.birthdate = response.data.birthdate;
+				originalData.selectedMBTI = response.data.mbti;
 				
 				accountId.value = response.data.accountId;
-				snsId.value = response.data.snsId;
+				snsID.value = response.data.snsId;
 				selectedMBTI.value = response.data.mbti;
 				name.value = response.data.nickname;
-				birthdate.value = calculateAge(response.data.birthdate);
+				birthdate.value = response.data.birthdate;
+				age.value = calculateAge(response.data.birthdate);
 				gender.value = getGenderInKorean(response.data.gender);
 				selfIntro.value = response.data.description;
 
@@ -128,13 +110,43 @@ export const useProfileStore = defineStore('profile', () => {
 					originalData.selectedMBTI = selectedMBTI.value;
 					router.back();
 				}
-			} else {
-				console.error('Unknown route for submission');
+			} else if (currentRoute === '/editSnsID') {
+				const submitData = { snsId: snsID.value };
+				const response = await memberSettingRepository.patchSnsId(submitData);
+				if (response.message === "SNS ID 수정에 성공했습니다.") {
+					originalData.snsID = snsID.value;
+					router.back();
+				}
 			}
 		} catch (error) {
 			console.error('Error during profile submission:', error);
 		}
 	};
+	
+	const isDuplicate = ref(null);
+	const alertMessageVisible = ref(false);
+	const alertMessage = ref('');
+	const alertMessageInventory = [
+		"중복 여부를 확인해주세요.",
+		"사용 가능한 닉네임입니다.",
+		"이미 사용 중인 닉네임입니다.",
+	];
+	const checkDuplicate = async () => {
+		const eventId = eventStore.encodedId;
+		const nameTo = name.value
+		try {
+			const data = await memberAccountRepository.getNameDuplicate(eventId, nameTo);
+			if ( data.message === "사용 가능한 닉네임입니다." ) {
+				alertMessage.value = alertMessageInventory[1];
+				isDuplicate.value = false; // 중복 확인 완료
+			} else {
+				alertMessage.value = alertMessageInventory[2];
+				isDuplicate.value = true; // 중복 확인 완료
+			}
+		} catch (error) {
+			console.error('name Duplicate :', error);
+		}
+	}
 	
 	return {
 		selectedMBTI,
@@ -143,20 +155,21 @@ export const useProfileStore = defineStore('profile', () => {
 		gender,
 		selfIntro,
 		accountId,
-		snsId,
+		snsID,
+		age,
 		hasChanges,
 		
 		originalData,
+		
+		fetchProfile,
+		restoreOriginalData,
+		submit,
 		
 		isDuplicate,
 		alertMessageVisible,
 		alertMessage,
 		alertMessageInventory,
 		checkDuplicate,
-		
-		fetchProfile,
-		submit,
-		restoreOriginalData,
 	};
 }, {
 	persist: {

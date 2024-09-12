@@ -1,6 +1,18 @@
-import { patchNotification, patchNickname, patchMBTI, patchSelfIntro, getProfileInfo, getNotification } from '../http/api/memberSettingApi.js'
+import {
+	patchSnsId,
+	patchNotification,
+	patchNickname,
+	patchMBTI,
+	patchSelfIntro,
+	getProfileInfo,
+	getNotification,
+} from '../http/api/memberSettingApi.js'
 
 export class MemberSettingRepository {
+	async patchSnsId(snsId) {
+		const response = await patchSnsId(snsId)
+		return response
+	}
 	async patchNotification(notification) {
 		const response = await patchNotification(notification)
 		return response

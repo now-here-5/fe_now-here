@@ -1,5 +1,9 @@
 import httpClient from '@/infrastructure/http//httpClient'
 
+export const patchSnsId = async (snsId) => {
+	const response = await httpClient.patch(`/member/update/sns-id`, snsId);
+	return response.data;
+}
 export const patchNotification = async (notification) => {
 	const response = await httpClient.patch(`/member/update/notification-setting`, notification);
 	return response.data;

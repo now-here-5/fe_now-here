@@ -7,7 +7,7 @@
         <div class="profileNickname">
           <span>{{ profileStore.name }}</span>
           <div class="profileDetail">
-            <span>만 {{ profileStore.birthdate }}세</span>
+            <span>만 {{ profileStore.age }}세</span>
             <span>{{ profileStore.gender }}</span>
           </div>
         </div>
