@@ -76,9 +76,19 @@ const router = createRouter({
           component: () => import('@/presentation/components/profile/EditSelfView.vue')
         },
         {
+          path: '/editSnsID', // /match/sent-hearts
+          name: 'editSnsID',
+          component: () => import('@/presentation/components/profile/EditSnsIDView.vue')
+        },
+        {
           path: '/editName', // /match/sent-hearts
           name: 'editName',
           component: () => import('@/presentation/components/profile/EditNameView.vue')
+        },
+        {
+          path: '/editBirth', // /match/sent-hearts
+          name: 'editBirth',
+          component: () => import('@/presentation/components/profile/EditBirthView.vue')
         },
         {
           path: '/editMBTI', // /match/sent-hearts

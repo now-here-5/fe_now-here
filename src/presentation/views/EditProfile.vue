@@ -24,7 +24,7 @@
         <OptionItem
           label="카카오톡 ID"
           :detail="profileStore.snsId"
-          :onClick="navigateToName"
+          :onClick="navigateToSnsID"
         />
         <OptionItem
           label="닉네임"
@@ -35,7 +35,7 @@
         <OptionItem
           label="나이"
           :detail="'만 ' + profileStore.birthdate + '세'"
-          :onClick="navigateToName"
+          :onClick="navigateToBirth"
           :visible=true
         />
         <OptionItem
@@ -90,8 +90,14 @@ const handleSubmit = () => {
 const navigateToSelf = () => {
   router.push('/editSelf')
 }
+const navigateToSnsID = () => {
+  router.push('/editSnsID')
+}
 const navigateToName = () => {
   router.push('/editName')
+}
+const navigateToBirth = () => {
+  router.push('/editBirth')
 }
 const navigateToMBTI = () => {
   router.push('/editMBTI')
