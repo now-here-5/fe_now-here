@@ -1,5 +1,5 @@
 <template>
-  <div v-if="store_popup.modalL_cardL" class="M_Overlay">
+  <div v-if="popupStore.modalLVisible.cardL" class="M_Overlay">
     <div class="modalL">
       <div class="modalL_contentContainer">
         <MemberLargeCard :member-info="memberInfo" />
@@ -18,7 +18,7 @@
 
 <script setup>
 import { useMatchingStore } from '@/presentation/stores/matchingStore'
-import { popupStore } from '@/presentation/stores/popupStore.js'
+import { usePopupStore } from '@/presentation/stores/popupStore.js'
 import { useRouter } from 'vue-router'
 import MemberLargeCard from '../MemberLargeCard.vue'
 
@@ -29,13 +29,13 @@ const props = defineProps({
   }
 })
 
-const store_popup = popupStore()
+const popupStore = usePopupStore()
 const matchingStore = useMatchingStore()
 const router = useRouter()
 
 const rejectHeart = () => {
   // 하트 거절 로직
-  store_popup.modalL_cardL = false
+  popupStore.modalLVisible.cardL = false
 }
 const acceptHeart = async () => {
   // 하트 수락 로직
@@ -46,7 +46,7 @@ const acceptHeart = async () => {
   } catch (err) {
     alert('오류가 발생했습니다.')
   } finally {
-    store_popup.modalL_cardL = false
+    popupStore.modalLVisible.cardL = false
   }
 }
 </script>

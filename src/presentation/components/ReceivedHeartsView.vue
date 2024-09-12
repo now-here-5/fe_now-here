@@ -30,19 +30,19 @@ import { onMounted, ref } from 'vue'
 import { useMatchingStore } from '../stores/matchingStore'
 import TodayCardItem from './home/TodayCardItem.vue'
 import ModalL_CardL from './popUp/ModalL_CardL.vue'
-import { popupStore } from '../stores/popupStore'
+import { usePopupStore } from '../stores/popupStore'
 import { storeToRefs } from 'pinia'
 import LoadingSpinner from './LoadingSpinner.vue'
 
 const matchingStore = useMatchingStore()
-const popUpStore = popupStore()
+const popupStore = usePopupStore()
 const senderList = ref([])
 const selectedMember = ref({})
-const { modalL_cardL } = storeToRefs(popUpStore)
+const { modalL_cardL } = storeToRefs(popupStore)
 
 const receiveHearts = (memberInfo) => {
   selectedMember.value = memberInfo
-  popUpStore.modalL_cardL = true
+  popupStore.modalLVisible.cardL = true
 }
 
 onMounted(async () => {

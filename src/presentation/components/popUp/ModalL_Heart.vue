@@ -1,5 +1,5 @@
 <template>
-  <div v-if="popupStore.modalL_heart" class="M_Overlay">
+  <div v-if="popupStore.modalLVisible.heart" class="M_Overlay">
     <div class="modalL">
       <div class="modalL_contentContainer">
         <div class="modalL_header">
@@ -40,7 +40,7 @@ const matchingStore = useMatchingStore()
 
 const sendNotHeart = () => {
   // 하트 중단 로직
-  popupStore.modalL_heart = false
+  popupStore.modalLVisible.heart = false
 }
 const sendHeart = async () => {
   // 하트 송신 로직
@@ -52,7 +52,7 @@ const sendHeart = async () => {
   } catch (err) {
     alert('하트 전송 과정에서 에러가 발생했습니다.')
   } finally {
-    popupStore.modalL_heart = false
+    popupStore.modalLVisible.heart = false
   }
 }
 </script>
