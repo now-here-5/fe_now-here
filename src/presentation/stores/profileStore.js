@@ -128,6 +128,7 @@ export const useProfileStore = defineStore('profile', () => {
 				const response = await memberSettingRepository.patchBirth(submitData);
 				if (response.message === "생일 수정에 성공했습니다.") {
 					originalData.birth = birth.value;
+					age.value = calculateAge(birth.value);
 					router.back();
 				}
 			}
@@ -201,6 +202,7 @@ export const useProfileStore = defineStore('profile', () => {
 			`gender`,
 			`selfIntro`,
 			`phone`,
+			`originalData`,
 		]
 	}
 });

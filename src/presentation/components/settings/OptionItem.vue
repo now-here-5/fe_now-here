@@ -74,9 +74,13 @@ const handleClick = () => {
   display: flex;
   flex-direction: row;
   span {
+    width: 180px;
+    overflow: hidden;
+    text-overflow: ellipsis;
     font-weight: $textS_weight;
     font-size: $textM_size;
     color: $dark;
+    text-align: right; /* 우측 정렬 */
   }
   .Bold {
     font-weight: $textB_weight;
