@@ -7,12 +7,8 @@
       </div>
     </header>
     <main class="body">
-      <loginInput />
-      <SelectBtn
-        isActive="true"
-        buttonText="로그인"
-        @click="handleLogin"
-      />
+      <LoginInput />
+      <SelectBtn isActive="true" buttonText="로그인" @click="handleLogin" />
     </main>
     <footer class="bottom">
       <div class="left_content" @click="openBottomSheet">
@@ -29,7 +25,7 @@
 </template>
 
 <script setup>
-import loginInput from '@/presentation/components/login/loginInput.vue'
+import LoginInput from '@/presentation/components/login/LoginInput.vue'
 import SelectBtn from '@/presentation/components/SelectBtn.vue'
 import BottomSheetAgree from '@/presentation/components/popUp/BottomSheetAgree.vue'
 import BottomSheetTerm from '@/presentation/components/popUp/BottomSheetTerm.vue'
