@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 
-export const usePasswordSignupStore = defineStore('password', () => {
+export const useSignupPWStore = defineStore('password', () => {
 	const password = ref("");
 	const passwordConfirm = ref("");
 	const alertMessage = ref(false);

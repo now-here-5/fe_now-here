@@ -14,9 +14,9 @@
 import PasswordComponent from "@/presentation/components/signup/PasswordComponent.vue";
 import { ref, watch, computed } from 'vue';
 import { useSignupStore } from "@/presentation/stores/signupStore.js";
-import { usePasswordSignupStore } from "@/presentation/stores/signupSub/passwordSignupStore.js";
+import { useSignupPWStore } from "@/presentation/stores/signupSub/signupPWStore.js";
 
-const passwordSignupStore = usePasswordSignupStore();
+const passwordSignupStore = useSignupPWStore();
 const signupStore = useSignupStore();
 signupStore.signupCompleted.password = false;
 signupStore.signupStep = 1;
