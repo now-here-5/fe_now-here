@@ -17,9 +17,8 @@ httpClient.interceptors.request.use(
     const excludeUrls = [
       '/admin/event/list',
       '/interaction/inquiry',
-      '/member/verify/code',
+      '/member/verify',
       '/member/register',
-      '/member/verify/nickname',
       '/auth/login'
     ];
     const isExcluded = excludeUrls.some((url) => config.url.includes(url));

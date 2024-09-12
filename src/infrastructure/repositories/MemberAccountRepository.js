@@ -1,4 +1,4 @@
-import { postAuthNumber, postRegister, getAuthNumber, getNameDuplicate, deleteAccount } from '@/infrastructure/http/api/memberAccountApi.js';
+import { postAuthNumber, postRegister, getAuthNumber, getIDDuplicate, getNameDuplicate, deleteAccount } from '@/infrastructure/http/api/memberAccountApi.js';
 
 export class MemberAccountRepository {
 	async postAuthNumber(phone,authNum) {
@@ -11,6 +11,10 @@ export class MemberAccountRepository {
 	}
 	async getAuthNumber(eventId,phone) {
 		const response = await getAuthNumber(eventId, phone)
+		return response
+	}
+	async getIDDuplicate(eventId,ID) {
+		const response = await getIDDuplicate(eventId, ID)
 		return response
 	}
 	async getNameDuplicate(eventId,name) {
