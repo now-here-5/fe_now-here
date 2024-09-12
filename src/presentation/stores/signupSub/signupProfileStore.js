@@ -56,9 +56,11 @@ export const useSignupProfile = defineStore('signupProfile', () => {
 		try {
 			const data = await memberAccountRepository.getNameDuplicate(eventId, nameTo);
 			if ( data.message === "사용 가능한 닉네임입니다." ) {
+				alertMessageVisible.value = true;
 				alertMessage.value = alertMessageInventory[1];
 				isDuplicate.value = false;
 			} else {
+				alertMessageVisible.value = true
 				alertMessage.value = alertMessageInventory[2];
 				isDuplicate.value = true;
 				popupStore.modalSVisible.duplicateName = true;

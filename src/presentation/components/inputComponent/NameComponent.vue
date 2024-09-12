@@ -24,7 +24,6 @@
         :class="{
           success: store.isDuplicate === false,
           error: store.isDuplicate === true,
-          warning: store.isDuplicate === null
         }"
         v-if="store.alertMessageVisible"
       >
@@ -35,7 +34,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 
 const props = defineProps({
   store: {
@@ -66,6 +65,11 @@ const checkDuplicate = () => {
 }
 onMounted(() => {
   formName()
+  if (props.store.originalData && props.store.name === props.store.originalData.name) {
+    props.store.alertMessageVisible = false;
+    props.store.alertMessage = '';
+    duplicateBtn.value = false;
+  }
 })
 </script>
 

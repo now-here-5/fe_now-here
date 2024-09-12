@@ -1,9 +1,10 @@
 import { defineStore } from 'pinia';
-import { computed, ref, reactive } from 'vue';
+import { computed, watch,  ref, reactive } from 'vue';
 import { useRouter } from 'vue-router'
 import { MemberSettingRepository } from '@/infrastructure/repositories/MemberSettingRepository.js';
 import { MemberAccountRepository } from "@/infrastructure/repositories/MemberAccountRepository.js";
 import { useEventStore } from '@/presentation/stores/eventStore.js';
+import { usePopupStore } from '@/presentation/stores/popupStore.js';
 
 const memberSettingRepository = new MemberSettingRepository();
 const memberAccountRepository = new MemberAccountRepository();
@@ -11,6 +12,7 @@ const memberAccountRepository = new MemberAccountRepository();
 export const useProfileStore = defineStore('profile', () => {
 	const router = useRouter();
 	const eventStore = useEventStore();
+	const popupStore = usePopupStore();
 	
 	const accountId = ref("");
 	const birthdate = ref("");
@@ -31,9 +33,9 @@ export const useProfileStore = defineStore('profile', () => {
 	
 	const hasChanges = computed(() => {
 		return (
-			selfIntro.value !== originalData.selfIntro ||
+			selfIntro.value.length > 9 && selfIntro.value !== originalData.selfIntro ||
 			snsID.value !== originalData.snsID ||
-			name.value !== originalData.name ||
+			name.value.length > 1 && name.value.length < 9 && name.value !== originalData.name && isDuplicate.value === false ||
 			selectedMBTI.value !== originalData.selectedMBTI ||
 			birthdate.value !== originalData.birthdate
 		);
@@ -137,16 +139,20 @@ export const useProfileStore = defineStore('profile', () => {
 		try {
 			const data = await memberAccountRepository.getNameDuplicate(eventId, nameTo);
 			if ( data.message === "사용 가능한 닉네임입니다." ) {
+				alertMessageVisible.value = true;
 				alertMessage.value = alertMessageInventory[1];
-				isDuplicate.value = false; // 중복 확인 완료
+				isDuplicate.value = false;
 			} else {
+				alertMessageVisible.value = true;
 				alertMessage.value = alertMessageInventory[2];
-				isDuplicate.value = true; // 중복 확인 완료
+				isDuplicate.value = true;
+				popupStore.modalSVisible.duplicateName = true;
 			}
 		} catch (error) {
 			console.error('name Duplicate :', error);
 		}
 	}
+
 	
 	return {
 		selectedMBTI,
@@ -175,9 +181,12 @@ export const useProfileStore = defineStore('profile', () => {
 	persist: {
 		enabled: true,
 		paths: [
-			`mbti`,
+			`snsID`,
+			`selectedMBTI`,
+			`accountId`,
 			`name`,
 			`birthdate`,
+			`age`,
 			`gender`,
 			`selfIntro`,
 			`phone`,
