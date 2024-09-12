@@ -20,6 +20,10 @@ export const patchSelfIntro = async (description) => {
 	const response = await httpClient.patch(`/member/update/description`, description);
 	return response.data;
 }
+export const patchBirth = async (birth) => {
+	const response = await httpClient.patch(`/member/update/birthday`, birth);
+	return response.data;
+}
 export const getProfileInfo = async () => {
 	const response = await httpClient.get(`/member/read/personal-info`);
 	return response.data;

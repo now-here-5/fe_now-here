@@ -4,6 +4,7 @@ import {
 	patchNickname,
 	patchMBTI,
 	patchSelfIntro,
+	patchBirth,
 	getProfileInfo,
 	getNotification,
 } from '../http/api/memberSettingApi.js'
@@ -27,6 +28,10 @@ export class MemberSettingRepository {
 	}
 	async patchSelfIntro(description) {
 		const response = await patchSelfIntro(description)
+		return response
+	}
+	async patchBirth(birth) {
+		const response = await patchBirth(birth)
 		return response
 	}
 	async getProfileInfo(encodedId, userData ) {

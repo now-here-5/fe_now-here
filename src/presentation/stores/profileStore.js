@@ -16,6 +16,7 @@ export const useProfileStore = defineStore('profile', () => {
 	
 	const accountId = ref("");
 	const birthdate = ref("");
+	const birth = ref("");
 	const age = ref("");
 	const selfIntro = ref("");
 	const gender = ref("");
@@ -27,7 +28,7 @@ export const useProfileStore = defineStore('profile', () => {
 		selfIntro: "",
 		snsId: "",
 		name: "",
-		birthdate: "",
+		birth: "",
 		selectedMBTI: "",
 	});
 	
@@ -37,7 +38,7 @@ export const useProfileStore = defineStore('profile', () => {
 			snsID.value !== originalData.snsID ||
 			name.value.length > 1 && name.value.length < 9 && name.value !== originalData.name && isDuplicate.value === false ||
 			selectedMBTI.value !== originalData.selectedMBTI ||
-			birthdate.value !== originalData.birthdate
+			birth.value !== originalData.birth && birth.value.length > 5
 		);
 	});
 	
@@ -64,14 +65,14 @@ export const useProfileStore = defineStore('profile', () => {
 				originalData.selfIntro = response.data.description;
 				originalData.snsID = response.data.snsId;
 				originalData.name = response.data.nickname;
-				originalData.birthdate = response.data.birthdate;
+				originalData.birth = response.data.birthdate;
 				originalData.selectedMBTI = response.data.mbti;
 				
 				accountId.value = response.data.accountId;
 				snsID.value = response.data.snsId;
 				selectedMBTI.value = response.data.mbti;
 				name.value = response.data.nickname;
-				birthdate.value = response.data.birthdate;
+				birth.value = response.data.birthdate;
 				age.value = calculateAge(response.data.birthdate);
 				gender.value = getGenderInKorean(response.data.gender);
 				selfIntro.value = response.data.description;
@@ -85,6 +86,8 @@ export const useProfileStore = defineStore('profile', () => {
 	};
 	
 	const restoreOriginalData = () => {
+		birth.value = originalData.birth;
+		snsID.value = originalData.snsID;
 		selectedMBTI.value = originalData.selectedMBTI;
 		name.value = originalData.name;
 		selfIntro.value = originalData.selfIntro;
@@ -117,6 +120,14 @@ export const useProfileStore = defineStore('profile', () => {
 				const response = await memberSettingRepository.patchSnsId(submitData);
 				if (response.message === "SNS ID 수정에 성공했습니다.") {
 					originalData.snsID = snsID.value;
+					router.back();
+				}
+			} else if (currentRoute === '/editBirth') {
+				const submitData = { birthday: birth.value };
+				console.log('submitData:', submitData);
+				const response = await memberSettingRepository.patchBirth(submitData);
+				if (response.message === "생일 수정에 성공했습니다.") {
+					originalData.birth = birth.value;
 					router.back();
 				}
 			}
@@ -152,12 +163,12 @@ export const useProfileStore = defineStore('profile', () => {
 			console.error('name Duplicate :', error);
 		}
 	}
-
 	
 	return {
 		selectedMBTI,
 		name,
 		birthdate,
+		birth,
 		gender,
 		selfIntro,
 		accountId,
