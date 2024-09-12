@@ -28,25 +28,25 @@ onMounted(async () => {
 </script>
 
 <style scoped lang="scss">
-  .match-status-container {
-   padding: 10px;
-   margin-top: 90px;
-   margin-bottom: 70px;
+.match-status-container {
+  padding: 10px;
+  margin-top: 90px;
+  margin-bottom: 70px;
 
-   .cards-wrapper {
-     display: grid;
-     grid-template-columns: repeat(1, 1fr);
-     gap: 10px; /* 아이템 간의 간격 */
-     row-gap: 40px;
-     padding: 0 calc((100% - 250px) / 2); /* 그리드 전체의 좌우 공백 */
-   }
-
-   .loading-spinner-wrapper {
-     display: flex;
-     align-items: center;
-     justify-content: center;
-     width: 100%;
-     height: 500px;
-   }
+  .cards-wrapper {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 10px; /* 아이템 간의 간격 */
+    row-gap: 40px;
+    padding: 0 calc((100% - 250px) / 2); /* 그리드 전체의 좌우 공백 */
   }
+
+  .loading-spinner-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 500px;
+  }
+}
 </style>

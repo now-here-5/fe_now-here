@@ -34,7 +34,7 @@
             :is-flipped="isFlipped"
             :show-desc="true"
             :show-mbti="true"
-          /></template>
+        /></template>
       </div>
       <div class="reroll-button-wrapper">
         <button @click="reroll">다시 뽑기</button>
@@ -114,8 +114,7 @@ watch(route, (to) => {
     height: 30px;
     justify-content: space-around;
     background-color: white;
-    border-left: 1px solid #ddd;
-    border-right: 1px solid #ddd;
+    z-index: 100;
 
     .tab {
       text-decoration: none;

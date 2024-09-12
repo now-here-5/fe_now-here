@@ -4,9 +4,9 @@
     <main class="body">
       <div class="contentContainer" :class="{ profile: signupStore.signupStep === 2 }">
         <LocationDescComponent
-          :location= eventStore.eventName
-          :title= "signupStore.textTitle[signupStore.signupStep]"
-          :Desc= "signupStore.textMention[signupStore.signupStep]"
+          :location="eventStore.eventName"
+          :title="signupStore.textTitle[signupStore.signupStep]"
+          :Desc="signupStore.textMention[signupStore.signupStep]"
         />
         <router-view />
       </div>
@@ -45,25 +45,25 @@
 </template>
 
 <script setup>
-import BackspaceHeader from "@/presentation/components/BackspaceHeader.vue";
-import LocationDescComponent from "@/presentation/components/signup/LocationDescComponent.vue";
-import SelectBtn from "@/presentation/components/SelectBtn.vue";
-import ModalS from "@/presentation/components/popUp/ModalS.vue";
-import { useRouter } from 'vue-router';
-import { useSignupProfile } from "@/presentation/stores/signupSub/signupProfileStore.js";
-import { useEventStore } from '@/presentation/stores/eventStore.js';
-import { usePopupStore } from '@/presentation/stores/popupStore.js';
-import { useSignupStore } from "@/presentation/stores/signupStore.js";
+import BackspaceHeader from '@/presentation/components/BackspaceHeader.vue'
+import LocationDescComponent from '@/presentation/components/signup/LocationDescComponent.vue'
+import SelectBtn from '@/presentation/components/SelectBtn.vue'
+import ModalS from '@/presentation/components/popUp/ModalS.vue'
+import { useRouter } from 'vue-router'
+import { useSignupProfile } from '@/presentation/stores/signupSub/signupProfileStore.js'
+import { useEventStore } from '@/presentation/stores/eventStore.js'
+import { usePopupStore } from '@/presentation/stores/popupStore.js'
+import { useSignupStore } from '@/presentation/stores/signupStore.js'
 
-const router = useRouter();
-const signupProfileStore = useSignupProfile();
-const eventStore = useEventStore();
-const popupStore = usePopupStore();
-const signupStore = useSignupStore();
+const router = useRouter()
+const signupProfileStore = useSignupProfile()
+const eventStore = useEventStore()
+const popupStore = usePopupStore()
+const signupStore = useSignupStore()
 
 const handleSubmit = () => {
-  signupStore.submit(router);
-};
+  signupStore.submit(router)
+}
 </script>
 
 <style scoped lang="scss">
@@ -71,7 +71,7 @@ const handleSubmit = () => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 25px 25px 25px ;
+  padding: 25px 25px 25px;
   height: 100vh;
   background: $white;
 }
@@ -109,14 +109,12 @@ const handleSubmit = () => {
 }
 /* 모바일 장치에 적용할 스타일 */
 @media only screen and (max-width: 600px) {
-
   .body {
     height: 520px;
   }
 }
 /* 데스크톱에 적용할 스타일 */
 @media only screen and (min-width: 601px) {
-
   .body {
     align-self: stretch;
     flex-grow: 1;

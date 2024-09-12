@@ -20,8 +20,8 @@ httpClient.interceptors.request.use(
       '/member/verify',
       '/member/register',
       '/auth/login'
-    ];
-    const isExcluded = excludeUrls.some((url) => config.url.includes(url));
+    ]
+    const isExcluded = excludeUrls.some((url) => config.url.includes(url))
     if (token && !isExcluded) {
       config.headers.Authorization = `Bearer ${token}`
     }
@@ -37,8 +37,9 @@ httpClient.interceptors.request.use(
 //   (response) => response,
 //   (error) => {
 //     // 예: 인증 오류 처리
-//     if (error.response?.status === 401) {
-//       // 리다이렉트 또는 다른 처리
+//     if (error.response?.status === 400) {
+//       alert(error.response?.data.message)
+//       // alert(error.response.message)
 //     }
 //     return Promise.reject(error)
 //   }

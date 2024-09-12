@@ -19,8 +19,12 @@ import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
-const showMainHeader = computed(() => route.path === '/' || route.path === '/profile' || route.path.startsWith('/match'))
-const showBottomNav = computed(() => route.path === '/' || route.path === '/profile' || route.path.startsWith('/match'))
+const showMainHeader = computed(
+  () => route.path === '/' || route.path === '/profile' || route.path.startsWith('/match')
+)
+const showBottomNav = computed(
+  () => route.path === '/' || route.path === '/profile' || route.path.startsWith('/match')
+)
 </script>
 
 <style scoped lang="scss">
@@ -63,6 +67,7 @@ const showBottomNav = computed(() => route.path === '/' || route.path === '/prof
   border-top: 1px solid $gray;
   border-left: 1px solid $white;
   border-right: 1px solid $white;
+  z-index: 100;
 
   .bottom-nav-menu {
     display: flex;

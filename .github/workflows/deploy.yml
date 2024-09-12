@@ -3,7 +3,7 @@ name: Deploy to Oracle Object Storage
 on:
   push:
     branches:
-        - prod
+      - prod
 
 jobs:
   build:
@@ -14,7 +14,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
 
       # npm 캐시를 사용해 의존성 설치 속도 최적화
       - name: Cache Node.js modules
@@ -31,7 +30,6 @@ jobs:
       - name: Build project
         run: npm run build
 
-
       - name: Configure OCI CLI
         run: |
           # OCI CLI && node.js는 oci-node-image에 포함되어 있음.
@@ -44,7 +42,7 @@ jobs:
             echo "key_file=~/.oci/api_key.pem" >> ~/.oci/config
             echo "tenancy=${{ secrets.OCI_TENANCY_OCID }}" >> ~/.oci/config
             echo "region=${{ secrets.OCI_REGION }}" >> ~/.oci/config
-        
+
             echo "${{ secrets.OCI_API_KEY }}" > ~/.oci/api_key.pem
             chmod 600 ~/.oci/api_key.pem
 
