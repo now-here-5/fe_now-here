@@ -12,10 +12,10 @@
           maxlength="15"
         />
         <div
-          :class="['authBtn', { active: signupIDStore.DuplicateBtn }]"
+          :class="['duplicateBtn', { active: signupIDStore.DuplicateBtn }]"
           @click="signupIDStore.getIDDuplicate()"
         >
-          <p>중복확인</p>
+          <span>중복확인</span>
         </div>
       </div>
       <span
@@ -84,9 +84,6 @@ onMounted(() => {
   .error {
     color: $red;
   }
-  .warning {
-    color: $red;
-  }
 }
 .inputBtn {
   display: flex;
@@ -97,46 +94,37 @@ onMounted(() => {
 }
 .inputBox {
   box-sizing: border-box;
-
-  /* Auto layout */
   display: flex;
   flex-direction: row;
   align-items: center;
   padding: 12px;
   gap: 10px;
-
   flex: 1;
   height: 44px;
-
   border: 1px solid $dark;
   border-radius: 5px;
 }
-.authBtn {
-  /* Auto layout */
+.duplicateBtn {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   padding: 14px 5px;
   gap: 10px;
-
   width: 90px;
-
   background: $middle_gray;
   border-radius: 8px;
-
   cursor: not-allowed;
-
-  p {
+  span {
     font-size: $textS_size;
     font-weight: $textB_weight;
     color: $gray;
   }
   &.active {
-    background: $point; /* 활성화 시 버튼 색상 변경 */
-    cursor: pointer; /* 커서 모양 변경 */
-    p {
-      color: $white; /* 텍스트 색상 변경 */
+    background: $point;
+    cursor: pointer;
+    span {
+      color: $white;
     }
   }
 }
