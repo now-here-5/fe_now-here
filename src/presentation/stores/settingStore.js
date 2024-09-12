@@ -43,6 +43,7 @@ export const useSettingStore = defineStore('setting', () => {
 			const response = await memberAuthRepository.deletLogout();
 			if (response.message === "로그아웃에 성공했습니다.") {
 				authStore.token = '';
+				sessionStorage.clear()
 				localStorage.clear();
 				router.push(`/login/${event_id}`);
 			}
@@ -60,6 +61,7 @@ export const useSettingStore = defineStore('setting', () => {
 			const response = await memberAccountRepository.deleteAccount(content);
 			if (response.message === "회원탈퇴에 성공했습니다.") {
 				authStore.token = '';
+				sessionStorage.clear()
 				localStorage.clear();
 				router.push(`/login/${event_id}`);
 			}

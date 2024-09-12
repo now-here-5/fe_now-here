@@ -69,6 +69,16 @@ export const useSignupProfile = defineStore('signupProfile', () => {
 			console.error('name Duplicate :', error);
 		}
 	}
+	
+	const $reset = () => {
+		name.value = "";
+		isDuplicate.value = null;
+		snsID.value = "";
+		birth.value = "";
+		selectedSex.value = "";
+		selectedMBTI.value = [];
+		selfIntro.value = "";
+	};
 	return {
 		name,
 		isDuplicate,
@@ -88,6 +98,7 @@ export const useSignupProfile = defineStore('signupProfile', () => {
 		signupReady,
 		
 		checkDuplicate,
+		$reset
 	};
 }, {
 	persist: {

@@ -6,10 +6,16 @@ export const useSignupPWStore = defineStore('password', () => {
 	const passwordConfirm = ref("");
 	const alertMessage = ref(false);
 	
+	const $reset = () => {
+		password.value = "";
+		passwordConfirm.value = "";
+	};
+	
 	return {
 		password,
 		passwordConfirm,
 		alertMessage,
+		$reset
 	};
 }, {
 	persist: {

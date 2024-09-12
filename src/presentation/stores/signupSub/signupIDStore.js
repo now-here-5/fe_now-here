@@ -34,7 +34,10 @@ export const useSignupIDStore = defineStore('ID', () => {
 			console.error('Auth number fetch failed:', error);
 		}
 	}
-	
+		
+		const $reset = () => {
+			ID.value = "";
+		};
 	return {
 		ID,
 		DuplicateBtn,
@@ -42,6 +45,7 @@ export const useSignupIDStore = defineStore('ID', () => {
 		alertMessage,
 		
 		getIDDuplicate,
+		$reset
 	};
 }, {
 	persist: {
