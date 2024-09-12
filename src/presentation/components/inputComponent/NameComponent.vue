@@ -7,7 +7,7 @@
           class="nameInput"
           type="text"
           placeholder="2자리 이상 8자리 이하 입력"
-          v-model="name"
+          v-model="props.store.name"
           @input="formName"
           maxlength="8"
         />
@@ -35,7 +35,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted } from 'vue'
 
 const props = defineProps({
   store: {
@@ -43,36 +43,23 @@ const props = defineProps({
     required: true
   }
 })
-
-const name = ref(props.store.name)
 const duplicateBtn = ref(false)
 
-watch(name, (newName) => {
-  props.store.name = newName
-})
 const formName = () => {
-  let formedName = name.value.replace(/[^a-zA-Z가-힣0-9\s]/g, '')
-  if (formedName.length > 8) {
-    formedName = formedName.slice(0, 8)
+  props.store.name = (props.store.name || '').replace(/[^a-zA-Z가-힣0-9\s]/g, '');
+  if (props.store.name.length > 8) {
+    props.store.name = props.store.name.slice(0, 8)
   }
-  name.value = formedName
-  props.store.name = name.value
-  if (!name.value) {
-    props.store.alertMessage = ''
+  if (!props.store.name) {
     props.store.alertMessageVisible = false
-    duplicateBtn.value = false
-    return
-  }
-  if (props.store.name === props.store.originalData.name) {
     props.store.alertMessage = ''
-    props.store.alertMessageVisible = false
     duplicateBtn.value = false
     return
   }
   props.store.isDuplicate = null
-  props.store.alertMessage = props.store.alertMessageInventory[0]
   props.store.alertMessageVisible = true
-  duplicateBtn.value = formedName.length >= 2 && formedName.length <= 8
+  props.store.alertMessage = props.store.alertMessageInventory[0]
+  duplicateBtn.value = props.store.name.length >= 2 && props.store.name.length <= 8
 }
 const checkDuplicate = () => {
   props.store.checkDuplicate()

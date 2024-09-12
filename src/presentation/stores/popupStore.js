@@ -2,13 +2,13 @@ import { defineStore } from 'pinia';
 import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { InteractionRepository } from '@/infrastructure/repositories/InteractionRepository.js';
-import { useProfileSignupStore } from '@/presentation/stores/signupSub/profileSignupStore.js';
+import { useSignupProfile } from '@/presentation/stores/signupSub/signupProfileStore.js';
 
 const interactionRepository = new InteractionRepository();
 
 export const usePopupStore = defineStore('popup', () => {
   const router = useRouter();
-  const profileSignupStore = useProfileSignupStore();
+  const signupProfileStore = useSignupProfile();
   
   //BS
   const bottomSheetVisible = ref({
@@ -24,23 +24,23 @@ export const usePopupStore = defineStore('popup', () => {
   //M_S
   const modalSVisible = ref({
     duplicateID: false,
+    duplicateName: false,
     complete: false,
   });
   
   const modalSTitle = computed(() => {
     if (modalSVisible.value.complete) {
-      return `${profileSignupStore.selectedMBTI} ${profileSignupStore.name}님 <br> 회원가입 완료`;
+      return `${signupProfileStore.selectedMBTI} ${signupProfileStore.name}님 <br> 회원가입 완료`;
     } else {
       return "알림";
     }
   });
-  const closeModal = () => {
-    if (modalSVisible.value.duplicateID) {
-      modalSVisible.value.duplicateID = false;
-    }
-    if (modalSVisible.value.complete) {
-      modalSVisible.value.complete = false;
-      router.push('/match');
+  const closeModal = (key) => {
+    if (modalSVisible.value[key]) {
+      modalSVisible.value[key] = false;
+      if (key === 'complete') {
+        router.push('/match');
+      }
     }
   };
   //M_L

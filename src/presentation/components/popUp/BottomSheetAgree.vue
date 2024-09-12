@@ -88,7 +88,7 @@ const openTermBottomSheet = (type) => {
 const navigateToSignUp = () => {
   if (popupStore.agreeState.service && popupStore.agreeState.privacy) {
     closeBottomSheet('agree')
-    router.push('/signup/signup-phoneAuth')
+    router.push('/signup/signup-ID')
   }
 }
 </script>

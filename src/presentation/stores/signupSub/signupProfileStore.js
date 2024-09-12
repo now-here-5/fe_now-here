@@ -3,16 +3,17 @@ import { ref, computed, watch } from 'vue';
 import { MemberAccountRepository } from "@/infrastructure/repositories/MemberAccountRepository.js";
 import { useEventStore } from '@/presentation/stores/eventStore.js';
 import { useSignupStore } from "@/presentation/stores/signupStore.js";
+import { usePopupStore } from '@/presentation/stores/popupStore.js'
 
 const memberAccountRepository = new MemberAccountRepository();
 
-export const useProfileSignupStore = defineStore('profileSignup', () => {
+export const useSignupProfile = defineStore('signupProfile', () => {
 	const eventStore = useEventStore();
 	const signupStore = useSignupStore();
+	const popupStore = usePopupStore();
 	
 	const name = ref("");
 	const isDuplicate = ref(null);
-	
 	const alertMessageVisible = ref(false);
 	const alertMessage = ref('');
 	const alertMessageInventory = [
@@ -20,6 +21,8 @@ export const useProfileSignupStore = defineStore('profileSignup', () => {
 		"사용 가능한 닉네임입니다.",
 		"이미 사용 중인 닉네임입니다.",
 	];
+	
+	const snsID = ref("");
 	
 	const birth = ref("");
 	const selectedSex = ref("");
@@ -30,13 +33,14 @@ export const useProfileSignupStore = defineStore('profileSignup', () => {
 	
 	const isNameFilled = computed(() => name.value.length >= 2 && name.value.length <= 8);
 	const isNameValid = computed(() => isDuplicate.value === false);
+	const isSNSIDValid = computed(() => snsID.value.length > 0);
 	const isBirthValid = computed(() => birth.value.length === 10); // 모든 생년월일 값이 채워졌는지 확인
 	const isSexValid = computed(() => selectedSex.value !== '');
 	const isMBTIValid = computed(() => selectedMBTI.value.length === 4); // 모든 MBTI 값이 채워졌는지 확인
 	const isSelfIntroductionValid = computed(() => selfIntro.value.length >= 10 && selfIntro.value.length <= 30);
 	
 	const signupReady = computed(() => {
-		return isNameFilled.value && isNameValid.value && isBirthValid.value && isSexValid.value && isMBTIValid.value && isSelfIntroductionValid.value;
+		return isNameFilled.value && isNameValid.value && isSNSIDValid.value && isBirthValid.value && isSexValid.value && isMBTIValid.value && isSelfIntroductionValid.value;
 	});
 	watch(signupReady, (newValue) => {
 		if (newValue) {
@@ -53,10 +57,11 @@ export const useProfileSignupStore = defineStore('profileSignup', () => {
 			const data = await memberAccountRepository.getNameDuplicate(eventId, nameTo);
 			if ( data.message === "사용 가능한 닉네임입니다." ) {
 				alertMessage.value = alertMessageInventory[1];
-				isDuplicate.value = false; // 중복 확인 완료
+				isDuplicate.value = false;
 			} else {
 				alertMessage.value = alertMessageInventory[2];
-				isDuplicate.value = true; // 중복 확인 완료
+				isDuplicate.value = true;
+				popupStore.modalSVisible.duplicateName = true;
 			}
 		} catch (error) {
 			console.error('name Duplicate :', error);
@@ -65,10 +70,11 @@ export const useProfileSignupStore = defineStore('profileSignup', () => {
 	return {
 		name,
 		isDuplicate,
-		
 		alertMessageVisible,
 		alertMessage,
 		alertMessageInventory,
+		
+		snsID,
 		
 		birth,
 		selectedSex,
@@ -87,7 +93,7 @@ export const useProfileSignupStore = defineStore('profileSignup', () => {
 		paths: [
 			'name',
 			'isDuplicate',
-			
+			`snsID`,
 			'birth',
 			'selectedSex',
 			'selectedMBTI',
