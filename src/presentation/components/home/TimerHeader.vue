@@ -3,7 +3,7 @@
     <LoadingSpinner v-if="isLoading" />
 
     <template v-else>
-      <p class="timer-title"><strong>건국대학교</strong>에서 짝을 만날 시간</p>
+      <p class="timer-title"><strong>{{ eventStore.eventName }}</strong>에서 짝을 만날 시간</p>
       <div class="timer">
         <div class="time-segment">
           <span class="time">{{ formatNumber(days) }}</span>
@@ -32,6 +32,7 @@
 <script setup>
 import { computed, onMounted, onUnmounted, ref } from 'vue'
 import LoadingSpinner from '../LoadingSpinner.vue'
+import { useEventStore } from '@/presentation/stores/eventStore'
 
 const props = defineProps({
   endsAt: {
@@ -39,7 +40,7 @@ const props = defineProps({
     required: true
   }
 })
-
+const eventStore = useEventStore()
 const isLoading = computed(() => props.endsAt === '')
 const days = ref(0)
 const hours = ref(0)

@@ -11,7 +11,7 @@
       <div class="info-wrapper">
         <div class="event-info">
           <span class="sub-info">Now Here in</span>
-          <span class="main-info">건국대학교</span>
+          <span class="main-info">{{ eventStore.eventName }}</span>
         </div>
         <div class="desc-info">
           <span class="main-info">지금 여기, 당신의 인연이 있나요?</span>
@@ -58,12 +58,13 @@ import { useRoute } from 'vue-router'
 
 import { usePopupStore } from '@/presentation/stores/popupStore.js'
 import { useMatchingStore } from '../stores/matchingStore'
+import { useEventStore } from '@/presentation/stores/eventStore'
 import { storeToRefs } from 'pinia'
 import LoadingSpinner from '../components/LoadingSpinner.vue'
 
 const route = useRoute()
 const popupStore = usePopupStore() // 스토어 인스턴스를 가져옴
-
+const eventStore = useEventStore()
 const matchingStore = useMatchingStore()
 const { recommendedMembers } = storeToRefs(matchingStore)
 
