@@ -34,6 +34,7 @@
             :is-flipped="isFlipped"
             :show-desc="true"
             :show-mbti="true"
+            :on-custom-click="sendHeart"
         /></template>
       </div>
       <div class="reroll-button-wrapper">

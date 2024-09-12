@@ -22,14 +22,14 @@
     </div>
   </div>
 
-  <ModalL_CardL v-if="modalL_cardL" :member-info="selectedMember" />
+  <LargeCardModal v-if="modalL_cardL" :member-info="selectedMember" />
 </template>
 
 <script setup>
 import { onMounted, ref } from 'vue'
 import { useMatchingStore } from '../stores/matchingStore'
 import TodayCardItem from './home/TodayCardItem.vue'
-import ModalL_CardL from './popUp/ModalL_CardL.vue'
+import LargeCardModal from './popUp/LargeCardModal.vue'
 import { usePopupStore } from '../stores/popupStore'
 import { storeToRefs } from 'pinia'
 import LoadingSpinner from './LoadingSpinner.vue'
