@@ -22,7 +22,7 @@
       </div>
       <div class="editItemList" v-if="route.path === '/editProfile'">
         <OptionItem
-          label="카카오톡 ID"
+          label="카카오톡 아이디"
           :detail="profileStore.snsID"
           :onClick="navigateToSnsID"
         />

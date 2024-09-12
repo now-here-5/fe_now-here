@@ -1,7 +1,7 @@
 <template>
   <div class="snsIDComponent">
     <div class="titleDesc">
-      <span class="title">카카오톡 ID</span>
+      <span class="title">카카오톡 아이디</span>
       <p v-html="Desc" v-if="Desc"></p>
       <span class="desc">매칭 성공 시 입력하신 카카오톡 ID가<br>상대방에게 자동으로 노출됩니다.</span>
     </div>

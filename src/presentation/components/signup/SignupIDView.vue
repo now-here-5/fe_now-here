@@ -1,6 +1,6 @@
 <template>
   <div class="IDComponent">
-    <span>카카오톡 ID</span>
+    <span>아이디</span>
     <div class="inputBtnAlert">
       <div class="inputBtn">
         <input
