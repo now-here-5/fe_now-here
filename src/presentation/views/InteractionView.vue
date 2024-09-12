@@ -92,7 +92,7 @@ const handleSubmit = async () => {
   if (isSuccess) {
     router.back() // 3초 후에 뒤로 가기
     setTimeout(() => {
-      popupStore.tostMessage.visible = false
+      popupStore.toastMessage.visible = false
     }, 3000)
   }
 }

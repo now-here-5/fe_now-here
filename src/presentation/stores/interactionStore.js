@@ -36,7 +36,7 @@ export const useInteractionStore = defineStore('interaction', () => {
     const data = prepareData(type);
     const response = await sendRequest(type, data);
     if (response.data.message.includes(`${type.toUpperCase()} 생성에 성공했습니다.`)) {
-      popupStore.tostMessage = { visible: true, type: `${type}` };
+      popupStore.toastMessage = { visible: true, type: `${type}` };
       return true;
     }
   };
