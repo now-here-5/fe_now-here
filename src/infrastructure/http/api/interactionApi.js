@@ -1,7 +1,14 @@
-import httpClient from '../httpClient'
+import httpClient from '@/infrastructure/http//httpClient'
 
-// 피드백 작성
+export const postInquiry = async (body) => {
+  const response = await httpClient.post(`/interaction/inquiry`, body);
+  return response;
+}
 export const postFeedback = async (body) => {
   const response = await httpClient.post('/interaction/feedback', body)
   return response
+}
+export const getFeedbackModal = async ( ) => {
+  const response = await httpClient.get(`/interaction/feedback/status`);
+  return response.data;
 }

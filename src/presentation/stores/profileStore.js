@@ -1,33 +1,44 @@
 import { defineStore } from 'pinia';
-import { computed, ref, reactive } from 'vue';
-import { ProfileRepository } from '@/infrastructure/repositories/ProfileRepository.js';
-import { EditProfileRepository } from '@/infrastructure/repositories/EditProfileRepository.js';
-import router from "@/presentation/router/index.js";
+import { computed, watch,  ref, reactive } from 'vue';
+import { useRouter } from 'vue-router'
+import { MemberSettingRepository } from '@/infrastructure/repositories/MemberSettingRepository.js';
+import { MemberAccountRepository } from "@/infrastructure/repositories/MemberAccountRepository.js";
+import { useEventStore } from '@/presentation/stores/eventStore.js';
+import { usePopupStore } from '@/presentation/stores/popupStore.js';
 
-const profileRepository = new ProfileRepository();
-const editProfileRepository = new EditProfileRepository();
+const memberSettingRepository = new MemberSettingRepository();
+const memberAccountRepository = new MemberAccountRepository();
 
-export const profileStore = defineStore('profile', () => {
-	const mbti = ref("");
-	const nickname = ref("");
-	const birthdate = ref("");
-	const gender = ref("");
-	const description = ref("");
-	const phone = ref("");
+export const useProfileStore = defineStore('profile', () => {
+	const router = useRouter();
+	const eventStore = useEventStore();
+	const popupStore = usePopupStore();
 	
-	// 원본 데이터를 저장해 변경 여부를 추적
+	const accountId = ref("");
+	const birthdate = ref("");
+	const birth = ref("");
+	const age = ref("");
+	const selfIntro = ref("");
+	const gender = ref("");
+	const selectedMBTI = ref("");
+	const name = ref("");
+	const snsID = ref("");
+	
 	const originalData = reactive({
-		mbti: "",
-		nickname: "",
-		description: "",
+		selfIntro: "",
+		snsId: "",
+		name: "",
+		birth: "",
+		selectedMBTI: "",
 	});
 	
-	// 필드 값 변경 여부를 체크하는 computed 속성
 	const hasChanges = computed(() => {
 		return (
-			mbti.value !== originalData.mbti ||
-			nickname.value !== originalData.nickname ||
-			description.value !== originalData.description
+			selfIntro.value.length > 9 && selfIntro.value !== originalData.selfIntro ||
+			snsID.value !== originalData.snsID ||
+			name.value.length > 1 && name.value.length < 9 && name.value !== originalData.name && isDuplicate.value === false ||
+			selectedMBTI.value !== originalData.selectedMBTI ||
+			birth.value !== originalData.birth && birth.value.length > 5
 		);
 	});
 	
@@ -36,111 +47,162 @@ export const profileStore = defineStore('profile', () => {
 		const today = new Date();
 		let age = today.getFullYear() - birth.getFullYear();
 		const monthDiff = today.getMonth() - birth.getMonth();
-		
-		// 생일이 지나지 않았다면 나이를 1살 줄임
 		if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
 			age--;
 		}
 		return age;
 	};
-	
 	const getGenderInKorean = (gender) => {
 		return gender === "FEMALE" ? "여성" : "남성";
 	};
 	
 	const fetchProfile = async () => {
-		console.log('mbti', mbti.value);
-		console.log('nickname', nickname.value);
-		console.log('birthdate', birthdate.value);
-		console.log('gender', gender.value);
-		console.log('description', description.value);
-		console.log('phone', phone.value);
 		try {
-			const response = await profileRepository.profileInfo();
-			console.log('response', response);
-			// response.data가 true일 때만 동작을 수행
+			const response = await memberSettingRepository.getProfileInfo();
 			if (response.message === "개인정보 조회에 성공했습니다.") {
-				originalData.mbti = response.data.mbti;
-				originalData.nickname = response.data.nickname;
-				originalData.description = response.data.description;
+				console.log('Profile info:', response.data);
 				
-				mbti.value = response.data.mbti;
-				nickname.value = response.data.nickname;
-				birthdate.value = calculateAge(response.data.birthdate);
+				originalData.selfIntro = response.data.description;
+				originalData.snsID = response.data.snsId;
+				originalData.name = response.data.nickname;
+				originalData.birth = response.data.birthdate;
+				originalData.selectedMBTI = response.data.mbti;
+				
+				accountId.value = response.data.accountId;
+				snsID.value = response.data.snsId;
+				selectedMBTI.value = response.data.mbti;
+				name.value = response.data.nickname;
+				birth.value = response.data.birthdate;
+				age.value = calculateAge(response.data.birthdate);
 				gender.value = getGenderInKorean(response.data.gender);
-				description.value = response.data.description;
-				phone.value = response.data.phone;
-				
+				selfIntro.value = response.data.description;
+
 				return true;
-			} else {
-				console.log("피드백 모달을 표시하지 않습니다.");
 			}
 		} catch (error) {
 			console.error('Error fetching profile info:', error);
-			return null; // 혹은 다른 기본 값
+			return null;
 		}
 	};
 	
-	// 원본 데이터로 복원
 	const restoreOriginalData = () => {
-		mbti.value = originalData.mbti;
-		nickname.value = originalData.nickname;
-		description.value = originalData.description;
+		birth.value = originalData.birth;
+		snsID.value = originalData.snsID;
+		selectedMBTI.value = originalData.selectedMBTI;
+		name.value = originalData.name;
+		selfIntro.value = originalData.selfIntro;
 	};
 	const submit = async (currentRoute) => {
 		try {
 			if (currentRoute === '/editSelf') {
-				const submitData = { description: description.value };
-				const response = await editProfileRepository.editSelfIntro(submitData);
+				const submitData = { description: selfIntro.value };
+				const response = await memberSettingRepository.patchSelfIntro(submitData);
 				if (response.message === "자기소개 수정에 성공했습니다.") {
-					originalData.description = description.value;
+					originalData.selfIntro = selfIntro.value;
 					router.back();
 				}
 			} else if (currentRoute === '/editName') {
-				const submitData = { nickname: nickname.value };
-				const response = await editProfileRepository.editNickname(submitData);
+				const submitData = { nickname: name.value };
+				const response = await memberSettingRepository.patchNickname(submitData);
 				if (response.message === "닉네임 수정에 성공했습니다.") {
-					originalData.nickname = nickname.value;
+					originalData.name = name.value;
 					router.back();
 				}
 			} else if (currentRoute === '/editMBTI') {
-				const submitData = { mbti: mbti.value };
-				const response = await editProfileRepository.editMBTI(submitData);
+				const submitData = { mbti: selectedMBTI.value };
+				const response = await memberSettingRepository.patchMBTI(submitData);
 				if (response.message === "MBTI 수정에 성공했습니다.") {
-					originalData.mbti = mbti.value;
+					originalData.selectedMBTI = selectedMBTI.value;
 					router.back();
 				}
-			} else {
-				console.error('Unknown route for submission');
+			} else if (currentRoute === '/editSnsID') {
+				const submitData = { snsId: snsID.value };
+				const response = await memberSettingRepository.patchSnsId(submitData);
+				if (response.message === "SNS ID 수정에 성공했습니다.") {
+					originalData.snsID = snsID.value;
+					router.back();
+				}
+			} else if (currentRoute === '/editBirth') {
+				const submitData = { birthday: birth.value };
+				console.log('submitData:', submitData);
+				const response = await memberSettingRepository.patchBirth(submitData);
+				if (response.message === "생일 수정에 성공했습니다.") {
+					originalData.birth = birth.value;
+					age.value = calculateAge(birth.value);
+					router.back();
+				}
 			}
 		} catch (error) {
 			console.error('Error during profile submission:', error);
 		}
 	};
 	
+	const isDuplicate = ref(null);
+	const alertMessageVisible = ref(false);
+	const alertMessage = ref('');
+	const alertMessageInventory = [
+		"중복 여부를 확인해주세요.",
+		"사용 가능한 닉네임입니다.",
+		"이미 사용 중인 닉네임입니다.",
+	];
+	const checkDuplicate = async () => {
+		const eventId = eventStore.encodedId;
+		const nameTo = name.value
+		try {
+			const data = await memberAccountRepository.getNameDuplicate(eventId, nameTo);
+			if ( data.message === "사용 가능한 닉네임입니다." ) {
+				alertMessageVisible.value = true;
+				alertMessage.value = alertMessageInventory[1];
+				isDuplicate.value = false;
+			} else {
+				alertMessageVisible.value = true;
+				alertMessage.value = alertMessageInventory[2];
+				isDuplicate.value = true;
+				popupStore.modalSVisible.duplicateName = true;
+			}
+		} catch (error) {
+			console.error('name Duplicate :', error);
+		}
+	}
 	
 	return {
-		mbti,
-		nickname,
+		selectedMBTI,
+		name,
 		birthdate,
+		birth,
 		gender,
-		description,
-		phone,
+		selfIntro,
+		accountId,
+		snsID,
+		age,
 		hasChanges,
+		
+		originalData,
+		
 		fetchProfile,
-		submit,
 		restoreOriginalData,
+		submit,
+		
+		isDuplicate,
+		alertMessageVisible,
+		alertMessage,
+		alertMessageInventory,
+		checkDuplicate,
 	};
 }, {
 	persist: {
 		enabled: true,
 		paths: [
-			`mbti`,
-			`nickname`,
+			`snsID`,
+			`selectedMBTI`,
+			`accountId`,
+			`name`,
 			`birthdate`,
+			`age`,
 			`gender`,
-			`description`,
+			`selfIntro`,
 			`phone`,
+			`originalData`,
 		]
 	}
 });

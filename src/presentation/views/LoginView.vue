@@ -1,14 +1,18 @@
 <template>
   <div class="frame">
     <header class="header">
-      <img class="logo_text" src="/images/Text_Logo/logo_text.png" alt="logo" />
-      <div class="slogan_text">
+      <img class="textLogo" src="/images/Text_Logo/logo_text.png" alt="logo" />
+      <div class="slogan">
         <span>지금 여기, 새로운 만남의 시작</span>
       </div>
     </header>
     <main class="body">
-      <InputForm />
-      <SelectBtn isActive="true" buttonText="로그인" @click="handleLogin" />
+      <loginInput />
+      <SelectBtn
+        isActive="true"
+        buttonText="로그인"
+        @click="handleLogin"
+      />
     </main>
     <footer class="bottom">
       <div class="left_content" @click="openBottomSheet">
@@ -20,50 +24,42 @@
     </footer>
   </div>
 
-  <BottomSheet_Agree />
-  <BottomSheet_Term />
+  <BottomSheetAgree />
+  <BottomSheetTerm />
 </template>
 
 <script setup>
-import InputForm from '@/presentation/components/login/InputForm.vue'
+import loginInput from '@/presentation/components/login/loginInput.vue'
 import SelectBtn from '@/presentation/components/SelectBtn.vue'
-import BottomSheet_Agree from '@/presentation/components/popUp/BottomSheet_Agree.vue'
-import BottomSheet_Term from '@/presentation/components/popUp/BottomSheet_Term.vue'
-
+import BottomSheetAgree from '@/presentation/components/popUp/BottomSheetAgree.vue'
+import BottomSheetTerm from '@/presentation/components/popUp/BottomSheetTerm.vue'
 import { onMounted } from 'vue'
-import { useRoute, useRouter } from 'vue-router' // useRoute 추가
+import { useRoute, useRouter } from 'vue-router'
+import { useEventStore } from '@/presentation/stores/eventStore.js'
+import { useLoginStore } from '@/presentation/stores/loginStore.js'
+import { usePopupStore } from '@/presentation/stores/popupStore.js'
 
-import { loginStore } from '@/presentation/stores/loginStore.js'
-import { eventStore } from '@/presentation/stores/eventStore.js'
-import { popupStore } from '@/presentation/stores/popupStore.js'
-
-const route = useRoute() // useRoute를 통해 패스 변수를 추출
+const route = useRoute()
 const router = useRouter()
+const eventStore = useEventStore()
+const loginStore = useLoginStore()
+const popupStore = usePopupStore()
 
-const store_Login = loginStore()
-const store_Event = eventStore()
-const store_PopUp = popupStore()
-
-// onMounted에서 store의 checkEventExistence 함수를 호출
 onMounted(async () => {
-  store_Event.encodedId = route.params.encodedId // 경로 변수 추출
-  console.log('encodedId', store_Event.encodedId)
-
-  const isExist = await store_Event.checkEventExistence() // store에서 직접 호출
+  eventStore.encodedId = route.params.encodedId // 경로 변수 추출
+  const isExist = await eventStore.checkEventExistence() // store에서 직접 호출
   if (!isExist) {
     router.push('/error')
   }
 })
-
 const handleLogin = () => {
-  store_Login.login()
+  loginStore.login()
 }
-
 const openBottomSheet = () => {
-  store_PopUp.bottomSheetVisible.agree = true
+  popupStore.bottomSheetVisible.agree = true
 }
 const navigateToContact = () => {
-  router.push('/contact') // 원하는 라우트로 이동
+  router.push(`/interaction/inquiry`);
 }
 </script>
 
@@ -72,32 +68,26 @@ const navigateToContact = () => {
   display: flex;
   flex-direction: column;
   align-items: center;
-
   height: 100vh;
 }
-
 .header {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   align-items: flex-start;
-  padding: 0px 0px 0px 25px;
-
+  padding: 0 0 0 25px;
   width: 100%;
   height: 175px;
-  .logo_text {
+  .textLogo {
     height: 56px;
   }
-  .slogan_text {
+  .slogan {
     display: flex;
     flex-direction: row;
     align-items: center;
     padding: 5px 10px;
-
     height: 35px;
-
     border-top: 2px solid $point;
-
     align-self: stretch;
     span {
       font-size: $textM_size;
@@ -108,37 +98,28 @@ const navigateToContact = () => {
   }
 }
 .body {
-  /* Auto layout */
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
-  padding: 24px 0px;
+  padding: 24px 0;
   gap: 10px;
 }
 .bottom {
-  /* Auto layout */
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: flex-start;
-
   width: 100%;
   height: 70px;
   .left_content {
-    /* Auto layout */
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
     align-items: flex-start;
-    padding: 0px 30px;
-
+    padding: 0 30px;
     height: 20px;
-
     border-right: 1px solid $dark;
-
-    flex: 1;
-    order: 0;
     span {
       font-size: $textMS_size;
       font-weight: $textB_weight;
@@ -150,14 +131,9 @@ const navigateToContact = () => {
     display: flex;
     flex-direction: row;
     align-items: center;
-    padding: 0px 30px;
-
+    padding: 0 30px;
     height: 20px;
-
     border-left: 1px solid $dark;
-
-    flex: 1;
-    order: 0;
     span {
       font-size: $textMS_size;
       font-weight: $textB_weight;
@@ -166,8 +142,7 @@ const navigateToContact = () => {
     }
   }
 }
-
-/* 모바일 장치에 적용할 스타일 */
+/* 모바일에 적용할 스타일 */
 @media only screen and (max-width: 767px) {
   .header {
     height: 175px;

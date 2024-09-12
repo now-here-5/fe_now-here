@@ -1,41 +1,36 @@
 <template>
-  <div class="Frame">
+  <div class="frame">
     <img class="imageContainer" src="/images/404_error.png" alt="error" />
-    <p v-html="'페이지에 접근할 수 없습니다.<br> QR코드를 통해 접속해주세요'"></p>
-    <button @click="requestPermission">allow</button>
+    <span v-html="'페이지에 접근할 수 없습니다.<br> QR코드를 통해 접속해주세요'"></span>
   </div>
 </template>
 
 <script setup>
-import { requestPermission } from '@/composables/useNotification'
+import { onMounted } from 'vue'
+
+onMounted(() => {
+  alert('비정상적인 접근입니다')
+})
 </script>
 
 <style scoped lang="scss">
-.Frame {
+.frame {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  padding: 150px 0px;
+  padding: 150px 0;
   gap: 50px;
-
   height: 100vh;
-  p {
+  span {
     font-weight: $textS_weight;
     font-size: $textM_size;
     text-align: center;
-
     color: $dark;
   }
 }
 .imageContainer {
   width: 300px;
   height: 215px;
-}
-/* 데스크톱에 적용할 스타일 */
-@media only screen and (min-width: 601px) {
-  .Frame {
-    justify-content: center;
-  }
 }
 </style>

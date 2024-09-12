@@ -28,13 +28,13 @@
     </div>
   </div>
 
-  <ModalL_Heart :member-info="memberInfo" />
+  <HeartSendModal :member-info="memberInfo" />
 </template>
 
 <script setup>
 import { useMatchingStore } from '@/presentation/stores/matchingStore'
 import { computed } from 'vue'
-import ModalL_Heart from '../popUp/ModalL_Heart.vue'
+import HeartSendModal from '../popUp/HeartSendModal.vue'
 
 const props = defineProps({
   memberInfo: {

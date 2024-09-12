@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { eventStore } from '@/presentation/stores/eventStore.js'
-import { authStore } from '@/presentation/stores/authStore.js'
+import { useAuthStore } from '@/presentation/stores/authStore.js'
+import { useEventStore } from '@/presentation/stores/eventStore.js'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -19,22 +19,22 @@ const router = createRouter({
       path: '/signup',
       name: 'signup',
       component: () => import('@/presentation/views/SignupView.vue'),
-      redirect: { name: 'signup_mobileAuth' }, // 기본 리다이렉트 설정
+      redirect: { name: 'signup-ID' }, // 기본 리다이렉트 설정
       children: [
         {
-          path: 'signup_mobileAuth', // /match/sent-hearts
-          name: 'signup_mobileAuth',
-          component: () => import('@/presentation/components/signup/Signup_PhoneAuth.vue')
+          path: 'signup-ID',
+          name: 'signup-ID',
+          component: () => import('@/presentation/components/signup/SignupIDView.vue')
         },
         {
-          path: 'signup_password', // /match/received-hearts
-          name: 'signup_password',
-          component: () => import('@/presentation/components/signup/Signup_Password.vue')
+          path: 'signup-password',
+          name: 'signup-password',
+          component: () => import('@/presentation/components/signup/SignupPasswordView.vue')
         },
         {
-          path: 'signup_profile', // /match/status
-          name: 'signup_profile',
-          component: () => import('@/presentation/components/signup/Signup_Profile.vue')
+          path: 'signup-profile',
+          name: 'signup-profile',
+          component: () => import('@/presentation/components/signup/SignupProfileView.vue')
         }
       ]
     },
@@ -76,9 +76,19 @@ const router = createRouter({
           component: () => import('@/presentation/components/profile/EditSelfView.vue')
         },
         {
+          path: '/editSnsID', // /match/sent-hearts
+          name: 'editSnsID',
+          component: () => import('@/presentation/components/profile/EditSnsIDView.vue')
+        },
+        {
           path: '/editName', // /match/sent-hearts
           name: 'editName',
           component: () => import('@/presentation/components/profile/EditNameView.vue')
+        },
+        {
+          path: '/editBirth', // /match/sent-hearts
+          name: 'editBirth',
+          component: () => import('@/presentation/components/profile/EditBirthView.vue')
         },
         {
           path: '/editMBTI', // /match/sent-hearts
@@ -93,9 +103,9 @@ const router = createRouter({
       component: () => import('@/presentation/views/SettingsView.vue'),
       children: [
         {
-          path: '/deleteAccount', // /match/sent-hearts
-          name: 'deleteAccount',
-          component: () => import('@/presentation/components/settings/DeleteAccount.vue')
+          path: '/withdraw', // /match/sent-hearts
+          name: 'withdraw',
+          component: () => import('@/presentation/components/settings/WithdrawView.vue')
         }
       ]
     },
@@ -105,14 +115,9 @@ const router = createRouter({
       component: () => import('@/presentation/views/NoticeView.vue')
     },
     {
-      path: '/contact',
-      name: 'contact',
-      component: () => import('@/presentation/views/ContactView.vue')
-    },
-    {
-      path: '/review',
-      name: 'review',
-      component: () => import('@/presentation/views/ReviewView.vue')
+      path: '/interaction/:type',
+      name: 'interaction',
+      component: () => import('@/presentation/views/InteractionView.vue')
     },
     {
       path: '/error',
@@ -122,61 +127,38 @@ const router = createRouter({
   ]
 })
 
-// 라우터 가드 추가
 router.beforeEach(async (to, from, next) => {
-  const store_Event = eventStore()
-  const store_Auth = authStore()
-
-  // 페이지가 'login' 또는 'error'일 경우 이동을 허용
-  if (to.name === 'login' || to.name === 'error' || to.name === 'contact') {
+  const authStore = useAuthStore()
+  const eventStore = useEventStore()
+  if (to.name === 'login' || to.name === 'error' || to.name === 'interaction') {
     next()
     return
   }
-
-  // 'signup' 페이지 또는 'signup'의 자식 라우트로 이동을 허용
   if (to.matched.some((record) => record.path.includes('signup'))) {
-    console.log('signup 페이지로 이동합니다.')
-    // store에서 eventId eventName 값이 있는지 확인
-    if (store_Event.eventId && store_Event.eventName) {
-      console.log('eventId 및 eventName이 설정되어 있습니다.')
-      next() // 값이 있으면 이동 허용
+    if (eventStore.eventId && eventStore.eventName) {
+      next()
     } else {
-      console.log('eventId 또는 eventName이 설정되지 않았습니다.')
-      next({ name: 'error' }) // 값이 없으면 'error' 페이지로 이동
+      next({ name: 'error' })
     }
     return
   }
-
-  // 로컬 스토리지에서 토큰 확인
-  const token = store_Auth.token
-  console.log('토큰:', token)
+  const token = authStore.token
   if (!token) {
-    // 토큰이 없으면 'error' 페이지로 이동
-    console.log('토큰이 없습니다.')
     next({ name: 'error' })
     return
   }
-
-  try {
-    // 서버에서 이벤트 정보를 받아와 토큰 유효성 판단
-    await store_Event.fetchEventDetail()
-
-    if (store_Event.status === true) {
-      console.log('토큰이 유효합니다.')
-      console.log('event_detail:', store_Event.event_detail)
+  if (token && eventStore.encodedId) {
+    next() // 'next()'만 호출
+    return
+  } else {
+    await eventStore.fetchEventDetail()
+    if (eventStore.status === true) {
       next()
     } else {
       console.error('토큰이 유효하지 않습니다.')
       next({ name: 'error' })
     }
-  } catch (error) {
-    console.error('API 요청 실패:', error)
-    next({ name: 'error' })
-    status.value = false // 에러 발생 시 status를 false로 설정
   }
-
-  // 기본적으로 next()를 호출
-  return next()
 })
 
 export default router

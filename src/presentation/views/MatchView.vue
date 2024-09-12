@@ -11,7 +11,7 @@
       <div class="info-wrapper">
         <div class="event-info">
           <span class="sub-info">Now Here in</span>
-          <span class="main-info">건국대학교</span>
+          <span class="main-info">{{ eventStore.eventName }}</span>
         </div>
         <div class="desc-info">
           <span class="main-info">지금 여기, 당신의 인연이 있나요?</span>
@@ -34,6 +34,7 @@
             :is-flipped="isFlipped"
             :show-desc="true"
             :show-mbti="true"
+            :on-custom-click="sendHeart"
         /></template>
       </div>
       <div class="reroll-button-wrapper">
@@ -44,26 +45,27 @@
     <router-view></router-view>
   </div>
 
-  <ModalL_Landing />
-  <ModalL_Review />
+  <MatchAgreeModal />
+  <FeedbackModal />
 </template>
 
 <script setup>
 import TodayCardItem from '@/presentation/components/home/TodayCardItem.vue'
-import ModalL_Landing from '@/presentation/components/popUp/ModalL_Landing.vue'
-import ModalL_Review from '@/presentation/components/popUp/ModalL_Review.vue'
+import MatchAgreeModal from '@/presentation/components/popUp/MatchAgreeModal.vue'
+import FeedbackModal from '@/presentation/components/popUp/FeedbackModal.vue'
 
 import { onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
-import { popupStore } from '@/presentation/stores/popupStore.js'
+import { usePopupStore } from '@/presentation/stores/popupStore.js'
 import { useMatchingStore } from '../stores/matchingStore'
+import { useEventStore } from '@/presentation/stores/eventStore'
 import { storeToRefs } from 'pinia'
 import LoadingSpinner from '../components/LoadingSpinner.vue'
 
 const route = useRoute()
-const store_Popup = popupStore() // 스토어 인스턴스를 가져옴
-
+const popupStore = usePopupStore() // 스토어 인스턴스를 가져옴
+const eventStore = useEventStore()
 const matchingStore = useMatchingStore()
 const { recommendedMembers } = storeToRefs(matchingStore)
 
@@ -75,28 +77,25 @@ const reroll = () => {
   }, 1000)
 }
 
+const sendHeart = () => {
+  popupStore.modalLVisible.heart = true
+}
+
 const handleRouteChange = (to) => {
-  if (to.path.startsWith('/match')) {
-    // '/match' 또는 그 하위 라우트일 때
-    if (to.path === '/match' && store_Popup.matchAgree === false) {
-      store_Popup.modalL_matchLanding = true
+  if (to.path === '/match') {
+    if (popupStore.matchAgree === false) {
+      popupStore.modalLVisible.matchLanding = true
     } else {
-      store_Popup.getReviewModalTF() // 공통 함수 호출
+      popupStore.fetchFeedbackModal() // 함수 호출
     }
+  } else if (to.path === '/match/status') {
+    popupStore.fetchFeedbackModal() // 함수 호출
   }
 }
-
-// 하트 보내기
-const sendHeart = () => {
-  store_Popup.modalL_heart = true
-}
-
 onMounted(async () => {
   handleRouteChange(route) // 첫 마운트 시에 라우트 확인
   await matchingStore.fetchRecommendedCards()
 })
-
-// 라우트가 변경될 때마다 실행
 watch(route, (to) => {
   handleRouteChange(to)
 })
@@ -210,6 +209,4 @@ watch(route, (to) => {
     }
   }
 }
-
-/* 모바일 환경을 위한 미디어 쿼리 */
 </style>

@@ -1,17 +1,17 @@
 <template>
   <div class="birthComponent">
-    <div class="componentText_mention">
-      <p1>생년월일</p1>
-      <p2>매칭 카드에 표시될 나이를 자동 계산해 드릴게요.</p2>
+    <div class="titleDesc">
+      <span class="title">생년월일</span>
+      <span class="desc">매칭 카드에 표시될 나이를 자동 계산해 드릴게요.</span>
     </div>
     <div class="numberContainer" @click="focusInput">
       <div
         v-for="(char, index) in 6"
         :key="index"
-        class="numberInput"
+        class="numberBox"
         :class="{ filled: birthInput[index] }"
       >
-        <p>{{ birthInput[index] || (index < 2 ? 'Y' : index < 4 ? 'M' : 'D') }}</p>
+        <span>{{ birthInput[index] || (index < 2 ? 'Y' : index < 4 ? 'M' : 'D') }}</span>
       </div>
     </div>
     <input
@@ -22,7 +22,7 @@
       v-model="birthInput"
       @input="updateBirth"
     />
-    <p v-if="birthAlertVisible">{{ birthAlertMessage }}</p>
+    <span class="alertMessage" v-if="birthAlertVisible">{{ birthAlertMessage }}</span>
   </div>
 </template>
 
@@ -36,7 +36,10 @@ const props = defineProps({
   }
 })
 
-const birthInput = ref(props.store.birth ? props.store.birth.replace(/-/g, '').slice(2) : '')
+const birthInput = ref(
+  props.store.birth ?
+  props.store.birth.replace(/-/g, '').slice(2) : ''
+)
 const hiddenInput = ref(null)
 const birthAlertVisible = ref(false)
 const birthAlertMessage = ref('')
@@ -47,7 +50,6 @@ const focusInput = () => {
     hiddenInput.value.focus()
   })
 }
-
 const updateBirth = (event) => {
   let inputValue = event.target.value.replace(/\D/g, '').slice(0, 6)
   birthInput.value = inputValue
@@ -66,7 +68,6 @@ const updateBirth = (event) => {
       isValid = false
     }
   }
-
   if (dayPart.length === 2 && isValid) {
     const month = parseInt(monthPart, 10)
     const day = parseInt(dayPart, 10)
@@ -78,21 +79,17 @@ const updateBirth = (event) => {
       isValid = false
     }
   }
-
   birthAlertVisible.value = !isValid
-
   if (inputValue.length === 6 && isValid) {
     const currentYear = new Date().getFullYear()
     const currentYearTwoDigits = currentYear % 100
     const userInputYear = parseInt(yearPart, 10)
     const century = userInputYear > currentYearTwoDigits ? '19' : '20'
     props.store.birth = `${century}${yearPart}-${monthPart}-${dayPart}`
-    console.log('store Birth', props.store.birth)
   } else {
     props.store.birth = ''
   }
 }
-
 const getMaxDaysInMonth = (month) => {
   const currentYear = new Date().getFullYear()
   const yearPrefix = parseInt(birthInput.value.slice(0, 2)) > currentYear % 100 ? 1900 : 2000
@@ -113,7 +110,6 @@ const getMaxDaysInMonth = (month) => {
   }
   return daysInMonth[month] || 31
 }
-
 const isLeapYear = (year) => {
   return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0
 }
@@ -121,72 +117,63 @@ const isLeapYear = (year) => {
 
 <style scoped lang="scss">
 .birthComponent {
-  /* Auto layout */
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 15px 0px 0px;
+  padding: 15px 0 0;
   gap: 10px;
-
   width: 100%;
-  p {
+  span {
     font-size: $textS_size;
     font-weight: $textS_weight;
-    color: $red; /* 닉네임 중복 시 */
+    color: $red;
   }
 }
-.componentText_mention {
+.titleDesc {
   display: flex;
   flex-direction: column;
-  p1 {
+  .title {
     font-size: $textL_size;
     font-weight: $textB_weight;
     color: $dark;
   }
-  p2 {
+  .desc {
     font-size: $textMS_size;
     font-weight: $textS_weight;
     color: $gray;
   }
 }
 .numberContainer {
-  /* Auto layout */
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 0px;
   gap: 10px;
-
   width: 325px;
   height: 55px;
 }
-.numberInput {
+.numberBox {
   box-sizing: border-box;
-
-  /* Auto layout */
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 0px 12px;
+  padding: 0 12px;
   gap: 10px;
-
   width: 45px;
   height: 55px;
-
   background: $light_gray;
   border: 1px solid $gray;
   border-radius: 5px;
-  p {
+  span {
     font-size: $textM_size;
     font-weight: $textB_weight;
     color: $gray;
   }
 }
-.numberInput.filled {
+.numberBox.filled {
   background: $point;
-  p {
+  span {
     color: $white;
   }
 }

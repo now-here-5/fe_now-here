@@ -1,7 +1,6 @@
 import axios from 'axios'
-import { authStore } from '@/presentation/stores/authStore.js'
+import { useAuthStore } from '@/presentation/stores/authStore.js'
 
-console.log(import.meta.env.VITE_API_BASE_URL)
 const httpClient = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
   timeout: 10000,
@@ -13,12 +12,17 @@ const httpClient = axios.create({
 // 요청 인터셉터
 httpClient.interceptors.request.use(
   (config) => {
-    // config.headers.Authorization = `Bearer EUpGGO6Xc2jVcOjGXqDA7FzIDBqp8S6C-546f8211-76ff-4bc2-9822-aa2b2d2c1671`
-    const store_Auth = authStore()
-    const token = store_Auth.token
-    console.log('토큰 in', token)
-    if (token) {
-      console.log('토큰 in http:', token)
+    const authStore = useAuthStore()
+    const token = authStore.token
+    const excludeUrls = [
+      '/admin/event/list',
+      '/interaction/inquiry',
+      '/member/verify',
+      '/member/register',
+      '/auth/login'
+    ]
+    const isExcluded = excludeUrls.some((url) => config.url.includes(url))
+    if (token && !isExcluded) {
       config.headers.Authorization = `Bearer ${token}`
     }
     return config
