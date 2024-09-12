@@ -14,7 +14,6 @@
         <div
           class="duplicateBtn"
           :class="{ filled: duplicateBtn }"
-          :disabled="!duplicateBtn"
           @click="checkDuplicate"
         >
           <span>중복 확인</span>
@@ -59,17 +58,18 @@ const formName = () => {
   props.store.alertMessageVisible = true
   props.store.alertMessage = props.store.alertMessageInventory[0]
   duplicateBtn.value = props.store.name.length >= 2 && props.store.name.length <= 8
-}
-const checkDuplicate = () => {
-  props.store.checkDuplicate()
-}
-onMounted(() => {
-  formName()
   if (props.store.originalData && props.store.name === props.store.originalData.name) {
     props.store.alertMessageVisible = false;
     props.store.alertMessage = '';
     duplicateBtn.value = false;
   }
+}
+const checkDuplicate = () => {
+  if (!duplicateBtn.value) return
+  props.store.checkDuplicate()
+}
+onMounted(() => {
+  formName()
 })
 </script>
 

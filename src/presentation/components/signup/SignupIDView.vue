@@ -13,7 +13,7 @@
         />
         <div
           :class="['duplicateBtn', { active: signupIDStore.DuplicateBtn }]"
-          @click="signupIDStore.getIDDuplicate()"
+          @click="signupIDStore.DuplicateBtn && signupIDStore.getIDDuplicate()"
         >
           <span>중복확인</span>
         </div>
@@ -44,7 +44,12 @@ signupStore.signupStep = 0
 const handleID = () => {
   signupIDStore.ID = signupIDStore.ID.replace(/[^a-z0-9]/g, '');
   signupIDStore.DuplicateBtn = signupIDStore.ID.length >= 3 && signupIDStore.ID.length <= 15;
-
+  if (!signupIDStore.ID) {
+    signupStore.signupCompleted.ID = false;
+    signupIDStore.alertMessageVisible = false
+    signupIDStore.alertMessage = ''
+    return
+  }
   signupStore.signupCompleted.ID = false;
   signupIDStore.alertMessageVisible = true;
   signupIDStore.alertMessage = '중복 여부를 확인해주세요.';
