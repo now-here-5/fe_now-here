@@ -4,10 +4,10 @@
     <main class="body">
       <div class="textComponent">
         <div class="titleDesc">
-          <span class="title" v-if="type === 'inquiry'">휴대폰 번호</span>
+          <span class="title" v-if="type === 'inquiry'">이메일 주소</span>
           <span class="title" v-else>별점 등록</span>
           <span class="desc" v-if="type === 'inquiry'">
-            답변받을 휴대폰 번호를 입력해주세요.
+            답변 받을 이메일 주소를 입력해주세요.
           </span>
           <span class="desc" v-else>
             Now Here를 이용해 주셔서 감사합니다.<br/>
@@ -17,11 +17,10 @@
         <input
           v-if="type === 'inquiry'"
           class="componentInquiry"
-          type="tel"
-          placeholder="010-0000-0000"
-          v-model="phoneNumber"
-          @input="handlePhoneNumberInput"
-          maxlength="13"
+          type="email"
+          placeholder="nowHere@example.com"
+          v-model="mail"
+          @input="handleEmailInput"
         />
         <div v-if="type === 'feedback'" class="componentFeedback">
           <img
@@ -65,7 +64,6 @@ import starFilled from '/images/star_filled.png'
 import starUnfilled from '/images/star.png'
 import { ref, watch, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { formPhoneNumber } from '@/composition/FormNumber.js'
 import { useInteractionStore } from '@/presentation/stores/interactionStore.js'
 import { usePopupStore } from '@/presentation/stores/popupStore.js'
 
@@ -74,7 +72,7 @@ const router = useRouter()
 const type = route.params.type
 const interactionStore = useInteractionStore()
 const popupStore = usePopupStore()
-const phoneNumber = ref(interactionStore.number)
+const mail = ref(interactionStore.email)
 const contents = ref(interactionStore.textContent || '')
 const rate = ref(0)
 const Active = ref(false)
@@ -82,10 +80,10 @@ const Active = ref(false)
 const setRating = (rating) => {
   interactionStore.rate = rate.value = rating;
 }
-const handlePhoneNumberInput = () => {
-  phoneNumber.value = formPhoneNumber(phoneNumber.value)
-  interactionStore.inquiry_Num = phoneNumber.value
-}
+const handleEmailInput = () => {
+  interactionStore.email = mail.value;
+  console.log(interactionStore.email)
+};
 const formContents = () => {
   interactionStore.textContent = contents.value
 }
@@ -98,17 +96,17 @@ const handleSubmit = async () => {
     }, 3000)
   }
 }
-watch([phoneNumber, contents, rate], () => {
+watch([mail, contents, rate], () => {
   if (type === 'inquiry') {
-    Active.value = phoneNumber.value.length === 13 && contents.value.length > 0
+    Active.value = mail.value.length > 0 && contents.value.length > 0
   } else {
     Active.value = contents.value.length > 0 && rate.value > 0
   }
 })
 onMounted(() => {
+  mail.value = interactionStore.email = ''
+  rate.value = interactionStore.rate = 0
   contents.value = interactionStore.textContent = ''
-  interactionStore.rate = 0
-  interactionStore.inquiry_Num = ''
 })
 </script>
 

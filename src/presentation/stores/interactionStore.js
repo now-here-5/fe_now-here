@@ -9,14 +9,14 @@ export const useInteractionStore = defineStore('interaction', () => {
   const popupStore = usePopupStore();
   
   const textContent = ref('');
-  const number = ref('');
+  const email = ref('');
   const rate = ref(0);
   
   const prepareData = (type) => {
     if (type === 'inquiry') {
       return {
         content: textContent.value,
-        email: number.value,
+        email: email.value,
       };
     } else {
       return {
@@ -48,7 +48,7 @@ export const useInteractionStore = defineStore('interaction', () => {
 
   return {
     textContent,
-    number,
+    email,
     rate,
     
     sendInteraction,
