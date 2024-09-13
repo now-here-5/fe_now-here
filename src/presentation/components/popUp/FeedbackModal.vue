@@ -42,7 +42,7 @@ const closeModal = () => {
   popupStore.modalLVisible.review = false
 }
 const navigateToReview = () => {
-  router.push('/review')
+  router.push('/interaction/feedback')
 }
 </script>
 
