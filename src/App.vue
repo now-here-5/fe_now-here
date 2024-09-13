@@ -37,6 +37,7 @@ const showBottomNav = computed(
   overflow-y: auto;
   background-color: white;
   border: 1px solid $white;
+  box-shadow: 0 6px 10px 4px rgba(0, 0, 0, 0.15);
 
   /* 스크롤바 숨기기 설정 */
   scrollbar-width: none; /* Firefox용 설정 */
