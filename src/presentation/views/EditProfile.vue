@@ -78,7 +78,9 @@ const pageTitle = computed(() => {
   const titles = {
     '/editProfile': '프로필 수정',
     '/editSelf': '자기소개 수정',
+    '/editSnsID': '카카오톡 아이디 수정',
     '/editName': '닉네임 수정',
+    '/editBirth': '생년월일 수정',
     '/editMBTI': 'MBTI 수정'
   }
   return titles[route.path] || '수정하기'
