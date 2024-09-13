@@ -61,7 +61,6 @@ const handleClick = () => {
     font-weight: $textB_weight;
     font-size: $textM_size;
     line-height: 23px;
-    text-align: center;
     color: $dark;
   }
   .subTitle {
@@ -74,7 +73,7 @@ const handleClick = () => {
   display: flex;
   flex-direction: row;
   span {
-    width: 180px;
+    width: 150px;
     overflow: hidden;
     text-overflow: ellipsis;
     font-weight: $textS_weight;
