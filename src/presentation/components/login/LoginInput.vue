@@ -17,7 +17,7 @@
         <input
           class="inputBox"
           type="tel"
-          placeholder="비밀번호"
+          placeholder="4자리 비밀번호"
           v-model="loginStore.password"
           @input="formatPassword"
           maxlength="4"
