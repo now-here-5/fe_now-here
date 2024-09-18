@@ -20,7 +20,7 @@ export const useSignupPhoneStore = defineStore('phone', () => {
 	const authCount = ref(0);
 	
 	const fetchAuthNumber = async () => {
-		if (authCount.value >= 2) {
+		if (authCount.value >= 3) {
 			console.warn("최대 재전송 횟수에 도달했습니다.");
 			authBtnReady.value = false;
 			return;
