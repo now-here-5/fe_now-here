@@ -1,18 +1,25 @@
 <template>
   <div class="sent-hearts-container">
-    <div v-if="sentList.length > 0" class="cards-wrapper">
-      <TodayCardItem
-        v-for="(member, idx) in sentList"
-        :key="idx"
-        :member-info="member"
-        :show-desc="true"
-        :show-mbti="true"
-        :on-custom-click="() => receiveHearts(member)"
-      />
-    </div>
-    <div v-else class="loading-spinner-wrapper">
+    <div v-if="isLoading" class="loading-spinner-wrapper">
       <LoadingSpinner />
     </div>
+
+    <template v-else>
+      <div v-if="sentList.length === 0" class="no-sent-hearts-wrapper">
+        <span class="title">보낸 하트가 없어요.</span>
+        <span>활발한 매칭을 시도해보세요!</span>
+      </div>
+      <div v-else class="cards-wrapper">
+        <TodayCardItem
+          v-for="(member, idx) in sentList"
+          :key="idx"
+          :member-info="member"
+          :show-desc="true"
+          :show-mbti="true"
+          :on-custom-click="() => receiveHearts(member)"
+        />
+      </div>
+    </template>
   </div>
 </template>
 
@@ -24,9 +31,12 @@ import LoadingSpinner from './LoadingSpinner.vue'
 
 const matchingStore = useMatchingStore()
 const sentList = ref([])
+const isLoading = ref(false)
 
 onMounted(async () => {
+  isLoading.value = true
   sentList.value = await matchingStore.getSentHeartList()
+  isLoading.value = false
 })
 </script>
 
@@ -35,6 +45,20 @@ onMounted(async () => {
   padding: 10px;
   margin-top: 90px;
   margin-bottom: 70px;
+
+  .no-sent-hearts-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    height: 80vh;
+
+    .title {
+      font-size: $textXXL_size;
+      font-weight: $textB_weight;
+    }
+  }
 
   .cards-wrapper {
     display: grid;

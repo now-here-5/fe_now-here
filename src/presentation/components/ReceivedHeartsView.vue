@@ -1,25 +1,34 @@
 <template>
   <div class="received-hearts-container">
-    <div class="title-wrapper">
-      <span class="title">
-        <span class="point">총 {{ senderList.length }}분</span>이 당신에게
-        <span class="point">하트</span>를 보냈어요!
-      </span>
-      <span class="desc"> 카드를 눌러 수락 여부를 선택해주세요 </span>
-    </div>
-    <div v-if="senderList.length > 0" class="cards-wrapper">
-      <TodayCardItem
-        v-for="(member, idx) in senderList"
-        :key="idx"
-        :member-info="member"
-        :show-desc="true"
-        :show-mbti="true"
-        :on-custom-click="() => receiveHearts(member)"
-      />
-    </div>
-    <div v-else class="loading-spinner-wrapper">
+    <div v-if="isLoading" class="loading-spinner-wrapper">
       <LoadingSpinner />
     </div>
+
+    <template v-else>
+      <div v-if="senderList.length === 0" class="no-received-hearts-wrapper">
+        <span class="title">받은 하트가 없어요.</span>
+        <span>활발한 매칭을 시도해보세요!</span>
+      </div>
+      <template v-else>
+        <div class="title-wrapper">
+          <span class="title">
+            <span class="point">총 {{ senderList.length }}분</span>이 당신에게
+            <span class="point">하트</span>를 보냈어요!
+          </span>
+          <span class="desc"> 카드를 눌러 수락 여부를 선택해주세요 </span>
+        </div>
+        <div v-if="!isLoading" class="cards-wrapper">
+          <TodayCardItem
+            v-for="(member, idx) in senderList"
+            :key="idx"
+            :member-info="member"
+            :show-desc="true"
+            :show-mbti="true"
+            :on-custom-click="() => receiveHearts(member)"
+          />
+        </div>
+      </template>
+    </template>
   </div>
 
   <LargeCardModal v-if="modalL_cardL" :member-info="selectedMember" />
@@ -36,9 +45,11 @@ import LoadingSpinner from './LoadingSpinner.vue'
 
 const matchingStore = useMatchingStore()
 const popupStore = usePopupStore()
-const senderList = ref([])
-const selectedMember = ref({})
 const { modalL_cardL } = storeToRefs(popupStore)
+
+const senderList = ref([])
+const isLoading = ref(false)
+const selectedMember = ref({})
 
 const receiveHearts = (memberInfo) => {
   selectedMember.value = memberInfo
@@ -46,7 +57,9 @@ const receiveHearts = (memberInfo) => {
 }
 
 onMounted(async () => {
+  isLoading.value = true
   senderList.value = await matchingStore.getReceivedHeartList()
+  isLoading.value = false
 })
 </script>
 
@@ -55,6 +68,20 @@ onMounted(async () => {
   padding: 10px;
   margin-top: 90px;
   margin-bottom: 70px;
+
+  .no-received-hearts-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    height: 80vh;
+
+    .title {
+      font-size: $textXXL_size;
+      font-weight: $textB_weight;
+    }
+  }
 
   .title-wrapper {
     padding: 20px 0px;

@@ -7,7 +7,7 @@
     <div class="bottomSheet" @click.stop>
       <div class="header">
         <span v-if="popupStore.termType === 'service'">서비스 약관</span>
-        <span v-else>개인정보 수집 및<br />이용 동의</span>
+        <span v-else>개인정보 처리방침</span>
         <img @click="closeBottomSheet('terms')" src="/images/clear.png" alt="clear" />
       </div>
       <div class="contentContainer">
