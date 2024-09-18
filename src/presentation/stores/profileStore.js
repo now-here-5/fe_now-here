@@ -1,10 +1,11 @@
 import { defineStore } from 'pinia';
-import { computed, watch,  ref, reactive } from 'vue';
+import { computed,  ref, reactive } from 'vue';
 import { useRouter } from 'vue-router'
 import { MemberSettingRepository } from '@/infrastructure/repositories/MemberSettingRepository.js';
 import { MemberAccountRepository } from "@/infrastructure/repositories/MemberAccountRepository.js";
 import { useEventStore } from '@/presentation/stores/eventStore.js';
 import { usePopupStore } from '@/presentation/stores/popupStore.js';
+import { formPhoneNumber } from '@/composition/FormNumber.js'
 
 const memberSettingRepository = new MemberSettingRepository();
 const memberAccountRepository = new MemberAccountRepository();
@@ -22,11 +23,10 @@ export const useProfileStore = defineStore('profile', () => {
 	const gender = ref("");
 	const selectedMBTI = ref("");
 	const name = ref("");
-	const snsID = ref("");
+	const phoneNumber = ref("");
 	
 	const originalData = reactive({
 		selfIntro: "",
-		snsId: "",
 		name: "",
 		birth: "",
 		selectedMBTI: "",
@@ -35,7 +35,6 @@ export const useProfileStore = defineStore('profile', () => {
 	const hasChanges = computed(() => {
 		return (
 			selfIntro.value.length > 9 && selfIntro.value !== originalData.selfIntro ||
-			snsID.value !== originalData.snsID ||
 			name.value.length > 1 && name.value.length < 9 && name.value !== originalData.name && isDuplicate.value === false ||
 			selectedMBTI.value !== originalData.selectedMBTI ||
 			birth.value !== originalData.birth && birth.value.length > 5
@@ -63,13 +62,12 @@ export const useProfileStore = defineStore('profile', () => {
 				console.log('Profile info:', response.data);
 				
 				originalData.selfIntro = response.data.description;
-				originalData.snsID = response.data.snsId;
 				originalData.name = response.data.nickname;
 				originalData.birth = response.data.birthdate;
 				originalData.selectedMBTI = response.data.mbti;
 				
 				accountId.value = response.data.accountId;
-				snsID.value = response.data.snsId;
+				phoneNumber.value = formPhoneNumber(response.data.phoneNumber);
 				selectedMBTI.value = response.data.mbti;
 				name.value = response.data.nickname;
 				birth.value = response.data.birthdate;
@@ -87,7 +85,6 @@ export const useProfileStore = defineStore('profile', () => {
 	
 	const restoreOriginalData = () => {
 		birth.value = originalData.birth;
-		snsID.value = originalData.snsID;
 		selectedMBTI.value = originalData.selectedMBTI;
 		name.value = originalData.name;
 		selfIntro.value = originalData.selfIntro;
@@ -113,13 +110,6 @@ export const useProfileStore = defineStore('profile', () => {
 				const response = await memberSettingRepository.patchMBTI(submitData);
 				if (response.message === "MBTI 수정에 성공했습니다.") {
 					originalData.selectedMBTI = selectedMBTI.value;
-					router.back();
-				}
-			} else if (currentRoute === '/editSnsID') {
-				const submitData = { snsId: snsID.value };
-				const response = await memberSettingRepository.patchSnsId(submitData);
-				if (response.message === "SNS ID 수정에 성공했습니다.") {
-					originalData.snsID = snsID.value;
 					router.back();
 				}
 			} else if (currentRoute === '/editBirth') {
@@ -173,7 +163,7 @@ export const useProfileStore = defineStore('profile', () => {
 		gender,
 		selfIntro,
 		accountId,
-		snsID,
+		phoneNumber,
 		age,
 		hasChanges,
 		
@@ -193,7 +183,7 @@ export const useProfileStore = defineStore('profile', () => {
 	persist: {
 		enabled: true,
 		paths: [
-			`snsID`,
+			`phoneNumber`,
 			`selectedMBTI`,
 			`accountId`,
 			`name`,
