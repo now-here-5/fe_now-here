@@ -1,7 +1,7 @@
 import httpClient from '@/infrastructure/http//httpClient'
 
 export const postAuthNumber = async (phone, authNum) => {
-  const response = await httpClient.post(`/member/verify/code?phone=${phone}&code=${authNum}`);
+  const response = await httpClient.post(`/member/verify/code?phoneNumber=${phone}&code=${authNum}`);
   return response.data;
 }
 export const postRegister = async (encodedId, userData) => {
@@ -9,7 +9,7 @@ export const postRegister = async (encodedId, userData) => {
   return response.data;
 }
 export const getAuthNumber = async (eventId, phone) => {
-  const response = await httpClient.get(`/member/verify/${eventId}?phone=${phone}`);
+  const response = await httpClient.get(`/member/verify/phone/${eventId}?phoneNumber=${phone}`);
   return response.data;
 }
 export const getIDDuplicate = async (eventId, ID) => {

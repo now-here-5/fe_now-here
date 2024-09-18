@@ -3,7 +3,6 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import {
   formPhoneNumber,
-  formID,
   formPassword,
 } from '@/composition/FormNumber.js'
 import { MemberAuthRepository } from '@/infrastructure/repositories/MemberAuthRepository.js'

@@ -65,7 +65,7 @@
 import SelectBtn from '@/presentation/components/SelectBtn.vue'
 import { useRouter } from 'vue-router'
 import { usePopupStore } from '@/presentation/stores/popupStore.js'
-import { useSignupIDStore } from '@/presentation/stores/signupSub/signupIDStore.js'
+import { useSignupPhoneStore } from '@/presentation/stores/signupSub/signupPhoneStore.js'
 import { useSignupPWStore } from '@/presentation/stores/signupSub/signupPWStore.js'
 import { useSignupProfile } from '@/presentation/stores/signupSub/signupProfileStore.js'
 
@@ -92,9 +92,9 @@ const navigateToSignUp = () => {
   if (popupStore.agreeState.service && popupStore.agreeState.privacy) {
     closeBottomSheet('agree')
     // 모든 Pinia 스토어를 초기화
-    const stores = [useSignupIDStore(), useSignupPWStore(), useSignupProfile()];
+    const stores = [useSignupPhoneStore(), useSignupPWStore(), useSignupProfile()];
     stores.forEach(store => store.$reset());
-    router.push('/signup/signup-ID')
+    router.push('/signup/signup-phone')
   }
 }
 </script>
