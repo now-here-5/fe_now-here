@@ -61,11 +61,9 @@ export const useSignupProfile = defineStore(
     const checkDuplicate = async () => {
       const eventId = eventStore.encodedId
       const nameTo = name.value
-      console.log('checkDuplicate:', eventId, nameTo)
       try {
         const data = await memberAccountRepository.getNameDuplicate(eventId, nameTo)
         if (data.message === '사용 가능한 닉네임입니다.') {
-          console.log('name Duplicate :', data.message)
           alertMessageVisible.value = true
           alertMessage.value = alertMessageInventory[1]
           isDuplicate.value = false

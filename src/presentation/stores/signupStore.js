@@ -49,7 +49,6 @@ export const useSignupStore = defineStore('signup', () => {
 			case 0:
 				try {
 					const phone = signupPhoneStore.phoneNumber.replace(/[^0-9]/g, '');
-					console.log('fetchAuthNumber:', phone);
 					const data = await memberAccountRepository.postAuthNumber(phone, signupPhoneStore.authNumber);
 					if ( data.message === '휴대폰 인증에 실패했습니다.' ) {
 						popupStore.modalSVisible.authError = true;
@@ -84,7 +83,6 @@ export const useSignupStore = defineStore('signup', () => {
 							"gender": signupProfileStore.selectedSex,
 							"description": signupProfileStore.selfIntro,
 						};
-						console.log(userData);
 						const response = await memberAccountRepository.postRegister(eventStore.encodedId, userData);
 						if (response.message === "회원가입에 성공했습니다.") {
 							authStore.token = response.data

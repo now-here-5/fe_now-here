@@ -26,7 +26,6 @@ export const useSignupPhoneStore = defineStore('phone', () => {
 		}
 		const phone = phoneNumber.value.replace(/[^0-9]/g, '');
 		const eventId = eventStore.encodedId;
-		console.log('fetchAuthNumber:', phone, eventId);
 		try {
 			const data = await memberAccountRepository.getAuthNumber(eventId, phone);
 			if ( data.message === '현재 이벤트로 이미 가입된 번호입니다.' ) {

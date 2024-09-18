@@ -59,8 +59,6 @@ export const useProfileStore = defineStore('profile', () => {
 		try {
 			const response = await memberSettingRepository.getProfileInfo();
 			if (response.message === "개인정보 조회에 성공했습니다.") {
-				console.log('Profile info:', response.data);
-				
 				originalData.selfIntro = response.data.description;
 				originalData.name = response.data.nickname;
 				originalData.birth = response.data.birthdate;
@@ -114,7 +112,6 @@ export const useProfileStore = defineStore('profile', () => {
 				}
 			} else if (currentRoute === '/editBirth') {
 				const submitData = { birthday: birth.value };
-				console.log('submitData:', submitData);
 				const response = await memberSettingRepository.patchBirth(submitData);
 				if (response.message === "생일 수정에 성공했습니다.") {
 					originalData.birth = birth.value;

@@ -82,7 +82,6 @@ const setRating = (rating) => {
 }
 const handleEmailInput = () => {
   interactionStore.email = mail.value;
-  console.log(interactionStore.email)
 };
 const formContents = () => {
   interactionStore.textContent = contents.value
