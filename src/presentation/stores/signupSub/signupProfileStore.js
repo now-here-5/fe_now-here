@@ -24,8 +24,6 @@ export const useSignupProfile = defineStore(
       '이미 사용 중인 닉네임입니다.'
     ]
 
-    const snsID = ref('')
-
     const birth = ref('')
     const selectedSex = ref('')
     const selectedMBTI = ref([])
@@ -35,7 +33,6 @@ export const useSignupProfile = defineStore(
 
     const isNameFilled = computed(() => name.value.length >= 2 && name.value.length <= 8)
     const isNameValid = computed(() => isDuplicate.value === false)
-    const isSNSIDValid = computed(() => snsID.value.length > 0)
     const isBirthValid = computed(() => birth.value.length === 10) // 모든 생년월일 값이 채워졌는지 확인
     const isSexValid = computed(() => selectedSex.value !== '')
     const isMBTIValid = computed(() => selectedMBTI.value.length === 4) // 모든 MBTI 값이 채워졌는지 확인
@@ -47,7 +44,6 @@ export const useSignupProfile = defineStore(
       return (
         isNameFilled.value &&
         isNameValid.value &&
-        isSNSIDValid.value &&
         isBirthValid.value &&
         isSexValid.value &&
         isMBTIValid.value &&
@@ -85,7 +81,6 @@ export const useSignupProfile = defineStore(
     const $reset = () => {
       name.value = ''
       isDuplicate.value = null
-      snsID.value = ''
       birth.value = ''
       selectedSex.value = ''
       selectedMBTI.value = []
@@ -97,9 +92,7 @@ export const useSignupProfile = defineStore(
       alertMessageVisible,
       alertMessage,
       alertMessageInventory,
-
-      snsID,
-
+      
       birth,
       selectedSex,
       selectedMBTI,
@@ -116,7 +109,7 @@ export const useSignupProfile = defineStore(
   {
     persist: {
       enabled: true,
-      paths: ['name', 'isDuplicate', `snsID`, 'birth', 'selectedSex', 'selectedMBTI', 'selfIntro']
+      paths: ['name', 'isDuplicate', 'birth', 'selectedSex', 'selectedMBTI', 'selfIntro']
     }
   }
 )

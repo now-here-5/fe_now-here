@@ -33,7 +33,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted } from 'vue'
 
 const props = defineProps({
   store: {
@@ -44,7 +44,7 @@ const props = defineProps({
 const duplicateBtn = ref(false)
 
 const formName = () => {
-  props.store.name = (props.store.name || '').replace(/[^a-zA-Z가-힣0-9\s]/g, '');
+  props.store.name = (props.store.name || '').replace(/[^a-zA-Z가-힣ㄱ-ㅎㅏ-ㅣ0-9\s]/g, '');
   if (props.store.name.length > 8) {
     props.store.name = props.store.name.slice(0, 8)
   }

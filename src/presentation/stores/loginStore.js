@@ -3,9 +3,7 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import {
   formPhoneNumber,
-  formID,
   formPassword,
-  cleanPhoneNumber
 } from '@/composition/FormNumber.js'
 import { MemberAuthRepository } from '@/infrastructure/repositories/MemberAuthRepository.js'
 import { useAuthStore } from '@/presentation/stores/authStore.js'
@@ -18,19 +16,16 @@ export const useLoginStore = defineStore('login', () => {
   const authStore = useAuthStore()
   const eventStore = useEventStore()
 
-  const ID = ref('')
+  const phoneNumber = ref('')
   const password = ref('')
   const alertMessage = ref('')
   const alertMessageInventory = ref([
-    '아이디를 입력해 주세요.',
+    '휴대폰 번호를 입력해 주세요.',
     '비밀번호를 입력해 주세요.',
-    '아이디와 비밀번호를 입력해 주세요',
-    `아이디 또는 비밀번호가 잘못되었습니다.<br>확인 후 다시 입력해 주세요.`
+    '휴대폰 번호와 비밀번호를 입력해 주세요',
+    `휴대폰 번호 또는 비밀번호가 잘못되었습니다.<br>확인 후 다시 입력해 주세요.`
   ])
-
-  const formatID = (id) => {
-    return formID(id)
-  }
+  
   const formatPhone = (phoneNumber) => {
     return formPhoneNumber(phoneNumber)
   }
@@ -39,21 +34,21 @@ export const useLoginStore = defineStore('login', () => {
   }
 
   const login = async () => {
-    if (!ID.value && password.value) {
+    if (!phoneNumber.value && password.value) {
       alertMessage.value = alertMessageInventory.value[0]
       return
     }
-    if (ID.value && !password.value) {
+    if (phoneNumber.value && !password.value) {
       alertMessage.value = alertMessageInventory.value[1]
       return
     }
-    if (!ID.value && !password.value) {
+    if (!phoneNumber.value && !password.value) {
       alertMessage.value = alertMessageInventory.value[2]
       return
     }
     alertMessage.value = ''
     const loginData = {
-      accountId: ID.value,
+      phoneNumber: phoneNumber.value.replace(/[^0-9]/g, ''),
       password: password.value
     }
     try {
@@ -70,10 +65,9 @@ export const useLoginStore = defineStore('login', () => {
   }
 
   return {
-    ID,
+    phoneNumber,
     password,
     alertMessage,
-    formatID,
     formatPhone,
     formatPassword,
     login

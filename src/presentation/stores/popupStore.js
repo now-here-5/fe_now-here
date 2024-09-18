@@ -23,7 +23,8 @@ export const usePopupStore = defineStore('popup', () => {
   const termType = ref('');
   //M_S
   const modalSVisible = ref({
-    duplicateID: false,
+    duplicatePhone: false,
+    authError: false,
     duplicateName: false,
     complete: false,
   });

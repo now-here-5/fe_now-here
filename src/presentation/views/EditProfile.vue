@@ -5,10 +5,10 @@
       <router-view />
       <div class="selfContainer" v-if="route.path === '/editProfile'">
         <OptionItem
-          label="아이디"
+          label="휴대폰 번호"
           :boldText= true
           :none= false
-          :detail="profileStore.accountId"
+          :detail="profileStore.phoneNumber"
           :visible=false
           :boldDetail=true
         />
@@ -21,11 +21,6 @@
         </div>
       </div>
       <div class="editItemList" v-if="route.path === '/editProfile'">
-        <OptionItem
-          label="카카오톡 아이디"
-          :detail="profileStore.snsID"
-          :onClick="navigateToSnsID"
-        />
         <OptionItem
           label="닉네임"
           :onClick="navigateToName"

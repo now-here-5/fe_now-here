@@ -8,7 +8,7 @@
     </header>
     <main class="body">
       <LoginInput />
-      <SelectBtn isActive="true" buttonText="로그인" @click="handleLogin" />
+      <SelectBtn :isActive="true" buttonText="로그인" @click="handleLogin" />
     </main>
     <footer class="bottom">
       <div class="left_content" @click="openBottomSheet">
