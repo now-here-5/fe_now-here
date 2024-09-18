@@ -7,16 +7,16 @@
         삭제된 정보는 복구할 수 없습니다.
       </span>
     </div>
-      <div class="componentInput">
-        <textarea
-          class="input"
-          placeholder="내용을 작성해주세요."
-          v-model="contents"
-          @input="formContents"
-          maxlength="1000"
-        />
-        <span>{{ contents.length }}/1000</span>
-      </div>
+    <div class="componentInput">
+      <textarea
+        class="input"
+        placeholder="내용을 작성해주세요."
+        v-model="contents"
+        @input="formContents"
+        maxlength="1000"
+      />
+      <span>{{ contents.length }}/1000</span>
+    </div>
   </main>
   <footer class="bottom">
     <SelectBtn :isActive="Active" buttonText="작성 완료" @click="handleSubmit" />
@@ -47,6 +47,7 @@ watch([contents], () => {
 <style scoped lang="scss">
 .body {
   /* Auto layout */
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: flex-end;

@@ -8,38 +8,46 @@
     </nav>
     <!-- 매칭 -->
     <main v-if="route.path === '/match'" class="matching-content">
-      <div class="info-wrapper">
-        <div class="event-info">
-          <span class="sub-info">Now Here in</span>
-          <span class="main-info">{{ eventStore.eventName }}</span>
-        </div>
-        <div class="desc-info">
-          <span class="main-info">지금 여기, 당신의 인연이 있나요?</span>
-          <span class="sub-info">카드를 클릭해 하트를 전달해보세요!</span>
-        </div>
+      <div v-if="isLoading" class="loading-wrapper">
+        <LoadingSpinner />
       </div>
-      <div class="cards-wrapper">
-        <div v-if="!recommendedMembers.length" class="loading-wrapper">
-          <LoadingSpinner />
+      <template v-else>
+        <template v-if="recommendedMembers.length > 0">
+          <div class="info-wrapper">
+            <div class="event-info">
+              <span class="sub-info">Now Here in</span>
+              <span class="main-info">{{ eventStore.eventName }}</span>
+            </div>
+            <div class="desc-info">
+              <span class="main-info">지금 여기, 당신의 인연이 있나요?</span>
+              <span class="sub-info">카드를 클릭해 하트를 전달해보세요!</span>
+            </div>
+          </div>
+          <div class="cards-wrapper">
+            <TodayCardItem
+              :member-info="recommendedMembers[0]"
+              :is-flipped="isFlipped"
+              :show-desc="true"
+              :show-mbti="true"
+              :on-custom-click="sendHeart"
+            />
+            <TodayCardItem
+              :member-info="recommendedMembers[1]"
+              :is-flipped="isFlipped"
+              :show-desc="true"
+              :show-mbti="true"
+              :on-custom-click="sendHeart"
+            />
+          </div>
+          <div class="reroll-button-wrapper">
+            <button @click="reroll">다시 뽑기</button>
+          </div>
+        </template>
+        <div v-else class="no-matching-wrapper">
+          <span class="title">현재 매칭 가능한 상태가 없어요!</span>
+          <span>조금만 기다려주세요!</span>
         </div>
-        <template v-else>
-          <TodayCardItem
-            :member-info="recommendedMembers[0]"
-            :is-flipped="isFlipped"
-            :show-desc="true"
-            :show-mbti="true"
-            :on-custom-click="sendHeart" />
-          <TodayCardItem
-            :member-info="recommendedMembers[1]"
-            :is-flipped="isFlipped"
-            :show-desc="true"
-            :show-mbti="true"
-            :on-custom-click="sendHeart"
-        /></template>
-      </div>
-      <div class="reroll-button-wrapper">
-        <button @click="reroll">다시 뽑기</button>
-      </div>
+      </template>
     </main>
     <!-- 하위 라우터에서 설정된 컴포넌트들이 여기에 렌더링됨 -->
     <router-view></router-view>
@@ -69,7 +77,9 @@ const eventStore = useEventStore()
 const matchingStore = useMatchingStore()
 const { recommendedMembers } = storeToRefs(matchingStore)
 
+const isLoading = ref(false)
 const isFlipped = ref(false)
+
 const reroll = () => {
   isFlipped.value = !isFlipped.value
   setTimeout(async () => {
@@ -93,8 +103,11 @@ const handleRouteChange = (to) => {
   }
 }
 onMounted(async () => {
+  isLoading.value = true
   handleRouteChange(route) // 첫 마운트 시에 라우트 확인
+
   await matchingStore.fetchRecommendedCards()
+  isLoading.value = false
 })
 watch(route, (to) => {
   handleRouteChange(to)
@@ -104,6 +117,28 @@ watch(route, (to) => {
 <style scoped lang="scss">
 .matching-container {
   /* margin-top: 70px; */
+
+  .loading-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 500px;
+  }
+
+  .no-matching-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    height: 80vh;
+
+    .title {
+      font-size: $textXXL_size;
+      font-weight: $textB_weight;
+    }
+  }
 
   .mathcing-nav-container {
     display: flex;
@@ -177,14 +212,6 @@ watch(route, (to) => {
       align-items: center;
       gap: 1rem;
       margin-top: 15px;
-
-      .loading-wrapper {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        height: 230px;
-      }
     }
 
     .reroll-button-wrapper {
