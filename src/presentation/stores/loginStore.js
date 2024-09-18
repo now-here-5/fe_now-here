@@ -63,6 +63,11 @@ export const useLoginStore = defineStore('login', () => {
       console.error('Login failed:', error)
     }
   }
+  
+  const $reset = () => {
+    phoneNumber.value = "";
+    password.value = "";
+  };
 
   return {
     phoneNumber,
@@ -70,6 +75,8 @@ export const useLoginStore = defineStore('login', () => {
     alertMessage,
     formatPhone,
     formatPassword,
-    login
+    login,
+    
+    $reset,
   }
 })
