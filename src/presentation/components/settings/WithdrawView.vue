@@ -13,8 +13,9 @@
         placeholder="내용을 작성해주세요."
         v-model="contents"
         @input="formContents"
+        maxlength="1000"
       />
-      <span>{{ contents.length }}/30</span>
+      <span>{{ contents.length }}/1000</span>
     </div>
   </main>
   <footer class="bottom">
