@@ -58,7 +58,7 @@ const popupStore = usePopupStore()
 const currentStep = ref(0)
 const images = [matchLandingMobile, matchLandingCouple, matchLandingNotification]
 const texts = [
-  '매칭이 성사되면 서로의 카카오톡 ID를<br>동시에 공유해드립니다.',
+  '매칭이 성사되면 서로의 휴대폰 번호를<br>동시에 공유해드립니다.',
   '매칭 후의 모든 연락과 만남은<br>사용자의 판단과 책임 하에 이뤄집니다.',
   '서비스 사용 전,<br>주의사항을 꼭 확인해주세요.'
 ]
