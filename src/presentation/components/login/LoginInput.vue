@@ -12,7 +12,7 @@
           placeholder="휴대폰 번호"
           v-model="loginStore.phoneNumber"
           @input="formatPhone"
-          maxlength="15"
+          maxlength="13"
         />
         <input
           class="inputBox"
