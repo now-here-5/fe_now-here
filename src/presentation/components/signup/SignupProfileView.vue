@@ -1,6 +1,5 @@
 <template>
   <NameComponent :store="signupProfileStore" />
-  <SnsIDComponent :store="signupProfileStore" />
   <BirthComponent :store="signupProfileStore" />
   <SexComponent :store="signupProfileStore" />
   <MBTIComponent :store="signupProfileStore" />
@@ -9,7 +8,6 @@
 
 <script setup>
 import NameComponent from "@/presentation/components/inputComponent/NameComponent.vue";
-import SnsIDComponent from "@/presentation/components/inputComponent/SnsIDComponent.vue";
 import BirthComponent from "@/presentation/components/inputComponent/BirthComponent.vue";
 import SexComponent from "@/presentation/components/inputComponent/SexComponent.vue";
 import MBTIComponent from "@/presentation/components/inputComponent/MBTIComponent.vue";

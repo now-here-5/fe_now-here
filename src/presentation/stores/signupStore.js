@@ -9,7 +9,6 @@ import { useAuthStore } from '@/presentation/stores/authStore.js';
 import { useEventStore } from '@/presentation/stores/eventStore.js';
 import { usePopupStore } from '@/presentation/stores/popupStore.js';
 import { getAvatarSrc } from '@/composition/GetAvatar.js'
-import { formPhoneNumber } from '@/composition/FormNumber.js'
 
 const memberAccountRepository = new MemberAccountRepository();
 
@@ -77,8 +76,7 @@ export const useSignupStore = defineStore('signup', () => {
 				if (signupProfileStore.signupReady) {
 					try {
 						const userData = {
-							"accountId": signupPhoneStore.ID,
-							"snsId": signupProfileStore.snsID,
+							"phoneNumber": signupPhoneStore.phoneNumber.replace(/[^0-9]/g, ''),
 							"password": signupPWStore.password,
 							"nickname": signupProfileStore.name,
 							"birth": signupProfileStore.birth,
