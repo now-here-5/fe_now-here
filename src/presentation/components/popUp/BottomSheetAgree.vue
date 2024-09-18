@@ -7,7 +7,7 @@
     <div class="bottomSheet" @click.stop>
       <div class="header">
         <span>약관 동의</span>
-        <img @click="closeBottomSheet('agree')" src="/images/clear.png" alt="clear"/>
+        <img @click="closeBottomSheet('agree')" src="/images/clear.png" alt="clear" />
       </div>
       <div class="contentContainer">
         <div class="descContainer">
@@ -92,8 +92,8 @@ const navigateToSignUp = () => {
   if (popupStore.agreeState.service && popupStore.agreeState.privacy) {
     closeBottomSheet('agree')
     // 모든 Pinia 스토어를 초기화
-    const stores = [useSignupPhoneStore(), useSignupPWStore(), useSignupProfile()];
-    stores.forEach(store => store.$reset());
+    const stores = [useSignupPhoneStore(), useSignupPWStore(), useSignupProfile()]
+    stores.forEach((store) => store.$reset())
     router.push('/signup/signup-phone')
   }
 }
@@ -111,7 +111,7 @@ const navigateToSignUp = () => {
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
-  z-index: 1;
+  z-index: 200;
 }
 .bottomSheet {
   display: flex;

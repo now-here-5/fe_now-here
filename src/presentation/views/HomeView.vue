@@ -8,11 +8,14 @@
       <DirectReview />
     </main>
     <footer class="footer-container">
-      <span>이용약관</span>
-      <span>개인정보처리방침</span>
-      <span>문의하기</span>
+      <span @click="openBottomSheet('service')">이용약관</span>
+      <span @click="openBottomSheet('privacy')">개인정보처리방침</span>
+      <span @click="router.push('/interaction/inquiry')">문의하기</span>
     </footer>
   </div>
+
+  <BottomSheetAgree />
+  <BottomSheetTerm />
 </template>
 
 <script setup>
@@ -24,9 +27,25 @@ import DirectReview from '@/presentation/components/home/DirectReview.vue'
 import { onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useEventStore } from '../stores/eventStore'
+import { useRouter } from 'vue-router'
+import { usePopupStore } from '../stores/popupStore'
+import BottomSheetAgree from '../components/popUp/BottomSheetAgree.vue'
+import BottomSheetTerm from '../components/popUp/BottomSheetTerm.vue'
 
 const eventStore = useEventStore()
+const popupStore = usePopupStore()
+const router = useRouter()
 const { endsAt } = storeToRefs(eventStore)
+
+const openBottomSheet = (type) => {
+  if (type === 'sevice') {
+    popupStore.termType = type
+    popupStore.bottomSheetVisible.agree = true
+  } else {
+    popupStore.termType = type
+    popupStore.bottomSheetVisible.terms = true
+  }
+}
 
 onMounted(() => {
   eventStore.fetchEventEndsAt()
