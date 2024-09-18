@@ -8,7 +8,7 @@
         <template v-else>
           <span class="heart-text">보낸 하트</span>
           <span class="heart-count">{{ matchingSummary.sendLove }}</span>
-          <span v-if="matchingSummary.sendLove !== 0" class="new-badge">N</span>
+          <span v-if="matchingSummary.sendLove != 0" class="new-badge">N</span>
         </template>
       </div>
       <div class="heart-item" @click="router.push('/match/received-hearts')">
@@ -16,7 +16,7 @@
         <template v-else>
           <span class="heart-text">받은 하트</span>
           <span class="heart-count">{{ matchingSummary.receiveLove }}</span>
-          <span v-if="matchingSummary.sendLove !== 0" class="new-badge">N</span>
+          <span v-if="matchingSummary.receiveLove != 0" class="new-badge">N</span>
         </template>
       </div>
     </div>
