@@ -100,7 +100,7 @@ watch([mail, contents, rate], () => {
   if (type === 'inquiry') {
     Active.value = mail.value.length > 0 && contents.value.length > 0
   } else {
-    Active.value = contents.value.length > 0 && rate.value > 0
+    Active.value = contents.value.length >= 30 && rate.value > 0
   }
 })
 onMounted(() => {
