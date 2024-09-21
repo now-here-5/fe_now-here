@@ -20,8 +20,9 @@ export const useSignupPhoneStore = defineStore('phone', () => {
 	const authCount = ref(0);
 	
 	const fetchAuthNumber = async () => {
-		if (authCount.value >= 2) {
+		if (authCount.value >= 3) {
 			console.warn("최대 재전송 횟수에 도달했습니다.");
+			authBtnReady.value = false;
 			return;
 		}
 		const phone = phoneNumber.value.replace(/[^0-9]/g, '');
@@ -45,6 +46,7 @@ export const useSignupPhoneStore = defineStore('phone', () => {
 		phoneNumber.value = "";
 		authBtnReady.value = false;
 		isAuthSend.value = false;
+		authBtnText.value = "인증번호 요청";
 	};
 	
 	return {

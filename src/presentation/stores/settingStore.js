@@ -6,6 +6,7 @@ import { MemberAuthRepository } from '@/infrastructure/repositories/MemberAuthRe
 import { MemberAccountRepository } from '@/infrastructure/repositories/MemberAccountRepository.js';
 import { useAuthStore } from '@/presentation/stores/authStore.js';
 import { useEventStore } from '@/presentation/stores/eventStore.js';
+import { useLoginStore } from '@/presentation/stores/loginStore.js'
 
 const memberSettingRepository = new MemberSettingRepository();
 const memberAuthRepository = new MemberAuthRepository();
@@ -15,6 +16,7 @@ export const useSettingStore = defineStore('setting', () => {
 	const router = useRouter();
 	const authStore = useAuthStore();
 	const eventStore = useEventStore();
+	const loginStore = useLoginStore();
 	
 	const notification = ref(true);
 	const textContent = ref('');
@@ -45,6 +47,7 @@ export const useSettingStore = defineStore('setting', () => {
 				authStore.token = '';
 				sessionStorage.clear()
 				localStorage.clear();
+				loginStore.$reset();
 				router.push(`/login/${event_id}`);
 			}
 			return response.data;
@@ -63,6 +66,7 @@ export const useSettingStore = defineStore('setting', () => {
 				authStore.token = '';
 				sessionStorage.clear()
 				localStorage.clear();
+				loginStore.$reset();
 				router.push(`/login/${event_id}`);
 			}
 		} catch (error) {
