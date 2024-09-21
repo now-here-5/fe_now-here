@@ -8,7 +8,7 @@
       <div class="inputContainer">
         <input
           class="inputBox"
-          type="text"
+          type="tel"
           placeholder="휴대폰 번호"
           v-model="loginStore.phoneNumber"
           @input="formatPhone"
