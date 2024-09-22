@@ -9,6 +9,7 @@ import {
   getReceivedHeartList,
   getRecommendedMembers,
   getSentHeartList,
+  getSpecialHeart,
   postReceivedHeart,
   postSendHeart
 } from '@/infrastructure/http/api/matchingApi'
@@ -47,6 +48,12 @@ export class MatchingRepository {
 
   async getMatchingNotificationList() {
     const { data } = await getMatchingNotificationList()
+    return data
+  }
+
+  // 스페셜 하트 개수 조회
+  async getSpecialHeart() {
+    const { data } = await getSpecialHeart()
     return data
   }
 

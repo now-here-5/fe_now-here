@@ -6,20 +6,25 @@
           <div class="modalL_titleContainer">
             <p>알림</p>
           </div>
-          <div class="modalL_clearContainer"></div>
+          <div class="modalL_clearContainer">
+            <img width="34px" src="/images/clear.png" @click="closeModal" />
+          </div>
         </div>
         <div class="modalL_detailContainer">
-          <p>하트를 보내시겠습니까?<br>
-            <span class="boldText">스페셜 하트</span>를 보내면,<br>
-            상대방에게 메세지 알림이 갑니다!</p>
+          <LoadingSpinner v-if="isLoading" />
+          <p v-else>
+            하트를 보내시겠습니까?<br />
+            <span class="boldText">스페셜 하트</span>를 보내면,<br />
+            상대방에게 메세지 알림이 갑니다!
+          </p>
         </div>
       </div>
       <div class="modalL_btn">
-        <div class="modalL_btnBg active" @click="sendNotHeart">
+        <div class="modalL_btnBg active" @click="sendHeart(false)">
           <p>하트</p>
         </div>
-        <div class="modalL_btnBg active" @click="sendHeart">
-          <p>스폐셜 하트 x 10</p>
+        <div class="modalL_btnBg active" @click="sendHeart(true)">
+          <p>스폐셜 하트 x {{ specialHearts }}</p>
         </div>
       </div>
     </div>
@@ -29,6 +34,8 @@
 <script setup>
 import { useMatchingStore } from '@/presentation/stores/matchingStore'
 import { usePopupStore } from '@/presentation/stores/popupStore.js' // useRouter를 추가로 import
+import { onMounted, ref } from 'vue'
+import LoadingSpinner from '../LoadingSpinner.vue'
 
 const props = defineProps({
   memberInfo: {
@@ -40,14 +47,21 @@ const props = defineProps({
 const popupStore = usePopupStore()
 const matchingStore = useMatchingStore()
 
-const sendNotHeart = () => {
-  // 하트 중단 로직
+const specialHearts = ref(0)
+const isLoading = ref(false)
+
+const closeModal = () => {
   popupStore.modalLVisible.heart = false
 }
-const sendHeart = async () => {
-  // 하트 송신 로직
+
+// 스페셜 하트 보내기
+const sendHeart = async (isSpecialUsed) => {
+  const body = {
+    receiverId: props.memberInfo.memberId,
+    isSpecialUsed
+  }
   try {
-    await matchingStore.sendHeart(props.memberInfo.memberId)
+    await matchingStore.sendHeart(body)
     alert('하트가 전송되었습니다.')
     // 하트 전송이 되면 추천 회원을 새로운 응답으로 업데이트
     await matchingStore.fetchRecommendedCards()
@@ -57,6 +71,12 @@ const sendHeart = async () => {
     popupStore.modalLVisible.heart = false
   }
 }
+
+onMounted(async () => {
+  isLoading.value = true
+  specialHearts.value = await matchingStore.getSpecialHeart()
+  isLoading.value = false
+})
 </script>
 
 <style scoped lang="scss">
@@ -125,6 +145,9 @@ const sendHeart = async () => {
   }
 }
 .modalL_clearContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 34px;
   height: 34px;
   cursor: pointer;
@@ -135,9 +158,8 @@ const sendHeart = async () => {
   align-items: center;
   padding: 0px 0px 20px;
   gap: 15px;
-
   width: 100%;
-
+  min-height: 77px;
   flex: none;
   order: 2;
   align-self: stretch;
