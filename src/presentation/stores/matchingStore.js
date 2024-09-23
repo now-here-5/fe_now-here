@@ -20,6 +20,7 @@ export const useMatchingStore = defineStore('matching', () => {
   const heartSendMemebers = ref([])
   const heartReceivedMemebers = ref([])
   const matchedInfoList = ref([])
+  const specialHearts = ref(0)
 
   const fetchRecommendedCards = async () => {
     recommendedMembers.value = await matchingRepository.getRecommendedMembers()
@@ -65,8 +66,14 @@ export const useMatchingStore = defineStore('matching', () => {
     return matchingRepository.getMatchingNotificationList()
   }
 
-  const sendHeart = (receiverId) => {
-    return matchingRepository.postMatchingSendHeart(receiverId)
+  const sendHeart = (body) => {
+    return matchingRepository.postMatchingSendHeart(body)
+  }
+
+  const getSpecialHeart = async () => {
+    const res = await matchingRepository.getSpecialHeart()
+    specialHearts.value = res
+    return res
   }
 
   const receiveHeart = (senderId) => {
@@ -92,6 +99,7 @@ export const useMatchingStore = defineStore('matching', () => {
   return {
     recommendedMembers,
     matchedInfoList,
+    specialHearts,
     fetchRecommendedCards,
     getRecommendedMemberAge,
     getRecommendedMemberMbtiScore,
@@ -103,6 +111,7 @@ export const useMatchingStore = defineStore('matching', () => {
     getMatchingSummaryForHomeView,
     fetchMatchingNotificationCounts,
     getMatchingNotificationList,
+    getSpecialHeart,
     sendHeart,
     receiveHeart,
     getReceivedHeartList,

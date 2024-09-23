@@ -29,9 +29,15 @@ export const getMatchingNotificationList = async () => {
   return data
 }
 
+// 스페셜 하트 개수 조회
+export const getSpecialHeart = async () => {
+  const { data } = await httpClient.get(`/matching/getSpecialHeart`)
+  return data
+}
+
 // 하트 보내기
-export const postSendHeart = async (receiverId) => {
-  const { data } = await httpClient.post(`/matching/send/${receiverId}`)
+export const postSendHeart = async (body) => {
+  const { data } = await httpClient.post(`/matching/send`, body)
   return data
 }
 
