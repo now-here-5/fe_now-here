@@ -231,6 +231,8 @@ const avatarImgUrl = computed(() => recommendedInfo.value.avatarImgUrl)
       border-bottom-right-radius: 13px;
       box-shadow: 0px 1px 3px 1px #00000026;
       font-size: $textXS_size;
+      word-break: break-word;
+      padding: 0 5px;
     }
   }
 }

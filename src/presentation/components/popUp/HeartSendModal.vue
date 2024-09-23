@@ -34,8 +34,9 @@
 <script setup>
 import { useMatchingStore } from '@/presentation/stores/matchingStore'
 import { usePopupStore } from '@/presentation/stores/popupStore.js' // useRouter를 추가로 import
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 import LoadingSpinner from '../LoadingSpinner.vue'
+import { storeToRefs } from 'pinia'
 
 const props = defineProps({
   memberInfo: {
@@ -46,8 +47,8 @@ const props = defineProps({
 
 const popupStore = usePopupStore()
 const matchingStore = useMatchingStore()
+const { specialHearts } = storeToRefs(matchingStore)
 
-const specialHearts = ref(0)
 const isLoading = ref(false)
 
 const closeModal = () => {
@@ -72,11 +73,11 @@ const sendHeart = async (isSpecialUsed) => {
   }
 }
 
-onMounted(async () => {
-  isLoading.value = true
-  specialHearts.value = await matchingStore.getSpecialHeart()
-  isLoading.value = false
-})
+// onMounted(async () => {
+//   isLoading.value = true
+//   specialHearts.value = await matchingStore.getSpecialHeart()
+//   isLoading.value = false
+// })
 </script>
 
 <style scoped lang="scss">

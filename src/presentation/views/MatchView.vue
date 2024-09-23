@@ -87,7 +87,8 @@ const reroll = () => {
   }, 1000)
 }
 
-const sendHeart = () => {
+const sendHeart = async () => {
+  await matchingStore.getSpecialHeart()
   popupStore.modalLVisible.heart = true
 }
 
