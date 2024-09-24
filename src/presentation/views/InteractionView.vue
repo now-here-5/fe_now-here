@@ -22,6 +22,12 @@
           v-model="mail"
           @input="handleEmailInput"
         />
+        <span
+          v-if="type === 'inquiry' && !isEmailValid"
+          class="alertMessage"
+        >
+          유효한 이메일을 입력하세요
+        </span>
         <div v-if="type === 'feedback'" class="componentFeedback">
           <img
             v-for="n in 5"
@@ -77,12 +83,19 @@ const mail = ref(interactionStore.email)
 const contents = ref(interactionStore.textContent || '')
 const rate = ref(0)
 const Active = ref(false)
+const isEmailValid = ref(true)
+
+const validateEmail = (email) => {
+  const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  return regex.test(email);
+};
 
 const setRating = (rating) => {
   interactionStore.rate = rate.value = rating;
 }
 const handleEmailInput = () => {
   interactionStore.email = mail.value;
+  isEmailValid.value = validateEmail(mail.value);
 };
 const formContents = () => {
   interactionStore.textContent = contents.value
@@ -90,7 +103,7 @@ const formContents = () => {
 const handleSubmit = async () => {
   const isSuccess = await interactionStore.sendInteraction(type)
   if (isSuccess) {
-    router.back() // 3초 후에 뒤로 가기
+    router.back()
     setTimeout(() => {
       popupStore.toastMessage.visible = false
     }, 3000)
@@ -98,9 +111,9 @@ const handleSubmit = async () => {
 }
 watch([mail, contents, rate], () => {
   if (type === 'inquiry') {
-    Active.value = mail.value.length > 0 && contents.value.length > 0
+    Active.value = mail.value.length > 0 && contents.value.length > 0 && isEmailValid.value;
   } else {
-    Active.value = contents.value.length >= 30 && rate.value > 0
+    Active.value = contents.value.length >= 30 && rate.value > 0;
   }
 })
 onMounted(() => {
@@ -246,5 +259,10 @@ onMounted(() => {
     align-self: stretch;
     flex-grow: 1;
   }
+}
+.alertMessage {
+  font-size: $textS_size;
+  font-weight: $textS_weight;
+  color: $red;
 }
 </style>
