@@ -77,22 +77,18 @@ export class MatchingRepository {
     const { data } = await getReceivedHeartList()
 
     const recommendedMembers = data.map((member) => {
-      member.memberId = member.senderId
-      delete member.senderId
       return new RecommendedMemberEntity(member)
     })
     return recommendedMembers
   }
 
   /**
-   * 서버로부터 나에게 하트를 보낸 멤버 리스트를 받아 엔티티 인스턴스화
+   * 서버로부터 내가 하트를 보낸 멤버 리스트를 받아 엔티티 인스턴스화
    * @returns {Promise<RecommendedMemberEntity[]>} 멤버 엔티티 배열
    */
   async getMatchingSentHeartList() {
     const { data } = await getSentHeartList()
     const sentHeartMembers = data.map((member) => {
-      member.memberId = member.senderId
-      delete member.senderId
       return new RecommendedMemberEntity(member)
     })
     return sentHeartMembers
