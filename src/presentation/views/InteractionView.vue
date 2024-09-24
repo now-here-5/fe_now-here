@@ -39,7 +39,7 @@
         <div class="inputContainer">
           <textarea
             class="input"
-            :placeholder="type === 'inquiry' ? '문의 내용을 작성해주세요.' : '내용을 작성해주세요.'"
+            :placeholder="type === 'inquiry' ? '문의 내용을 작성해주세요.' : '30자 이상 1000자 이하 입력'"
             v-model="contents"
             @input="formContents"
             maxlength="1000"
