@@ -10,7 +10,7 @@
     <div class="inputContainer">
       <textarea
         class="selfInput"
-        placeholder="자기소개를 입력해주세요."
+        placeholder="10자 이상 30자 미만 입력"
         v-model="selfIntro"
         maxlength="30"
       />

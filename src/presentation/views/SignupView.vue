@@ -22,7 +22,7 @@
     <ModalS
       :isVisible="popupStore.modalSVisible.duplicatePhone"
       :title="popupStore.modalSTitle"
-      :message="`이미 가입된 휴대폰 번호입니다.<br>다시 한 번 확인해주세요.`"
+      :message="`가입 또는 탈퇴한 이력이 있습니다.<br>게시판을 통해 문의해 주세요`"
       buttonText="확인"
       @close="popupStore.closeModal('duplicatePhone')"
     />
