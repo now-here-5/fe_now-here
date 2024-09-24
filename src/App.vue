@@ -70,6 +70,10 @@ const showBottomNav = computed(
   border-right: 1px solid $white;
   z-index: 100;
 
+  @media screen and (max-width: 768px) {
+    width: 100vw; // 모바일 기준 너비 설정
+  }
+
   .bottom-nav-menu {
     display: flex;
     justify-content: center;
