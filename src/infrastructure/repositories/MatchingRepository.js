@@ -75,6 +75,7 @@ export class MatchingRepository {
    */
   async getMatchingReceivedHeartList() {
     const { data } = await getReceivedHeartList()
+
     const recommendedMembers = data.map((member) => {
       member.memberId = member.senderId
       delete member.senderId

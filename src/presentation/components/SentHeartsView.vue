@@ -16,7 +16,6 @@
           :member-info="member"
           :show-desc="true"
           :show-mbti="true"
-          :on-custom-click="() => receiveHearts(member)"
         />
       </div>
     </template>
