@@ -2,13 +2,14 @@
   <div class="frame">
     <BackspaceHeader />
     <main class="body">
-      <div class="contentContainer" :class="{ profile: signupStore.signupStep === 2 }">
+      <div class="contentContainer" :class="{ profile: signupStore.signupStep === 2 }" @scroll="hideScrollHint">
         <LocationDescComponent
           :location="eventStore.eventName"
           :title="signupStore.textTitle[signupStore.signupStep]"
           :Desc="signupStore.textMention[signupStore.signupStep]"
         />
         <router-view />
+        <div class="scroll-hint" v-if="showScrollHint"></div>
       </div>
     </main>
     <footer class="bottom">
@@ -52,29 +53,49 @@
 </template>
 
 <script setup>
-import BackspaceHeader from '@/presentation/components/BackspaceHeader.vue'
-import LocationDescComponent from '@/presentation/components/signup/LocationDescComponent.vue'
-import SelectBtn from '@/presentation/components/SelectBtn.vue'
-import ModalS from '@/presentation/components/popUp/ModalS.vue'
-import { useRouter } from 'vue-router'
-import { useSignupProfile } from '@/presentation/stores/signupSub/signupProfileStore.js'
-import { useEventStore } from '@/presentation/stores/eventStore.js'
-import { usePopupStore } from '@/presentation/stores/popupStore.js'
-import { useSignupStore } from '@/presentation/stores/signupStore.js'
+import { ref, onMounted } from 'vue';
+import BackspaceHeader from '@/presentation/components/BackspaceHeader.vue';
+import LocationDescComponent from '@/presentation/components/signup/LocationDescComponent.vue';
+import SelectBtn from '@/presentation/components/SelectBtn.vue';
+import ModalS from '@/presentation/components/popUp/ModalS.vue';
+import { useRouter } from 'vue-router';
+import { useSignupProfile } from '@/presentation/stores/signupSub/signupProfileStore.js';
+import { useEventStore } from '@/presentation/stores/eventStore.js';
+import { usePopupStore } from '@/presentation/stores/popupStore.js';
+import { useSignupStore } from '@/presentation/stores/signupStore.js';
 
-const router = useRouter()
-const signupProfileStore = useSignupProfile()
-const eventStore = useEventStore()
-const popupStore = usePopupStore()
-const signupStore = useSignupStore()
+const router = useRouter();
+const signupProfileStore = useSignupProfile();
+const eventStore = useEventStore();
+const popupStore = usePopupStore();
+const signupStore = useSignupStore();
+
+const showScrollHint = ref(false);
 
 const handleSubmit = () => {
-  signupStore.submit(router)
-}
+  signupStore.submit(router);
+};
+onMounted(() => {
+  const contentContainer = document.querySelector('.contentContainer');
+  const checkScrollHint = () => {
+    if (contentContainer.scrollHeight > contentContainer.clientHeight) {
+      showScrollHint.value = true;
+    } else {
+      showScrollHint.value = false;
+    }
+  };
+
+  checkScrollHint();
+});
+const hideScrollHint = () => {
+  showScrollHint.value = false;
+};
 </script>
+
 
 <style scoped lang="scss">
 .frame {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -92,6 +113,7 @@ const handleSubmit = () => {
   width: 100%;
 }
 .contentContainer {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -100,7 +122,7 @@ const handleSubmit = () => {
 }
 .contentContainer.profile {
   height: calc(100vh - 300px);
-  overflow-y: auto;
+  overflow-y: scroll;
 }
 .contentContainer::-webkit-scrollbar {
   display: none;
@@ -126,5 +148,32 @@ const handleSubmit = () => {
     align-self: stretch;
     flex-grow: 1;
   }
+}
+
+.scroll-hint {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 150px;
+  height: 50px;
+  background-color: $point;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &::before {
+    content: '';
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 15px solid white;
+  }
+  animation: bounce 2s infinite;
+}
+@keyframes bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(10px); }
 }
 </style>
