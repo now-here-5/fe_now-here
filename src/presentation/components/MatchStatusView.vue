@@ -65,14 +65,14 @@ onMounted(async () => {
       font-size: $textXXL_size;
       font-weight: $textB_weight;
     }
+  }
 
-    .cards-wrapper {
-      display: grid;
-      grid-template-columns: repeat(1, 1fr);
-      gap: 10px; /* 아이템 간의 간격 */
-      row-gap: 40px;
-      padding: 0 calc((100% - 250px) / 2); /* 그리드 전체의 좌우 공백 */
-    }
+  .cards-wrapper {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 10px; /* 아이템 간의 간격 */
+    row-gap: 40px;
+    padding: 0 calc((100% - 250px) / 2); /* 그리드 전체의 좌우 공백 */
   }
 }
 </style>
