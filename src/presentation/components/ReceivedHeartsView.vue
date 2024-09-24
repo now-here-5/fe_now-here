@@ -31,7 +31,7 @@
     </template>
   </div>
 
-  <LargeCardModal v-if="modalL_cardL" :member-info="selectedMember" />
+  <LargeCardModal v-if="modalLVisible.cardL" :member-info="selectedMember" />
 </template>
 
 <script setup>
@@ -45,7 +45,7 @@ import LoadingSpinner from './LoadingSpinner.vue'
 
 const matchingStore = useMatchingStore()
 const popupStore = usePopupStore()
-const { modalL_cardL } = storeToRefs(popupStore)
+const { modalLVisible } = storeToRefs(popupStore)
 
 const senderList = ref([])
 const isLoading = ref(false)
@@ -53,6 +53,7 @@ const selectedMember = ref({})
 
 const receiveHearts = (memberInfo) => {
   selectedMember.value = memberInfo
+  console.log(selectedMember.value)
   popupStore.modalLVisible.cardL = true
 }
 

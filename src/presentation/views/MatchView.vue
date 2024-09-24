@@ -44,7 +44,7 @@
           </div>
         </template>
         <div v-else class="no-matching-wrapper">
-          <span class="title">현재 매칭 가능한 상태가 없어요!</span>
+          <span class="title">현재 매칭 가능한 상대가 없어요!</span>
           <span>조금만 기다려주세요!</span>
         </div>
       </template>
