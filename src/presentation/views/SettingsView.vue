@@ -4,6 +4,7 @@
     <router-view />
     <main class="body" v-if="route.path === '/settings'">
       <div class="optionList">
+        <!--
         <div class="optionItem">
           <p>문자 알림</p>
           <div class="toggle-switch">
@@ -16,6 +17,7 @@
             <label for="switch"></label>
           </div>
         </div>
+        -->
         <OptionItem label="로그아웃" :boldText= true :on-click="settingStore.logout" :visible=false />
         <OptionItem label="계정 탈퇴" :boldText= true :on-click="openWithdrawModal" :visible=false />
       </div>
@@ -38,9 +40,12 @@ const route = useRoute()
 const settingStore = useSettingStore()
 const popupStore = usePopupStore()
 
+/*
 onMounted(() => {
   settingStore.getNotification()
 })
+*/
+
 const pageTitle = computed(() => {
   if (route.path === '/settings') {
     return '설정'
