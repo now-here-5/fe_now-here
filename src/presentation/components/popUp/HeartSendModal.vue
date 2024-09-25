@@ -67,7 +67,7 @@ const sendHeart = async (isSpecialUsed) => {
     await matchingStore.sendHeart(body)
     alert('하트가 전송되었습니다.')
     // 하트 전송이 되면 추천 회원을 새로운 응답으로 업데이트
-    // await matchingStore.fetchRecommendedCards()
+    await matchingStore.fetchRecommendedCards()
     // 하트 전송이 완료되면 보낸 하트 페이지로 이동
     router.push('/match/sent-hearts')
   } catch (err) {
