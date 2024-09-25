@@ -36,12 +36,12 @@ httpClient.interceptors.request.use(
 // 응답 인터셉터
 httpClient.interceptors.response.use(
   (response) => response,
-  async (error) => {
+  (error) => {
     // 예: 인증 오류 처리
     if (error.response?.status === 401) {
       const settingStore = useSettingStore()
       alert('세션이 만료되었습니다. 다시 로그인 해주세요.')
-      await settingStore.logout()
+      settingStore.initUserInfo()
       // alert(error.response.message)
     }
     return Promise.reject(error)
