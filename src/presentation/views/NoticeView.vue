@@ -5,22 +5,27 @@
       <span class="title">알림</span>
     </div>
     <div class="notice-content">
-      <template v-if="notificationList.length">
-        <div
-          v-for="(item, idx) in notificationList"
-          :key="idx"
-          class="notice-item"
-          @click="routeTo(item.title)"
-        >
-          <span class="notice-item__title">{{ item.title }}</span>
-          <span class="notice-item__desc">{{ item.content }}</span>
-          <img src="/images/navigate_next.png" />
+      <div v-if="isLoading" class="loading-wrapper">
+        <LoadingSpinner />
+      </div>
+      <template v-else>
+        <template v-if="notificationList.length">
+          <div
+            v-for="(item, idx) in notificationList"
+            :key="idx"
+            class="notice-item"
+            @click="routeTo(item.title)"
+          >
+            <span class="notice-item__title">{{ item.title }}</span>
+            <span class="notice-item__desc">{{ item.content }}</span>
+            <img src="/images/navigate_next.png" />
+          </div>
+        </template>
+        <div class="no-content" v-else>
+          <span class="title">새로운 알림이 없어요...</span>
+          <span class="desc">활발한 매칭을 시도해보세요!</span>
         </div>
       </template>
-      <div class="no-content" v-else>
-        <span class="title">새로운 알림이 없어요...</span>
-        <span class="desc">활발한 매칭을 시도해보세요!</span>
-      </div>
     </div>
   </div>
 </template>
@@ -29,10 +34,12 @@
 import { onMounted, ref } from 'vue'
 import { useMatchingStore } from '../stores/matchingStore'
 import { useRouter } from 'vue-router'
+import LoadingSpinner from '../components/LoadingSpinner.vue'
 
 const notificationList = ref([])
 const matchingStore = useMatchingStore()
 const router = useRouter()
+const isLoading = ref(false)
 
 const routeTo = (title) => {
   if (title === '받은 하트') router.push('/match/received-hearts')
@@ -40,8 +47,10 @@ const routeTo = (title) => {
 }
 
 onMounted(async () => {
+  isLoading.value = true
   const res = await matchingStore.getMatchingNotificationList()
   notificationList.value = res
+  isLoading.value = false
 })
 </script>
 
@@ -76,6 +85,15 @@ onMounted(async () => {
     height: auto;
     /* background-color: aliceblue; */
     margin-top: 10px;
+    padding: 0 15px;
+
+    .loading-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 500px;
+    }
 
     .notice-item {
       width: 100%;

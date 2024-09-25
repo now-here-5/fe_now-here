@@ -31,11 +31,15 @@
     </template>
   </div>
 
-  <LargeCardModal v-if="modalLVisible.cardL" :member-info="selectedMember" />
+  <LargeCardModal
+    v-if="modalLVisible.cardL"
+    :member-info="selectedMember"
+    @refresh="fetchSenderList"
+  />
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, onUnmounted, ref } from 'vue'
 import { useMatchingStore } from '../stores/matchingStore'
 import TodayCardItem from './home/TodayCardItem.vue'
 import LargeCardModal from './popUp/LargeCardModal.vue'
@@ -53,14 +57,22 @@ const selectedMember = ref({})
 
 const receiveHearts = (memberInfo) => {
   selectedMember.value = memberInfo
-  console.log(selectedMember.value)
   popupStore.modalLVisible.cardL = true
+}
+
+const fetchSenderList = async () => {
+  senderList.value = await matchingStore.getReceivedHeartList()
 }
 
 onMounted(async () => {
   isLoading.value = true
-  senderList.value = await matchingStore.getReceivedHeartList()
+  await fetchSenderList()
   isLoading.value = false
+})
+
+onUnmounted(() => {
+  // 페이지 이탈 시 모달 닫기
+  popupStore.modalLVisible.cardL = false
 })
 </script>
 

@@ -53,6 +53,12 @@ export const postReceivedHeart = async (senderId) => {
   return data
 }
 
+// 하트 거절하기
+export const patchRejectHeart = async (senderId) => {
+  const { data } = await httpClient.patch(`/matching/reject/${senderId}`)
+  return data
+}
+
 // 보낸 하트 페이지 조회
 export const getSentHeartList = async () => {
   const { data } = await httpClient.get(`/matching/receiverList`)
