@@ -13,7 +13,7 @@
         <div class="modalL_detailContainer">
           <LoadingSpinner v-if="isLoading" />
           <p v-else>
-            하트를 보내시겠습니까?<br />
+            <span>{{ memberInfo.nickname }}님께 하트를 보내시겠습니까?<br /></span>
             <span class="boldText">스페셜 하트</span>를 보내면,<br />
             상대방에게 메세지 알림이 갑니다!
           </p>

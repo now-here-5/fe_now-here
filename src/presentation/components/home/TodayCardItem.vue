@@ -27,14 +27,11 @@
       <img class="text-logo" src="/images/Text_Logo/logo_text.png" />
     </div>
   </div>
-
-  <HeartSendModal :member-info="memberInfo" />
 </template>
 
 <script setup>
 import { useMatchingStore } from '@/presentation/stores/matchingStore'
 import { computed } from 'vue'
-import HeartSendModal from '../popUp/HeartSendModal.vue'
 
 const props = defineProps({
   memberInfo: {
