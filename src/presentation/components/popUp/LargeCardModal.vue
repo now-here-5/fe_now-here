@@ -1,6 +1,9 @@
 <template>
   <div v-if="popupStore.modalLVisible.cardL" class="M_Overlay">
     <div class="modalL">
+      <div class="closeBtn" @click="closeModal">
+        <img src="/images/clear.png" />
+      </div>
       <div class="modalL_contentContainer">
         <MemberLargeCard :member-info="memberInfo" />
       </div>
@@ -28,14 +31,23 @@ const props = defineProps({
     required: true
   }
 })
+const emit = defineEmits(['refresh'])
 
 const popupStore = usePopupStore()
 const matchingStore = useMatchingStore()
 const router = useRouter()
 
-const rejectHeart = () => {
+const rejectHeart = async () => {
   // 하트 거절 로직
-  popupStore.modalLVisible.cardL = false
+  try {
+    await matchingStore.rejectHeart(props.memberInfo.memberId)
+    alert('거절되었습니다.')
+    emit('refresh')
+  } catch (err) {
+    alert('오류가 발생했습니다.')
+  } finally {
+    closeModal()
+  }
 }
 const acceptHeart = async () => {
   // 하트 수락 로직
@@ -46,8 +58,11 @@ const acceptHeart = async () => {
   } catch (err) {
     alert('오류가 발생했습니다.')
   } finally {
-    popupStore.modalLVisible.cardL = false
+    closeModal()
   }
+}
+const closeModal = () => {
+  popupStore.modalLVisible.cardL = false
 }
 </script>
 
@@ -70,8 +85,8 @@ const acceptHeart = async () => {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-
   width: 250px;
+  position: relative;
 }
 .modalL_contentContainer {
   box-sizing: border-box;
@@ -84,7 +99,7 @@ const acceptHeart = async () => {
   width: 100%;
 
   background: $white;
-  border-bottom: 1px solid $dark;
+  z-index: 101;
   border-radius: 15px 15px 0px 0px;
 }
 .modalL_header {
@@ -265,6 +280,22 @@ const acceptHeart = async () => {
 
   width: 250px;
   height: 250px;
+}
+.closeBtn {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  left: 10px;
+  top: 10px;
+  z-index: 102;
+  border-radius: 10px;
+  background-color: $white;
+  cursor: pointer;
+  padding: 2px;
+  img {
+    width: 24px;
+  }
 }
 .scoreContainer {
   /* Auto layout */

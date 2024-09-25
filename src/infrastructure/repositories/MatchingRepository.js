@@ -10,6 +10,7 @@ import {
   getRecommendedMembers,
   getSentHeartList,
   getSpecialHeart,
+  patchRejectHeart,
   postReceivedHeart,
   postSendHeart
 } from '@/infrastructure/http/api/matchingApi'
@@ -66,6 +67,12 @@ export class MatchingRepository {
   // 하트 받기
   async postMatchingReceiveHeart(senderId) {
     const res = await postReceivedHeart(senderId)
+    return res
+  }
+
+  // 하트 거절
+  async patchRejectHeart(senderId) {
+    const res = await patchRejectHeart(senderId)
     return res
   }
 

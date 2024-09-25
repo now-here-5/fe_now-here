@@ -76,8 +76,14 @@ export const useMatchingStore = defineStore('matching', () => {
     return res
   }
 
+  // 하트 수락
   const receiveHeart = (senderId) => {
     return matchingRepository.postMatchingReceiveHeart(senderId)
+  }
+
+  // 하트 거절
+  const rejectHeart = (senderId) => {
+    return matchingRepository.patchRejectHeart(senderId)
   }
 
   const getReceivedHeartList = async () => {
@@ -114,6 +120,7 @@ export const useMatchingStore = defineStore('matching', () => {
     getSpecialHeart,
     sendHeart,
     receiveHeart,
+    rejectHeart,
     getReceivedHeartList,
     getSentHeartList,
     getMatchStatusList
