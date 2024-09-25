@@ -130,34 +130,52 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore()
   const eventStore = useEventStore()
-  if (to.name === 'login' || to.name === 'error' || to.name === 'interaction') {
-    next()
-    return
+  const token = authStore.token
+
+  // 기본적으로 허용하는 라우트
+  const publicRoutes = ['login', 'error', 'interaction']
+
+  if (publicRoutes.includes(to.name)) {
+    return next()
   }
+
+  // 회원가입 경로 처리
   if (to.matched.some((record) => record.path.includes('signup'))) {
     if (eventStore.eventId && eventStore.eventName) {
-      next()
-    } else {
-      next({ name: 'error' })
+      return next()
     }
-    return
+    return next({ name: 'error' })
   }
-  const token = authStore.token
+
+  // SMS URL로 직접 접속하는 경우 (매칭 현황, 받은 하트)
+  const isHeartOrMatchRoute = ['receivedHearts', 'matchStatus'].includes(to.name)
+
+  if (isHeartOrMatchRoute) {
+    if (token) {
+      return next() // 토큰이 있으면 바로 이동
+    }
+    const { eventCode } = to.query
+    return eventCode ? next(`/login/${eventCode}`) : next({ name: 'error' })
+  }
+
+  // 그 외 경로에 대한 토큰 검증
   if (!token) {
-    next({ name: 'error' })
-    return
+    return next({ name: 'error' })
   }
+
+  // 이벤트 정보가 있는 경우 바로 진행
   if (token && eventStore.encodedId) {
-    next() // 'next()'만 호출
-    return
+    return next()
+  }
+
+  // 이벤트 정보가 없을 경우 이벤트 세부사항 가져오기
+  await eventStore.fetchEventDetail()
+
+  if (eventStore.status) {
+    return next()
   } else {
-    await eventStore.fetchEventDetail()
-    if (eventStore.status === true) {
-      next()
-    } else {
-      console.error('토큰이 유효하지 않습니다.')
-      next({ name: 'error' })
-    }
+    console.error('토큰이 유효하지 않습니다.')
+    return next({ name: 'error' })
   }
 })
 
