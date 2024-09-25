@@ -29,14 +29,14 @@
               :is-flipped="isFlipped"
               :show-desc="true"
               :show-mbti="true"
-              :on-custom-click="sendHeart"
+              :on-custom-click="() => sendHeart(recommendedMembers[0])"
             />
             <TodayCardItem
               :member-info="recommendedMembers[1]"
               :is-flipped="isFlipped"
               :show-desc="true"
               :show-mbti="true"
-              :on-custom-click="sendHeart"
+              :on-custom-click="() => sendHeart(recommendedMembers[1])"
             />
           </div>
           <div class="reroll-button-wrapper">
@@ -55,12 +55,14 @@
 
   <MatchAgreeModal />
   <FeedbackModal />
+  <HeartSendModal v-if="popupStore.modalLVisible.heart" :member-info="selectedMember" />
 </template>
 
 <script setup>
 import TodayCardItem from '@/presentation/components/home/TodayCardItem.vue'
 import MatchAgreeModal from '@/presentation/components/popUp/MatchAgreeModal.vue'
 import FeedbackModal from '@/presentation/components/popUp/FeedbackModal.vue'
+import HeartSendModal from '../components/popUp/HeartSendModal.vue'
 
 import { onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
@@ -79,6 +81,7 @@ const { recommendedMembers } = storeToRefs(matchingStore)
 
 const isLoading = ref(false)
 const isFlipped = ref(false)
+const selectedMember = ref(null)
 
 const reroll = () => {
   isFlipped.value = !isFlipped.value
@@ -87,7 +90,8 @@ const reroll = () => {
   }, 1000)
 }
 
-const sendHeart = async () => {
+const sendHeart = async (member) => {
+  selectedMember.value = member
   await matchingStore.getSpecialHeart()
   popupStore.modalLVisible.heart = true
 }

@@ -18,8 +18,18 @@
           </div>
         </div>
         -->
-        <OptionItem label="로그아웃" :boldText= true :on-click="settingStore.logout" :visible=false />
-        <OptionItem label="계정 탈퇴" :boldText= true :on-click="openWithdrawModal" :visible=false />
+        <OptionItem
+          label="로그아웃"
+          :boldText="true"
+          :on-click="settingStore.logout"
+          :visible="false"
+        />
+        <OptionItem
+          label="계정 탈퇴"
+          :boldText="true"
+          :on-click="openWithdrawModal"
+          :visible="false"
+        />
       </div>
     </main>
   </div>
@@ -32,7 +42,7 @@ import BackspaceHeader from '@/presentation/components/BackspaceHeader.vue'
 import WithdrawModal from '@/presentation/components/popUp/WithdrawModal.vue'
 import OptionItem from '@/presentation/components/settings/OptionItem.vue'
 import { useRoute } from 'vue-router'
-import { onMounted, computed } from 'vue'
+import { computed } from 'vue'
 import { useSettingStore } from '@/presentation/stores/settingStore.js'
 import { usePopupStore } from '@/presentation/stores/popupStore.js'
 

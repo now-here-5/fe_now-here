@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { useAuthStore } from '@/presentation/stores/authStore.js'
+import { useSettingStore } from '@/presentation/stores/settingStore'
 
 const httpClient = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
@@ -33,16 +34,18 @@ httpClient.interceptors.request.use(
 )
 
 // 응답 인터셉터
-// httpClient.interceptors.response.use(
-//   (response) => response,
-//   (error) => {
-//     // 예: 인증 오류 처리
-//     if (error.response?.status === 400) {
-//       alert(error.response?.data.message)
-//       // alert(error.response.message)
-//     }
-//     return Promise.reject(error)
-//   }
-// )
+httpClient.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    // 예: 인증 오류 처리
+    if (error.response?.status === 401) {
+      const settingStore = useSettingStore()
+      alert('세션이 만료되었습니다. 다시 로그인 해주세요.')
+      await settingStore.logout()
+      // alert(error.response.message)
+    }
+    return Promise.reject(error)
+  }
+)
 
 export default httpClient
