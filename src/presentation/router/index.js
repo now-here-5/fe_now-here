@@ -141,7 +141,7 @@ router.beforeEach(async (to, from, next) => {
 
   // 회원가입 경로 처리
   if (to.matched.some((record) => record.path.includes('signup'))) {
-    if (eventStore.eventId && eventStore.eventName) {
+    if (eventStore.encodedId && eventStore.eventName) {
       return next()
     }
     return next({ name: 'error' })
