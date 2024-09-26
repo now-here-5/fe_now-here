@@ -2,7 +2,7 @@
   <div class="inputDescContainer">
     <div class="inputDesc">
       <span>
-        각 이벤트마다 별도 가입이 필요합니다.<br/>
+        각 이벤트마다 별도 가입이 필요합니다.<br />
         해당 이벤트에 처음 참여하신다면 "회원가입"을 눌러주세요.
       </span>
       <div class="inputContainer">
@@ -16,7 +16,7 @@
         />
         <input
           class="inputBox"
-          type="tel"
+          type="password"
           placeholder="4자리 비밀번호"
           v-model="loginStore.password"
           @input="formatPassword"
