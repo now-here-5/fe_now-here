@@ -16,7 +16,7 @@ httpClient.interceptors.request.use(
     const authStore = useAuthStore()
     const token = authStore.token
     const excludeUrls = [
-      '/admin/event/list',
+      '/event/list',
       '/interaction/inquiry',
       '/member/verify',
       '/member/register',
