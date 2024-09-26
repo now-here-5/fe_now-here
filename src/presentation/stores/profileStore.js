@@ -185,6 +185,7 @@ export const useProfileStore = defineStore('profile', () => {
 			`accountId`,
 			`name`,
 			`birthdate`,
+			`birth`,
 			`age`,
 			`gender`,
 			`selfIntro`,

@@ -17,7 +17,6 @@
     <input
       ref="hiddenInput"
       type="tel"
-      maxlength="6"
       class="hiddenInput"
       v-model="birthInput"
       @input="updateBirth"
@@ -38,7 +37,7 @@ const props = defineProps({
 
 const birthInput = ref(
   props.store.birth ?
-  props.store.birth.replace(/-/g, '').slice(2) : ''
+    props.store.birth.replace(/-/g, '').slice(2) : ''
 )
 const hiddenInput = ref(null)
 const birthAlertVisible = ref(false)
@@ -50,50 +49,60 @@ const focusInput = () => {
     hiddenInput.value.focus()
   })
 }
+
 const updateBirth = (event) => {
-  let inputValue = event.target.value.replace(/\D/g, '').slice(0, 6)
-  birthInput.value = inputValue
+  let inputValue = event.target.value.replace(/\D/g, ''); // 숫자 외 문자 제거
 
-  const yearPart = inputValue.slice(0, 2)
-  let monthPart = inputValue.slice(2, 4)
-  let dayPart = inputValue.slice(4, 6)
+  // 입력값을 6자리로 제한하되 추가 입력 감지 후 초기화
+  if (inputValue.length > 6) {
+    const extraInput = inputValue.slice(6); // 추가로 입력된 값 추출
+    birthInput.value = extraInput; // 필드를 초기화한 후 새 입력값 설정
+    props.store.birth = ''; // store에서도 초기화
+    birthAlertVisible.value = false;
+    return;
+  }
 
-  let isValid = true
+  birthInput.value = inputValue;
+
+  const yearPart = inputValue.slice(0, 2);
+  let monthPart = inputValue.slice(2, 4);
+  let dayPart = inputValue.slice(4, 6);
+  let isValid = true;
   if (monthPart.length === 2) {
-    const month = parseInt(monthPart, 10)
+    const month = parseInt(monthPart, 10);
     if (month < 1 || month > 12) {
-      inputValue = yearPart
-      birthInput.value = inputValue
-      birthAlertMessage.value = birthAlertInventory[0]
-      isValid = false
+      birthInput.value = yearPart;
+      birthAlertMessage.value = birthAlertInventory[0];
+      isValid = false;
     }
   }
   if (dayPart.length === 2 && isValid) {
-    const month = parseInt(monthPart, 10)
-    const day = parseInt(dayPart, 10)
-    const maxDays = getMaxDaysInMonth(month)
+    const month = parseInt(monthPart, 10);
+    const day = parseInt(dayPart, 10);
+    const maxDays = getMaxDaysInMonth(month);
     if (day < 1 || day > maxDays) {
-      inputValue = yearPart + monthPart
-      birthInput.value = inputValue
-      birthAlertMessage.value = birthAlertInventory[1]
-      isValid = false
+      birthInput.value = yearPart + monthPart;
+      birthAlertMessage.value = birthAlertInventory[1];
+      isValid = false;
     }
   }
-  birthAlertVisible.value = !isValid
+  birthAlertVisible.value = !isValid;
+
   if (inputValue.length === 6 && isValid) {
-    const currentYear = new Date().getFullYear()
-    const currentYearTwoDigits = currentYear % 100
-    const userInputYear = parseInt(yearPart, 10)
-    const century = userInputYear > currentYearTwoDigits ? '19' : '20'
-    props.store.birth = `${century}${yearPart}-${monthPart}-${dayPart}`
+    const currentYear = new Date().getFullYear();
+    const currentYearTwoDigits = currentYear % 100;
+    const userInputYear = parseInt(yearPart, 10);
+    const century = userInputYear > currentYearTwoDigits ? '19' : '20';
+    props.store.birth = `${century}${yearPart}-${monthPart}-${dayPart}`;
   } else {
-    props.store.birth = ''
+    props.store.birth = '';
   }
-}
+};
+
 const getMaxDaysInMonth = (month) => {
-  const currentYear = new Date().getFullYear()
-  const yearPrefix = parseInt(birthInput.value.slice(0, 2)) > currentYear % 100 ? 1900 : 2000
-  const fullYear = yearPrefix + parseInt(birthInput.value.slice(0, 2))
+  const currentYear = new Date().getFullYear();
+  const yearPrefix = parseInt(birthInput.value.slice(0, 2)) > currentYear % 100 ? 1900 : 2000;
+  const fullYear = yearPrefix + parseInt(birthInput.value.slice(0, 2));
   const daysInMonth = {
     1: 31,
     2: isLeapYear(fullYear) ? 29 : 28,
@@ -107,11 +116,11 @@ const getMaxDaysInMonth = (month) => {
     10: 31,
     11: 30,
     12: 31
-  }
-  return daysInMonth[month] || 31
+  };
+  return daysInMonth[month] || 31;
 }
 const isLeapYear = (year) => {
-  return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0
+  return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
 }
 </script>
 
