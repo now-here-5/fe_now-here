@@ -53,7 +53,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, watch, nextTick } from 'vue';
 import BackspaceHeader from '@/presentation/components/BackspaceHeader.vue';
 import LocationDescComponent from '@/presentation/components/signup/LocationDescComponent.vue';
 import SelectBtn from '@/presentation/components/SelectBtn.vue';
@@ -75,23 +75,31 @@ const showScrollHint = ref(false);
 const handleSubmit = () => {
   signupStore.submit(router);
 };
-onMounted(() => {
+
+const checkScrollHint = () => {
   const contentContainer = document.querySelector('.contentContainer');
-  const checkScrollHint = () => {
-    if (contentContainer.scrollHeight > contentContainer.clientHeight) {
-      showScrollHint.value = true;
+  if (contentContainer && contentContainer.scrollHeight > contentContainer.clientHeight) {
+    showScrollHint.value = true;
+  } else {
+    showScrollHint.value = false;
+  }
+};
+watch(
+  () => signupStore.signupStep,
+  (newStep) => {
+    if (newStep === 2) {
+      nextTick(() => {
+        checkScrollHint();
+      });
     } else {
       showScrollHint.value = false;
     }
-  };
-
-  checkScrollHint();
-});
+  }
+);
 const hideScrollHint = () => {
   showScrollHint.value = false;
 };
 </script>
-
 
 <style scoped lang="scss">
 .frame {
@@ -108,7 +116,7 @@ const hideScrollHint = () => {
   flex-direction: column;
   align-items: flex-end;
   justify-content: flex-start;
-  padding: 15px 0px;
+  padding: 15px 0;
   gap: 20px;
   width: 100%;
 }
@@ -123,9 +131,6 @@ const hideScrollHint = () => {
 .contentContainer.profile {
   height: calc(100vh - 300px);
   overflow-y: scroll;
-}
-.contentContainer::-webkit-scrollbar {
-  display: none;
 }
 
 .bottom {
@@ -162,6 +167,7 @@ const hideScrollHint = () => {
   display: flex;
   justify-content: center;
   align-items: center;
+  animation: bounce 2s infinite;
   &::before {
     content: '';
     width: 0;
@@ -170,7 +176,6 @@ const hideScrollHint = () => {
     border-right: 10px solid transparent;
     border-top: 15px solid white;
   }
-  animation: bounce 2s infinite;
 }
 @keyframes bounce {
   0%, 100% { transform: translateX(-50%) translateY(0); }
