@@ -12,7 +12,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useMatchingStore } from '../stores/matchingStore'
 import { useRoute } from 'vue-router'
 
@@ -20,10 +20,15 @@ const route = useRoute()
 const notificationCounts = ref(0)
 const matchingStore = useMatchingStore()
 
-onMounted(async () => {
-  const { data } = await matchingStore.fetchMatchingNotificationCounts()
-  notificationCounts.value = data
-})
+watch(
+  () => route.name,
+  async (newName) => {
+    if (newName === 'home' || newName === 'profile' || newName === 'match') {
+      const { data } = await matchingStore.fetchMatchingNotificationCounts();
+      notificationCounts.value = data;
+    }
+  }
+);
 </script>
 
 <style lang="scss">
