@@ -4,7 +4,6 @@
     <router-view />
     <main class="body" v-if="route.path === '/settings'">
       <div class="optionList">
-        <!--
         <div class="optionItem">
           <p>문자 알림</p>
           <div class="toggle-switch">
@@ -17,7 +16,6 @@
             <label for="switch"></label>
           </div>
         </div>
-        -->
         <OptionItem
           label="로그아웃"
           :boldText="true"
