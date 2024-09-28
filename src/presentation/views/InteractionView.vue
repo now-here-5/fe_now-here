@@ -10,7 +10,7 @@
             답변 받을 이메일 주소를 입력해주세요.
           </span>
           <span class="desc" v-else>
-            서비스 개선을 위해 소중한 의견을 남겨주세요! <br>
+            서비스 개선을 위해 소중한 의견을 남겨주세요! <br />
             상대방에게 메세지 알림이 가는 '스페셜 하트' 5개를 드립니다.
           </span>
         </div>
@@ -22,10 +22,7 @@
           v-model="mail"
           @input="handleEmailInput"
         />
-        <span
-          v-if="type === 'inquiry' && !isEmailValid"
-          class="alertMessage"
-        >
+        <span v-if="type === 'inquiry' && !isEmailValid" class="alertMessage">
           유효한 이메일을 입력하세요
         </span>
         <div v-if="type === 'feedback'" class="componentFeedback">
@@ -45,21 +42,21 @@
         <div class="inputContainer">
           <textarea
             class="input"
-            :placeholder="type === 'inquiry' ? '문의 내용을 작성해주세요.' : '30자 이상 1000자 이하 입력'"
+            :placeholder="type === 'inquiry' ? '문의 내용을 작성해주세요.' : '내용을 작성해주세요.'"
             v-model="contents"
             @input="formContents"
             maxlength="1000"
           />
-          <span>{{ contents.length }}/1000</span>
+          <div v-if="type === 'feedback'" class="feedback-wrapper">
+            <span>30자 이상 1000자 이하 입력</span>
+            <span>{{ contents.length }}/1000</span>
+          </div>
+          <span v-else>{{ contents.length }}/1000</span>
         </div>
       </div>
     </main>
     <footer class="bottom">
-      <SelectBtn
-        :isActive="Active"
-        buttonText="작성완료"
-        @click="handleSubmit"
-      />
+      <SelectBtn :isActive="Active" buttonText="작성완료" @click="handleSubmit" />
     </footer>
   </div>
 </template>
@@ -86,17 +83,17 @@ const Active = ref(false)
 const isEmailValid = ref(true)
 
 const validateEmail = (email) => {
-  const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-  return regex.test(email);
-};
+  const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+  return regex.test(email)
+}
 
 const setRating = (rating) => {
-  interactionStore.rate = rate.value = rating;
+  interactionStore.rate = rate.value = rating
 }
 const handleEmailInput = () => {
-  interactionStore.email = mail.value;
-  isEmailValid.value = validateEmail(mail.value);
-};
+  interactionStore.email = mail.value
+  isEmailValid.value = validateEmail(mail.value)
+}
 const formContents = () => {
   interactionStore.textContent = contents.value
 }
@@ -111,9 +108,9 @@ const handleSubmit = async () => {
 }
 watch([mail, contents, rate], () => {
   if (type === 'inquiry') {
-    Active.value = mail.value.length > 0 && contents.value.length > 0 && isEmailValid.value;
+    Active.value = mail.value.length > 0 && contents.value.length > 0 && isEmailValid.value
   } else {
-    Active.value = contents.value.length >= 30 && rate.value > 0;
+    Active.value = contents.value.length >= 30 && rate.value > 0
   }
 })
 onMounted(() => {
@@ -248,6 +245,12 @@ onMounted(() => {
   padding: 10px 0;
   gap: 10px;
   height: 110px;
+}
+.feedback-wrapper {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
 }
 @media only screen and (max-width: 767px) {
   .body {
