@@ -40,7 +40,7 @@ httpClient.interceptors.response.use(
     // 예: 인증 오류 처리
     if (error.response?.status === 401) {
       const settingStore = useSettingStore()
-      alert('세션이 만료되었습니다. 다시 로그인 해주세요.')
+      // alert('세션이 만료되었습니다. 다시 로그인 해주세요.')
       settingStore.initUserInfo()
       // alert(error.response.message)
     }
