@@ -15,16 +15,25 @@
           <p v-else>
             <span>{{ memberInfo.nickname }}님께 하트를 보내시겠습니까?<br /></span>
             <span class="boldText">스페셜 하트</span>를 보내면,<br />
-            상대방에게 메세지 알림이 갑니다!
+            상대방에게 메세지 알림이 갑니다! <br />
+            <span class="desc"
+              >상대방이 알림 수신을 OFF한 경우, <br />스페셜 하트를 보낼 수 없습니다.</span
+            >
           </p>
         </div>
       </div>
       <div class="modalL_btn">
         <div class="modalL_btnBg active" @click="sendHeart(false)">
-          <p>하트</p>
+          <p v-if="!isSendHeartLoading">하트</p>
+          <LoadingSpinner v-else />
         </div>
-        <div class="modalL_btnBg active" @click="sendHeart(true)">
-          <p>스폐셜 하트 x {{ specialHearts }}</p>
+        <div
+          class="modalL_btnBg"
+          :class="memberInfo.notificationOn ? 'active' : 'disabled'"
+          @click="sendHeart(true)"
+        >
+          <p v-if="!isSendHeartLoading">스폐셜 하트 x {{ specialHearts }}</p>
+          <LoadingSpinner v-else />
         </div>
       </div>
     </div>
@@ -52,6 +61,7 @@ const { specialHearts } = storeToRefs(matchingStore)
 const router = useRouter()
 
 const isLoading = ref(false)
+const isSendHeartLoading = ref(false)
 
 const closeModal = () => {
   popupStore.modalLVisible.heart = false
@@ -59,11 +69,18 @@ const closeModal = () => {
 
 // 하트 보내기
 const sendHeart = async (isSpecialUsed) => {
+  // 스페셜 하트를 보내는데 상대방 알림이 꺼져있으면 return
+  if (isSpecialUsed && !props.memberInfo.notificationOn) return
+
+  // 하트를 보내는 중이면 return
+  if (isSendHeartLoading.value) return
+
   const body = {
     receiverId: props.memberInfo.memberId,
     isSpecialUsed
   }
   try {
+    isSendHeartLoading.value = true
     await matchingStore.sendHeart(body)
     alert('하트가 전송되었습니다.')
     // 하트 전송이 되면 추천 회원을 새로운 응답으로 업데이트
@@ -73,6 +90,7 @@ const sendHeart = async (isSpecialUsed) => {
   } catch (err) {
     alert('하트 전송 과정에서 에러가 발생했습니다.')
   } finally {
+    isSendHeartLoading.value = false
     popupStore.modalLVisible.heart = false
   }
 }
@@ -178,6 +196,10 @@ const sendHeart = async (isSpecialUsed) => {
   .boldText {
     font-weight: 900;
   }
+  .desc {
+    font-size: $textXS_size;
+    color: #727272;
+  }
 }
 .modalL_btn {
   /* Auto layout */
@@ -213,6 +235,12 @@ const sendHeart = async (isSpecialUsed) => {
   }
   &.active {
     background: $point; /* active 클래스가 있을 때의 배경 색상 */
+    p {
+      color: $white;
+    }
+  }
+  &.disabled {
+    background: $gray;
     p {
       color: $white;
     }

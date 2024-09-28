@@ -1,21 +1,32 @@
-// example: Todo 엔티티를 표현하는 클래스
 export class RecommendedMemberEntity {
   /**
-   * @param {number} memberId
-   * @param {string} nickname
-   * @param {string} mbti
-   * @param {Date} birthdate
-   * @param {string} gender
-   * @param {string} description
-   * @param {string} phoneNumber
+   * @param {Object} member - Member information object
+   * @param {number} member.memberId
+   * @param {string} member.nickname
+   * @param {string} member.mbti
+   * @param {Date} member.birthdate
+   * @param {string} member.gender
+   * @param {string} member.description
+   * @param {string} [member.phoneNumber] - Optional phone number
+   * @param {boolean} [member.notificationOn=false] - Optional notification flag
    */
-  constructor(member) {
-    this.memberId = member.memberId
-    this.nickname = member.nickname
-    this.mbti = member.mbti
-    this.birthdate = member.birthdate
-    this.gender = member.gender
-    this.description = member.description
-    if (member.phoneNumber) this.phoneNumber = member.phoneNumber
+  constructor({
+    memberId,
+    nickname,
+    mbti,
+    birthdate,
+    gender,
+    description,
+    phoneNumber = '',
+    notificationOn = false
+  }) {
+    this.memberId = memberId
+    this.nickname = nickname
+    this.mbti = mbti
+    this.birthdate = birthdate
+    this.gender = gender
+    this.description = description
+    this.phoneNumber = phoneNumber
+    this.notificationOn = notificationOn
   }
 }

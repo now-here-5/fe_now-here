@@ -25,6 +25,7 @@
           </div>
           <div class="cards-wrapper">
             <TodayCardItem
+              v-if="recommendedMembers[0]"
               :member-info="recommendedMembers[0]"
               :is-flipped="isFlipped"
               :show-desc="true"
@@ -32,6 +33,7 @@
               :on-custom-click="() => sendHeart(recommendedMembers[0])"
             />
             <TodayCardItem
+              v-if="recommendedMembers[1]"
               :member-info="recommendedMembers[1]"
               :is-flipped="isFlipped"
               :show-desc="true"
@@ -109,9 +111,12 @@ const handleRouteChange = (to) => {
 }
 onMounted(async () => {
   handleRouteChange(route) // 첫 마운트 시에 라우트 확인
-  // isLoading.value = true
-  // await matchingStore.fetchRecommendedCards()
-  // isLoading.value = false
+
+  if (recommendedMembers.value.length === 0) {
+    isLoading.value = true
+    await matchingStore.fetchRecommendedCards()
+    isLoading.value = false
+  }
 })
 watch(route, (to) => {
   handleRouteChange(to)
