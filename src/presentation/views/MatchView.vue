@@ -108,11 +108,10 @@ const handleRouteChange = (to) => {
   }
 }
 onMounted(async () => {
-  isLoading.value = true
   handleRouteChange(route) // 첫 마운트 시에 라우트 확인
-
-  await matchingStore.fetchRecommendedCards()
-  isLoading.value = false
+  // isLoading.value = true
+  // await matchingStore.fetchRecommendedCards()
+  // isLoading.value = false
 })
 watch(route, (to) => {
   handleRouteChange(to)
