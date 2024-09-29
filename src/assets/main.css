@@ -3,13 +3,11 @@
 #app {
   max-width: 400px;
   min-height: 100vh;
-  margin: 0 auto;
   font-weight: normal;
 }
 
-/* @media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
+@media (min-width: 767px) {
+  #app {
+    margin: 0 auto;
   }
-} */
+}

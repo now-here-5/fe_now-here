@@ -18,6 +18,8 @@
           class="inputBox"
           type="password"
           placeholder="4자리 비밀번호"
+          inputmode="numeric"
+          pattern="[0-9]*"
           v-model="loginStore.password"
           @input="formatPassword"
           maxlength="4"
