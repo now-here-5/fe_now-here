@@ -148,7 +148,7 @@ const avatarImgUrl = computed(() => recommendedInfo.value.avatarImgUrl)
   }
 
   &__image {
-    width: 170px;
+    width: 100%;
     border-bottom: 2px solid #e0e0e0;
   }
 
