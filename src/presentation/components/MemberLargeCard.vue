@@ -7,10 +7,10 @@
       </div>
       <div class="detailContainer">
         <div class="mbtiContainer">
-          <p>ENTJ</p>
+          <p>{{ memberInfo?.mbti }}</p>
         </div>
         <div class="nameContainer">
-          <p class="name">{{ memberInfo.nickname }}</p>
+          <p class="name">{{ memberInfo?.nickname }}</p>
           <p class="age-gender">{{ age }}세, {{ gender }}</p>
         </div>
       </div>
@@ -51,8 +51,20 @@ const memberInfo = computed(() => {
   const description = props.memberInfo.description
   const memberId = props.memberInfo.memberId
   const phoneNumber = props.memberInfo.phoneNumber
+  const mbti = props.memberInfo.mbti
+  const nickname = props.memberInfo.nickname
 
-  return { gender, age, mbtiScore, avatarImgUrl, description, memberId, phoneNumber }
+  return {
+    gender,
+    age,
+    mbti,
+    mbtiScore,
+    avatarImgUrl,
+    description,
+    memberId,
+    phoneNumber,
+    nickname
+  }
 })
 
 const gender = computed(() => memberInfo.value.gender)

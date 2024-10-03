@@ -25,16 +25,22 @@ import { ref } from 'vue'
 
 const interactionStore = useInteractionStore()
 const reviewValue = ref('')
+const isLoading = ref(false)
+
 const sendDirectReview = async () => {
-  // TODO: field null 가능하도록 수정 요청
+  if (isLoading.value) return
+
   const body = {
     content: reviewValue.value,
     field: 1
   }
+
+  isLoading.value = true
   const res = await interactionStore.postFeedback(body)
   if (res.status === 200) alert('소중한 의견을 주셔서 감사합니다!')
   else alert('피드백 전송 과정에서 오류가 발생했습니다.')
 
+  isLoading.value = false
   reviewValue.value = ''
 }
 </script>
