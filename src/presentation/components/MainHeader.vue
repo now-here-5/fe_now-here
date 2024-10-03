@@ -1,6 +1,6 @@
 <template>
   <header class="main-header">
-    <img class="logo" src="/images/logo_text.png" alt="logo" />
+    <img class="logo" src="/images/logo_text.png" alt="logo" @click="router.push('/')" />
     <RouterLink v-if="route.path === '/profile'" to="/settings">
       <img src="/images/settings.png" alt="settings" />
     </RouterLink>
@@ -14,9 +14,10 @@
 <script setup>
 import { ref, watch } from 'vue'
 import { useMatchingStore } from '../stores/matchingStore'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
 const route = useRoute()
+const router = useRouter()
 const notificationCounts = ref(0)
 const matchingStore = useMatchingStore()
 
@@ -24,11 +25,11 @@ watch(
   () => route.name,
   async (newName) => {
     if (newName === 'home' || newName === 'profile' || newName === 'match') {
-      const { data } = await matchingStore.fetchMatchingNotificationCounts();
-      notificationCounts.value = data;
+      const { data } = await matchingStore.fetchMatchingNotificationCounts()
+      notificationCounts.value = data
     }
   }
-);
+)
 </script>
 
 <style lang="scss">
