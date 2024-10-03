@@ -81,6 +81,7 @@ const contents = ref(interactionStore.textContent || '')
 const rate = ref(0)
 const Active = ref(false)
 const isEmailValid = ref(true)
+const isLoading = ref(false)
 
 const validateEmail = (email) => {
   const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
@@ -98,6 +99,9 @@ const formContents = () => {
   interactionStore.textContent = contents.value
 }
 const handleSubmit = async () => {
+  if (isLoading.value) return
+
+  isLoading.value = true
   const isSuccess = await interactionStore.sendInteraction(type)
   if (isSuccess) {
     router.back()
@@ -105,6 +109,7 @@ const handleSubmit = async () => {
       popupStore.toastMessage.visible = false
     }, 3000)
   }
+  isLoading.value = false
 }
 watch([mail, contents, rate], () => {
   if (type === 'inquiry') {
