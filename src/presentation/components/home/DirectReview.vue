@@ -1,7 +1,7 @@
 <template>
   <div class="direct-reivew-container">
     <span class="title">의견 남기기</span>
-    <span class="desc">더 좋은 서비스를 만들기 위해, 많은 의견을 남겨주세요!</span>
+    <span class="desc">서비스 개선을 위해 소중한 의견을 남겨주세요!<br/>상대방에게 메세지 알림이 가는 '스페셜 하트' 5개를 드립니다.</span>
     <div class="input-container">
       <div class="input-background">
         <input

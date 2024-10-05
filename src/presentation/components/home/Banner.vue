@@ -18,14 +18,14 @@
 <script setup>
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 .matching-banner {
   position: relative;
   display: flex;
   align-items: center;
   background-color: $white;
   border-radius: 10px;
-  border: 1px solid $gray;
+  border: 2px solid $light_gray;
   width: 100%;
   height: 100px;
   margin-top: 30px;
