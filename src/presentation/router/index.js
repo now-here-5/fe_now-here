@@ -149,46 +149,55 @@ router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore()
   const eventStore = useEventStore()
   const token = authStore.token
-
-  // 기본적으로 허용하는 라우트
-  const publicRoutes = ['login', 'error', 'interaction']
-
-  if (publicRoutes.includes(to.name)) {
-    return next()
+  
+  // 자동 로그인
+  const autoLoginRoutes = ['login', 'PWUpdate', 'signup'];
+  if (autoLoginRoutes.includes(to.name) && token) {
+    if (!eventStore.encodedId) {
+      await eventStore.fetchEventDetail(); // 이벤트 정보가 없으면 가져오기
+    }
+    if (eventStore.status) {
+      return next({ name: 'home' }); // 이벤트 정보가 유효하면 홈으로 이동
+    }
   }
-
+  
+  // 기본적으로 허용하는 라우트
+  const publicRoutes = ['login', 'error', 'interaction'];
+  if (publicRoutes.includes(to.name)) {
+    return next();
+  }
+  
   // 회원가입 경로 처리
-  if (to.matched.some((record) => record.path.includes('signup'))) {
+  if (to.matched.some((record) => record.path.includes('signup', 'PWUpdate'))) {
     if (eventStore.encodedId && eventStore.eventName) {
       return next()
     }
     return next({ name: 'error' })
   }
-
+  
   // SMS URL로 직접 접속하는 경우 (매칭 현황, 받은 하트)
   const isHeartOrMatchRoute = ['receivedHearts', 'matchStatus'].includes(to.name)
-
   if (isHeartOrMatchRoute) {
     if (token) {
       return next() // 토큰이 있으면 바로 이동
     }
     const { eventCode } = to.query
-    return eventCode ? next(`/login/${eventCode}`) : next({ name: 'error' })
+    return eventCode ? next(`/login/${eventCode}`) : next({ name: 'error' });
   }
-
+  
   // 그 외 경로에 대한 토큰 검증
   if (!token) {
     return next({ name: 'error' })
   }
-
+  
   // 이벤트 정보가 있는 경우 바로 진행
   if (token && eventStore.encodedId) {
     return next()
   }
-
+  
   // 이벤트 정보가 없을 경우 이벤트 세부사항 가져오기
   await eventStore.fetchEventDetail()
-
+  
   if (eventStore.status) {
     return next()
   } else {
@@ -196,5 +205,4 @@ router.beforeEach(async (to, from, next) => {
     return next({ name: 'error' })
   }
 })
-
 export default router
