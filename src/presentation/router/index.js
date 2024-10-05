@@ -166,13 +166,13 @@ router.beforeEach(async (to, from, next) => {
   if (publicRoutes.includes(to.name)) {
     return next();
   }
-  
+
   // 회원가입 경로 처리
-  if (to.matched.some((record) => record.path.includes('signup', 'PWUpdate'))) {
+  if (to.matched.some((record) => record.path.includes('signup') || record.path.includes('PWUpdate'))) {
     if (eventStore.encodedId && eventStore.eventName) {
-      return next()
+      return next();
     }
-    return next({ name: 'error' })
+    return next({ name: 'error' });
   }
   
   // SMS URL로 직접 접속하는 경우 (매칭 현황, 받은 하트)
