@@ -30,9 +30,13 @@ const isLoading = ref(false)
 const sendDirectReview = async () => {
   if (isLoading.value) return
 
+  if (!reviewValue.value.trim()) {
+    return
+  }
+
   const body = {
     content: reviewValue.value,
-    field: 1
+    field: null,
   }
 
   isLoading.value = true
