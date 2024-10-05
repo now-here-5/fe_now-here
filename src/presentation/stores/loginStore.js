@@ -67,6 +67,7 @@ export const useLoginStore = defineStore('login', () => {
   const $reset = () => {
     phoneNumber.value = "";
     password.value = "";
+    alertMessage.value = "";
   };
 
   return {

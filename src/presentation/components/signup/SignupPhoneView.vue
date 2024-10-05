@@ -58,8 +58,6 @@ const signupStore = useSignupStore()
 signupStore.signupCompleted.auth = false
 signupStore.signupStep = 0
 
-console.log(signupStore.signupCompleted.auth);
-
 const phoneNum = ref(signupPhoneStore.phoneNumber || '')
 const authNumber = ref('')
 

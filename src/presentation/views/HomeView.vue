@@ -3,6 +3,7 @@
     <main class="main-content">
       <TimerHeader :ends-at="endsAt" />
       <TodayCards />
+      <Banner />
       <HeartHistory />
       <MatchingStatus />
       <DirectReview />
@@ -24,6 +25,7 @@ import TodayCards from '@/presentation/components/home/TodayCards.vue'
 import HeartHistory from '@/presentation/components/home/HeartHistory.vue'
 import MatchingStatus from '@/presentation/components/home/MatchingStatus.vue'
 import DirectReview from '@/presentation/components/home/DirectReview.vue'
+import Banner from '@/presentation/components/home/Banner.vue'
 import { onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useEventStore } from '../stores/eventStore'
