@@ -27,8 +27,9 @@ export const useSignupPhoneStore = defineStore('phone', () => {
 		}
 		const phone = phoneNumber.value.replace(/[^0-9]/g, '');
 		const eventId = eventStore.encodedId;
+		const forReset = `false`;
 		try {
-			const data = await memberAccountRepository.getAuthNumber(eventId, phone);
+			const data = await memberAccountRepository.getAuthNumber(eventId, phone, forReset);
 			if ( data.message === '현재 이벤트로 이미 가입된 번호입니다.' ) {
 				popupStore.modalSVisible.duplicatePhone = true;
 			} else {

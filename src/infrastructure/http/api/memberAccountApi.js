@@ -8,8 +8,8 @@ export const postRegister = async (encodedId, userData) => {
   const response = await httpClient.post(`/member/register/${encodedId}`, userData);
   return response.data;
 }
-export const getAuthNumber = async (eventId, phone) => {
-  const response = await httpClient.get(`/member/verify/phone/${eventId}?phoneNumber=${phone}`);
+export const getAuthNumber = async (eventId, phone, forReset) => {
+  const response = await httpClient.get(`/member/verify/phone/${eventId}?phoneNumber=${phone}&forReset=${forReset}`);
   return response.data;
 }
 export const getIDDuplicate = async (eventId, ID) => {

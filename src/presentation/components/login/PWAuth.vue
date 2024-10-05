@@ -11,10 +11,10 @@
         maxlength="13"
       />
       <div
-        :class="['authBtn', { active: signupPhoneStore.authBtnReady }]"
-        @click="signupPhoneStore.fetchAuthNumber()"
+        :class="['authBtn', { active: pwUpdateStore.authBtnReady }]"
+        @click="pwUpdateStore.fetchAuthNumber()"
       >
-        <p>{{ signupPhoneStore.authBtnText }}</p>
+        <p>{{ pwUpdateStore.authBtnText }}</p>
       </div>
     </div>
   </div>
@@ -28,8 +28,8 @@
         v-model="authNumber"
         @input="handleAuthNumberInput"
         maxlength="6"
-        :disabled="!signupPhoneStore.isAuthSend"
-        :class="{ 'disabled-input': !signupPhoneStore.isAuthSend }"
+        :disabled="!pwUpdateStore.isAuthSend"
+        :class="{ 'disabled-input': !pwUpdateStore.isAuthSend }"
       />
       <div class="time"></div>
     </div>
@@ -50,17 +50,13 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { formPhoneNumber } from '@/composition/FormNumber.js'
-import { useSignupPhoneStore } from '@/presentation/stores/signupSub/signupPhoneStore.js'
-import { useSignupStore } from '@/presentation/stores/signupStore.js'
+import { usePWUpdateStore } from '@/presentation/stores/pwUpdateStore.js';
 
-const signupPhoneStore = useSignupPhoneStore()
-const signupStore = useSignupStore()
-signupStore.signupCompleted.auth = false
-signupStore.signupStep = 0
+const pwUpdateStore = usePWUpdateStore();
+pwUpdateStore.step = 0
+pwUpdateStore.stepCompleted.auth = false
 
-console.log(signupStore.signupCompleted.auth);
-
-const phoneNum = ref(signupPhoneStore.phoneNumber || '')
+const phoneNum = ref(pwUpdateStore.phoneNumber || '')
 const authNumber = ref('')
 
 onMounted(() => {
@@ -71,13 +67,13 @@ onMounted(() => {
 
 const handlePhoneNumberInput = () => {
   phoneNum.value = formPhoneNumber(phoneNum.value) // 포맷 적용
-  signupPhoneStore.phoneNumber = phoneNum.value
-  signupPhoneStore.authBtnReady = phoneNum.value.length === 13
+  pwUpdateStore.phoneNumber = phoneNum.value
+  pwUpdateStore.authBtnReady = phoneNum.value.length === 13
 }
 const handleAuthNumberInput = () => {
   authNumber.value = authNumber.value.replace(/[^0-9]/g, '').slice(0, 6)
-  signupPhoneStore.authNumber = authNumber.value
-  signupStore.signupCompleted.auth = authNumber.value.length === 6
+  pwUpdateStore.authNumber = authNumber.value
+  pwUpdateStore.stepCompleted.auth = authNumber.value.length === 6
 }
 </script>
 

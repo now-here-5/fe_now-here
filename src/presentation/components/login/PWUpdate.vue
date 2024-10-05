@@ -6,23 +6,21 @@
   <PasswordComponent
     v-model="passwordConfirmInput"
     label="비밀번호 확인"
-    :errorMessage="passwordSignupStore.alertMessage"
+    :errorMessage="pwUpdateStore.alertMessage"
   />
 </template>
 
 <script setup>
 import PasswordComponent from "@/presentation/components/signup/PasswordComponent.vue";
 import { ref, watch, computed } from 'vue';
-import { useSignupStore } from "@/presentation/stores/signupStore.js";
-import { useSignupPWStore } from "@/presentation/stores/signupSub/signupPWStore.js";
+import { usePWUpdateStore } from '@/presentation/stores/pwUpdateStore.js';
 
-const passwordSignupStore = useSignupPWStore();
-const signupStore = useSignupStore();
-signupStore.signupCompleted.password = false;
-signupStore.signupStep = 1;
+const pwUpdateStore = usePWUpdateStore();
+pwUpdateStore.step = 1;
+pwUpdateStore.stepCompleted.password = false;
 
-const passwordInput = ref(passwordSignupStore.password || '');
-const passwordConfirmInput = ref(passwordSignupStore.passwordConfirm || '');
+const passwordInput = ref(pwUpdateStore.password || '');
+const passwordConfirmInput = ref(pwUpdateStore.passwordConfirm || '');
 
 const isPasswordValid = computed(() => {
   return (
@@ -33,16 +31,17 @@ const isPasswordValid = computed(() => {
 const isPasswordMatch = computed(() => {
   return passwordInput.value === passwordConfirmInput.value;
 });
+
 watch([passwordInput, passwordConfirmInput], () => {
-  passwordSignupStore.password = passwordInput.value;
-  passwordSignupStore.passwordConfirm = passwordConfirmInput.value;
-  signupStore.signupCompleted.password = isPasswordValid.value;
+  pwUpdateStore.password = passwordInput.value;
+  pwUpdateStore.passwordConfirm = passwordConfirmInput.value;
+  pwUpdateStore.stepCompleted.password = isPasswordValid.value;
   if (passwordConfirmInput.value.length === 4) {
-    passwordSignupStore.alertMessage = isPasswordMatch.value
+    pwUpdateStore.alertMessage = isPasswordMatch.value
       ? '비밀번호가 일치합니다.'
       : '비밀번호가 일치하지 않습니다.';
   } else {
-    passwordSignupStore.alertMessage = '';
+    pwUpdateStore.alertMessage = '';
   }
 }, { immediate: true });
 </script>

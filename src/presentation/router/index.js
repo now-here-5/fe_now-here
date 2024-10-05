@@ -16,10 +16,28 @@ const router = createRouter({
       component: () => import('@/presentation/views/LoginView.vue')
     },
     {
+      path: '/PWUpdate',
+      name: 'PWUpdate',
+      component: () => import('@/presentation/views/PWUpdateView.vue'),
+      redirect: { name: 'PWUpdate-phone' },
+      children: [
+        {
+          path: 'PWUpdate-phone',
+          name: 'PWUpdate-phone',
+          component: () => import('@/presentation/components/login/PWAuth.vue')
+        },
+        {
+          path: 'PWUpdate-password',
+          name: 'PWUpdate-password',
+          component: () => import('@/presentation/components/login/PWUpdate.vue')
+        }
+      ]
+    },
+    {
       path: '/signup',
       name: 'signup',
       component: () => import('@/presentation/views/SignupView.vue'),
-      redirect: { name: 'signup-ID' }, // 기본 리다이렉트 설정
+      redirect: { name: 'signup-phone' }, // 기본 리다이렉트 설정
       children: [
         {
           path: 'signup-phone',

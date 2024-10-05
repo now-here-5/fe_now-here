@@ -3,12 +3,14 @@ import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { InteractionRepository } from '@/infrastructure/repositories/InteractionRepository.js';
 import { useSignupProfile } from '@/presentation/stores/signupSub/signupProfileStore.js';
+import { useEventStore } from '@/presentation/stores/eventStore.js';
 
 const interactionRepository = new InteractionRepository();
 
 export const usePopupStore = defineStore('popup', () => {
   const router = useRouter();
   const signupProfileStore = useSignupProfile();
+  const eventStore = useEventStore();
   
   //BS
   const bottomSheetVisible = ref({
@@ -25,6 +27,8 @@ export const usePopupStore = defineStore('popup', () => {
   const modalSVisible = ref({
     duplicatePhone: false,
     authError: false,
+    updatePWError: false,
+    completePW: false,
     duplicateName: false,
     complete: false,
   });
@@ -41,6 +45,8 @@ export const usePopupStore = defineStore('popup', () => {
       modalSVisible.value[key] = false;
       if (key === 'complete') {
         router.push('/match');
+      } else if (key === 'completePW') {
+        router.push(`/login/${eventStore.encodedId}`);
       }
     }
   };

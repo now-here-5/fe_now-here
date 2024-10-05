@@ -11,10 +11,13 @@
       <SelectBtn :isActive="true" buttonText="로그인" @click="handleLogin" />
     </main>
     <footer class="bottom">
-      <div class="left_content" @click="openBottomSheet">
+      <div class="side-content" @click="openBottomSheet">
         <span>회원가입</span>
       </div>
-      <div class="right_content" @click="navigateToContact">
+      <div class="center-content" @click="navigateToPassword">
+        <span>비밀번호 찾기</span>
+      </div>
+      <div class="side-content" @click="navigateToContact">
         <span>문의하기</span>
       </div>
     </footer>
@@ -34,12 +37,14 @@ import { useRoute, useRouter } from 'vue-router'
 import { useEventStore } from '@/presentation/stores/eventStore.js'
 import { useLoginStore } from '@/presentation/stores/loginStore.js'
 import { usePopupStore } from '@/presentation/stores/popupStore.js'
+import { usePWUpdateStore } from '@/presentation/stores/pwUpdateStore.js'
 
 const route = useRoute()
 const router = useRouter()
 const eventStore = useEventStore()
 const loginStore = useLoginStore()
 const popupStore = usePopupStore()
+const pwUpdateStore = usePWUpdateStore()
 
 onMounted(async () => {
   eventStore.encodedId = route.params.encodedId // 경로 변수 추출
@@ -47,6 +52,7 @@ onMounted(async () => {
   if (!isExist) {
     router.push('/error')
   }
+  loginStore.$reset()
 })
 const handleLogin = () => {
   loginStore.login()
@@ -56,6 +62,10 @@ const openBottomSheet = () => {
 }
 const navigateToContact = () => {
   router.push(`/interaction/inquiry`);
+}
+const navigateToPassword = () => {
+  router.push(`/PWUpdate`);
+  pwUpdateStore.$reset()
 }
 </script>
 
@@ -106,16 +116,18 @@ const navigateToContact = () => {
   flex-direction: row;
   justify-content: center;
   align-items: flex-start;
-  width: 100%;
+  width: 80%;
   height: 70px;
-  .left_content {
+  .side-content {
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
-    align-items: flex-start;
-    padding: 0 30px;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+    gap: 10px;
+
+    width: 50%;
     height: 20px;
-    border-right: 1px solid $dark;
     span {
       font-size: $textMS_size;
       font-weight: $textB_weight;
@@ -123,12 +135,17 @@ const navigateToContact = () => {
       cursor: pointer;
     }
   }
-  .right_content {
+  .center-content {
     display: flex;
     flex-direction: row;
+    justify-content: center;
     align-items: center;
-    padding: 0 30px;
+    padding: 0px;
+    gap: 10px;
+
+    width: 65%;
     height: 20px;
+    border-right: 1px solid $dark;
     border-left: 1px solid $dark;
     span {
       font-size: $textMS_size;

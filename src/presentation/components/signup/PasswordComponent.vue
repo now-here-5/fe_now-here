@@ -21,7 +21,13 @@
       v-model="internalValue"
       @input="onInput"
     />
-    <span class="error" v-if="errorMessage">{{ errorMessage }}</span>
+    <span
+      class="error"
+      :class="{ success: errorMessage === '비밀번호가 일치합니다.' }"
+      v-if="errorMessage"
+    >
+      {{ errorMessage }}
+    </span>
   </div>
 </template>
 
@@ -88,6 +94,9 @@ const focusInput = () => {
     font-size: $textS_size;
     font-weight: $textS_weight;
     color: $red;
+  }
+  .error.success {
+    color: $green;
   }
 }
 .pinRow {
