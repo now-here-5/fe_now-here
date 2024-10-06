@@ -80,8 +80,10 @@ onUnmounted(() => {
 <style lang="scss">
 .received-hearts-container {
   padding: 10px;
-  margin-top: 90px;
-  margin-bottom: 70px;
+  margin-top: 120px;
+  margin-bottom: 100px;
+  display: block;
+  height: calc(100dvh - 245px);
 
   .no-received-hearts-wrapper {
     display: flex;
@@ -89,10 +91,10 @@ onUnmounted(() => {
     align-items: center;
     flex-direction: column;
     width: 100%;
-    height: 80vh;
+    height: 100%;
 
     .title {
-      font-size: $textXXL_size;
+      font-size: $textL_size;
       font-weight: $textB_weight;
     }
   }

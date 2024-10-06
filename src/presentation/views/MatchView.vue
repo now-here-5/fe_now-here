@@ -1,6 +1,6 @@
 <template>
   <div class="matching-container">
-    <nav class="mathcing-nav-container">
+    <nav class="matching-nav-container">
       <router-link to="/match" class="tab">매칭</router-link>
       <router-link to="/match/received-hearts" class="tab">받은 하트</router-link>
       <router-link to="/match/sent-hearts" class="tab">보낸 하트</router-link>
@@ -141,19 +141,19 @@ watch(route, (to) => {
     align-items: center;
     flex-direction: column;
     width: 100%;
-    height: 80vh;
+    height: calc(100dvh - 170px);
 
     .title {
-      font-size: $textXXL_size;
+      font-size: $textL_size;
       font-weight: $textB_weight;
     }
   }
 
-  .mathcing-nav-container {
+  .matching-nav-container {
     display: flex;
     width: 400px;
     position: fixed;
-    top: 60px;
+    top: 70px;
     left: 50%; /* 좌우 중앙으로 이동 */
     transform: translateX(-50%);
     height: 30px;
@@ -173,7 +173,7 @@ watch(route, (to) => {
     }
   }
   @media (max-width: 767px) {
-    .mathcing-nav-container {
+    .matching-nav-container {
       width: 100vw;
     }
   }
@@ -181,8 +181,9 @@ watch(route, (to) => {
   .matching-content {
     display: flex;
     flex-direction: column;
+    height: calc(100dvh - 170px);
     padding: 10px;
-    margin-top: 90px;
+    margin-top: 100px;
     justify-content: space-around;
     .event-info {
       display: flex;
@@ -217,7 +218,7 @@ watch(route, (to) => {
 
     .cards-wrapper {
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
       align-items: center;
       gap: 1rem;
       margin-top: 15px;

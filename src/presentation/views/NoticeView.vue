@@ -62,9 +62,10 @@ onMounted(async () => {
   height: 60px;
   justify-content: center;
   align-items: center;
+
   img {
     position: absolute;
-    left: 0;
+    left: 20px;
     width: 30px;
     cursor: pointer;
   }
@@ -75,14 +76,13 @@ onMounted(async () => {
 }
 .notice-container {
   width: 100%;
-  padding-bottom: 20px;
+  height: calc(100dvh);
 
   .notice-content {
     display: flex;
     flex-direction: column;
     gap: 15px;
     width: 100%;
-    height: auto;
     /* background-color: aliceblue; */
     margin-top: 10px;
     padding: 0 15px;
@@ -121,13 +121,16 @@ onMounted(async () => {
 
   .no-content {
     display: flex;
-    height: calc(80vh - 60px);
+    height: calc(100dvh - 90px);
     flex-direction: column;
     align-items: center;
     justify-content: center;
     .title {
-      font-size: $textXXL_size;
+      font-size: $textL_size;
       font-weight: $textB_weight;
+    }
+    .desc {
+      font-size: $textMS_size;
     }
   }
 }

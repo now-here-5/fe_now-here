@@ -31,13 +31,15 @@ const showBottomNav = computed(
 .main-container {
   //padding: 0 20px; 삭제
   width: 400px;
-  min-height: 100vh;
+  /* min-height: 100vh; */
   margin: 0 auto;
   box-sizing: border-box;
   overflow-y: auto;
   background-color: white;
   border: 1px solid $white;
-  box-shadow: 0 6px 10px 4px rgba(0, 0, 0, 0.15);
+  @media (min-width: 767px) {
+    box-shadow: 0 6px 10px 4px rgba(0, 0, 0, 0.15);
+  }
 
   /* 스크롤바 숨기기 설정 */
   scrollbar-width: none; /* Firefox용 설정 */
@@ -65,7 +67,6 @@ const showBottomNav = computed(
   background-color: white;
   width: 400px;
   height: 70px;
-  border-top: 1px solid $gray;
   border-left: 1px solid $white;
   border-right: 1px solid $white;
   z-index: 100;
@@ -75,6 +76,8 @@ const showBottomNav = computed(
   }
 
   .bottom-nav-menu {
+    box-sizing: border-box;
+
     display: flex;
     justify-content: center;
     align-items: center;
@@ -84,11 +87,13 @@ const showBottomNav = computed(
     text-decoration: none;
     color: inherit;
     color: $gray;
+    border-top: 1px solid $gray;
 
     &.active {
       border-top: 2px solid $dark;
       font-size: 20px;
       color: $dark;
+      transform: translateY(-1px);
     }
   }
 }

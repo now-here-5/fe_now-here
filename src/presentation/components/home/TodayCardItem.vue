@@ -72,11 +72,11 @@ const avatarImgUrl = computed(() => recommendedInfo.value.avatarImgUrl)
 
 <style lang="scss">
 .character-card {
-  width: 170px;
-  height: 230px; // 카드의 높이를 명시적으로 설정
+  width: 160px;
+  height: 220px; // 카드의 높이를 명시적으로 설정
   position: relative;
   border-radius: 13px;
-  box-shadow: 0px 1px 3px 1px #00000026;
+  /* box-shadow: 0px 1px 3px 1px #00000026; */
   background-color: #fff;
   cursor: pointer;
 
@@ -218,11 +218,15 @@ const avatarImgUrl = computed(() => recommendedInfo.value.avatarImgUrl)
     font-size: $textM_size;
     font-weight: 700;
     height: 60px;
+    border-bottom-left-radius: 13px;
+    border-bottom-right-radius: 13px;
+    box-shadow: 0px 1px 3px 1px #00000026;
+
     .character-card__footer_content {
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 100%;
+      height: 48px;
       background-color: $white;
       border-bottom-left-radius: 13px;
       border-bottom-right-radius: 13px;

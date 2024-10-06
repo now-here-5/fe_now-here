@@ -42,8 +42,9 @@ onMounted(async () => {
 <style scoped lang="scss">
 .match-status-container {
   padding: 10px;
-  margin-top: 90px;
-  margin-bottom: 70px;
+  margin-top: 120px;
+  margin-bottom: 100px;
+  height: calc(100dvh - 245px);
 
   .loading-spinner-wrapper {
     display: flex;
@@ -59,10 +60,10 @@ onMounted(async () => {
     align-items: center;
     flex-direction: column;
     width: 100%;
-    height: 80vh;
+    height: 100%;
 
     .title {
-      font-size: $textXXL_size;
+      font-size: $textL_size;
       font-weight: $textB_weight;
     }
   }
@@ -73,6 +74,8 @@ onMounted(async () => {
     gap: 10px; /* 아이템 간의 간격 */
     row-gap: 40px;
     padding: 0 calc((100% - 250px) / 2); /* 그리드 전체의 좌우 공백 */
+    justify-items: center; /* 수평 가운데 정렬 */
+    align-items: center; /* 수직 가운데 정렬 */
   }
 }
 </style>
