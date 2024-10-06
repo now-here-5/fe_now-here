@@ -102,6 +102,11 @@ export const useMatchingStore = defineStore('matching', () => {
     return await matchingRepository.getMatchingMatchStatusList()
   }
 
+  // 보낸 하트 회수
+  const deleteUndoHeart = async (receiverId) => {
+    return await matchingRepository.deleteSentHeart(receiverId)
+  }
+
   return {
     recommendedMembers,
     matchedInfoList,
@@ -123,6 +128,7 @@ export const useMatchingStore = defineStore('matching', () => {
     rejectHeart,
     getReceivedHeartList,
     getSentHeartList,
-    getMatchStatusList
+    getMatchStatusList,
+    deleteUndoHeart
   }
 })

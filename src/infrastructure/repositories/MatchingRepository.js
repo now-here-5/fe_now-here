@@ -1,6 +1,7 @@
 import { MatchedInfoEntity } from '@/core/entities/MatchedInfoEntity'
 import { RecommendedMemberEntity } from '@/core/entities/RecommendedMemberEntity'
 import {
+  deleteUndoHeart,
   getMatchedInfoForBanner,
   getMatchingNotificationCount,
   getMatchingNotificationList,
@@ -73,6 +74,12 @@ export class MatchingRepository {
   // 하트 거절
   async patchRejectHeart(senderId) {
     const res = await patchRejectHeart(senderId)
+    return res
+  }
+
+  // 보낸 하트 회수
+  async deleteSentHeart(receiverId) {
+    const res = await deleteUndoHeart(receiverId)
     return res
   }
 

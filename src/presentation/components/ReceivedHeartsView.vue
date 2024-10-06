@@ -34,6 +34,7 @@
   <LargeCardModal
     v-if="modalLVisible.cardL"
     :member-info="selectedMember"
+    type="ReceivedHeart"
     @refresh="fetchSenderList"
   />
 </template>

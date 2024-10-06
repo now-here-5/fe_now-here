@@ -70,3 +70,13 @@ export const getMatchStatusList = async () => {
   const { data } = await httpClient.get(`/matching/summaryDetail`)
   return data
 }
+
+// 보낸 하트 회수
+export const deleteUndoHeart = async (receiverId) => {
+  const { data } = await httpClient.delete(`/matching/remove/heart`, {
+    params: {
+      receiverId
+    }
+  })
+  return data
+}

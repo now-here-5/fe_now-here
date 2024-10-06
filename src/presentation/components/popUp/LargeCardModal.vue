@@ -7,12 +7,19 @@
       <div class="modalL_contentContainer">
         <MemberLargeCard :member-info="memberInfo" />
       </div>
-      <div class="modalL_btn">
+      <!-- 받은 하트 액션 버튼 -->
+      <div v-if="type === 'ReceivedHeart'" class="modalL_btn">
         <div class="modalL_btnBg" @click="rejectHeart">
           <p>거절</p>
         </div>
         <div class="modalL_btnBg active" @click="acceptHeart">
           <p>수락</p>
+        </div>
+      </div>
+      <!-- 보낸 하트 액션 버튼 -->
+      <div v-else class="modalL_btn">
+        <div class="modalL_undo_heart_btnBg" @click="undoHeart">
+          <p>보낸 하트 회수하기</p>
         </div>
       </div>
     </div>
@@ -28,6 +35,10 @@ import MemberLargeCard from '../MemberLargeCard.vue'
 const props = defineProps({
   memberInfo: {
     type: Object,
+    required: true
+  },
+  type: {
+    type: String,
     required: true
   }
 })
@@ -61,6 +72,19 @@ const acceptHeart = async () => {
     closeModal()
   }
 }
+
+const undoHeart = async () => {
+  try {
+    await matchingStore.deleteUndoHeart(props.memberInfo.memberId)
+    alert('보낸 하트가 회수되었습니다.')
+    emit('refresh')
+  } catch (err) {
+    alert('오류가 발생했습니다.')
+  } finally {
+    closeModal()
+  }
+}
+
 const closeModal = () => {
   popupStore.modalLVisible.cardL = false
 }
@@ -222,6 +246,24 @@ const closeModal = () => {
     p {
       color: $white;
     }
+  }
+}
+.modalL_undo_heart_btnBg {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  height: 40px;
+
+  background: $point;
+  border-radius: 12px;
+
+  flex-grow: 1;
+  p {
+    font-size: $textM_size;
+    font-weight: $textB_weight;
+    color: $white;
   }
 }
 .modalL_btnBg.active {

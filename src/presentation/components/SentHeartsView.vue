@@ -16,10 +16,18 @@
           :member-info="member"
           :show-desc="true"
           :show-mbti="true"
+          :on-custom-click="() => onClickCard(member)"
         />
       </div>
     </template>
   </div>
+
+  <LargeCardModal
+    v-if="modalLVisible.cardL"
+    :member-info="selectedMember"
+    type="SentHeart"
+    @refresh="fetchReceiverList"
+  />
 </template>
 
 <script setup>
@@ -27,15 +35,31 @@ import { onMounted, ref } from 'vue'
 import TodayCardItem from './home/TodayCardItem.vue'
 import { useMatchingStore } from '../stores/matchingStore'
 import LoadingSpinner from './LoadingSpinner.vue'
+import { usePopupStore } from '../stores/popupStore'
+import LargeCardModal from './popUp/LargeCardModal.vue'
+import { storeToRefs } from 'pinia'
 
 const matchingStore = useMatchingStore()
+const popupStore = usePopupStore()
+const { modalLVisible } = storeToRefs(popupStore)
+
 const sentList = ref([])
 const isLoading = ref(false)
+const selectedMember = ref({})
 
-onMounted(async () => {
+const onClickCard = (memberInfo) => {
+  selectedMember.value = memberInfo
+  popupStore.modalLVisible.cardL = true
+}
+
+const fetchReceiverList = async () => {
   isLoading.value = true
   sentList.value = await matchingStore.getSentHeartList()
   isLoading.value = false
+}
+
+onMounted(() => {
+  fetchReceiverList()
 })
 </script>
 
