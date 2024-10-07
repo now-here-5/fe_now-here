@@ -20,6 +20,7 @@ export const useSignupStore = defineStore('signup', () => {
 	const authStore = useAuthStore();
 	const eventStore = useEventStore();
 	const popupStore = usePopupStore();
+	const isSubmitting = ref(false);
 	
 	const signupStep = ref(0);
 	const signupCompleted = ref({
@@ -44,7 +45,11 @@ export const useSignupStore = defineStore('signup', () => {
 		"가입 완료",
 	]);
 	
-	const submit = async  () => {
+	const submit = async () => {
+		if (isSubmitting.value) return;
+		
+		isSubmitting.value = true;
+		
 		switch (signupStep.value) {
 			case 0:
 				try {
@@ -63,7 +68,7 @@ export const useSignupStore = defineStore('signup', () => {
 				break;
 			
 			case 1:
-				if ( signupPWStore.password === signupPWStore.passwordConfirm ) {
+				if (signupPWStore.password === signupPWStore.passwordConfirm) {
 					signupPWStore.alertMessage = false;
 					router.push('/signup/signup-profile');
 				} else {
@@ -73,6 +78,8 @@ export const useSignupStore = defineStore('signup', () => {
 			
 			case 2: // 프로필 정보 입력 단계
 				if (signupProfileStore.signupReady) {
+					console.log('phone:', signupPhoneStore.phoneNumber);
+					
 					try {
 						const userData = {
 							"phoneNumber": signupPhoneStore.phoneNumber.replace(/[^0-9]/g, ''),
@@ -85,7 +92,7 @@ export const useSignupStore = defineStore('signup', () => {
 						};
 						const response = await memberAccountRepository.postRegister(eventStore.encodedId, userData);
 						if (response.message === "회원가입에 성공했습니다.") {
-							authStore.token = response.data
+							authStore.token = response.data;
 							if (authStore.token) {
 								await eventStore.fetchEventDetail(eventStore);
 								const baseImgSrc = getAvatarSrc(signupProfileStore.selectedSex, signupProfileStore.selectedMBTI);
@@ -103,6 +110,8 @@ export const useSignupStore = defineStore('signup', () => {
 			
 			default:
 		}
+		
+		isSubmitting.value = false;
 	}
 	return {
 		textTitle,
