@@ -7,10 +7,12 @@
     />
     <div class="info-wrapper">
       <span class="title">
-        매칭만 되면  <br />
-        자동으로 응모!
+        매칭 성공하면
+        <br />이벤트 자동 응모!
       </span>
-      <span class="desc">10명에게 파인트를 쏩니다!</span>
+      <span class="desc">
+        10명에게 파인트를 쏩니다!
+      </span>
     </div>
   </div>
 </template>
