@@ -1,6 +1,6 @@
 <template>
   <div class="body">
-    <div class="profileCard">
+    <div class="profileCard" @click="openDownloadModal">
       <img class="imgContainer" :src="avatarSrc" alt="profile" />
       <div class="profileInfo">
         <span>{{ profileStore.selectedMBTI }}</span>
@@ -21,17 +21,22 @@
       <OptionItem label="의견 남기기" :boldText= true :onClick="navigateToReview" />
     </div>
   </div>
+
+  <DownloadMBTIModal />
 </template>
 
 <script setup>
 import OptionItem from '@/presentation/components/settings/OptionItem.vue'
+import DownloadMBTIModal from '@/presentation/components/popUp/DownloadMBTIModal.vue'
 import { computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useProfileStore } from '@/presentation/stores/profileStore.js'
+import { usePopupStore } from '@/presentation/stores/popupStore.js'
 import { getAvatarSrc } from '@/composition/GetAvatar.js'
 
 const router = useRouter() // useRouter 사용
 const profileStore = useProfileStore()
+const popupStore = usePopupStore() // usePopupStore 사용
 
 onMounted(async () => {
   await profileStore.fetchProfile()
@@ -42,6 +47,9 @@ const avatarSrc = computed(() => {
   const src = getAvatarSrc(gender, profileStore.selectedMBTI)
   return src
 })
+const openDownloadModal = () => {
+  popupStore.modalLVisible.download = true
+}
 const navigateToEditProfile = () => {
   router.push('/editProfile')
 }

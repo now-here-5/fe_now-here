@@ -57,6 +57,7 @@ export const usePopupStore = defineStore('popup', () => {
     heart: false,
     cardL: false,
     withdraw: false,
+    download: false,
   });
   const matchAgree = ref(false);
   const fetchFeedbackModal = async () => {
