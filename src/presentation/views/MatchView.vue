@@ -158,7 +158,7 @@ watch(route, (to) => {
     left: 50%; /* 좌우 중앙으로 이동 */
     transform: translateX(-50%);
     height: 40px;
-    justify-content: space-around;
+    justify-content: flex-start;
     background-color: white;
     z-index: 100;
 
@@ -167,6 +167,8 @@ watch(route, (to) => {
       color: $gray;
       font-size: $textM_size;
       font-weight: $textB_weight;
+      width: 24%;
+      text-align: center;
     }
     .tab.router-link-exact-active {
       font-weight: $textB_weight;
