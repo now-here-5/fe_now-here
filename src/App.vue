@@ -67,9 +67,11 @@ const showBottomNav = computed(
   background-color: white;
   width: 400px;
   height: 70px;
+  border-top: 1px solid $gray;
   border-left: 1px solid $white;
   border-right: 1px solid $white;
   z-index: 100;
+  justify-content: space-around;
 
   @media screen and (max-width: 768px) {
     width: 100vw; // 모바일 기준 너비 설정
@@ -77,17 +79,14 @@ const showBottomNav = computed(
 
   .bottom-nav-menu {
     box-sizing: border-box;
-
+    width: 30%;
     display: flex;
     justify-content: center;
     align-items: center;
-    flex: 1;
     font-size: 14px;
     font-weight: 700;
     text-decoration: none;
-    color: inherit;
     color: $gray;
-    border-top: 1px solid $gray;
 
     &.active {
       border-top: 2px solid $dark;
