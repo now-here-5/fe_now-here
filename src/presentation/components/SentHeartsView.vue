@@ -68,7 +68,7 @@ onMounted(() => {
   padding: 10px;
   margin-top: 120px;
   margin-bottom: 100px;
-  height: calc(100dvh - 245px);
+  min-height: calc(100dvh - 245px);
 
   .no-sent-hearts-wrapper {
     display: flex;
@@ -77,6 +77,7 @@ onMounted(() => {
     flex-direction: column;
     width: 100%;
     height: 100%;
+    min-height: calc(100dvh - 245px);
 
     .title {
       font-size: $textL_size;

@@ -153,10 +153,11 @@ watch(route, (to) => {
     display: flex;
     width: 400px;
     position: fixed;
-    top: 70px;
+    top: 59px;
+    padding-top: 10px;
     left: 50%; /* 좌우 중앙으로 이동 */
     transform: translateX(-50%);
-    height: 30px;
+    height: 40px;
     justify-content: space-around;
     background-color: white;
     z-index: 100;
